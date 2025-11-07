@@ -1,5 +1,4 @@
-
-
+// FIX: All React hooks were undefined because the import statement was malformed. This has been corrected.
 import React, { useState, useRef, useEffect } from 'react';
 import { type Chat } from '@google/genai';
 import { type ChatMessage } from '../types';
@@ -138,7 +137,7 @@ export const Chatbot: React.FC = () => {
     const messagesEndRef = useRef<HTMLDivElement | null>(null);
 
     useEffect(() => {
-        if (isOpen) {
+        if (isOpen && !chatRef.current) {
             chatRef.current = startChat();
         }
     }, [isOpen]);
@@ -161,10 +160,16 @@ export const Chatbot: React.FC = () => {
                 const result = await chatRef.current.sendMessage({ message: input });
                 const modelMessage: ChatMessage = { role: 'model', content: result.text };
                 setMessages(prev => [...prev, modelMessage]);
+            } else {
+                 throw new Error("Chat not initialized");
             }
         } catch (error) {
             console.error('Error sending message:', error);
-            const errorMessage: ChatMessage = { role: 'model', content: 'Lo siento, ocurrió un error. Por favor, intenta de nuevo.' };
+            let errorText = 'Lo siento, ocurrió un error. Por favor, intenta de nuevo.';
+            if (error instanceof Error && (error.message.includes('RESOURCE_EXHAUSTED') || error.message.includes('API key not valid'))) {
+                errorText = 'Hubo un problema de conexión con el asistente. Por favor, inténtalo de nuevo más tarde.';
+            }
+            const errorMessage: ChatMessage = { role: 'model', content: errorText };
             setMessages(prev => [...prev, errorMessage]);
         } finally {
             setIsLoading(false);

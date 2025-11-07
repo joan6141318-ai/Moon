@@ -2,16 +2,9 @@
 
 import { GoogleGenAI, Chat } from "@google/genai";
 
-let ai: GoogleGenAI | null = null;
-
 export const getAiInstance = (): GoogleGenAI => {
-    if (ai) {
-        return ai;
-    }
-
     if (process.env.API_KEY) {
-        ai = new GoogleGenAI({ apiKey: process.env.API_KEY });
-        return ai;
+        return new GoogleGenAI({ apiKey: process.env.API_KEY });
     } else {
         console.error("La variable de entorno API_KEY no está configurada.");
         throw new Error("Clave de API no encontrada. Asegúrate de que la variable de entorno API_KEY esté configurada.");
@@ -19,11 +12,12 @@ export const getAiInstance = (): GoogleGenAI => {
 };
 
 export const startChat = (): Chat => {
-  const aiInstance = getAiInstance();
-  return aiInstance.chats.create({
-    model: 'gemini-2.5-flash',
-    config: {
-        systemInstruction: `Eres Luna, una asistente amigable y servicial para Agency Moon. Te acabas de presentar y de pedir el nombre al usuario. Cuando te lo proporcionen, salúdalo por su nombre (ej. "Hola, [nombre]. ¿En qué puedo ayudarte?") y úsalo para personalizar la conversación.
+  try {
+    const aiInstance = getAiInstance();
+    return aiInstance.chats.create({
+      model: 'gemini-2.5-flash',
+      config: {
+          systemInstruction: `Eres Luna, una asistente amigable y servicial para Agency Moon. Te acabas de presentar y de pedir el nombre al usuario. Cuando te lo proporcionen, salúdalo por su nombre (ej. "Hola, [nombre]. ¿En qué puedo ayudarte?") y úsalo para personalizar la conversación.
 
 No tienes acceso a internet; basa todas tus respuestas únicamente en la siguiente información interna sobre la agencia. Tu objetivo es ayudar a los streamers actuales y potenciales. Responde a sus preguntas de forma natural y servicial. Si no entiendes algo, pide que lo repitan.
 
@@ -105,46 +99,23 @@ Si un usuario pregunta algo que no puedes responder con la información proporci
 3.  Usa una respuesta directa como: "Para esa consulta específica, lo mejor es que te comuniques directamente con uno de nuestros managers por WhatsApp. Ellos podrán darte la información más precisa. Los números son +52 8118807625 y +593 96 736 4089."
 
 Si te preguntan por las ganancias de la agencia o temas no relacionados con la información proporcionada, rechaza amablemente la pregunta.`,
-    },
-  });
+      },
+    });
+  } catch (error) {
+    console.warn("MODO DE DESARROLLO: La clave de API no está configurada. El chatbot usará respuestas simuladas.");
+    return {
+        sendMessage: async (request: { message: string }) => {
+            await new Promise(resolve => setTimeout(resolve, 800));
+            return {
+                text: "Respuesta simulada en modo de desarrollo. La API real no fue llamada. ¡Puedes seguir diseñando la interfaz!",
+            };
+        },
+        sendMessageStream: async function* (request: { message: string; }) {
+            yield { text: "Respuesta simulada... " };
+            await new Promise(resolve => setTimeout(resolve, 500));
+            yield { text: "en modo de desarrollo." };
+        },
+        getHistory: () => [],
+    } as unknown as Chat;
+  }
 };
-
-// Audio helper functions for Live API
-
-export function encode(bytes: Uint8Array): string {
-  let binary = '';
-  const len = bytes.byteLength;
-  for (let i = 0; i < len; i++) {
-    binary += String.fromCharCode(bytes[i]);
-  }
-  return btoa(binary);
-}
-
-export function decode(base64: string): Uint8Array {
-  const binaryString = atob(base64);
-  const len = binaryString.length;
-  const bytes = new Uint8Array(len);
-  for (let i = 0; i < len; i++) {
-    bytes[i] = binaryString.charCodeAt(i);
-  }
-  return bytes;
-}
-
-export async function decodeAudioData(
-  data: Uint8Array,
-  ctx: AudioContext,
-  sampleRate: number,
-  numChannels: number,
-): Promise<AudioBuffer> {
-  const dataInt16 = new Int16Array(data.buffer);
-  const frameCount = dataInt16.length / numChannels;
-  const buffer = ctx.createBuffer(numChannels, frameCount, sampleRate);
-
-  for (let channel = 0; channel < numChannels; channel++) {
-    const channelData = buffer.getChannelData(channel);
-    for (let i = 0; i < frameCount; i++) {
-      channelData[i] = dataInt16[i * numChannels + channel] / 32768.0;
-    }
-  }
-  return buffer;
-}

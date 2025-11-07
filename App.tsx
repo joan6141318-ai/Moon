@@ -1,10 +1,27 @@
 
 
-import React, { useState, useEffect, useRef, ReactNode } from 'react';
+import React, { useState, useEffect, useRef, ReactNode, useCallback } from 'react';
 import { FAQItem, PaymentTier, InfoTab } from './types';
-import { Logo, ChevronDownIcon, YoutubeIcon, WhatsappIcon, XIcon, ChevronLeftIcon, ChevronRightIcon } from './components/icons';
+import { Logo, ChevronDownIcon, YoutubeIcon, WhatsappIcon, XIcon, ChevronLeftIcon, ChevronRightIcon, MenuIcon } from './components/icons';
 import { Chatbot } from './components/Chatbot';
-import LiveChat from './components/LiveChat';
+
+
+// --- Navigation Helper ---
+const handleSmoothScroll = (e: React.MouseEvent<HTMLAnchorElement>) => {
+    e.preventDefault();
+    const href = e.currentTarget.getAttribute('href');
+    if (!href || href === '#') return;
+    const targetId = href.substring(1);
+    const targetElement = document.getElementById(targetId);
+    
+    if (targetElement) {
+        // The 'scroll-padding-top' CSS property on the html element will handle the offset
+        targetElement.scrollIntoView({
+            behavior: 'smooth',
+            block: 'start'
+        });
+    }
+};
 
 
 // --- Reusable UI Components ---
@@ -25,6 +42,7 @@ const Section: React.FC<{ id: string; children: ReactNode; className?: string }>
         }
         return () => {
             if (ref.current) {
+                // eslint-disable-next-line react-hooks/exhaustive-deps
                 observer.unobserve(ref.current);
             }
         };
@@ -41,29 +59,87 @@ const Section: React.FC<{ id: string; children: ReactNode; className?: string }>
     );
 };
 
-const GlowButton: React.FC<{ children: ReactNode, href?: string, className?: string, onClick?: () => void }> = ({ children, href, className, onClick }) => {
+const GlowButton: React.FC<{ children: ReactNode, href?: string, className?: string, onClick?: (e: React.MouseEvent<HTMLElement>) => void }> = ({ children, href, className, onClick }) => {
     const classes = `inline-block bg-purple-600 text-white font-bold py-3 px-8 rounded-lg transition-all duration-300 hover:bg-purple-700 hover:shadow-[0_0_25px_rgba(168,85,247,0.9)] focus:outline-none focus:ring-4 focus:ring-purple-400/50 transform hover:scale-105 ${className}`;
+
+    const handleClick = (e: React.MouseEvent<HTMLElement>) => {
+        if (href && href.startsWith('#') && e.currentTarget.tagName === 'A') {
+            handleSmoothScroll(e as React.MouseEvent<HTMLAnchorElement>);
+        }
+        if (onClick) {
+            onClick(e);
+        }
+    };
 
     if (href) {
         return (
-            <a href={href} className={classes}>
+            <a href={href} className={classes} onClick={handleClick}>
                 {children}
             </a>
         );
     }
 
     return (
-        <button onClick={onClick} className={classes}>
+        <button onClick={handleClick} className={classes}>
             {children}
         </button>
     );
 };
 
 
+// --- Modal Component ---
+const JoinModal: React.FC<{ isOpen: boolean; onClose: () => void }> = ({ isOpen, onClose }) => {
+    if (!isOpen) return null;
+
+    const handleContactClick = (e: React.MouseEvent<HTMLElement>) => {
+        if ((e.currentTarget as HTMLAnchorElement).href.startsWith('#')) {
+            handleSmoothScroll(e as React.MouseEvent<HTMLAnchorElement>);
+        }
+        onClose(); // Close modal after clicking contact
+    };
+
+    return (
+        <div
+            className="fixed inset-0 bg-black/80 backdrop-blur-sm z-50 flex items-center justify-center p-4 animate-fade-in"
+            onClick={onClose}
+            role="dialog"
+            aria-modal="true"
+            aria-labelledby="join-modal-title"
+        >
+            <div
+                className="relative bg-gray-900 rounded-2xl p-8 md:p-12 border border-purple-500/30 text-center max-w-lg w-full animate-zoom-in"
+                onClick={(e) => e.stopPropagation()}
+            >
+                <button
+                    onClick={onClose}
+                    className="absolute top-4 right-4 text-gray-400 hover:text-white transition-colors"
+                    aria-label="Cerrar"
+                >
+                    <XIcon className="w-6 h-6" />
+                </button>
+                <h2 id="join-modal-title" className="text-3xl md:text-4xl font-bold text-white mb-4">¿Listo para brillar?</h2>
+                <p className="text-gray-400 max-w-3xl mx-auto mb-8">Cumple con estos requisitos y da el primer paso para monetizar tu talento.</p>
+                <div className="inline-block text-left max-w-md mx-auto mb-8">
+                    <ul className="list-none space-y-3">
+                        <li className="flex items-center text-gray-300"><span className="text-purple-400 mr-3 text-xl">✓</span> Edad: 18 a 35 años.</li>
+                        <li className="flex items-center text-gray-300"><span className="text-purple-400 mr-3 text-xl">✓</span> Disponibilidad: Mínimo 2 horas diarias.</li>
+                        <li className="flex items-center text-gray-300"><span className="text-purple-400 mr-3 text-xl">✓</span> Buena conexión a Internet e iluminación.</li>
+                        <li className="flex items-center text-gray-300"><span className="text-purple-400 mr-3 text-xl">✓</span> Personalidad carismática y proactiva.</li>
+                    </ul>
+                </div>
+                <div>
+                    <GlowButton href="#contact" onClick={handleContactClick}>Contactar por WhatsApp</GlowButton>
+                </div>
+            </div>
+        </div>
+    );
+};
+
 // --- Page Section Components ---
 
-const Header: React.FC = () => {
+const Header: React.FC<{ onOpenJoinModal: () => void }> = ({ onOpenJoinModal }) => {
     const [isScrolled, setIsScrolled] = useState(false);
+    const [isMenuOpen, setIsMenuOpen] = useState(false);
     
     useEffect(() => {
         const handleScroll = () => setIsScrolled(window.scrollY > 10);
@@ -71,38 +147,89 @@ const Header: React.FC = () => {
         return () => window.removeEventListener('scroll', handleScroll);
     }, []);
 
+    const handleMenuClick = (e: React.MouseEvent<HTMLAnchorElement>, href: string) => {
+        setIsMenuOpen(false);
+        if (href === '#join-modal') {
+            e.preventDefault();
+            onOpenJoinModal();
+        } else {
+            handleSmoothScroll(e);
+        }
+    };
+    
     const navLinks = [
-        { name: 'Únete', href: '#join' },
         { name: 'Quiénes somos', href: '#about' },
         { name: 'FAQ', href: '#faq' },
         { name: 'Pagos', href: '#payments' },
         { name: 'Información', href: '#info' },
         { name: 'Tips', href: '#tips' },
+        { name: 'Talentos', href: '#talents'},
         { name: 'Contacto', href: '#contact' },
     ];
 
+    const mobileNavLinks = [
+        { name: 'Quiénes Somos', href: '#about' },
+        { name: 'Requisitos para Unirte', href: '#join-modal' },
+        { name: 'Preguntas Frecuentes', href: '#faq' },
+        { name: 'Tabla de Pagos', href: '#payments' },
+        { name: 'Tips de Transmisión', href: '#tips' },
+        { name: 'Nuestros Talentos', href: '#talents' },
+        { name: 'Contáctanos', href: '#contact' },
+    ];
+
     return (
-        <header className={`fixed top-0 left-0 right-0 z-40 transition-all duration-300 ${isScrolled ? 'bg-black/80 backdrop-blur-sm' : 'bg-transparent'}`}>
+        <header className={`fixed top-0 left-0 right-0 z-40 transition-all duration-300 ${isScrolled || isMenuOpen ? 'bg-black/80 backdrop-blur-sm' : 'bg-transparent'}`}>
             <nav className="container mx-auto px-6 py-4 flex justify-between items-center">
-                <a href="#home" className="flex items-center gap-2">
+                <a href="#home" onClick={handleSmoothScroll} className="flex items-center gap-2">
                     <Logo className="h-8 w-auto text-white" />
                     <span className="text-white font-bold text-xl">Agency Moon</span>
                 </a>
                 <div className="hidden md:flex items-center space-x-8">
                     {navLinks.map(link => (
-                         <a key={link.name} href={link.href} className="text-gray-300 hover:text-white transition-colors hover:text-shadow-purple">{link.name}</a>
+                         <a key={link.name} href={link.href} onClick={handleSmoothScroll} className="text-gray-300 hover:text-white transition-colors hover:text-shadow-purple">{link.name}</a>
                     ))}
                 </div>
-                 <GlowButton href="#join" className="hidden md:inline-block">Únete ahora</GlowButton>
+                 <GlowButton onClick={onOpenJoinModal} className="hidden md:inline-block">Únete ahora</GlowButton>
+                 <div className="md:hidden">
+                    <button onClick={() => setIsMenuOpen(!isMenuOpen)} className="text-white focus:outline-none" aria-label="Abrir menú">
+                        {isMenuOpen ? <XIcon className="w-7 h-7" /> : <MenuIcon className="w-7 h-7" />}
+                    </button>
+                </div>
             </nav>
+            {isMenuOpen && (
+                 <div className="md:hidden absolute top-full left-0 w-full bg-black/90 backdrop-blur-sm animate-fade-in-down-fast">
+                    <div className="flex flex-col items-start px-6 py-4 space-y-1">
+                        {mobileNavLinks.map(link => (
+                            <a
+                                key={link.name}
+                                href={link.href}
+                                className="text-gray-200 hover:bg-purple-600/30 hover:text-white w-full text-left py-3 px-3 rounded-md transition-colors text-lg"
+                                onClick={(e) => handleMenuClick(e, link.href)}
+                            >
+                                {link.name}
+                            </a>
+                        ))}
+                    </div>
+                 </div>
+            )}
         </header>
     );
 };
 
-const Hero: React.FC = () => (
-    <section id="home" className="h-screen min-h-[700px] w-full flex items-center justify-center relative text-white text-center px-4">
-        <div className="absolute inset-0 bg-black">
-            <img src="https://picsum.photos/seed/agencymoon/1920/1080" alt="Transmisor en vivo" className="w-full h-full object-cover opacity-30" />
+const Hero: React.FC<{ onOpenJoinModal: () => void }> = ({ onOpenJoinModal }) => (
+    <section id="home" className="h-screen min-h-[700px] w-full flex items-center justify-center relative text-white text-center px-4 overflow-hidden">
+        <div className="absolute inset-0 bg-black z-0">
+            <video 
+                autoPlay 
+                loop 
+                muted 
+                playsInline
+                poster="https://images.pexels.com/videos/3129579/pictures/preview.jpg"
+                className="w-full h-full object-cover opacity-40"
+            >
+                <source src="https://videos.pexels.com/video-files/3129579/3129579-hd_1920_1080_25fps.mp4" type="video/mp4" />
+                Tu navegador no soporta la etiqueta de video.
+            </video>
             <div className="absolute inset-0 bg-gradient-to-t from-black via-black/70 to-transparent"></div>
             <div className="absolute inset-0 bg-gradient-to-r from-black via-transparent to-black"></div>
         </div>
@@ -110,23 +237,10 @@ const Hero: React.FC = () => (
             <h1 className="text-4xl md:text-6xl lg:text-7xl font-bold mb-4 animate-fade-in-down" style={{textShadow: '0 0 15px rgba(168, 85, 247, 0.7)'}}>Haz brillar tu talento con Agency Moon</h1>
             <p className="text-lg md:text-xl max-w-3xl mb-8 text-gray-300 animate-fade-in-up">Únete a nuestra comunidad de creadores y empieza a monetizar tus transmisiones.</p>
             <div className="animate-fade-in-up animation-delay-300">
-                <GlowButton href="#join">Únete ahora</GlowButton>
+                <GlowButton onClick={onOpenJoinModal}>Únete ahora</GlowButton>
             </div>
         </div>
     </section>
-);
-
-const JoinUs: React.FC = () => (
-    <Section id="join">
-        <div className="grid md:grid-cols-2 gap-12 items-center">
-            <div className="text-center md:text-left">
-                <h2 className="text-3xl md:text-4xl font-bold text-white mb-4">Únete a Nosotros</h2>
-                <p className="text-gray-400 mb-6">¿Listo para llevar tu carrera de streamer al siguiente nivel? En Agency Moon, te proporcionamos las herramientas, el soporte y la comunidad que necesitas para crecer y monetizar tu pasión. Completa nuestro formulario de contacto y un miembro de nuestro equipo se pondrá en contacto contigo.</p>
-                <GlowButton href="#">Formulario de Contacto</GlowButton>
-            </div>
-            <LiveChat />
-        </div>
-    </Section>
 );
 
 const AboutUs: React.FC = () => (
@@ -150,61 +264,87 @@ const AboutUs: React.FC = () => (
 );
 
 const AccordionItem: React.FC<{ item: FAQItem, isOpen: boolean, onClick: () => void }> = ({ item, isOpen, onClick }) => (
-    <div className="border-b border-purple-500/20">
-        <button onClick={onClick} className="w-full flex justify-between items-center text-left py-5 px-2">
+    <div className="bg-gray-900/50 rounded-lg border border-purple-500/30 mb-3 transition-all duration-300 hover:border-purple-400">
+        <button onClick={onClick} className="w-full flex justify-between items-center text-left p-5" aria-expanded={isOpen}>
             <span className="text-lg font-medium text-white">{item.question}</span>
-            <ChevronDownIcon className={`w-6 h-6 text-purple-400 transition-transform duration-300 ${isOpen ? 'rotate-180' : ''}`} />
+            <ChevronDownIcon className={`w-6 h-6 text-purple-400 transition-transform duration-300 flex-shrink-0 ml-4 ${isOpen ? 'rotate-180' : ''}`} />
         </button>
-        <div className={`overflow-hidden transition-all duration-300 ease-in-out ${isOpen ? 'max-h-96' : 'max-h-0'}`}>
-            <div className="text-gray-400 pb-5 px-2" dangerouslySetInnerHTML={{ __html: item.answer }} />
+        <div className={`overflow-hidden transition-all duration-500 ease-in-out ${isOpen ? 'max-h-[500px]' : 'max-h-0'}`}>
+            <div className="text-gray-300 px-5 pb-5 text-base leading-relaxed faq-answer" dangerouslySetInnerHTML={{ __html: item.answer }} />
         </div>
     </div>
 );
 
 
 const FAQ: React.FC = () => {
-    const [openIndex, setOpenIndex] = useState<number | null>(0);
+    const [openIndex, setOpenIndex] = useState<number | null>(null);
     const faqData: FAQItem[] = [
-        { 
-            question: '¿Qué necesito para unirme?', 
-            answer: `<p class="mb-4">Para formar parte de nuestro equipo, es fundamental que cumplas con los siguientes requisitos:</p>
-                     <ul class="list-disc list-inside space-y-2 pl-4 text-gray-300">
+        {
+            question: '¿Qué beneficios obtengo si me uno a agencia Agency Moon?',
+            answer: `<p>Nos complace que te intereses en nuestro equipo. Nuestro diferenciador es que como emisor obtendrás:</p>
+                     <ul>
+                         <li><strong>Atención y Soporte 24/7:</strong> Atención personalizada para resolver cualquier duda.</li>
+                         <li><strong>Información Oficial:</strong> Acceso a actualizaciones y novedades de la plataforma.</li>
+                         <li><strong>Comunidad Exclusiva:</strong> Oportunidad de participar en dinámicas y pertenecer a un grupo exclusivo de creadores.</li>
+                         <li><strong>Incentivos Adicionales:</strong> Bonos por cumplimiento de objetivos y acceso a nuestro programa de referidos.</li>
+                     </ul>`
+        },
+        {
+            question: '¿Qué necesito para poder transmitir?',
+            answer: `<p>Para formar parte de nuestro equipo, es fundamental que cumplas con los siguientes requisitos:</p>
+                     <ul>
                          <li><strong>Edad:</strong> 18 a 35 años.</li>
                          <li><strong>Disponibilidad:</strong> Mínimo 2 horas diarias para tus transmisiones.</li>
-                         <li><strong>Conexión a Internet:</strong> Contar con una buena conexión.</li>
-                         <li><strong>Iluminación:</strong> Disponer de una buena iluminación.</li>
-                         <li><strong>Personalidad:</strong> Ser una persona carismática.</li>
+                         <li><strong>Equipo:</strong> Contar con una buena conexión a internet y una iluminación adecuada.</li>
+                         <li><strong>Personalidad:</strong> Ser una persona carismática y proactiva.</li>
                      </ul>`
         },
-        { question: '¿Hay algún costo por unirse?', answer: 'No, unirse a Agency Moon es completamente gratuito. No hay costos de inscripción ni cuotas ocultas.' },
-        { 
-            question: '¿Qué beneficios obtengo al unirme?', 
-            answer: `<p class="mb-4">Nos complace que seas parte de nuestro equipo de creadores. Nuestro diferenciador es que como emisor obtendrás:</p>
-                     <ul class="list-disc list-inside space-y-2 pl-4 text-gray-300">
-                         <li><strong>Atención y Soporte 24/7:</strong> Atención personalizada las 24 horas del día.</li>
-                         <li><strong>Información Oficial:</strong> Acceso a actualizaciones y novedades dentro de la plataforma.</li>
-                         <li><strong>Comunidad Exclusiva:</strong> Oportunidad de participar en dinámicas oficiales y pertenecer a un grupo exclusivo de creadores de contenido.</li>
-                         <li><strong>Incentivos Adicionais:</strong> Oportunidad de obtener bonos personalizados por cumplimiento de objetivos.</li>
-                         <li><strong>Programa de Referidos:</strong> Acceso a nuestro programa para ganar recompensas adicionales.</li>
-                         <li><strong>Dinámicas Internas:</strong> Participación en eventos y dinámicas exclusivas de la agencia.</li>
-                     </ul>`
+        {
+            question: 'Nunca hice una transmisión en vivo, ¿Ustedes me pueden enseñar y ayudar?',
+            answer: '<p>¡Por supuesto! Entendemos que empezar puede ser un desafío. Nuestro equipo de managers te brindará capacitación inicial, guías y soporte constante para que te sientas seguro/a frente a la cámara. Te enseñaremos las mejores prácticas y te acompañaremos en tu crecimiento.</p>'
         },
-        { 
-            question: '¿Cómo y cuándo recibiré mis pagos?', 
-            answer: `<p class="mb-3">Los pagos son mensuales y se realizan en dólares dentro de la primera semana de cada mes.</p>
-                     <p class="mb-3">Puedes hacer el retiro directamente desde tu cuenta de emisor, utilizando las siguientes plataformas disponibles:</p>
-                     <ul class="list-disc list-inside space-y-1 pl-4 mb-3 text-gray-300">
-                         <li>Payoneer</li>
-                         <li>PayPal</li>
-                     </ul>
-                     <p class="mb-3">Para los usuarios que viven en Venezuela, ofrecemos alternativas de retiro adicionales, como Zelle, para facilitar el proceso.</p>
-                     <p class="font-semibold text-purple-300">Cabe destacar que no cobramos comisiones ni porcentajes: todo lo que generes es 100% para ti.</p>`
-        }
+        {
+            question: '¿Tendré un horario de trabajo?',
+            answer: '<p>No tienes un horario de trabajo fijo. Ofrecemos total flexibilidad. Solo necesitas cumplir con una meta de 2 horas de transmisión diarias, las cuales puedes realizar en el horario que mejor se adapte a tu rutina.</p>'
+        },
+        {
+            question: '¿Cuánto dinero puedo ganar con ustedes?',
+            answer: 'Tus ganancias dependen directamente de tu desempeño y del cumplimiento de las metas de semillas. Puedes consultar nuestra <a href="#payments">Tabla de Pagos</a> para ver el potencial de ingresos. ¡El cielo es el límite!'
+        },
+        {
+            question: '¿Su agencia me cobrará comisión, o me quitará parte de mi dinero?',
+            answer: '<p>Absolutamente no. Uno de nuestros mayores beneficios es que no cobramos ningún tipo de comisión ni porcentaje. Todo el dinero que generes a través de la plataforma es 100% tuyo.</p>'
+        },
+        {
+            question: '¿Tendré que dar la clave o contraseña de mi cuenta?',
+            answer: '<strong>¡Nunca!</strong> Jamás te pediremos tu contraseña ni información sensible de tu cuenta. La seguridad de tu cuenta es tuya y solo tuya. Nuestro rol es guiarte y apoyarte, no administrar tu perfil.'
+        },
+        {
+            question: '¿Qué debo hacer para empezar a trabajar con ustedes?',
+            answer: '<p>Es muy sencillo. Primero, asegúrate de cumplir con los requisitos básicos. Luego, haz clic en el botón "Únete ahora" o contáctanos directamente por WhatsApp. Uno de nuestros managers te guiará en el proceso de registro y bienvenida.</p>'
+        },
+        {
+            question: 'Si decido retirarme por alguna emergencia, ¿me cobrarán alguna penalización?',
+            answer: '<p>No. Entendemos que las emergencias ocurren. No existe ningún tipo de penalización, contrato de permanencia o cobro si decides retirarte. Puedes hacerlo en cualquier momento sin compromiso.</p>'
+        },
     ];
 
     return (
         <Section id="faq">
-            <h2 className="text-3xl md:text-4xl font-bold text-white text-center mb-10">Preguntas Frecuentes</h2>
+            <h2 className="text-3xl md:text-4xl font-bold text-white text-center mb-12">Preguntas Frecuentes</h2>
+            
+            <div className="max-w-2xl mx-auto mb-12">
+                <div
+                    className="block rounded-2xl overflow-hidden shadow-lg shadow-purple-900/50 border border-purple-500/20"
+                >
+                    <img 
+                        src='https://i.postimg.cc/s2RrM0nj/IMG-20251107-154910.png' 
+                        alt='Guía de bienvenida para nuevos streamers de Agency Moon' 
+                        className="w-full h-auto"
+                    />
+                </div>
+            </div>
+
             <div className="max-w-3xl mx-auto">
                 {faqData.map((item, index) => (
                     <AccordionItem key={index} item={item} isOpen={openIndex === index} onClick={() => setOpenIndex(openIndex === index ? null : index)} />
@@ -298,15 +438,34 @@ const PaymentsTable: React.FC = () => {
     );
 };
 
+const InfoAccordionItem: React.FC<{ item: InfoTab, isOpen: boolean, onClick: () => void }> = ({ item, isOpen, onClick }) => (
+    <div className="bg-gray-900/50 rounded-lg border border-purple-500/30 mb-4 transition-all duration-300 hover:border-purple-400 hover:shadow-[0_0_20px_rgba(168,85,247,0.4)]">
+        <button 
+            onClick={onClick} 
+            className="w-full flex justify-between items-center text-left p-6"
+            aria-expanded={isOpen}
+        >
+            <span className="text-xl font-bold text-white">{item.title}</span>
+            <ChevronDownIcon className={`w-6 h-6 text-purple-400 transition-transform duration-300 ${isOpen ? 'rotate-180' : ''}`} />
+        </button>
+        <div className={`overflow-hidden transition-all duration-500 ease-in-out ${isOpen ? 'max-h-96' : 'max-h-0'}`}>
+            <div className="text-gray-300 px-6 pb-6 space-y-4">
+                {item.content}
+            </div>
+        </div>
+    </div>
+);
+
 const GeneralInfo: React.FC = () => {
-    const [activeTab, setActiveTab] = useState(0);
+    const [openIndex, setOpenIndex] = useState<number | null>(0);
+
     const infoData: InfoTab[] = [
         {
             title: '¿Qué es un PK?',
             content: (
                 <>
                     <p>Un PK (Player Knockout) es una batalla en vivo entre dos streamers. Los espectadores envían regalos para apoyar a su creador favorito, y quien reciba más valor en regalos gana la batalla. Es una excelente forma de interactuar y aumentar la monetización.</p>
-                    <div className="mt-6">
+                    <div className="mt-4">
                         <a 
                             href="https://youtu.be/UbstkEfHweE?si=LEQHshF_LWPU00rv" 
                             target="_blank" 
@@ -320,7 +479,25 @@ const GeneralInfo: React.FC = () => {
                 </>
             )
         },
-        { title: 'Bloqueos', content: <p>Los bloqueos en la plataforma pueden ocurrir por violaciones de las normas de la comunidad. Nuestro equipo te asesora sobre las mejores prácticas para evitar bloqueos y te asiste en caso de que ocurra uno para resolverlo lo antes posible.</p> },
+        { 
+            title: 'Bloqueos', 
+            content: (
+                <>
+                    <p>Los bloqueos en la plataforma pueden ocurrir por violaciones de las normas de la comunidad. Nuestro equipo te asesora sobre las mejores prácticas para evitar bloqueos y te asiste en caso de que ocurra uno para resolverlo lo antes posible.</p>
+                    <div className="mt-4">
+                        <a 
+                            href="https://youtu.be/cIcz_999ZZc?si=ie_POk4ipUV_2vFs" 
+                            target="_blank" 
+                            rel="noopener noreferrer"
+                            className="inline-flex items-center gap-3 bg-gradient-to-br from-purple-600/20 to-indigo-600/20 text-white font-semibold py-2 px-5 rounded-lg transition-all duration-300 border border-purple-500/30 hover:border-purple-400 hover:shadow-[0_0_15px_rgba(168,85,247,0.7)] transform hover:-translate-y-1"
+                        >
+                            <YoutubeIcon className="w-6 h-6" />
+                            Aprende a evitar bloqueos
+                        </a>
+                    </div>
+                </>
+            )
+        },
         { title: 'Live Data', content: <p>Te proporcionamos acceso a un panel de control con datos en tiempo real de tus transmisiones. Analiza métricas clave como espectadores, duración, regalos recibidos y más, para optimizar tu contenido y estrategia de crecimiento.</p> },
         { title: 'Horas de Transmisión', content: <p>Las horas de transmisión son un factor clave para tu crecimiento y monetización. Establecemos metas de horas mensuales que, al cumplirse, desbloquean recompensas y bonificaciones. La consistencia es fundamental para el éxito.</p> },
     ];
@@ -328,18 +505,15 @@ const GeneralInfo: React.FC = () => {
     return (
         <Section id="info">
             <h2 className="text-3xl md:text-4xl font-bold text-white text-center mb-10">Información General</h2>
-            <div className="flex flex-col md:flex-row gap-8 max-w-5xl mx-auto bg-gray-900/50 rounded-2xl p-8 border border-purple-500/30">
-                <div className="flex md:flex-col border-b-2 md:border-b-0 md:border-r-2 border-purple-500/30 pr-0 md:pr-8 pb-4 md:pb-0">
-                    {infoData.map((tab, index) => (
-                        <button key={index} onClick={() => setActiveTab(index)} className={`text-left text-lg p-3 rounded-md transition-colors w-full ${activeTab === index ? 'bg-purple-600 text-white' : 'text-gray-300 hover:bg-gray-800'}`}>
-                            {tab.title}
-                        </button>
-                    ))}
-                </div>
-                <div className="flex-1 text-gray-300">
-                    <h3 className="text-2xl font-bold text-white mb-4">{infoData[activeTab].title}</h3>
-                    <div>{infoData[activeTab].content}</div>
-                </div>
+            <div className="max-w-4xl mx-auto">
+                {infoData.map((item, index) => (
+                    <InfoAccordionItem 
+                        key={index}
+                        item={item} 
+                        isOpen={openIndex === index} 
+                        onClick={() => setOpenIndex(openIndex === index ? null : index)} 
+                    />
+                ))}
             </div>
         </Section>
     );
@@ -380,6 +554,7 @@ const TipsSection: React.FC = () => {
         return () => {
             window.removeEventListener('keydown', handleKeyDown);
         };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [isTipsModalOpen]);
 
     return (
@@ -459,6 +634,139 @@ const TipsSection: React.FC = () => {
     );
 };
 
+const TalentsSection: React.FC = () => {
+    const talentData = [
+        { name: "StreamerUno", image: 'https://picsum.photos/seed/talent1/400/600', description: "Apasionado por los juegos de estrategia y la interacción con la comunidad. Siempre encontrarás un ambiente positivo en mis directos." },
+        { name: "GamerGirlX", image: 'https://picsum.photos/seed/talent2/400/600', description: "Amante de los RPG y las aventuras gráficas. Me encanta sumergirme en historias épicas y compartir cada momento con ustedes." },
+        { name: "ElProfe", image: 'https://picsum.photos/seed/talent3/400/600', description: "Aquí se aprende jugando. Analizo las mecánicas de los juegos más populares para mejorar juntos. ¡La práctica hace al maestro!" },
+        { name: "LaCreativa", image: 'https://picsum.photos/seed/talent4/400/600', description: "Un espacio para el arte digital y la creatividad. Desde ilustración hasta modelado 3D, todo en vivo y con buena música." },
+        { name: "ReyDelMiedo", image: 'https://picsum.photos/seed/talent5/400/600', description: "Si te gustan los sustos y el terror, este es tu canal. Jugamos los títulos más aterradores del mercado. ¡No apto para cardíacos!" },
+        { name: "AventuraTotal", image: 'https://picsum.photos/seed/talent6/400/600', description: "Explorador de mundos abiertos y cazador de trofeos. Mi objetivo es completar cada juego al 100% y descubrir todos sus secretos." },
+        { name: "JustChatter", image: 'https://picsum.photos/seed/talent7/400/600', description: "Conversaciones, reacciones y mucho humor. Un espacio para relajarse, charlar de todo un poco y pasar un buen rato juntos." },
+        { name: "EstrategaMaestro", image: 'https://picsum.photos/seed/talent8/400/600', description: "Dominando los MOBAs y juegos de cartas. Si buscas jugadas de alto nivel y análisis estratégico, has llegado al lugar indicado." }
+    ];
+
+    const [currentIndex, setCurrentIndex] = useState(0);
+    const [openInfoIndex, setOpenInfoIndex] = useState<number | null>(null);
+    // FIX: Replaced NodeJS.Timeout with ReturnType<typeof setInterval> to resolve TypeScript error in browser environment.
+    const autoPlayRef = useRef<ReturnType<typeof setInterval>>();
+
+    const nextSlide = useCallback(() => {
+        setOpenInfoIndex(null);
+        setCurrentIndex(prev => prev === talentData.length - 1 ? 0 : prev + 1);
+    }, [talentData.length]);
+
+    useEffect(() => {
+        autoPlayRef.current = setInterval(nextSlide, 3000);
+        return () => {
+            if (autoPlayRef.current) clearInterval(autoPlayRef.current);
+        };
+    }, [nextSlide]);
+
+    const prevSlide = () => {
+        const isFirstSlide = currentIndex === 0;
+        const newIndex = isFirstSlide ? talentData.length - 1 : currentIndex - 1;
+        setCurrentIndex(newIndex);
+        setOpenInfoIndex(null);
+    };
+
+    const nextSlideManual = () => {
+        const isLastSlide = currentIndex === talentData.length - 1;
+        const newIndex = isLastSlide ? 0 : currentIndex + 1;
+        setCurrentIndex(newIndex);
+        setOpenInfoIndex(null);
+    };
+    
+    const handleToggleInfo = (index: number) => {
+        setOpenInfoIndex(openInfoIndex === index ? null : index);
+    };
+
+    return (
+        <Section id="talents">
+            <div className="text-center">
+                <h2 className="text-3xl md:text-4xl font-bold text-white mb-4">Conoce a Nuestros Talentos</h2>
+                <p className="text-gray-400 max-w-2xl mx-auto mb-12">
+                    Descubre a los creadores que forman parte de la familia Agency Moon. Cada uno con un estilo único y una pasión por el streaming.
+                </p>
+            </div>
+            <div 
+                className="relative w-full max-w-xs mx-auto h-[60vh] max-h-[450px]"
+                onMouseEnter={() => { if(autoPlayRef.current) clearInterval(autoPlayRef.current); }}
+                onMouseLeave={() => { autoPlayRef.current = setInterval(nextSlide, 3000); }}
+            >
+                {/* Carousel viewport */}
+                <div className="relative w-full h-full overflow-hidden">
+                    {talentData.map((talent, index) => (
+                        <div
+                            key={index}
+                            className="absolute top-0 left-0 w-full h-full transition-transform duration-500 ease-out"
+                            style={{ transform: `translateX(${(index - currentIndex) * 100}%)` }}
+                            aria-hidden={index !== currentIndex}
+                        >
+                             {/* Talent Card */}
+                             <div className="relative w-full h-full rounded-2xl overflow-hidden shadow-lg shadow-purple-900/50 border border-purple-500/30 flex flex-col justify-end bg-gray-800">
+                                <img 
+                                    src={talent.image} 
+                                    alt={`Talento de Agency Moon: ${talent.name}`} 
+                                    className="absolute top-0 left-0 w-full h-full object-cover"
+                                />
+                                <div className="absolute bottom-0 left-0 w-full h-3/4 bg-gradient-to-t from-black/80 via-black/50 to-transparent"></div>
+                                <div className="relative z-10 text-white p-4 w-full">
+                                     {/* Clickable Info Toggle */}
+                                     <div 
+                                        className="flex justify-between items-center cursor-pointer"
+                                        onClick={() => handleToggleInfo(index)}
+                                        role="button"
+                                        aria-expanded={openInfoIndex === index}
+                                     >
+                                        <h3 className="text-xl font-bold">{talent.name}</h3>
+                                        <ChevronDownIcon className={`w-6 h-6 transition-transform duration-300 ${openInfoIndex === index ? 'rotate-180' : ''}`} />
+                                     </div>
+                                     {/* Expandable Info Panel */}
+                                     <div className={`overflow-hidden transition-all duration-500 ease-in-out ${openInfoIndex === index ? 'max-h-40 mt-2' : 'max-h-0'}`}>
+                                        <p className="text-gray-300 text-sm">{talent.description}</p>
+                                     </div>
+                                </div>
+                             </div>
+                        </div>
+                    ))}
+                </div>
+
+                {/* Navigation Buttons */}
+                <button
+                    onClick={prevSlide}
+                    className="absolute top-1/2 -left-4 md:-left-16 -translate-y-1/2 bg-black/50 text-white p-3 rounded-full hover:bg-purple-600 transition-colors z-20 focus:outline-none focus:ring-2 focus:ring-purple-400"
+                    aria-label="Anterior Talento"
+                >
+                    <ChevronLeftIcon className="w-6 h-6" />
+                </button>
+                <button
+                    onClick={nextSlideManual}
+                    className="absolute top-1/2 -right-4 md:-right-16 -translate-y-1/2 bg-black/50 text-white p-3 rounded-full hover:bg-purple-600 transition-colors z-20 focus:outline-none focus:ring-2 focus:ring-purple-400"
+                    aria-label="Siguiente Talento"
+                >
+                    <ChevronRightIcon className="w-6 h-6" />
+                </button>
+                
+                {/* Navigation Dots */}
+                <div className="absolute -bottom-10 left-1/2 -translate-x-1/2 flex gap-3">
+                    {talentData.map((_, index) => (
+                        <button
+                            key={index}
+                            onClick={() => {
+                                setCurrentIndex(index);
+                                setOpenInfoIndex(null);
+                            }}
+                            className={`w-3 h-3 rounded-full transition-all duration-300 ${index === currentIndex ? 'bg-purple-500 scale-125' : 'bg-gray-600 hover:bg-gray-400'}`}
+                            aria-label={`Ir al talento ${index + 1}`}
+                        />
+                    ))}
+                </div>
+            </div>
+        </Section>
+    );
+};
+
 
 const Contact: React.FC = () => (
     <Section id="contact">
@@ -496,73 +804,87 @@ const Footer: React.FC = () => (
 );
 
 export default function App() {
-  return (
-    <div className="bg-black text-white min-h-screen overflow-x-hidden">
-      <style>{`
-        html { scroll-behavior: smooth; }
-        .text-shadow-purple { text-shadow: 0 0 8px rgba(168, 85, 247, 0.7); }
-        @keyframes fade-in-down { from { opacity: 0; transform: translateY(-20px); } to { opacity: 1; transform: translateY(0); } }
-        @keyframes fade-in-up { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
-        .animate-fade-in-down { animation: fade-in-down 0.8s ease-out forwards; }
-        .animate-fade-in-up { animation: fade-in-up 0.8s ease-out forwards; }
-        .animation-delay-300 { animation-delay: 0.3s; }
+    const [isJoinModalOpen, setIsJoinModalOpen] = useState(false);
 
-        @media (max-width: 767px) {
-            .payment-table thead {
-                display: none;
-            }
-            .payment-table, .payment-table tbody, .payment-table tr, .payment-table td {
-                display: block;
-                width: 100%;
-            }
-            .payment-table tr {
-                margin-bottom: 1rem;
-                border: 1px solid rgba(168, 85, 247, 0.2);
-                border-radius: 0.5rem;
-                padding: 1rem;
-                background: rgba(168, 85, 247, 0.05);
-            }
-            .payment-table td {
-                display: flex;
-                justify-content: space-between;
-                text-align: right;
-                padding-left: 0;
-                padding-right: 0;
-                padding-top: 0.5rem;
-                padding-bottom: 0.5rem;
-                border-bottom: 1px solid rgba(168, 85, 247, 0.1);
-            }
-            .payment-table tr td:last-child {
-                border-bottom: none;
-            }
-            .payment-table td::before {
-                content: attr(data-label);
-                font-weight: 600;
-                text-align: left;
-                margin-right: 1rem;
-                color: #c4b5fd; /* A lighter purple for labels */
-            }
-        }
-        .scrollbar-hide::-webkit-scrollbar { display: none; }
-        .scrollbar-hide { -ms-overflow-style: none; scrollbar-width: none; }
-        @keyframes fade-in { from { opacity: 0; } to { opacity: 1; } }
-        @keyframes zoom-in { from { opacity: 0; transform: scale(0.9); } to { opacity: 1; transform: scale(1); } }
-        .animate-fade-in { animation: fade-in 0.3s ease-out forwards; }
-        .animate-zoom-in { animation: zoom-in 0.3s ease-out forwards; }
-      `}</style>
-      <Header />
-      <main>
-        <Hero />
-        <JoinUs />
-        <AboutUs />
-        <FAQ />
-        <PaymentsTable />
-        <GeneralInfo />
-        <TipsSection />
-        <Contact />
-      </main>
-      <Chatbot />
-      <Footer />
-    </div>
-  );
+    return (
+        <div className="bg-black text-white min-h-screen overflow-x-hidden">
+            <style>{`
+                html { scroll-behavior: smooth; scroll-padding-top: 80px; }
+                .text-shadow-purple { text-shadow: 0 0 8px rgba(168, 85, 247, 0.7); }
+                @keyframes fade-in-down { from { opacity: 0; transform: translateY(-20px); } to { opacity: 1; transform: translateY(0); } }
+                @keyframes fade-in-up { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+                .animate-fade-in-down { animation: fade-in-down 0.8s ease-out forwards; }
+                .animate-fade-in-up { animation: fade-in-up 0.8s ease-out forwards; }
+                .animation-delay-300 { animation-delay: 0.3s; }
+
+                @keyframes fade-in-down-fast { from { opacity: 0; transform: translateY(-10px); } to { opacity: 1; transform: translateY(0); } }
+                .animate-fade-in-down-fast { animation: fade-in-down-fast 0.3s ease-out forwards; }
+
+                @media (max-width: 767px) {
+                    .payment-table thead {
+                        display: none;
+                    }
+                    .payment-table, .payment-table tbody, .payment-table tr, .payment-table td {
+                        display: block;
+                        width: 100%;
+                    }
+                    .payment-table tr {
+                        margin-bottom: 1rem;
+                        border: 1px solid rgba(168, 85, 247, 0.2);
+                        border-radius: 0.5rem;
+                        padding: 1rem;
+                        background: rgba(168, 85, 247, 0.05);
+                    }
+                    .payment-table td {
+                        display: flex;
+                        justify-content: space-between;
+                        text-align: right;
+                        padding-left: 0;
+                        padding-right: 0;
+                        padding-top: 0.5rem;
+                        padding-bottom: 0.5rem;
+                        border-bottom: 1px solid rgba(168, 85, 247, 0.1);
+                    }
+                    .payment-table tr td:last-child {
+                        border-bottom: none;
+                    }
+                    .payment-table td::before {
+                        content: attr(data-label);
+                        font-weight: 600;
+                        text-align: left;
+                        margin-right: 1rem;
+                        color: #c4b5fd; /* A lighter purple for labels */
+                    }
+                }
+                .scrollbar-hide::-webkit-scrollbar { display: none; }
+                .scrollbar-hide { -ms-overflow-style: none; scrollbar-width: none; }
+                @keyframes fade-in { from { opacity: 0; } to { opacity: 1; } }
+                @keyframes zoom-in { from { opacity: 0; transform: scale(0.9); } to { opacity: 1; transform: scale(1); } }
+                .animate-fade-in { animation: fade-in 0.3s ease-out forwards; }
+                .animate-zoom-in { animation: zoom-in 0.3s ease-out forwards; }
+
+                .faq-answer p { margin-bottom: 1rem; }
+                .faq-answer ul { list-style: none; padding-left: 0.5rem; }
+                .faq-answer li { position: relative; padding-left: 1.5rem; margin-bottom: 0.5rem; }
+                .faq-answer li::before { content: '✓'; position: absolute; left: 0; color: #a855f7; }
+                .faq-answer a { color: #c084fc; text-decoration: underline; }
+                .faq-answer a:hover { color: #a855f7; }
+                .faq-answer strong { color: #d8b4fe; font-weight: 600; }
+            `}</style>
+            <Header onOpenJoinModal={() => setIsJoinModalOpen(true)} />
+            <main>
+                <Hero onOpenJoinModal={() => setIsJoinModalOpen(true)} />
+                <AboutUs />
+                <FAQ />
+                <PaymentsTable />
+                <GeneralInfo />
+                <TipsSection />
+                <TalentsSection />
+                <Contact />
+            </main>
+            <JoinModal isOpen={isJoinModalOpen} onClose={() => setIsJoinModalOpen(false)} />
+            <Chatbot />
+            <Footer />
+        </div>
+    );
 }
