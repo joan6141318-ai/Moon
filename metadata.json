@@ -1,0 +1,7 @@
+{
+  "name": "Agency Moon",
+  "description": "Una aplicación web moderna y atractiva para Agency Moon, una agencia de talentos para plataformas de streaming. Presenta información sobre la agencia, una tabla de pagos, preguntas frecuentes y asistentes de IA interactivos.",
+  "requestFramePermissions": [
+    "microphone"
+  ]
+}
