@@ -1,5 +1,3 @@
-
-
 import React, { useState, useEffect, useRef, ReactNode, useCallback } from 'react';
 import { FAQItem, PaymentTier, InfoTab } from './types';
 import { Logo, ChevronDownIcon, YoutubeIcon, WhatsappIcon, XIcon, ChevronLeftIcon, ChevronRightIcon, MenuIcon } from './components/icons';
@@ -52,7 +50,7 @@ const Section: React.FC<{ id: string; children: ReactNode; className?: string }>
         <section
             ref={ref}
             id={id}
-            className={`w-full max-w-6xl mx-auto px-6 py-16 md:py-24 opacity-0 translate-y-4 transition-all duration-700 ease-out ${className}`}
+            className={`w-full max-w-6xl mx-auto px-6 py-12 opacity-0 translate-y-4 transition-all duration-700 ease-out ${className}`}
         >
             {children}
         </section>
@@ -159,21 +157,25 @@ const Header: React.FC<{ onOpenJoinModal: () => void }> = ({ onOpenJoinModal }) 
     
     const navLinks = [
         { name: 'Quiénes somos', href: '#about' },
+        { name: 'Experiencia', href: '#experience' },
         { name: 'FAQ', href: '#faq' },
         { name: 'Pagos', href: '#payments' },
         { name: 'Información', href: '#info' },
         { name: 'Tips', href: '#tips' },
         { name: 'Talentos', href: '#talents'},
+        { name: 'Socios', href: '#partnership' },
         { name: 'Contacto', href: '#contact' },
     ];
 
     const mobileNavLinks = [
         { name: 'Quiénes Somos', href: '#about' },
+        { name: 'Nuestra Experiencia', href: '#experience' },
         { name: 'Requisitos para Unirte', href: '#join-modal' },
         { name: 'Preguntas Frecuentes', href: '#faq' },
         { name: 'Tabla de Pagos', href: '#payments' },
         { name: 'Tips de Transmisión', href: '#tips' },
         { name: 'Nuestros Talentos', href: '#talents' },
+        { name: 'Sé Nuestro Socio', href: '#partnership' },
         { name: 'Contáctanos', href: '#contact' },
     ];
 
@@ -224,17 +226,17 @@ const Hero: React.FC<{ onOpenJoinModal: () => void }> = ({ onOpenJoinModal }) =>
                 loop 
                 muted 
                 playsInline
-                poster="https://images.pexels.com/videos/3129579/pictures/preview.jpg"
-                className="w-full h-full object-cover opacity-40"
+                poster="https://images.pexels.com/photos/1252890/pexels-photo-1252890.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1"
+                className="w-full h-full object-cover opacity-50"
             >
-                <source src="https://videos.pexels.com/video-files/3129579/3129579-hd_1920_1080_25fps.mp4" type="video/mp4" />
+                <source src="https://videos.pexels.com/video-files/3132388/3132388-hd_1920_1080_30fps.mp4" type="video/mp4" />
                 Tu navegador no soporta la etiqueta de video.
             </video>
             <div className="absolute inset-0 bg-gradient-to-t from-black via-black/70 to-transparent"></div>
             <div className="absolute inset-0 bg-gradient-to-r from-black via-transparent to-black"></div>
         </div>
         <div className="relative z-10 flex flex-col items-center">
-            <h1 className="text-4xl md:text-6xl lg:text-7xl font-bold mb-4 animate-fade-in-down" style={{textShadow: '0 0 15px rgba(168, 85, 247, 0.7)'}}>Haz brillar tu talento con Agency Moon</h1>
+            <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold mb-4 animate-fade-in-down" style={{textShadow: '0 0 15px rgba(168, 85, 247, 0.7)'}}>Haz brillar tu talento con Agency Moon</h1>
             <p className="text-lg md:text-xl max-w-3xl mb-8 text-gray-300 animate-fade-in-up">Únete a nuestra comunidad de creadores y empieza a monetizar tus transmisiones.</p>
             <div className="animate-fade-in-up animation-delay-300">
                 <GlowButton onClick={onOpenJoinModal}>Únete ahora</GlowButton>
@@ -246,22 +248,121 @@ const Hero: React.FC<{ onOpenJoinModal: () => void }> = ({ onOpenJoinModal }) =>
 const AboutUs: React.FC = () => (
     <Section id="about" className="bg-gray-900/50 rounded-2xl">
         <h2 className="text-3xl md:text-4xl font-bold text-white text-center mb-10">Quiénes Somos</h2>
-        <div className="grid md:grid-cols-3 gap-8 text-center text-gray-300">
+        <div className="grid md:grid-cols-3 gap-8 text-center">
             <div>
                 <h3 className="text-xl font-semibold text-purple-400 mb-2">Nuestra Misión</h3>
-                <p>Potenciar a los creadores de contenido, brindándoles las mejores oportunidades para que puedan convertir su pasión en una carrera profesional exitosa y sostenible.</p>
+                <p className="text-gray-300 leading-relaxed">Potenciar a los creadores de contenido, brindándoles las mejores oportunidades para que puedan convertir su pasión en una carrera profesional exitosa y sostenible.</p>
             </div>
             <div>
                 <h3 className="text-xl font-semibold text-purple-400 mb-2">Nuestra Visión</h3>
-                <p>Ser la agencia líder a nivel mundial en la representación de talentos de streaming, reconocida por nuestra innovación, transparencia y el éxito de nuestros creadores.</p>
+                <p className="text-gray-300 leading-relaxed">Ser la agencia líder a nivel mundial en la representación de talentos de streaming, reconocida por nuestra innovación, transparencia y el éxito de nuestros creadores.</p>
             </div>
              <div>
                 <h3 className="text-xl font-semibold text-purple-400 mb-2">Nuestros Valores</h3>
-                <p>Compromiso, profesionalismo, comunidad y crecimiento constante. Creemos en el potencial de cada streamer y trabajamos para hacerlo brillar.</p>
+                <p className="text-gray-300 leading-relaxed">Compromiso, profesionalismo, comunidad y crecimiento constante. Creemos en el potencial de cada streamer y trabajamos para hacerlo brillar.</p>
             </div>
         </div>
     </Section>
 );
+
+const ProgressBar: React.FC<{ label: string; percentage: number; isInView: boolean }> = ({ label, percentage, isInView }) => (
+    <div className="mb-6">
+        <div className="flex justify-between items-center mb-2 gap-4">
+            <span className="text-gray-300 font-medium text-sm">{label}</span>
+            <span className="text-purple-300 font-bold text-lg flex-shrink-0">{percentage}%</span>
+        </div>
+        <div className="w-full bg-gray-800 rounded-full h-2.5 border border-purple-500/30">
+            <div 
+                className="bg-purple-600 h-2 rounded-full transition-all duration-1000 ease-out" 
+                style={{ width: isInView ? `${percentage}%` : '0%' }}
+            ></div>
+        </div>
+    </div>
+);
+
+const ExperienceSection: React.FC = () => {
+    const [isInView, setIsInView] = useState(false);
+    const sectionRef = useRef<HTMLDivElement>(null);
+
+    useEffect(() => {
+        const observer = new IntersectionObserver(
+            ([entry]) => {
+                if (entry.isIntersecting) {
+                    setIsInView(true);
+                    observer.unobserve(entry.target);
+                }
+            },
+            {
+                threshold: 0.5, // Animate when 50% of the element is visible
+            }
+        );
+
+        if (sectionRef.current) {
+            observer.observe(sectionRef.current);
+        }
+
+        return () => {
+            if (sectionRef.current) {
+                // eslint-disable-next-line react-hooks/exhaustive-deps
+                observer.unobserve(sectionRef.current);
+            }
+        };
+    }, []);
+
+    return (
+        <Section id="experience">
+            <div className="grid md:grid-cols-2 gap-12 items-center">
+                <div className="relative rounded-2xl overflow-hidden shadow-lg shadow-purple-900/40">
+                    <img 
+                        src="https://i.postimg.cc/k6yWdWb1/IMG-20251030-074627.png"
+                        alt="Grupo de streamers colaborando en una transmisión en vivo"
+                        className="w-full h-auto object-cover" 
+                    />
+                </div>
+                <div ref={sectionRef}>
+                    <h2 className="text-3xl md:text-4xl font-bold text-white mb-4">
+                        Nuestra Experiencia Impulsa Tu Éxito
+                    </h2>
+                    <p className="text-gray-300 md:text-lg mb-8">
+                        Nuestros streamers, influencers y creadores de contenido crecen más rápido a comparación de streamers independientes, esto nos convierte en la agencia líder en nuestras plataformas de trabajo.
+                    </p>
+                    <div>
+                        <ProgressBar label="Streamers Con Metas Alcanzadas" percentage={92} isInView={isInView} />
+                        <ProgressBar label="Emisores con más de 2 años activos" percentage={80} isInView={isInView} />
+                        <ProgressBar label="Promedio de Emisores que superan los 800 usd mensuales" percentage={96} isInView={isInView} />
+                    </div>
+                </div>
+            </div>
+        </Section>
+    );
+};
+
+const Banner: React.FC = () => {
+    return (
+        <div className="relative rounded-2xl overflow-hidden shadow-2xl shadow-purple-900/50 border border-purple-500/30">
+            <img 
+                src="https://images.pexels.com/photos/6801648/pexels-photo-6801648.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1" 
+                alt="Gráfico de crecimiento y éxito financiero, representando los logros de la agencia" 
+                className="absolute inset-0 w-full h-full object-cover object-center"
+            />
+            <div className="absolute inset-0 bg-gradient-to-r from-black/80 via-purple-900/70 to-transparent"></div>
+            <div className="relative z-10 flex items-center justify-start text-left min-h-[280px]">
+                <div className="max-w-md p-8 md:p-12">
+                    <h2 className="text-3xl md:text-4xl font-bold text-white mb-4 leading-tight" style={{textShadow: '0 2px 10px rgba(0,0,0,0.5)'}}>
+                        Convierte tu Pasión en una Carrera Profesional
+                    </h2>
+                    <p className="text-gray-200 mb-8" style={{textShadow: '0 1px 5px rgba(0,0,0,0.5)'}}>
+                       Te proporcionamos las herramientas, el soporte 24/7 y una comunidad que te impulsa a crecer. Con cero comisiones, todo lo que generas es 100% tuyo. Es hora de que tu talento brille.
+                    </p>
+                    <GlowButton href="#faq">
+                        Descubre Cómo
+                    </GlowButton>
+                </div>
+            </div>
+        </div>
+    );
+};
+
 
 const AccordionItem: React.FC<{ item: FAQItem, isOpen: boolean, onClick: () => void }> = ({ item, isOpen, onClick }) => (
     <div className="bg-gray-900/50 rounded-lg border border-purple-500/30 mb-3 transition-all duration-300 hover:border-purple-400">
@@ -636,14 +737,12 @@ const TipsSection: React.FC = () => {
 
 const TalentsSection: React.FC = () => {
     const talentData = [
-        { name: "StreamerUno", image: 'https://picsum.photos/seed/talent1/400/600', description: "Apasionado por los juegos de estrategia y la interacción con la comunidad. Siempre encontrarás un ambiente positivo en mis directos." },
-        { name: "GamerGirlX", image: 'https://picsum.photos/seed/talent2/400/600', description: "Amante de los RPG y las aventuras gráficas. Me encanta sumergirme en historias épicas y compartir cada momento con ustedes." },
-        { name: "ElProfe", image: 'https://picsum.photos/seed/talent3/400/600', description: "Aquí se aprende jugando. Analizo las mecánicas de los juegos más populares para mejorar juntos. ¡La práctica hace al maestro!" },
-        { name: "LaCreativa", image: 'https://picsum.photos/seed/talent4/400/600', description: "Un espacio para el arte digital y la creatividad. Desde ilustración hasta modelado 3D, todo en vivo y con buena música." },
-        { name: "ReyDelMiedo", image: 'https://picsum.photos/seed/talent5/400/600', description: "Si te gustan los sustos y el terror, este es tu canal. Jugamos los títulos más aterradores del mercado. ¡No apto para cardíacos!" },
-        { name: "AventuraTotal", image: 'https://picsum.photos/seed/talent6/400/600', description: "Explorador de mundos abiertos y cazador de trofeos. Mi objetivo es completar cada juego al 100% y descubrir todos sus secretos." },
-        { name: "JustChatter", image: 'https://picsum.photos/seed/talent7/400/600', description: "Conversaciones, reacciones y mucho humor. Un espacio para relajarse, charlar de todo un poco y pasar un buen rato juntos." },
-        { name: "EstrategaMaestro", image: 'https://picsum.photos/seed/talent8/400/600', description: "Dominando los MOBAs y juegos de cartas. Si buscas jugadas de alto nivel y análisis estratégico, has llegado al lugar indicado." }
+        { name: "steficupcake", image: 'https://i.postimg.cc/N0Z5jrFK/IMG-20251107-193051.jpg', description: "Record historico: 4.5 Millones | País: Colombia" },
+        { name: "Shinysoul_turtle", image: 'https://i.postimg.cc/kBFfgdFT/IMG-20251107-193553.jpg', description: "Record historico: 3.8 Millones | País: México" },
+        { name: "lbm0312", image: 'https://i.postimg.cc/rpn71VcF/In-Shot-20251107-185715214.jpg', description: "Record histórico: 3 Millones | País: Colombia" },
+        { name: "boanquita_", image: 'https://i.postimg.cc/R0Mtzmk6/IMG-20251107-183411.png', description: "Record histórico: 1 Millón | País: Colombia" },
+        { name: "Thunderblack", image: 'https://i.postimg.cc/sDg6cF6w/In-Shot-20251107-192231700.jpg', description: "Record histórico: 1 Millón | País: República Dominicana" },
+        { name: "Tuvenus", image: 'https://i.postimg.cc/BLzQFy5W/IMG-20251107-194701.jpg', description: "Récord histórico: 800k | País: Venezuela" },
     ];
 
     const [currentIndex, setCurrentIndex] = useState(0);
@@ -681,6 +780,30 @@ const TalentsSection: React.FC = () => {
         setOpenInfoIndex(openInfoIndex === index ? null : index);
     };
 
+    // Helper to render formatted description
+    const renderDescription = (description: string) => {
+        if (description.includes('|')) {
+            const parts = description.split('|').map(p => p.trim());
+            return (
+                <div className="text-gray-300 text-sm space-y-1 text-left">
+                    {parts.map(part => {
+                        const [key, value] = part.split(':');
+                        if (key && value) {
+                            return (
+                                <p key={key}>
+                                    <strong className="font-semibold text-purple-400">{key}:</strong>
+                                    <span className="ml-2">{value.trim()}</span>
+                                </p>
+                            );
+                        }
+                        return <p key={part}>{part}</p>; // Fallback for parts without ':'
+                    })}
+                </div>
+            );
+        }
+        return <p className="text-gray-300 text-sm">{description}</p>;
+    };
+
     return (
         <Section id="talents">
             <div className="text-center">
@@ -690,7 +813,7 @@ const TalentsSection: React.FC = () => {
                 </p>
             </div>
             <div 
-                className="relative w-full max-w-xs mx-auto h-[60vh] max-h-[450px]"
+                className="relative w-full max-w-xs mx-auto h-[50vh] max-h-[400px]"
                 onMouseEnter={() => { if(autoPlayRef.current) clearInterval(autoPlayRef.current); }}
                 onMouseLeave={() => { autoPlayRef.current = setInterval(nextSlide, 3000); }}
             >
@@ -704,13 +827,13 @@ const TalentsSection: React.FC = () => {
                             aria-hidden={index !== currentIndex}
                         >
                              {/* Talent Card */}
-                             <div className="relative w-full h-full rounded-2xl overflow-hidden shadow-lg shadow-purple-900/50 border border-purple-500/30 flex flex-col justify-end bg-gray-800">
+                             <div className="talent-card relative w-full h-full rounded-2xl overflow-hidden shadow-lg shadow-purple-900/50 border border-purple-500/30 flex flex-col justify-end bg-gray-800 transition-all duration-300 hover:border-purple-400 hover:shadow-[0_0_20px_rgba(168,85,247,0.5)]">
                                 <img 
                                     src={talent.image} 
                                     alt={`Talento de Agency Moon: ${talent.name}`} 
                                     className="absolute top-0 left-0 w-full h-full object-cover"
                                 />
-                                <div className="absolute bottom-0 left-0 w-full h-3/4 bg-gradient-to-t from-black/80 via-black/50 to-transparent"></div>
+                                <div className="absolute bottom-0 left-0 w-full h-3/4 bg-gradient-to-t from-black/80 via-black/50 to-transparent z-[2]"></div>
                                 <div className="relative z-10 text-white p-4 w-full">
                                      {/* Clickable Info Toggle */}
                                      <div 
@@ -724,7 +847,7 @@ const TalentsSection: React.FC = () => {
                                      </div>
                                      {/* Expandable Info Panel */}
                                      <div className={`overflow-hidden transition-all duration-500 ease-in-out ${openInfoIndex === index ? 'max-h-40 mt-2' : 'max-h-0'}`}>
-                                        <p className="text-gray-300 text-sm">{talent.description}</p>
+                                        {renderDescription(talent.description)}
                                      </div>
                                 </div>
                              </div>
@@ -767,6 +890,29 @@ const TalentsSection: React.FC = () => {
     );
 };
 
+const PartnershipSection: React.FC = () => (
+    <Section id="partnership">
+        <div className="relative rounded-2xl overflow-hidden shadow-2xl shadow-purple-900/50 border border-purple-500/30 text-center">
+            <img 
+                src="https://images.pexels.com/photos/7645300/pexels-photo-7645300.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1"
+                alt="Agente de negocios sonriendo en un entorno de oficina moderno" 
+                className="absolute inset-0 w-full h-full object-cover object-center opacity-40"
+            />
+            <div className="absolute inset-0 bg-gradient-to-t from-black via-black/60 to-transparent"></div>
+            <div className="relative z-10 p-8 md:p-12">
+                <h2 className="text-2xl md:text-4xl font-bold text-white mb-4 leading-tight" style={{textShadow: '0 2px 10px rgba(0,0,0,0.5)'}}>
+                    Forma tu propia agencia o sé uno de nuestros agentes en Latinoamérica
+                </h2>
+                <p className="text-gray-200 md:text-lg mb-8 max-w-2xl mx-auto" style={{textShadow: '0 1px 5px rgba(0,0,0,0.5)'}}>
+                    Actualmente buscamos socios comerciales o agentes que quieran trabajar con nosotros en la empresa. Expande tus horizontes y crece profesionalmente en la industria del streaming.
+                </p>
+                <GlowButton href="#contact">
+                    Más Información
+                </GlowButton>
+            </div>
+        </div>
+    </Section>
+);
 
 const Contact: React.FC = () => (
     <Section id="contact">
@@ -774,28 +920,33 @@ const Contact: React.FC = () => (
         <p className="text-gray-400 text-center max-w-2xl mx-auto mb-12">
             ¿Tienes preguntas más específicas o prefieres hablar directamente con un manager? Contáctanos a través de WhatsApp. Estamos aquí para ayudarte.
         </p>
-        <div className="flex flex-col md:flex-row justify-center items-center gap-8">
-            <a 
-                href="https://wa.me/528118807625" 
-                target="_blank" 
-                rel="noopener noreferrer"
-                className="inline-flex items-center gap-4 bg-gradient-to-br from-purple-600/20 to-indigo-600/20 text-white font-semibold py-3 px-6 rounded-lg transition-all duration-300 border border-purple-500/30 hover:border-purple-400 hover:shadow-[0_0_15px_rgba(168,85,247,0.7)] transform hover:-translate-y-1 text-lg"
-            >
-                <WhatsappIcon className="w-8 h-8" />
-                <span>Contactar Manager 1</span>
-            </a>
-            <a 
-                href="https://wa.me/593967364089" 
-                target="_blank" 
-                rel="noopener noreferrer"
-                className="inline-flex items-center gap-4 bg-gradient-to-br from-purple-600/20 to-indigo-600/20 text-white font-semibold py-3 px-6 rounded-lg transition-all duration-300 border border-purple-500/30 hover:border-purple-400 hover:shadow-[0_0_15px_rgba(168,85,247,0.7)] transform hover:-translate-y-1 text-lg"
-            >
-                <WhatsappIcon className="w-8 h-8" />
-                <span>Contactar Manager 2</span>
-            </a>
+        <div className="flex justify-center">
+             <div className="w-full max-w-md p-6 bg-gray-900/50 rounded-xl border border-purple-500/30 text-center transition-all duration-300 hover:border-purple-400 hover:shadow-[0_0_20px_rgba(168,85,247,0.5)]">
+                <WhatsappIcon className="w-12 h-12 mb-4 mx-auto text-white" />
+                <h3 className="text-xl font-semibold text-white mb-4">Contactar Managers</h3>
+                <div className="space-y-4">
+                    <a
+                        href="https://wa.me/528118807625"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="group block w-full p-3 bg-gray-800/60 rounded-lg border border-transparent hover:border-purple-500/50 hover:bg-gray-800/90 transition-all duration-300"
+                    >
+                         <span className="text-gray-300 group-hover:text-white font-medium">Manager 1 - Soporte General</span>
+                    </a>
+                     <a
+                        href="https://wa.me/593967364089"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="group block w-full p-3 bg-gray-800/60 rounded-lg border border-transparent hover:border-purple-500/50 hover:bg-gray-800/90 transition-all duration-300"
+                    >
+                         <span className="text-gray-300 group-hover:text-white font-medium">Manager 2 - Nuevos Ingresos</span>
+                    </a>
+                </div>
+            </div>
         </div>
     </Section>
 );
+
 
 const Footer: React.FC = () => (
     <footer className="border-t border-purple-500/20 text-center py-8 text-gray-500">
@@ -870,16 +1021,42 @@ export default function App() {
                 .faq-answer a { color: #c084fc; text-decoration: underline; }
                 .faq-answer a:hover { color: #a855f7; }
                 .faq-answer strong { color: #d8b4fe; font-weight: 600; }
+
+                @keyframes move-light {
+                    0% { transform: translate(-50%, -50%) rotate(0deg); }
+                    100% { transform: translate(-50%, -50%) rotate(360deg); }
+                }
+
+                .talent-card::after {
+                    content: '';
+                    position: absolute;
+                    left: 50%;
+                    top: 50%;
+                    width: 250%;
+                    padding-bottom: 250%;
+                    height: 0;
+                    background: radial-gradient(circle at 25% 25%, rgba(168, 85, 247, 0.25), transparent 40%);
+                    z-index: 1;
+                    pointer-events: none;
+                    animation: move-light 15s linear infinite;
+                    mix-blend-mode: overlay;
+                    opacity: 0.7;
+                }
             `}</style>
             <Header onOpenJoinModal={() => setIsJoinModalOpen(true)} />
             <main>
                 <Hero onOpenJoinModal={() => setIsJoinModalOpen(true)} />
                 <AboutUs />
+                <ExperienceSection />
+                <Section id="promo-banner" className="py-0 md:py-8">
+                    <Banner />
+                </Section>
                 <FAQ />
                 <PaymentsTable />
                 <GeneralInfo />
                 <TipsSection />
                 <TalentsSection />
+                <PartnershipSection />
                 <Contact />
             </main>
             <JoinModal isOpen={isJoinModalOpen} onClose={() => setIsJoinModalOpen(false)} />
