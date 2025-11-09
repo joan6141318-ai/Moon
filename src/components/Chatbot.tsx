@@ -43,15 +43,14 @@ const ChatMessageContent: React.FC<{ content: string; onViewImage: (url: string)
         const introText = parts[0].trim();
         const urls = parts[1]?.split('|') || [];
         const imageUrl = urls[0];
-        const linkUrl = urls[1];
 
-        if (!imageUrl || !linkUrl) {
-            return <p className="text-sm leading-relaxed">{content.replace(/\[PAYMENT_TABLE_IMAGE\].*/, '')}</p>;
+        if (!imageUrl) {
+            return <p className="text-sm leading-relaxed text-left">{content.replace(/\[PAYMENT_TABLE_IMAGE\].*/, '')}</p>;
         }
 
         return (
             <div className="text-sm">
-                {introText && <p className="leading-relaxed mb-2">{introText}</p>}
+                {introText && <p className="leading-relaxed mb-2 text-left">{introText}</p>}
                 <img src={imageUrl} alt="Tabla de Pagos" className="w-full h-auto rounded-lg border border-purple-500/30 mt-2" />
                 <div className="flex items-center justify-center gap-2 mt-3">
                     <button
@@ -72,55 +71,57 @@ const ChatMessageContent: React.FC<{ content: string; onViewImage: (url: string)
         );
     }
 
-    const lines = content.split('\n').map(line => line.trim()).filter(line => line);
+    const blocks = content.split(/\n\s*\n/).map(block => block.trim()).filter(Boolean);
 
     return (
-        <div className="text-sm space-y-2">
-            {lines.map((line, index) => {
-                // Renders headings like **Title**
-                if (line.startsWith('**') && line.endsWith('**')) {
-                    return (
-                        <p key={index} className="font-bold text-purple-300 text-base pt-2">
-                            {line.slice(2, -2)}
-                        </p>
-                    );
-                }
-
-                // Renders list items like "- **Key:** Value" or "- Item"
-                if (line.startsWith('- ')) {
-                    const itemContent = line.substring(2);
-                    const [key, ...valueParts] = itemContent.split(':');
-                    const value = valueParts.join(':');
-
-                    return (
-                        <div key={index} className="flex items-start pl-2">
-                            <span className="text-purple-400 mr-2 mt-1.5 flex-shrink-0">•</span>
-                            {value.trim() && valueParts.length > 0 ? (
-                                <span className="leading-relaxed">
-                                    <strong className="font-semibold text-purple-300">{key.replace(/\*/g, '').trim()}:</strong>
-                                    {' '}{value.trim()}
-                                </span>
-                            ) : (
-                                <span className="leading-relaxed">{itemContent.replace(/\*/g, '')}</span>
-                            )}
-                        </div>
-                    );
-                }
+        <div className="text-sm space-y-3">
+            {blocks.map((block, blockIndex) => {
+                const lines = block.split('\n').map(line => line.trim());
                 
-                 // Handles non-list key-value pairs
-                const [key, ...valueParts] = line.split(':');
-                const value = valueParts.join(':');
-                if (value.trim() && valueParts.length > 0 && key.length < 40) {
+                // Renders headings like **Title**
+                if (lines.length === 1 && lines[0].startsWith('**') && lines[0].endsWith('**')) {
                     return (
-                        <p key={index} className="leading-relaxed">
-                            <strong className="font-semibold text-purple-300">{key.replace(/\*/g, '').trim()}:</strong>
-                            {' '}{value.trim()}
+                        <p key={blockIndex} className="font-bold text-purple-300 text-base pt-1 text-left">
+                            {lines[0].slice(2, -2)}
                         </p>
-                    )
+                    );
+                }
+
+                // Renders list items that start with "- "
+                if (lines.every(line => line.startsWith('- '))) {
+                    return (
+                        <ul key={blockIndex} className="space-y-2">
+                            {lines.map((line, lineIndex) => {
+                                const itemContent = line.substring(2);
+                                const [key, ...valueParts] = itemContent.split(':');
+                                const value = valueParts.join(':');
+
+                                return (
+                                    <li key={lineIndex} className="flex items-start text-left">
+                                        <span className="text-purple-400 mr-2 mt-1 flex-shrink-0">•</span>
+                                        <span className="leading-relaxed">
+                                            {value.trim() && valueParts.length > 0 ? (
+                                                <>
+                                                    <strong className="font-semibold text-purple-300">{key.replace(/\*/g, '').trim()}:</strong>
+                                                    {' '}{value.trim()}
+                                                </>
+                                            ) : (
+                                                itemContent.replace(/\*/g, '')
+                                            )}
+                                        </span>
+                                    </li>
+                                );
+                            })}
+                        </ul>
+                    );
                 }
 
                 // Renders normal paragraphs, stripping any leftover '*'
-                return <p key={index} className="leading-relaxed">{line.replace(/\*/g, '')}</p>;
+                return (
+                    <p key={blockIndex} className="leading-relaxed text-left">
+                        {block.replace(/\*/g, '')}
+                    </p>
+                );
             })}
         </div>
     );
