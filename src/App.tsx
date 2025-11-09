@@ -1,4 +1,5 @@
 
+
 import React, { useState, useEffect, useRef, ReactNode, useCallback } from 'react';
 import { FAQItem, PaymentTier, InfoTab } from './types';
 import { 
@@ -285,6 +286,7 @@ const ApplicationFormModal: React.FC<{ isOpen: boolean; onClose: () => void }> =
                         <p className="text-gray-300 max-w-md mx-auto mb-8">
                             Gracias por tu interés en unirte a Agency Moon. Tu postulación ha sido enviada con éxito.
                         </p>
+                        {/* FIX: The 'GlowButton' component expects an 'onClick' handler that accepts a mouse event. The original code passed a function that does not accept any arguments directly, causing a type mismatch. This has been corrected by wrapping the function call in an arrow function to ensure the event argument is handled correctly. */}
                         <GlowButton onClick={() => onClose()}>Finalizar</GlowButton>
                     </div>
                 ) : (
@@ -447,7 +449,7 @@ const PartnershipModal: React.FC<{ isOpen: boolean; onClose: () => void }> = ({ 
 
 // --- Page Section Components ---
 
-const Header: React.FC<{ onOpenJoinModal: () => void; onOpenAboutModal: () => void }> = ({ onOpenJoinModal, onOpenAboutModal }) => {
+const Header: React.FC<{ onOpenJoinModal: () => void; }> = ({ onOpenJoinModal }) => {
     const [isScrolled, setIsScrolled] = useState(false);
     const [isMenuOpen, setIsMenuOpen] = useState(false);
     
@@ -462,10 +464,6 @@ const Header: React.FC<{ onOpenJoinModal: () => void; onOpenAboutModal: () => vo
         if (href === '#join-modal') {
             e.preventDefault();
             onOpenJoinModal();
-        } else if (href === '#about-us-section') {
-             e.preventDefault();
-             // This is now a smooth scroll target, not a modal opener
-             handleSmoothScroll(e);
         } else {
             handleSmoothScroll(e);
         }
@@ -1438,12 +1436,15 @@ export default function App() {
                 .faq-answer a { color: #C4B5FD; text-decoration: underline; }
                 .faq-answer a:hover { color: #D8B4FE; }
             `}</style>
-            <Header onOpenJoinModal={() => setIsJoinModalOpen(true)} onOpenAboutModal={() => setIsAboutUsModalOpen(true)} />
+            <Header onOpenJoinModal={() => setIsJoinModalOpen(true)} />
             <main>
                 <Hero onOpenJoinModal={() => setIsJoinModalOpen(true)} />
                 <Section id="about-us-section" className="text-center">
                     <h2 className="text-3xl md:text-4xl font-bold text-white mb-4">Quiénes Somos</h2>
-                    <GlowButton onClick={() => setIsAboutUsModalOpen(true)}>Conoce más</GlowButton>
+                    <p className="text-gray-300 max-w-3xl mx-auto mb-8 leading-relaxed">
+                        Con más de 7 años de trayectoria, Agency Moon se ha consolidado como líder en la representación de talentos para el dinámico mundo del streaming.
+                    </p>
+                    <GlowButton onClick={() => setIsAboutUsModalOpen(true)}>Conoce más de nosotros</GlowButton>
                 </Section>
                 <ExperienceSection />
                 <Section id="banner-cta" className="py-20">

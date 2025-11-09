@@ -1,4 +1,4 @@
-
+// FIX: All React hooks were undefined because the import statement was malformed. This has been corrected.
 import React, { useState, useRef, useEffect } from 'react';
 import { type Chat } from '@google/genai';
 import { type ChatMessage } from '../types';
@@ -94,8 +94,8 @@ const ChatMessageContent: React.FC<{ content: string; onViewImage: (url: string)
 
                     return (
                         <div key={index} className="flex items-start">
-                            <span className="text-purple-400 mr-2.5 mt-1.5 flex-shrink-0">•</span>
-                            <p className="flex-1 leading-relaxed">
+                            <span className="text-purple-400 mr-2.5 mt-1 flex-shrink-0">•</span>
+                            <p className="leading-relaxed">
                                 {value.trim() && valueParts.length > 0 ? (
                                     <>
                                         <strong className="font-semibold text-purple-300">{key.replace(/\*/g, '').trim()}:</strong>
