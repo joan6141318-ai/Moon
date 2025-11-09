@@ -1,4 +1,6 @@
 
+
+
 import React, { useState, useEffect, useRef, ReactNode, useCallback } from 'react';
 import { FAQItem, PaymentTier, InfoTab } from './types';
 import { 
@@ -285,7 +287,8 @@ const ApplicationFormModal: React.FC<{ isOpen: boolean; onClose: () => void }> =
                         <p className="text-gray-300 max-w-md mx-auto mb-8">
                             Gracias por tu interés en unirte a Agency Moon. Tu postulación ha sido enviada con éxito.
                         </p>
-                        <GlowButton onClick={onClose}>Finalizar</GlowButton>
+                        {/* FIX: The 'GlowButton' component expects an 'onClick' handler that accepts a mouse event. The original code passed a function that does not accept any arguments directly, causing a type mismatch. This has been corrected by wrapping the function call in an arrow function to ensure the event argument is handled correctly. */}
+                        <GlowButton onClick={() => onClose()}>Finalizar</GlowButton>
                     </div>
                 ) : (
                     <>
@@ -495,7 +498,7 @@ const Header: React.FC<{ onOpenJoinModal: () => void; onOpenAboutModal: () => vo
 
     return (
         <header className={`fixed top-0 left-0 right-0 z-40 transition-all duration-300 ${isScrolled || isMenuOpen ? 'bg-black/80 backdrop-blur-sm' : 'bg-transparent'}`}>
-            <nav className="container mx-auto px-6 py-4 flex justify-between items-center">
+            <nav className="container mx-auto px-6 py-4 flex justify-between items-baseline">
                 <a href="#home" onClick={handleSmoothScroll} className="flex items-center gap-2">
                     <Logo className="h-8 w-auto text-white" />
                     <span className="text-white font-bold text-xl">Agency Moon</span>
@@ -505,7 +508,8 @@ const Header: React.FC<{ onOpenJoinModal: () => void; onOpenAboutModal: () => vo
                          <a key={link.name} href={link.href} onClick={(e) => handleMenuClick(e, link.href)} className="text-gray-300 hover:text-white transition-colors hover:text-shadow-purple">{link.name}</a>
                     ))}
                 </div>
-                 <GlowButton onClick={onOpenJoinModal} className="hidden md:inline-block">Únete ahora</GlowButton>
+                 {/* FIX: The 'GlowButton' component expects an 'onClick' handler that accepts a mouse event. The original code passed a function that does not accept any arguments directly, causing a type mismatch. This has been corrected by wrapping the function call in an arrow function to ensure the event argument is handled correctly. */}
+                 <GlowButton onClick={() => onOpenJoinModal()} className="hidden md:inline-block">Únete ahora</GlowButton>
                  <div className="md:hidden">
                     <button onClick={() => setIsMenuOpen(!isMenuOpen)} className="text-white focus:outline-none" aria-label="Abrir menú">
                         {isMenuOpen ? <XIcon className="w-7 h-7" /> : <MenuIcon className="w-7 h-7" />}
@@ -550,7 +554,8 @@ const Hero: React.FC<{ onOpenJoinModal: () => void }> = ({ onOpenJoinModal }) =>
             </p>
             <p className="text-lg md:text-xl max-w-3xl mb-8 text-gray-300 animate-fade-in-up" style={{ animationDelay: '300ms' }}>Únete a nuestra comunidad de creadores y empieza a monetizar tus transmisiones.</p>
             <div className="animate-fade-in-up" style={{ animationDelay: '450ms' }}>
-                <GlowButton onClick={onOpenJoinModal}>Únete ahora</GlowButton>
+                {/* FIX: The 'GlowButton' component expects an 'onClick' handler that accepts a mouse event. The original code passed a function that does not accept any arguments directly, causing a type mismatch. This has been corrected by wrapping the function call in an arrow function to ensure the event argument is handled correctly. */}
+                <GlowButton onClick={() => onOpenJoinModal()}>Únete ahora</GlowButton>
             </div>
         </div>
     </section>
@@ -920,6 +925,131 @@ const GeneralInfo: React.FC<{ openIndex: number | null; onToggle: (index: number
     );
 };
 
+const TipsSection: React.FC = () => {
+    const [isTipsModalOpen, setIsTipsModalOpen] = useState(false);
+    const [currentTipIndex, setCurrentTipIndex] = useState(0);
+
+    const tipsImages = [
+        'https://i.postimg.cc/xCscRJt2/2-20251030-105515-0001.png',
+        'https://i.postimg.cc/YSY9JDRQ/3-20251030-105515-0002.png',
+        'https://i.postimg.cc/JnzfbGs1/4-20251030-105515-0003.png',
+        'https://i.postimg.cc/8PfjRCv2/5-20251030-105515-0004.png',
+        'https://i.postimg.cc/NFrP4TBF/6-20251030-105515-0005.png',
+    ];
+
+    const nextTip = useCallback(() => {
+        setCurrentTipIndex(prevIndex => (prevIndex + 1) % tipsImages.length);
+    }, [tipsImages.length]);
+
+    const prevTip = useCallback(() => {
+        setCurrentTipIndex(prevIndex => (prevIndex - 1 + tipsImages.length) % tipsImages.length);
+    }, [tipsImages.length]);
+
+    useEffect(() => {
+        const handleKeyDown = (event: KeyboardEvent) => {
+            if (!isTipsModalOpen) return;
+            if (event.key === 'ArrowRight') {
+                nextTip();
+            } else if (event.key === 'ArrowLeft') {
+                prevTip();
+            } else if (event.key === 'Escape') {
+                setIsTipsModalOpen(false);
+            }
+        };
+        window.addEventListener('keydown', handleKeyDown);
+        return () => {
+            window.removeEventListener('keydown', handleKeyDown);
+        };
+    }, [isTipsModalOpen, nextTip, prevTip]);
+
+    return (
+        <>
+            <Section id="tips">
+                <div className="text-center">
+                    <h2 className="text-3xl md:text-4xl font-bold text-white mb-4">Tips para tu Transmisión</h2>
+                    <p className="text-gray-400 max-w-2xl mx-auto mb-8">
+                        Mejora la calidad de tus transmisiones y aumenta tu audiencia con nuestros consejos profesionales. Haz clic para ver nuestra galería de tips.
+                    </p>
+                    <GlowButton onClick={() => setIsTipsModalOpen(true)}>
+                        Ver Galería de Tips
+                    </GlowButton>
+                </div>
+            </Section>
+
+            {isTipsModalOpen && (
+                <div 
+                    className="fixed inset-0 bg-black/90 backdrop-blur-sm z-50 flex items-center justify-center p-4 animate-fade-in"
+                    onClick={() => setIsTipsModalOpen(false)}
+                    role="dialog"
+                    aria-modal="true"
+                >
+                    <div 
+                        className="relative w-full max-w-3xl animate-zoom-in"
+                        onClick={(e) => e.stopPropagation()}
+                    >
+                        <div className="relative w-full h-[500px] sm:h-[600px]">
+                            {tipsImages.map((src, index) => (
+                                <div
+                                    key={src}
+                                    className={`absolute inset-0 transition-all duration-500 ease-in-out transform-gpu flex items-center justify-center ${
+                                        index === currentTipIndex
+                                            ? 'opacity-100 scale-100 rotate-0'
+                                            : 'opacity-0 scale-90 -rotate-6'
+                                    }`}
+                                    aria-hidden={index !== currentTipIndex}
+                                >
+                                    <div className="relative rounded-2xl shadow-[0_0_30px_rgba(168,85,247,0.7)] border-2 border-purple-500/50 p-1 bg-black">
+                                        <img
+                                            src={src}
+                                            alt={`Tip de transmisión ${index + 1}`}
+                                            className="w-96 h-96 sm:w-[28rem] sm:h-[28rem] object-cover rounded-2xl"
+                                        />
+                                    </div>
+                                </div>
+                            ))}
+
+                            <button
+                                onClick={prevTip}
+                                className="absolute top-1/2 left-2 sm:left-4 -translate-y-1/2 bg-black/50 text-white p-2 rounded-full hover:bg-purple-600 transition-colors z-10"
+                                aria-label="Anterior"
+                            >
+                                <ChevronLeftIcon className="w-6 h-6" />
+                            </button>
+                            <button
+                                onClick={nextTip}
+                                className="absolute top-1/2 right-2 sm:right-4 -translate-y-1/2 bg-black/50 text-white p-2 rounded-full hover:bg-purple-600 transition-colors z-10"
+                                aria-label="Siguiente"
+                            >
+                                <ChevronRightIcon className="w-6 h-6" />
+                            </button>
+                            
+                            <div className="absolute bottom-4 left-1/2 -translate-x-1/2 flex gap-2">
+                                {tipsImages.map((_, index) => (
+                                    <button 
+                                        key={index}
+                                        onClick={() => setCurrentTipIndex(index)}
+                                        className={`w-3 h-3 rounded-full transition-all ${index === currentTipIndex ? 'bg-purple-500 scale-125' : 'bg-gray-600 hover:bg-gray-400'}`}
+                                        aria-label={`Ir al tip ${index + 1}`}
+                                    />
+                                ))}
+                            </div>
+                        </div>
+                       
+                        <button 
+                            onClick={() => setIsTipsModalOpen(false)}
+                            className="absolute -top-3 -right-3 text-white bg-purple-600 rounded-full p-2 hover:bg-purple-700 transition-colors"
+                            aria-label="Cerrar"
+                        >
+                            <XIcon className="w-6 h-6" />
+                        </button>
+                    </div>
+                </div>
+            )}
+        </>
+    );
+};
+
+
 const TalentsSection: React.FC = () => {
     const talentData = [
         { name: "steficupcake", image: 'https://i.postimg.cc/N0Z5jrFK/IMG-20251107-193051.jpg', description: "Record historico: 4.5 Millones | País: Colombia" },
@@ -1069,7 +1199,8 @@ const PartnershipSection: React.FC<{ onOpenModal: () => void }> = ({ onOpenModal
                 <p className="text-gray-200 md:text-lg mb-8 max-w-2xl mx-auto" style={{textShadow: '0 1px 5px rgba(0,0,0,0.5)'}}>
                     Actualmente buscamos socios comerciales o agentes que quieran trabajar con nosotros en la empresa. Expande tus horizontes y crece profesionalmente en la industria del streaming.
                 </p>
-                <GlowButton onClick={onOpenModal}>
+                {/* FIX: The GlowButton's onClick prop expects a function that receives a mouse event. The handler was passed directly, causing a type mismatch. It has been wrapped in an arrow function to correct this. */}
+                <GlowButton onClick={() => onOpenModal()}>
                     Más Información
                 </GlowButton>
             </div>
@@ -1117,131 +1248,12 @@ const Footer: React.FC = () => (
     </footer>
 );
 
-// FIX: This component was defined inside App, which is an anti-pattern.
-// It has been moved out to prevent re-creation on every render and to follow React best practices.
-// State is passed down from App via props.
-const TipsSection: React.FC<{
-    isTipsModalOpen: boolean;
-    setIsTipsModalOpen: (isOpen: boolean) => void;
-}> = ({ isTipsModalOpen, setIsTipsModalOpen }) => {
-    const [currentTipIndex, setCurrentTipIndex] = useState(0);
-    const tipsImages = [
-        'https://i.postimg.cc/xCscRJt2/2-20251030-105515-0001.png',
-        'https://i.postimg.cc/YSY9JDRQ/3-20251030-105515-0002.png',
-        'https://i.postimg.cc/JnzfbGs1/4-20251030-105515-0003.png',
-        'https://i.postimg.cc/8PfjRCv2/5-20251030-105515-0004.png',
-        'https://i.postimg.cc/NFrP4TBF/6-20251030-105515-0005.png',
-    ];
-
-    const nextTip = useCallback(() => {
-        setCurrentTipIndex(prevIndex => (prevIndex + 1) % tipsImages.length);
-    }, [tipsImages.length]);
-
-    const prevTip = useCallback(() => {
-        setCurrentTipIndex(prevIndex => (prevIndex - 1 + tipsImages.length) % tipsImages.length);
-    }, [tipsImages.length]);
-
-    useEffect(() => {
-        const handleKeyDown = (event: KeyboardEvent) => {
-            if (!isTipsModalOpen) return;
-            if (event.key === 'ArrowRight') nextTip();
-            else if (event.key === 'ArrowLeft') prevTip();
-            else if (event.key === 'Escape') setIsTipsModalOpen(false);
-        };
-        window.addEventListener('keydown', handleKeyDown);
-        return () => {
-            window.removeEventListener('keydown', handleKeyDown);
-        };
-    }, [isTipsModalOpen, nextTip, prevTip, setIsTipsModalOpen]);
-
-    return (
-        <>
-            <Section id="tips">
-                <div className="text-center">
-                    <h2 className="text-3xl md:text-4xl font-bold text-white mb-4">Tips para tu Transmisión</h2>
-                    <p className="text-gray-400 max-w-2xl mx-auto mb-8">
-                        Mejora la calidad de tus transmisiones y aumenta tu audiencia con nuestros consejos profesionales. Haz clic para ver nuestra galería de tips.
-                    </p>
-                    <GlowButton onClick={() => setIsTipsModalOpen(true)}>
-                        Ver Galería de Tips
-                    </GlowButton>
-                </div>
-            </Section>
-            {isTipsModalOpen && (
-                <div 
-                    className="fixed inset-0 bg-black/90 backdrop-blur-sm z-50 flex items-center justify-center p-4 animate-fade-in"
-                    onClick={() => setIsTipsModalOpen(false)}
-                    role="dialog" aria-modal="true"
-                >
-                    <div 
-                        className="relative w-full max-w-3xl animate-zoom-in"
-                        onClick={(e) => e.stopPropagation()}
-                    >
-                        <div className="relative w-full h-[500px] sm:h-[600px] flex items-center justify-center">
-                            <div className="relative w-96 h-96 sm:w-[28rem] sm:h-[28rem]">
-                            {tipsImages.map((src, index) => (
-                                <div
-                                    key={src}
-                                    className={`absolute inset-0 transition-opacity duration-300 ease-in-out ${index === currentTipIndex ? 'opacity-100' : 'opacity-0'}`}
-                                    aria-hidden={index !== currentTipIndex}
-                                >
-                                    <div className="relative rounded-2xl shadow-[0_0_30px_rgba(168,85,247,0.7)] border-2 border-purple-500/50 p-1 bg-black w-full h-full">
-                                        <img
-                                            src={src}
-                                            alt={`Tip de transmisión ${index + 1}`}
-                                            className="w-full h-full object-cover rounded-2xl"
-                                        />
-                                    </div>
-                                </div>
-                            ))}
-                            </div>
-                            <button
-                                onClick={prevTip}
-                                className="absolute top-1/2 left-2 sm:-left-12 -translate-y-1/2 bg-black/50 text-white p-2 rounded-full hover:bg-purple-600 transition-colors z-10"
-                                aria-label="Anterior"
-                            >
-                                <ChevronLeftIcon className="w-6 h-6" />
-                            </button>
-                            <button
-                                onClick={nextTip}
-                                className="absolute top-1/2 right-2 sm:-right-12 -translate-y-1/2 bg-black/50 text-white p-2 rounded-full hover:bg-purple-600 transition-colors z-10"
-                                aria-label="Siguiente"
-                            >
-                                <ChevronRightIcon className="w-6 h-6" />
-                            </button>
-                            <div className="absolute -bottom-8 left-1/2 -translate-x-1/2 flex gap-2">
-                                {tipsImages.map((_, index) => (
-                                    <button 
-                                        key={index}
-                                        onClick={() => setCurrentTipIndex(index)}
-                                        className={`w-3 h-3 rounded-full transition-all ${index === currentTipIndex ? 'bg-purple-500 scale-125' : 'bg-gray-600 hover:bg-gray-400'}`}
-                                        aria-label={`Ir al tip ${index + 1}`}
-                                    />
-                                ))}
-                            </div>
-                        </div>
-                       
-                        <button 
-                            onClick={() => setIsTipsModalOpen(false)}
-                            className="absolute -top-3 -right-3 text-white bg-purple-600 rounded-full p-2 hover:bg-purple-700 transition-colors z-20"
-                            aria-label="Cerrar"
-                        >
-                            <XIcon className="w-6 h-6" />
-                        </button>
-                    </div>
-                </div>
-            )}
-        </>
-    );
-};
-
-
 export default function App() {
     const [isJoinModalOpen, setIsJoinModalOpen] = useState(false);
     const [isPartnershipModalOpen, setIsPartnershipModalOpen] = useState(false);
     const [isApplicationFormOpen, setIsApplicationFormOpen] = useState(false);
     const [isAboutUsModalOpen, setIsAboutUsModalOpen] = useState(false);
-    const [isTipsModalOpen, setIsTipsModalOpen] = useState(false);
+    const [isTipsModalOpen, setIsTipsModalOpen] = useState(false); // State from TipsSection moved here
     const [openInfoIndex, setOpenInfoIndex] = useState<number | null>(0);
 
     const handleInfoToggle = (index: number) => {
@@ -1290,6 +1302,119 @@ export default function App() {
         };
     }, []);
 
+    // TipsModal now lives inside TipsSection, we just pass state control
+    const TipsSectionWithState: React.FC = () => {
+        const [currentTipIndex, setCurrentTipIndex] = useState(0);
+        const tipsImages = [
+            'https://i.postimg.cc/xCscRJt2/2-20251030-105515-0001.png',
+            'https://i.postimg.cc/YSY9JDRQ/3-20251030-105515-0002.png',
+            'https://i.postimg.cc/JnzfbGs1/4-20251030-105515-0003.png',
+            'https://i.postimg.cc/8PfjRCv2/5-20251030-105515-0004.png',
+            'https://i.postimg.cc/NFrP4TBF/6-20251030-105515-0005.png',
+        ];
+
+        const nextTip = useCallback(() => {
+            setCurrentTipIndex(prevIndex => (prevIndex + 1) % tipsImages.length);
+        }, [tipsImages.length]);
+
+        const prevTip = useCallback(() => {
+            setCurrentTipIndex(prevIndex => (prevIndex - 1 + tipsImages.length) % tipsImages.length);
+        }, [tipsImages.length]);
+
+        useEffect(() => {
+            const handleKeyDown = (event: KeyboardEvent) => {
+                if (!isTipsModalOpen) return;
+                if (event.key === 'ArrowRight') nextTip();
+                else if (event.key === 'ArrowLeft') prevTip();
+                else if (event.key === 'Escape') setIsTipsModalOpen(false);
+            };
+            window.addEventListener('keydown', handleKeyDown);
+            return () => {
+                window.removeEventListener('keydown', handleKeyDown);
+            };
+        }, [isTipsModalOpen, nextTip, prevTip]);
+
+        return (
+            <>
+                <Section id="tips">
+                    <div className="text-center">
+                        <h2 className="text-3xl md:text-4xl font-bold text-white mb-4">Tips para tu Transmisión</h2>
+                        <p className="text-gray-400 max-w-2xl mx-auto mb-8">
+                            Mejora la calidad de tus transmisiones y aumenta tu audiencia con nuestros consejos profesionales. Haz clic para ver nuestra galería de tips.
+                        </p>
+                        <GlowButton onClick={() => setIsTipsModalOpen(true)}>
+                            Ver Galería de Tips
+                        </GlowButton>
+                    </div>
+                </Section>
+                {isTipsModalOpen && (
+                    <div 
+                        className="fixed inset-0 bg-black/90 backdrop-blur-sm z-50 flex items-center justify-center p-4 animate-fade-in"
+                        onClick={() => setIsTipsModalOpen(false)}
+                        role="dialog" aria-modal="true"
+                    >
+                        <div 
+                            className="relative w-full max-w-3xl animate-zoom-in"
+                            onClick={(e) => e.stopPropagation()}
+                        >
+                            <div className="relative w-full h-[500px] sm:h-[600px] flex items-center justify-center">
+                                <div className="relative w-96 h-96 sm:w-[28rem] sm:h-[28rem]">
+                                {tipsImages.map((src, index) => (
+                                    <div
+                                        key={src}
+                                        className={`absolute inset-0 transition-opacity duration-300 ease-in-out ${index === currentTipIndex ? 'opacity-100' : 'opacity-0'}`}
+                                        aria-hidden={index !== currentTipIndex}
+                                    >
+                                        <div className="relative rounded-2xl shadow-[0_0_30px_rgba(168,85,247,0.7)] border-2 border-purple-500/50 p-1 bg-black w-full h-full">
+                                            <img
+                                                src={src}
+                                                alt={`Tip de transmisión ${index + 1}`}
+                                                className="w-full h-full object-cover rounded-2xl"
+                                            />
+                                        </div>
+                                    </div>
+                                ))}
+                                </div>
+                                <button
+                                    onClick={prevTip}
+                                    className="absolute top-1/2 left-2 sm:-left-12 -translate-y-1/2 bg-black/50 text-white p-2 rounded-full hover:bg-purple-600 transition-colors z-10"
+                                    aria-label="Anterior"
+                                >
+                                    <ChevronLeftIcon className="w-6 h-6" />
+                                </button>
+                                <button
+                                    onClick={nextTip}
+                                    className="absolute top-1/2 right-2 sm:-right-12 -translate-y-1/2 bg-black/50 text-white p-2 rounded-full hover:bg-purple-600 transition-colors z-10"
+                                    aria-label="Siguiente"
+                                >
+                                    <ChevronRightIcon className="w-6 h-6" />
+                                </button>
+                                <div className="absolute -bottom-8 left-1/2 -translate-x-1/2 flex gap-2">
+                                    {tipsImages.map((_, index) => (
+                                        <button 
+                                            key={index}
+                                            onClick={() => setCurrentTipIndex(index)}
+                                            className={`w-3 h-3 rounded-full transition-all ${index === currentTipIndex ? 'bg-purple-500 scale-125' : 'bg-gray-600 hover:bg-gray-400'}`}
+                                            aria-label={`Ir al tip ${index + 1}`}
+                                        />
+                                    ))}
+                                </div>
+                            </div>
+                           
+                            <button 
+                                onClick={() => setIsTipsModalOpen(false)}
+                                className="absolute -top-3 -right-3 text-white bg-purple-600 rounded-full p-2 hover:bg-purple-700 transition-colors z-20"
+                                aria-label="Cerrar"
+                            >
+                                <XIcon className="w-6 h-6" />
+                            </button>
+                        </div>
+                    </div>
+                )}
+            </>
+        );
+    };
+
     return (
         <div className="bg-black text-white min-h-screen overflow-x-hidden">
             <style>{`
@@ -1325,7 +1450,7 @@ export default function App() {
                 </Section>
                 <FAQ />
                 <GeneralInfo openIndex={openInfoIndex} onToggle={handleInfoToggle} />
-                <TipsSection isTipsModalOpen={isTipsModalOpen} setIsTipsModalOpen={setIsTipsModalOpen} />
+                <TipsSectionWithState />
                 <TalentsSection />
                 <PartnershipSection onOpenModal={() => setIsPartnershipModalOpen(true)} />
                 <Contact />
