@@ -94,17 +94,14 @@ Si un usuario pregunta algo que no puedes responder con la información proporci
 3.  **OFRECE** los números de contacto de los managers si es apropiado.
 `;
 
-// FIX: Corrected API key access to use process.env.API_KEY as per guidelines, resolving the TypeScript error.
-const API_KEY = process.env.API_KEY;
-
 // getAiInstance for LiveChat and other potential uses
 export function getAiInstance(): GoogleGenAI {
-    if (!API_KEY) {
+    if (!process.env.API_KEY) {
         console.error("API_KEY not found. Please set it in your environment.");
         throw new Error("API key not valid"); // Throw error for components to catch
     }
     if (!aiInstance) {
-        aiInstance = new GoogleGenAI({ apiKey: API_KEY });
+        aiInstance = new GoogleGenAI({ apiKey: process.env.API_KEY });
     }
     return aiInstance;
 }
@@ -116,8 +113,7 @@ export function startChat(): Chat {
     }
     
     // Development mode: If API_KEY is not set, use a mock.
-    if (!API_KEY) {
-        // FIX: Updated warning message to reflect the correct environment variable.
+    if (!process.env.API_KEY) {
         console.warn("API_KEY not found. Using mock chat for development.");
         const mockChat: Chat = {
             sendMessage: async (prompt: { message: string }) => {
