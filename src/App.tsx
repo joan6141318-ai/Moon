@@ -1,7 +1,4 @@
 
-
-
-
 import React, { useState, useEffect, useRef, ReactNode, useCallback } from 'react';
 import { FAQItem, PaymentTier, InfoTab } from './types';
 import { 
@@ -451,7 +448,7 @@ const PartnershipModal: React.FC<{ isOpen: boolean; onClose: () => void }> = ({ 
 
 // --- Page Section Components ---
 
-const Header: React.FC<{ onOpenJoinModal: () => void; onOpenAboutModal: () => void }> = ({ onOpenJoinModal, onOpenAboutModal }) => {
+const Header: React.FC<{ onOpenJoinModal: () => void; onOpenAboutModal: () => void; activeSection: string; }> = ({ onOpenJoinModal, onOpenAboutModal, activeSection }) => {
     const [isScrolled, setIsScrolled] = useState(false);
     const [isMenuOpen, setIsMenuOpen] = useState(false);
     
@@ -466,9 +463,6 @@ const Header: React.FC<{ onOpenJoinModal: () => void; onOpenAboutModal: () => vo
         if (href === '#join-modal') {
             e.preventDefault();
             onOpenJoinModal();
-        } else if (href === '#about-us') {
-            e.preventDefault();
-            onOpenAboutModal();
         } else {
             handleSmoothScroll(e);
         }
@@ -505,9 +499,19 @@ const Header: React.FC<{ onOpenJoinModal: () => void; onOpenAboutModal: () => vo
                     <span className="text-white font-bold text-xl">Agency Moon</span>
                 </a>
                 <div className="hidden md:flex items-center space-x-8">
-                    {navLinks.map(link => (
-                         <a key={link.name} href={link.href} onClick={(e) => handleMenuClick(e, link.href)} className="text-gray-300 hover:text-white transition-colors hover:text-shadow-purple">{link.name}</a>
-                    ))}
+                    {navLinks.map(link => {
+                        const isActive = activeSection === link.href.substring(1);
+                        return (
+                             <a 
+                                key={link.name} 
+                                href={link.href} 
+                                onClick={(e) => handleMenuClick(e, link.href)} 
+                                className={`transition-colors font-medium ${isActive ? 'text-purple-400 font-bold text-shadow-purple' : 'text-gray-300 hover:text-white hover:text-shadow-purple'}`}
+                             >
+                                {link.name}
+                            </a>
+                        )
+                    })}
                 </div>
                  {/* FIX: The 'GlowButton' component expects an 'onClick' handler that accepts a mouse event. The original code passed a function that does not accept any arguments directly, causing a type mismatch. This has been corrected by wrapping the function call in an arrow function to ensure the event argument is handled correctly. */}
                  <GlowButton onClick={() => onOpenJoinModal()} className="hidden md:inline-block">Únete ahora</GlowButton>
@@ -520,16 +524,19 @@ const Header: React.FC<{ onOpenJoinModal: () => void; onOpenAboutModal: () => vo
             {isMenuOpen && (
                  <div className="md:hidden absolute top-full left-0 w-full bg-black/90 backdrop-blur-sm animate-fade-in-down-fast">
                     <div className="flex flex-col items-start px-6 py-4 space-y-1">
-                        {mobileNavLinks.map(link => (
-                            <a
-                                key={link.name}
-                                href={link.href}
-                                className="text-gray-200 hover:bg-purple-600/30 hover:text-white w-full text-left py-3 px-3 rounded-md transition-colors text-lg"
-                                onClick={(e) => handleMenuClick(e, link.href)}
-                            >
-                                {link.name}
-                            </a>
-                        ))}
+                        {mobileNavLinks.map(link => {
+                             const isActive = activeSection === link.href.substring(1);
+                             return (
+                                <a
+                                    key={link.name}
+                                    href={link.href}
+                                    className={`w-full text-left py-3 px-3 rounded-md transition-colors text-lg ${isActive ? 'bg-purple-600/30 text-white font-semibold' : 'text-gray-200 hover:bg-purple-600/30 hover:text-white'}`}
+                                    onClick={(e) => handleMenuClick(e, link.href)}
+                                >
+                                    {link.name}
+                                </a>
+                             )
+                        })}
                     </div>
                  </div>
             )}
@@ -1264,6 +1271,36 @@ export default function App() {
     const [isAboutUsModalOpen, setIsAboutUsModalOpen] = useState(false);
     const [isTipsModalOpen, setIsTipsModalOpen] = useState(false); // State from TipsSection moved here
     const [openInfoIndex, setOpenInfoIndex] = useState<number | null>(0);
+    const [activeSection, setActiveSection] = useState<string>('home');
+
+
+    useEffect(() => {
+        const sections = document.querySelectorAll('section[id]');
+        
+        const observer = new IntersectionObserver(
+            (entries) => {
+                entries.forEach((entry) => {
+                    if (entry.isIntersecting) {
+                        setActiveSection(entry.target.id);
+                    }
+                });
+            },
+            { 
+                rootMargin: '-80px 0px -40% 0px', // Adjusts the viewport for observation, accounting for the header
+                threshold: 0.2 // A smaller threshold to trigger faster
+            } 
+        );
+
+        sections.forEach((section) => {
+            observer.observe(section);
+        });
+
+        return () => {
+            sections.forEach((section) => {
+                observer.unobserve(section);
+            });
+        };
+    }, []);
 
     const handleInfoToggle = (index: number) => {
         setOpenInfoIndex(prev => (prev === index ? null : index));
@@ -1450,7 +1487,7 @@ export default function App() {
                 .faq-answer a { color: #C4B5FD; text-decoration: underline; }
                 .faq-answer a:hover { color: #D8B4FE; }
             `}</style>
-            <Header onOpenJoinModal={() => setIsJoinModalOpen(true)} onOpenAboutModal={() => setIsAboutUsModalOpen(true)} />
+            <Header onOpenJoinModal={() => setIsJoinModalOpen(true)} onOpenAboutModal={() => setIsAboutUsModalOpen(true)} activeSection={activeSection} />
             <main>
                 <Hero onOpenJoinModal={() => setIsJoinModalOpen(true)} />
                 <Section id="about-us" className="text-center">
