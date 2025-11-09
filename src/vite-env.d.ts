@@ -1,11 +1,18 @@
-// FIX: The triple-slash directive for "vite/client" was removed as it could not be resolved, and the application does not use Vite-specific client APIs.
+// Este archivo proporciona las definiciones de tipo para las variables de entorno de Vite.
+// Más información: https://vitejs.dev/guide/features.html#intellisense-for-typescript
 
-// The original `declare var process` caused a "Cannot redeclare block-scoped variable 'process'" error.
-// This is likely due to a conflict with global types from a dependency like @types/node.
-// We now augment the existing `NodeJS.ProcessEnv` interface to add the `API_KEY` type.
-// This is the standard way to add types to `process.env` without causing declaration conflicts.
-declare namespace NodeJS {
-  interface ProcessEnv {
-    API_KEY: string;
-  }
-}
+/// <reference types="vite/client" />
+
+// FIX: The original type augmentation for `process.env` relied on the `NodeJS`
+// namespace, which requires the `@types/node` package. To remove this dependency
+// and resolve potential type resolution errors, `process.env` is typed more
+// directly. This approach ensures that `process.env.API_KEY` is correctly typed
+// for the application's client-side code, where Vite replaces it at build time.
+declare var process: {
+  env: {
+    /**
+     * The API key for the Gemini service.
+     */
+    readonly API_KEY: string;
+  };
+};

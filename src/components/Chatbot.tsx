@@ -93,18 +93,16 @@ const ChatMessageContent: React.FC<{ content: string; onViewImage: (url: string)
                     const value = valueParts.join(':');
 
                     return (
-                        <div key={index} className="flex items-start">
-                            <span className="text-purple-400 mr-2.5 mt-1 flex-shrink-0">•</span>
-                            <p className="leading-relaxed">
-                                {value.trim() && valueParts.length > 0 ? (
-                                    <>
-                                        <strong className="font-semibold text-purple-300">{key.replace(/\*/g, '').trim()}:</strong>
-                                        {' '}{value.trim()}
-                                    </>
-                                ) : (
-                                    <>{itemContent.replace(/\*/g, '')}</>
-                                )}
-                            </p>
+                        <div key={index} className="flex items-start pl-2">
+                            <span className="text-purple-400 mr-2 mt-1.5 flex-shrink-0">•</span>
+                            {value.trim() && valueParts.length > 0 ? (
+                                <span className="leading-relaxed">
+                                    <strong className="font-semibold text-purple-300">{key.replace(/\*/g, '').trim()}:</strong>
+                                    {' '}{value.trim()}
+                                </span>
+                            ) : (
+                                <span className="leading-relaxed">{itemContent.replace(/\*/g, '')}</span>
+                            )}
                         </div>
                     );
                 }
@@ -133,7 +131,7 @@ export const Chatbot: React.FC = () => {
     const [isOpen, setIsOpen] = useState(false);
     const [input, setInput] = useState('');
     const [messages, setMessages] = useState<ChatMessage[]>([
-        { role: 'model', content: 'Hola, soy Luna, asistente virtual de Agency Moon. Para personalizar nuestra conversación, ¿me podrías decir tu nombre?' }
+        { role: 'model', content: 'Hola, mi nombre es Luna, soy asistente oficial de Agencia MOON. Será un gusto poder atender tus dudas. ¿Me podrías brindar tu nombre, por favor?' }
     ]);
     const [isLoading, setIsLoading] = useState(false);
     const [modalImage, setModalImage] = useState<string | null>(null);
