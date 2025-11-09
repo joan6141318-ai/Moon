@@ -1,3 +1,4 @@
+
 import React, { useState, useEffect, useRef, ReactNode, useCallback } from 'react';
 import { FAQItem, PaymentTier, InfoTab } from './types';
 import { 
@@ -284,7 +285,7 @@ const ApplicationFormModal: React.FC<{ isOpen: boolean; onClose: () => void }> =
                         <p className="text-gray-300 max-w-md mx-auto mb-8">
                             Gracias por tu interés en unirte a Agency Moon. Tu postulación ha sido enviada con éxito.
                         </p>
-                        <GlowButton onClick={onClose}>Finalizar</GlowButton>
+                        <GlowButton onClick={() => onClose()}>Finalizar</GlowButton>
                     </div>
                 ) : (
                     <>
@@ -461,16 +462,16 @@ const Header: React.FC<{ onOpenJoinModal: () => void; onOpenAboutModal: () => vo
         if (href === '#join-modal') {
             e.preventDefault();
             onOpenJoinModal();
-        } else if (href === '#about-us') {
-            e.preventDefault();
-            onOpenAboutModal();
+        } else if (href === '#about-us-section') {
+             e.preventDefault();
+             // This is now a smooth scroll target, not a modal opener
+             handleSmoothScroll(e);
         } else {
             handleSmoothScroll(e);
         }
     };
     
     const navLinks = [
-        { name: 'Quiénes somos', href: '#about-us' },
         { name: 'Experiencia', href: '#experience' },
         { name: 'FAQ', href: '#faq' },
         { name: 'Información', href: '#info' },
@@ -481,7 +482,7 @@ const Header: React.FC<{ onOpenJoinModal: () => void; onOpenAboutModal: () => vo
     ];
 
     const mobileNavLinks = [
-        { name: 'Quiénes Somos', href: '#about-us' },
+        { name: 'Quiénes Somos', href: '#about-us-section' },
         { name: 'Nuestra Experiencia', href: '#experience' },
         { name: 'Requisitos para Unirte', href: '#join-modal' },
         { name: 'Preguntas Frecuentes', href: '#faq' },
@@ -495,16 +496,23 @@ const Header: React.FC<{ onOpenJoinModal: () => void; onOpenAboutModal: () => vo
     return (
         <header className={`fixed top-0 left-0 right-0 z-40 transition-all duration-300 ${isScrolled || isMenuOpen ? 'bg-black/80 backdrop-blur-sm' : 'bg-transparent'}`}>
             <nav className="container mx-auto px-6 py-4 flex justify-between items-center">
-                <a href="#home" onClick={handleSmoothScroll} className="flex items-center gap-2">
-                    <Logo className="h-8 w-auto text-white" />
+                <a href="#home" onClick={handleSmoothScroll} className="flex items-center gap-3">
+                    <Logo className="h-9 w-auto text-white" />
                     <span className="text-white font-bold text-xl">Agency Moon</span>
                 </a>
-                <div className="hidden md:flex items-center space-x-8">
+                <div className="hidden md:flex items-center gap-x-6">
                     {navLinks.map(link => (
-                         <a key={link.name} href={link.href} onClick={(e) => handleMenuClick(e, link.href)} className="text-gray-300 hover:text-white transition-colors hover:text-shadow-purple">{link.name}</a>
+                         <a 
+                            key={link.name} 
+                            href={link.href} 
+                            onClick={(e) => handleMenuClick(e, link.href)} 
+                            className="text-gray-300 hover:text-white transition-colors hover:text-shadow-purple whitespace-nowrap text-sm font-medium"
+                        >
+                            {link.name}
+                        </a>
                     ))}
+                    <GlowButton onClick={() => onOpenJoinModal()} className="py-2 px-5 text-sm">Únete ahora</GlowButton>
                 </div>
-                 <GlowButton onClick={onOpenJoinModal} className="hidden md:inline-block">Únete ahora</GlowButton>
                  <div className="md:hidden">
                     <button onClick={() => setIsMenuOpen(!isMenuOpen)} className="text-white focus:outline-none" aria-label="Abrir menú">
                         {isMenuOpen ? <XIcon className="w-7 h-7" /> : <MenuIcon className="w-7 h-7" />}
@@ -549,7 +557,7 @@ const Hero: React.FC<{ onOpenJoinModal: () => void }> = ({ onOpenJoinModal }) =>
             </p>
             <p className="text-lg md:text-xl max-w-3xl mb-8 text-gray-300 animate-fade-in-up" style={{ animationDelay: '300ms' }}>Únete a nuestra comunidad de creadores y empieza a monetizar tus transmisiones.</p>
             <div className="animate-fade-in-up" style={{ animationDelay: '450ms' }}>
-                <GlowButton onClick={onOpenJoinModal}>Únete ahora</GlowButton>
+                <GlowButton onClick={() => onOpenJoinModal()}>Únete ahora</GlowButton>
             </div>
         </div>
     </section>
@@ -1090,7 +1098,7 @@ const TalentsSection: React.FC = () => {
                 </p>
             </div>
             <div 
-                className="relative w-full max-w-[280px] mx-auto h-[420px]"
+                className="relative w-full max-w-[280px] h-[420px] sm:max-w-xs sm:h-[480px] md:max-w-sm md:h-[520px] mx-auto"
                 onMouseEnter={() => { if(autoPlayRef.current) clearInterval(autoPlayRef.current); }}
                 onMouseLeave={() => { autoPlayRef.current = setInterval(nextSlide, 3000); }}
             >
@@ -1193,7 +1201,7 @@ const PartnershipSection: React.FC<{ onOpenModal: () => void }> = ({ onOpenModal
                 <p className="text-gray-200 md:text-lg mb-8 max-w-2xl mx-auto" style={{textShadow: '0 1px 5px rgba(0,0,0,0.5)'}}>
                     Actualmente buscamos socios comerciales o agentes que quieran trabajar con nosotros en la empresa. Expande tus horizontes y crece profesionalmente en la industria del streaming.
                 </p>
-                <GlowButton onClick={onOpenModal}>
+                <GlowButton onClick={() => onOpenModal()}>
                     Más Información
                 </GlowButton>
             </div>
@@ -1433,7 +1441,7 @@ export default function App() {
             <Header onOpenJoinModal={() => setIsJoinModalOpen(true)} onOpenAboutModal={() => setIsAboutUsModalOpen(true)} />
             <main>
                 <Hero onOpenJoinModal={() => setIsJoinModalOpen(true)} />
-                <Section id="about-us" className="text-center">
+                <Section id="about-us-section" className="text-center">
                     <h2 className="text-3xl md:text-4xl font-bold text-white mb-4">Quiénes Somos</h2>
                     <GlowButton onClick={() => setIsAboutUsModalOpen(true)}>Conoce más</GlowButton>
                 </Section>
