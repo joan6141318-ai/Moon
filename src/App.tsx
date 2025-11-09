@@ -1,6 +1,7 @@
 
 
 
+
 import React, { useState, useEffect, useRef, ReactNode, useCallback } from 'react';
 import { FAQItem, PaymentTier, InfoTab } from './types';
 import { 
@@ -498,7 +499,7 @@ const Header: React.FC<{ onOpenJoinModal: () => void; onOpenAboutModal: () => vo
 
     return (
         <header className={`fixed top-0 left-0 right-0 z-40 transition-all duration-300 ${isScrolled || isMenuOpen ? 'bg-black/80 backdrop-blur-sm' : 'bg-transparent'}`}>
-            <nav className="container mx-auto px-6 py-4 flex justify-between items-baseline">
+            <nav className="container mx-auto px-6 py-4 flex justify-between items-center">
                 <a href="#home" onClick={handleSmoothScroll} className="flex items-center gap-2">
                     <Logo className="h-8 w-auto text-white" />
                     <span className="text-white font-bold text-xl">Agency Moon</span>
@@ -1009,14 +1010,18 @@ const TipsSection: React.FC = () => {
                             ))}
 
                             <button
-                                onClick={prevTip}
+// FIX: The onClick handler expects a function that receives a mouse event.
+// Wrapping `prevTip` in an arrow function ensures the correct signature.
+                                onClick={() => prevTip()}
                                 className="absolute top-1/2 left-2 sm:left-4 -translate-y-1/2 bg-black/50 text-white p-2 rounded-full hover:bg-purple-600 transition-colors z-10"
                                 aria-label="Anterior"
                             >
                                 <ChevronLeftIcon className="w-6 h-6" />
                             </button>
                             <button
-                                onClick={nextTip}
+// FIX: The onClick handler expects a function that receives a mouse event.
+// Wrapping `nextTip` in an arrow function ensures the correct signature.
+                                onClick={() => nextTip()}
                                 className="absolute top-1/2 right-2 sm:right-4 -translate-y-1/2 bg-black/50 text-white p-2 rounded-full hover:bg-purple-600 transition-colors z-10"
                                 aria-label="Siguiente"
                             >
@@ -1154,14 +1159,18 @@ const TalentsSection: React.FC = () => {
                 </div>
 
                 <button
-                    onClick={prevSlide}
+// FIX: The onClick handler expects a function that receives a mouse event.
+// Wrapping `prevSlide` in an arrow function ensures the correct signature.
+                    onClick={() => prevSlide()}
                     className="absolute top-1/2 -left-4 md:-left-16 -translate-y-1/2 bg-black/50 text-white p-3 rounded-full hover:bg-purple-600 transition-colors z-20 focus:outline-none focus:ring-2 focus:ring-purple-400"
                     aria-label="Anterior Talento"
                 >
                     <ChevronLeftIcon className="w-6 h-6" />
                 </button>
                 <button
-                    onClick={nextSlideManual}
+// FIX: The onClick handler expects a function that receives a mouse event.
+// Wrapping `nextSlideManual` in an arrow function ensures the correct signature.
+                    onClick={() => nextSlideManual()}
                     className="absolute top-1/2 -right-4 md:-right-16 -translate-y-1/2 bg-black/50 text-white p-3 rounded-full hover:bg-purple-600 transition-colors z-20 focus:outline-none focus:ring-2 focus:ring-purple-400"
                     aria-label="Siguiente Talento"
                 >
@@ -1376,14 +1385,18 @@ export default function App() {
                                 ))}
                                 </div>
                                 <button
-                                    onClick={prevTip}
+// FIX: The onClick handler expects a function that receives a mouse event.
+// Wrapping `prevTip` in an arrow function ensures the correct signature.
+                                    onClick={() => prevTip()}
                                     className="absolute top-1/2 left-2 sm:-left-12 -translate-y-1/2 bg-black/50 text-white p-2 rounded-full hover:bg-purple-600 transition-colors z-10"
                                     aria-label="Anterior"
                                 >
                                     <ChevronLeftIcon className="w-6 h-6" />
                                 </button>
                                 <button
-                                    onClick={nextTip}
+// FIX: The onClick handler expects a function that receives a mouse event.
+// Wrapping `nextTip` in an arrow function ensures the correct signature.
+                                    onClick={() => nextTip()}
                                     className="absolute top-1/2 right-2 sm:-right-12 -translate-y-1/2 bg-black/50 text-white p-2 rounded-full hover:bg-purple-600 transition-colors z-10"
                                     aria-label="Siguiente"
                                 >
