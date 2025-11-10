@@ -321,13 +321,34 @@ export const SettingsIcon: React.FC<{ className?: string }> = ({ className }) =>
     </svg>
 );
 
-export const EighteenPlusIcon: React.FC<{ className?: string }> = ({ className }) => (
-    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={className}>
-        <circle cx="12" cy="12" r="10"></circle>
-        <path d="M8 12h8"></path>
-        <path d="M12 8v8"></path>
-        <path d="M15 11h.01"></path>
-        <path d="M5.5 11h.01"></path>
-        <path d="M5.5 14h.01"></path>
+export const InstagramIcon: React.FC<{ className?: string }> = ({ className }) => (
+    <svg
+        xmlns="http://www.w3.org/2000/svg"
+        width="24"
+        height="24"
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        strokeWidth="2"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+        className={className}
+    >
+        <rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect>
+        <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path>
+        <line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line>
+    </svg>
+);
+
+export const TiktokIcon: React.FC<{ className?: string }> = ({ className }) => (
+    <svg 
+        xmlns="http://www.w3.org/2000/svg" 
+        width="24" 
+        height="24" 
+        viewBox="0 0 24 24" 
+        fill="currentColor" 
+        className={className}
+    >
+        <path d="M12.525.02c1.31-.02 2.61-.01 3.91-.02.08 1.53.63 3.09 1.75 4.17 1.12 1.11 2.7 1.62 4.24 1.79v4.03c-1.44-.05-2.89-.35-4.2-.97-.57-.26-1.1-.59-1.62-.93-.01 2.92.01 5.84-.02 8.75-.08 1.4-.54 2.79-1.35 3.94-1.31 1.92-3.58 3.17-5.91 3.21-2.43.03-4.83-.95-6.46-2.95C.944 19.2.154 16.7.374 14.05c.21-2.5 1.88-4.81 4.09-5.91 2.21-1.1 4.75-1.01 6.85.25.02 1.62.02 3.24.01 4.87-.64-.28-1.29-.44-1.96-.51-1.33-.13-2.64.09-3.86.61-.95.42-1.74 1.12-2.31 2.01-.58.89-.82 1.94-.78 3.01.03.96.28 1.91.75 2.75.91 1.61 2.84 2.61 4.82 2.33 1.97-.28 3.63-1.66 4.36-3.44.29-.71.43-1.46.42-2.22.01-2.88.01-5.76 0-8.64-.02-1.28-.27-2.56-.73-3.76-1.22-3.21-4.75-5.02-8.15-4.42-1.6.28-3.08 1.02-4.27 2.21v4.03c.94-.92 2.12-1.53 3.4-1.66.02-3.3.01-6.6 0-9.9.08-1.32.19-2.63.32-3.94Z" />
     </svg>
 );
