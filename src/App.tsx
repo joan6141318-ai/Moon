@@ -507,25 +507,21 @@ const Hero: React.FC<{ onOpenJoinModal: () => void }> = ({ onOpenJoinModal }) =>
     <section id="home" className="h-screen min-h-[700px] w-full flex items-center justify-center relative text-white text-center px-4 overflow-hidden">
         <div className="absolute inset-0 bg-black z-0">
             <img
-                src="https://images.pexels.com/photos/1252890/pexels-photo-1252890.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1"
-                alt="Fondo de galaxia púrpura y azul"
-                className="w-full h-full object-cover opacity-50"
+                src="https://images.pexels.com/photos/169647/pexels-photo-169647.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1"
+                alt="Edificio de oficinas de noche"
+                className="w-full h-full object-cover opacity-40"
             />
             <div className="absolute inset-0 bg-gradient-to-t from-black via-black/70 to-transparent"></div>
-            <div className="absolute inset-0 bg-gradient-to-r from-black via-transparent to-black"></div>
         </div>
         <div className="relative z-10 flex flex-col items-center">
-            <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold mb-4 animate-fade-in-down">
-                Conecta . Crea . <span className="bg-clip-text text-transparent bg-gradient-to-r from-fuchsia-400 to-purple-500" style={{textShadow: '0 0 20px rgba(217, 70, 239, 0.5)'}}>Brilla</span> .
+            <h1 className="text-5xl md:text-6xl lg:text-7xl font-bold mb-6 animate-fade-in-down tracking-tight">
+                Conecta. Crea. <span className="text-fuchsia-500">Brilla.</span>
             </h1>
-            <p className="text-xl md:text-2xl mt-4 mb-24 text-gray-200 animate-fade-in-up font-light tracking-wide" style={{ animationDelay: '150ms' }}>
-                Tu talento merece ser visto
+            <p className="text-xl md:text-2xl mb-12 text-gray-300 animate-fade-in-up font-light" style={{ animationDelay: '150ms' }}>
+                Tu talento merece ser visto.
             </p>
-            <p className="text-lg md:text-xl max-w-3xl mb-8 text-gray-300 animate-fade-in-up" style={{ animationDelay: '300ms' }}>
-                Únete a nuestra comunidad de creadores y empieza a monetizar tus transmisiones.
-            </p>
-            <div className="animate-fade-in-up" style={{ animationDelay: '450ms' }}>
-                <GlowButton onClick={onOpenJoinModal}>Únete ahora</GlowButton>
+            <div className="animate-fade-in-up" style={{ animationDelay: '300ms' }}>
+                <GlowButton onClick={() => onOpenJoinModal()}>Comienza hoy</GlowButton>
             </div>
         </div>
     </section>
