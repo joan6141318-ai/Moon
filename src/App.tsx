@@ -3,8 +3,7 @@ import { FAQItem, PaymentTier, InfoTab } from './types';
 import { 
     Logo, ChevronDownIcon, YoutubeIcon, WhatsappIcon, XIcon, ChevronLeftIcon, ChevronRightIcon, MenuIcon,
     PercentageIcon, TransparencyIcon, TrainingIcon, SupportMaterialIcon, TalentDatabaseIcon, VerificationIcon, PersonalizedSupportIcon,
-    CheckIcon, StarIcon, TargetIcon, UsersIcon, DollarSignIcon, BarChartIcon, SettingsIcon, RocketIcon,
-    InstagramIcon, TiktokIcon
+    CheckIcon, StarIcon, TargetIcon, UsersIcon, DollarSignIcon, BarChartIcon, SettingsIcon, RocketIcon
 } from './components/icons';
 import { Chatbot } from './components/Chatbot';
 
@@ -440,7 +439,6 @@ const Header: React.FC<{ onOpenJoinModal: () => void; activeSection: string; }> 
         { name: 'Información', href: '#info' },
         { name: 'Tips', href: '#tips' },
         { name: 'Talentos', href: '#talents'},
-        { name: 'Testimonios', href: '#testimonials'},
         { name: 'Socios', href: '#partnership' },
         { name: 'Contacto', href: '#contact' },
     ];
@@ -1189,73 +1187,6 @@ const TalentsSection: React.FC = () => {
     );
 };
 
-const TestimonialsSection: React.FC = () => {
-    const testimonials = [
-        {
-            quote: "Desde que me uní a Agency Moon, mi carrera despegó. El soporte es increíble y la comunidad me hace sentir en familia. ¡Crecí más en 6 meses que en 2 años por mi cuenta!",
-            name: "steficupcake",
-            image: "https://i.postimg.cc/N0Z5jrFK/IMG-20251107-193051.jpg",
-        },
-        {
-            quote: "Lo que más valoro es la transparencia. Sé exactamente cuánto gano y los pagos son siempre puntuales. Además, las capacitaciones me han ayudado a mejorar mis directos.",
-            name: "Shinysoul_turtle",
-            image: "https://i.postimg.cc/kBFfgdFT/IMG-20251107-193553.jpg",
-        },
-        {
-            quote: "La agencia no solo me dio herramientas, sino también confianza. El equipo siempre está ahí para resolver dudas y motivarte. ¡Recomendado al 100%!",
-            name: "lbm0312",
-            image: "https://i.postimg.cc/rpn71VcF/In-Shot-20251107-185715214.jpg",
-        },
-    ];
-
-    const [currentIndex, setCurrentIndex] = useState(0);
-    const autoPlayRef = useRef<ReturnType<typeof setInterval>>();
-
-    const nextSlide = useCallback(() => {
-        setCurrentIndex(prev => (prev === testimonials.length - 1 ? 0 : prev + 1));
-    }, [testimonials.length]);
-
-    useEffect(() => {
-        autoPlayRef.current = setInterval(nextSlide, 5000);
-        return () => clearInterval(autoPlayRef.current);
-    }, [nextSlide]);
-
-    return (
-        <Section id="testimonials">
-            <div className="text-center">
-                <h2 className="text-3xl md:text-4xl font-bold text-white mb-4">Lo que dicen nuestros talentos</h2>
-                <p className="text-gray-400 max-w-2xl mx-auto mb-12">
-                    Nuestra mayor satisfacción es el éxito y la felicidad de nuestros creadores.
-                </p>
-            </div>
-            <div 
-                className="relative w-full max-w-3xl mx-auto h-[320px]"
-                onMouseEnter={() => clearInterval(autoPlayRef.current)}
-                onMouseLeave={() => { autoPlayRef.current = setInterval(nextSlide, 5000); }}
-            >
-                <div className="relative h-full overflow-hidden">
-                    {testimonials.map((testimonial, index) => (
-                        <div
-                            key={index}
-                            className={`absolute top-0 left-0 w-full h-full transition-opacity duration-700 ease-in-out ${index === currentIndex ? 'opacity-100' : 'opacity-0'}`}
-                            aria-hidden={index !== currentIndex}
-                        >
-                            <div className="flex flex-col items-center justify-center text-center h-full bg-gray-900/40 p-8 rounded-2xl border border-purple-500/30">
-                                <p className="text-lg italic text-gray-300 mb-6">"{testimonial.quote}"</p>
-                                <div className="flex items-center gap-4">
-                                    <img src={testimonial.image} alt={testimonial.name} className="w-12 h-12 rounded-full object-cover border-2 border-purple-400" />
-                                    <span className="font-bold text-white text-lg">{testimonial.name}</span>
-                                </div>
-                            </div>
-                        </div>
-                    ))}
-                </div>
-            </div>
-        </Section>
-    );
-};
-
-
 const PartnershipSection: React.FC<{ onOpenModal: () => void }> = ({ onOpenModal }) => (
     <Section id="partnership">
         <div className="relative rounded-2xl overflow-hidden shadow-2xl shadow-purple-900/50 border border-purple-500/30 text-center">
@@ -1315,31 +1246,15 @@ const Contact: React.FC = () => (
 
 
 const Footer: React.FC = () => {
-    const socialLinks = [
-        { href: "https://www.instagram.com/agencymoonoficial/", icon: InstagramIcon, label: "Instagram" },
-        { href: "https://www.tiktok.com/@agencymoonoficial", icon: TiktokIcon, label: "TikTok" },
-        { href: "https://www.youtube.com/@AgencyMoon", icon: YoutubeIcon, label: "YouTube" },
-    ];
-
     return (
         <footer className="bg-gray-900/50 border-t border-purple-500/20 text-gray-400">
             <div className="w-full max-w-6xl mx-auto px-6 py-10">
-                <div className="flex flex-col md:flex-row justify-between items-center gap-8">
-                    <div className="text-center md:text-left">
-                        <a href="#home" onClick={handleSmoothScroll} className="flex items-center justify-center md:justify-start gap-3 mb-3">
-                            <Logo className="h-8 w-auto text-white" />
-                            <span className="text-white font-bold text-xl">Agency Moon</span>
-                        </a>
-                        <p className="max-w-xs">Potenciando a los creadores de contenido para convertir su pasión en una carrera de éxito.</p>
-                    </div>
-                    <div className="flex items-center gap-5">
-                        {socialLinks.map(link => (
-                            <a key={link.label} href={link.href} target="_blank" rel="noopener noreferrer" aria-label={link.label}
-                               className="text-gray-400 hover:text-purple-400 transition-colors transform hover:scale-110">
-                                <link.icon className="w-7 h-7" />
-                            </a>
-                        ))}
-                    </div>
+                <div className="flex flex-col md:flex-row justify-center md:justify-start items-center text-center md:text-left gap-8">
+                    <a href="#home" onClick={handleSmoothScroll} className="flex items-center justify-center md:justify-start gap-3">
+                        <Logo className="h-8 w-auto text-white" />
+                        <span className="text-white font-bold text-xl">Agency Moon</span>
+                    </a>
+                    <p className="max-w-xs">Potenciando a los creadores de contenido para convertir su pasión en una carrera de éxito.</p>
                 </div>
                 <div className="mt-8 pt-6 border-t border-purple-500/20 text-center text-sm">
                     <p>&copy; {new Date().getFullYear()} Agency Moon. Todos los derechos reservados.</p>
@@ -1427,7 +1342,6 @@ export default function App() {
                 <GeneralInfo openIndex={openInfoIndex} onToggle={handleInfoToggle} />
                 <TipsSection />
                 <TalentsSection />
-                <TestimonialsSection />
                 <PartnershipSection onOpenModal={() => setIsPartnershipModalOpen(true)} />
                 <Contact />
             </main>
