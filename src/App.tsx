@@ -484,14 +484,13 @@ const Header: React.FC<{ onOpenJoinModal: () => void; activeSection: string; }> 
                                 <a
                                     key={link.name}
                                     href={link.href}
-                                    className={`w-full text-left py-3 px-3 rounded-md transition-colors text-lg ${isActive ? 'bg-purple-600/30 text-white font-semibold' : 'text-gray-200 hover:bg-purple-600/30 hover:text-white'}`}
+                                    className={`w-full text-left py-3 px-3 rounded-md transition-colors text-lg ${isActive ? 'bg-purple-600/30 text-white font-semibold' : 'text-gray-200 hover:text-white'}`}
                                     onClick={handleMenuClick}
                                 >
                                     {link.name}
                                 </a>
                             );
                         })}
-                        <GlowButton onClick={onOpenJoinModal} className="w-full mt-4">Únete ahora</GlowButton>
                     </div>
                  </div>
             )}
