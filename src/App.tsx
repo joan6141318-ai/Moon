@@ -472,6 +472,17 @@ const Header: React.FC<{ onOpenJoinModal: () => void; onOpenAboutModal: () => vo
         }
     };
     
+    const navLinks = [
+        { name: 'Quiénes somos', href: '#about-us' },
+        { name: 'Experiencia', href: '#experience' },
+        { name: 'FAQ', href: '#faq' },
+        { name: 'Información', href: '#info' },
+        { name: 'Tips', href: '#tips' },
+        { name: 'Talentos', href: '#talents'},
+        { name: 'Socios', href: '#partnership' },
+        { name: 'Contacto', href: '#contact' },
+    ];
+
     const mobileNavLinks = [
         { name: 'Quiénes Somos', href: '#about-us' },
         { name: 'Nuestra Experiencia', href: '#experience' },
@@ -486,25 +497,31 @@ const Header: React.FC<{ onOpenJoinModal: () => void; onOpenAboutModal: () => vo
 
     return (
         <header className={`fixed top-0 left-0 right-0 z-40 transition-all duration-300 ${isScrolled || isMenuOpen ? 'bg-black/80 backdrop-blur-sm' : 'bg-transparent'}`}>
-            <nav className="px-6 py-4 flex justify-between items-center">
+            <nav className="container mx-auto px-6 py-4 flex justify-between items-baseline">
                 <a href="#home" onClick={handleSmoothScroll} className="flex items-center gap-2">
                     <Logo className="h-8 w-auto text-white" />
                     <span className="text-white font-bold text-xl">Agency Moon</span>
                 </a>
-                <div>
+                <div className="hidden md:flex items-center space-x-8">
+                    {navLinks.map(link => (
+                         <a key={link.name} href={link.href} onClick={(e) => handleMenuClick(e, link.href)} className="text-gray-300 hover:text-white transition-colors hover:text-shadow-purple font-medium">{link.name}</a>
+                    ))}
+                </div>
+                 <GlowButton onClick={(e) => onOpenJoinModal()} className="hidden md:inline-block">Únete ahora</GlowButton>
+                 <div className="md:hidden">
                     <button onClick={() => setIsMenuOpen(!isMenuOpen)} className="text-white focus:outline-none" aria-label="Abrir menú">
                         {isMenuOpen ? <XIcon className="w-7 h-7" /> : <MenuIcon className="w-7 h-7" />}
                     </button>
                 </div>
             </nav>
             {isMenuOpen && (
-                 <div className="absolute top-full left-0 w-full bg-black/90 backdrop-blur-sm animate-fade-in-down-fast">
+                 <div className="md:hidden absolute top-full left-0 w-full bg-black/90 backdrop-blur-sm animate-fade-in-down-fast">
                     <div className="flex flex-col items-start px-6 py-4 space-y-1">
                         {mobileNavLinks.map(link => (
                             <a
                                 key={link.name}
                                 href={link.href}
-                                className="text-white font-semibold hover:bg-purple-600/30 w-full text-left py-3 px-3 rounded-md transition-colors text-lg"
+                                className="text-gray-200 hover:bg-purple-600/30 hover:text-white w-full text-left py-3 px-3 rounded-md transition-colors text-lg"
                                 onClick={(e) => handleMenuClick(e, link.href)}
                             >
                                 {link.name}
@@ -517,66 +534,32 @@ const Header: React.FC<{ onOpenJoinModal: () => void; onOpenAboutModal: () => vo
     );
 };
 
-const Hero: React.FC<{ onOpenJoinModal: () => void }> = ({ onOpenJoinModal }) => {
-    const [pulsations, setPulsations] = useState<{ id: number; x: number; y: number }[]>([]);
-    const nextId = useRef(0);
-
-    const handlePulsate = (e: React.MouseEvent<HTMLElement>) => {
-        const rect = e.currentTarget.getBoundingClientRect();
-        const x = e.clientX - rect.left;
-        const y = e.clientY - rect.top;
-        const newPulsation = { id: nextId.current++, x, y };
-        
-        setPulsations(prev => [...prev, newPulsation]);
-
-        setTimeout(() => {
-            setPulsations(prev => prev.filter(p => p.id !== newPulsation.id));
-        }, 1000); 
-    };
-
-    return (
-        <section
-            id="home"
-            className="h-screen min-h-[700px] w-full flex items-center justify-center relative text-white text-center px-4 overflow-hidden"
-            onClick={handlePulsate}
-        >
-            <div className="absolute inset-0 bg-black z-0">
-                <img
-                    src="https://images.pexels.com/photos/1252890/pexels-photo-1252890.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1"
-                    alt="Fondo de galaxia púrpura y azul"
-                    className="w-full h-full object-cover opacity-50"
-                />
-                <div className="absolute inset-0 bg-gradient-to-t from-black via-black/70 to-transparent"></div>
-                <div className="absolute inset-0 bg-gradient-to-r from-black via-transparent to-black"></div>
+const Hero: React.FC<{ onOpenJoinModal: () => void }> = ({ onOpenJoinModal }) => (
+    <section id="home" className="h-screen min-h-[700px] w-full flex items-center justify-center relative text-white text-center px-4 overflow-hidden">
+        <div className="absolute inset-0 bg-black z-0">
+            <img
+                src="https://images.pexels.com/photos/1252890/pexels-photo-1252890.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1"
+                alt="Fondo de galaxia púrpura y azul"
+                className="w-full h-full object-cover opacity-50"
+            />
+            <div className="absolute inset-0 bg-gradient-to-t from-black via-black/70 to-transparent"></div>
+            <div className="absolute inset-0 bg-gradient-to-r from-black via-transparent to-black"></div>
+        </div>
+        <div className="relative z-10 flex flex-col items-center">
+            <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold mb-4 animate-fade-in-down" style={{textShadow: '0 0 15px rgba(168, 85, 247, 0.7)'}}>Haz brillar tu talento</h1>
+            <h2 className="text-2xl md:text-3xl font-semibold bg-clip-text text-transparent bg-gradient-to-r from-purple-400 to-indigo-400 mb-6 animate-fade-in-down" style={{ animationDelay: '100ms' }}>
+                Crea. Conecta. Brilla.
+            </h2>
+            <p className="text-xl md:text-2xl max-w-3xl my-6 text-gray-300 italic animate-fade-in-up" style={{ animationDelay: '150ms' }}>
+                "Que no te digan que el cielo es el límite cuando hay huellas en la luna"
+            </p>
+            <p className="text-lg md:text-xl max-w-3xl mb-8 text-gray-300 animate-fade-in-up" style={{ animationDelay: '300ms' }}>Únete a nuestra comunidad de creadores y empieza a monetizar tus transmisiones.</p>
+            <div className="animate-fade-in-up" style={{ animationDelay: '450ms' }}>
+                <GlowButton onClick={(e) => onOpenJoinModal()}>Únete ahora</GlowButton>
             </div>
-
-            {pulsations.map(p => (
-                <div
-                    key={p.id}
-                    className="absolute rounded-full pointer-events-none animate-pulse-effect"
-                    style={{
-                        left: p.x,
-                        top: p.y,
-                        width: '50px',
-                        height: '50px',
-                        transform: 'translate(-50%, -50%)',
-                    }}
-                />
-            ))}
-            
-            <div className="relative z-10 flex flex-col items-center">
-                <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold mb-4 animate-fade-in-down" style={{textShadow: '0 0 15px rgba(168, 85, 247, 0.7)'}}>Haz brillar tu talento</h1>
-                <p className="text-xl md:text-2xl max-w-3xl my-6 text-gray-300 italic animate-fade-in-up" style={{ animationDelay: '150ms' }}>
-                    "Que no te digan que el cielo es el límite cuando hay huellas en la luna"
-                </p>
-                <p className="text-lg md:text-xl max-w-3xl mb-8 text-gray-300 animate-fade-in-up" style={{ animationDelay: '300ms' }}>Únete a nuestra comunidad de creadores y empieza a monetizar tus transmisiones.</p>
-                <div className="animate-fade-in-up" style={{ animationDelay: '450ms' }}>
-                    <GlowButton onClick={(e) => { e.stopPropagation(); onOpenJoinModal(); }}>Únete ahora</GlowButton>
-                </div>
-            </div>
-        </section>
-    );
-};
+        </div>
+    </section>
+);
 
 
 const ProgressBar: React.FC<{ label: string; percentage: number; isInView: boolean }> = ({ label, percentage, isInView }) => (
@@ -678,22 +661,27 @@ const Banner: React.FC = () => {
 };
 
 
-const AccordionItem: React.FC<{ item: FAQItem, isOpen: boolean, onClick: () => void }> = ({ item, isOpen, onClick }) => (
-    <div className="bg-gray-900/50 rounded-lg border border-purple-500/30 mb-3 transition-all duration-300 hover:border-purple-400">
-        <button onClick={() => onClick()} className="w-full flex justify-between items-center text-left p-5" aria-expanded={isOpen}>
-            <span className="text-lg font-medium text-white">{item.question}</span>
-            <ChevronDownIcon className={`w-6 h-6 text-purple-400 transition-transform duration-300 flex-shrink-0 ml-4 ${isOpen ? 'rotate-180' : ''}`} />
-        </button>
-        <div className={`overflow-hidden transition-all duration-500 ease-in-out ${isOpen ? 'max-h-[500px]' : 'max-h-0'}`}>
-            <div className="text-gray-300 px-5 pb-5 text-base leading-relaxed faq-answer" dangerouslySetInnerHTML={{ __html: item.answer }} />
+const FaqItemDisplay: React.FC<{ item: FAQItem }> = ({ item }) => {
+    const [isOpen, setIsOpen] = useState(false);
+    return (
+        <div className="bg-gray-900/50 rounded-lg border border-purple-500/30 mb-3 overflow-hidden transition-all duration-300 hover:border-purple-400">
+            <button
+                onClick={() => setIsOpen(!isOpen)}
+                className="w-full flex justify-between items-center p-5 text-left font-medium text-white transition-colors hover:bg-purple-900/20"
+                aria-expanded={isOpen}
+            >
+                <h3 className="text-lg">{item.question}</h3>
+                <ChevronDownIcon className={`w-5 h-5 transform transition-transform duration-300 ${isOpen ? 'rotate-180' : ''}`} />
+            </button>
+            <div className={`transition-all duration-500 ease-in-out overflow-hidden ${isOpen ? 'max-h-96 opacity-100' : 'max-h-0 opacity-0'}`}>
+                <div className="p-5 pt-0 text-gray-300 text-base leading-relaxed faq-answer" dangerouslySetInnerHTML={{ __html: item.answer }} />
+            </div>
         </div>
-    </div>
-);
+    );
+};
 
 
 const FAQ: React.FC = () => {
-    const [openIndex, setOpenIndex] = useState<number | null>(null);
-    const [isFaqExpanded, setIsFaqExpanded] = useState(false);
     const faqData: FAQItem[] = [
         {
             question: '¿Qué beneficios obtengo si me uno a agencia Agency Moon?',
@@ -747,6 +735,7 @@ const FAQ: React.FC = () => {
 
     return (
         <Section id="faq">
+             <h2 className="text-3xl md:text-4xl font-bold text-white text-center mb-10">Preguntas Frecuentes</h2>
             <div className="max-w-2xl mx-auto mb-8">
                 <div className="block rounded-2xl overflow-hidden shadow-lg shadow-purple-900/50 border border-purple-500/20">
                     <img 
@@ -757,148 +746,102 @@ const FAQ: React.FC = () => {
                 </div>
             </div>
 
-            <div className="max-w-3xl mx-auto text-center">
-                 <button
-                    onClick={() => setIsFaqExpanded(!isFaqExpanded)}
-                    className="inline-flex items-center justify-center gap-3 text-left py-3 px-6 bg-gray-900/50 rounded-lg border border-purple-500/30 mb-3 transition-all duration-300 hover:border-purple-400 hover:bg-gray-900/70 focus:outline-none focus:ring-2 focus:ring-purple-500"
-                    aria-expanded={isFaqExpanded}
-                    aria-controls="faq-list"
-                >
-                    <span className="text-lg font-semibold text-white">Preguntas Frecuentes</span>
-                    <ChevronDownIcon className={`w-6 h-6 text-purple-400 transition-transform duration-300 flex-shrink-0 ${isFaqExpanded ? 'rotate-180' : ''}`} />
-                </button>
-            </div>
-            
-            <div 
-                id="faq-list"
-                className={`max-w-3xl mx-auto overflow-hidden transition-all duration-700 ease-in-out ${isFaqExpanded ? 'max-h-[2000px] opacity-100' : 'max-h-0 opacity-0'}`}
-            >
-                <div className="pt-4">
-                    {faqData.map((item, index) => (
-                        <AccordionItem key={index} item={item} isOpen={openIndex === index} onClick={() => setOpenIndex(openIndex === index ? null : index)} />
-                    ))}
-                </div>
+            <div id="faq-list" className="max-w-3xl mx-auto">
+                {faqData.map((item, index) => (
+                    <FaqItemDisplay key={index} item={item} />
+                ))}
             </div>
         </Section>
     );
 };
 
-const paymentData: PaymentTier[] = [
-    { level: 'A', seedsGoal: '2,000', dailyHours: '2', remuneration: '$14', seedExchange: '$9', totalPayment: '$23' },
-    { level: 'B', seedsGoal: '5,000', dailyHours: '2', remuneration: '$35', seedExchange: '$23', totalPayment: '$58' },
-    { level: 'C', seedsGoal: '10,000', dailyHours: '2', remuneration: '$74', seedExchange: '$48', totalPayment: '$122' },
-    { level: 'CE', seedsGoal: '20,000', dailyHours: '2', remuneration: '$141', seedExchange: '$95', totalPayment: '$236' },
-    { level: 'D', seedsGoal: '30,000', dailyHours: '2', remuneration: '$211', seedExchange: '$143', totalPayment: '$354' },
-    { level: 'E', seedsGoal: '60,000', dailyHours: '2', remuneration: '$422', seedExchange: '$286', totalPayment: '$708' },
-    { level: 'S1', seedsGoal: '100,000', dailyHours: '2', remuneration: '$660', seedExchange: '$476', totalPayment: '$1,136' },
-    { level: 'S2', seedsGoal: '150,000', dailyHours: '2', remuneration: '$990', seedExchange: '$714', totalPayment: '$1,704' },
-    { level: 'S3', seedsGoal: '200,000', dailyHours: '2', remuneration: '$1,320', seedExchange: '$952', totalPayment: '$2,272' },
-    { level: 'S4', seedsGoal: '250,000', dailyHours: '2', remuneration: '$1,650', seedExchange: '$1,190', totalPayment: '$2,840' },
-    { level: 'S5', seedsGoal: '300,000', dailyHours: '2', remuneration: '$1,980', seedExchange: '$1,429', totalPayment: '$3,409' },
-    { level: 'S6', seedsGoal: '400,000', dailyHours: '2', remuneration: '$2,700', seedExchange: '$1,905', totalPayment: '$4,604' },
-    { level: 'S7', seedsGoal: '500,000', dailyHours: '2', remuneration: '$3,550', seedExchange: '$2,381', totalPayment: '$5,931' },
-    { level: 'S8', seedsGoal: '750,000', dailyHours: '2', remuneration: '$5,500', seedExchange: '$3,572', totalPayment: '$9,072' },
-    { level: 'S9', seedsGoal: '1,000,000', dailyHours: '2', remuneration: '$6,800', seedExchange: '$4,762', totalPayment: '$11,562' },
-    { level: 'S10', seedsGoal: '1,500,000', dailyHours: '2', remuneration: '$10,400', seedExchange: '$7,143', totalPayment: '$17,543' },
-    { level: 'S11', seedsGoal: '2,000,000', dailyHours: '2', remuneration: '$14,500', seedExchange: '$9,524', totalPayment: '$24,024' },
-    { level: 'S12', seedsGoal: '3,000,000', dailyHours: '2', remuneration: '$22,500', seedExchange: '$14,286', totalPayment: '$36,786' }
-];
+const PaymentCarousel: React.FC = () => {
+    const paymentTiers: PaymentTier[] = [
+      { level: 'A', seedsGoal: '2,000', dailyHours: '2 Diarias / 44 Mensuales', remuneration: '$23', seedExchange: 'N/A', totalPayment: '$23 USD' },
+      { level: 'S1', seedsGoal: '10,000', dailyHours: '2 Diarias / 44 Mensuales', remuneration: '$118', seedExchange: 'N/A', totalPayment: '$118 USD' },
+      { level: 'S2', seedsGoal: '20,000', dailyHours: '2 Diarias / 44 Mensuales', remuneration: '$235', seedExchange: 'N/A', totalPayment: '$235 USD' },
+      { level: 'S6', seedsGoal: '200,000', dailyHours: '2 Diarias / 44 Mensuales', remuneration: '$2,353', seedExchange: 'N/A', totalPayment: '$2,353 USD' },
+      { level: 'S10', seedsGoal: '1,000,000', dailyHours: '2 Diarias / 44 Mensuales', remuneration: '$11,765', seedExchange: 'N/A', totalPayment: '$11,765 USD' },
+      { level: 'S12', seedsGoal: '3,000,000', dailyHours: '2 Diarias / 44 Mensuales', remuneration: '$36,786', seedExchange: 'N/A', totalPayment: '$36,786 USD' },
+    ];
 
-const PaymentInfoCarousel: React.FC = () => {
     const [currentIndex, setCurrentIndex] = useState(0);
 
-    const prevTier = () => {
-        const isFirst = currentIndex === 0;
-        const newIndex = isFirst ? paymentData.length - 1 : currentIndex - 1;
+    const prevSlide = () => {
+        const isFirstSlide = currentIndex === 0;
+        const newIndex = isFirstSlide ? paymentTiers.length - 1 : currentIndex - 1;
         setCurrentIndex(newIndex);
     };
 
-    const nextTier = () => {
-        const isLast = currentIndex === paymentData.length - 1;
-        const newIndex = isLast ? 0 : currentIndex + 1;
+    const nextSlide = () => {
+        const isLastSlide = currentIndex === paymentTiers.length - 1;
+        const newIndex = isLastSlide ? 0 : currentIndex + 1;
         setCurrentIndex(newIndex);
     };
     
-    const currentTier = paymentData[currentIndex];
-
     return (
-        <div className="relative">
-            <div className="block border border-purple-500/30 rounded-lg overflow-hidden transition-all duration-300 hover:border-purple-400 hover:shadow-[0_0_15px_rgba(168,85,247,0.7)]">
-                <img src="https://i.postimg.cc/8zccpBdH/NIVEL-20251030-155750-0001.png" alt="Tabla de Pagos" className="w-full h-auto" />
-            </div>
-
-            <div className="bg-gray-800/50 p-4 rounded-lg relative overflow-hidden mt-4 border border-purple-500/20">
-                <button onClick={() => prevTier()} aria-label="Nivel anterior" className="absolute left-2 top-1/2 -translate-y-1/2 z-10 p-1 bg-black/40 rounded-full hover:bg-purple-600 transition-colors focus:outline-none focus:ring-2 focus:ring-purple-400">
-                    <ChevronLeftIcon className="w-5 h-5" />
-                </button>
-                <button onClick={() => nextTier()} aria-label="Siguiente nivel" className="absolute right-2 top-1/2 -translate-y-1/2 z-10 p-1 bg-black/40 rounded-full hover:bg-purple-600 transition-colors focus:outline-none focus:ring-2 focus:ring-purple-400">
-                    <ChevronRightIcon className="w-5 h-5" />
+        <div className="relative w-full max-w-sm mx-auto flex flex-col items-center justify-center">
+            <div className="relative w-full h-[360px] flex items-center justify-center">
+                 <button onClick={prevSlide} className="absolute -left-4 md:-left-12 top-1/2 -translate-y-1/2 z-10 p-2 bg-black/40 rounded-full hover:bg-purple-600 transition-colors focus:outline-none focus:ring-2 focus:ring-purple-400">
+                    <ChevronLeftIcon className="w-6 h-6" />
                 </button>
 
-                <div key={currentIndex} className="text-center animate-fade-in">
-                    <h4 className="text-2xl font-bold text-purple-400 mb-4">Nivel {currentTier.level}</h4>
-                    
-                    <div className="grid grid-cols-2 gap-x-4 gap-y-2 text-sm max-w-xs mx-auto">
-                        <p className="text-left text-gray-400">Meta Semillas:</p>
-                        <p className="text-right font-semibold text-white">{currentTier.seedsGoal}</p>
-                        
-                        <p className="text-left text-gray-400">Horas Diarias:</p>
-                        <p className="text-right font-semibold text-white">{currentTier.dailyHours}</p>
-                        
-                        <p className="text-left text-gray-400">Remuneración:</p>
-                        <p className="text-right font-semibold text-white">{currentTier.remuneration}</p>
-                        
-                        <p className="text-left text-gray-400">Cambio Semillas:</p>
-                        <p className="text-right font-semibold text-white">{currentTier.seedExchange}</p>
-                        
-                        <hr className="col-span-2 border-purple-500/30 my-1"/>
-                        
-                        <p className="text-left text-purple-300 font-bold text-base">Pago Total:</p>
-                        <p className="text-right font-bold text-lg text-purple-300">{currentTier.totalPayment} USD</p>
+                <div className="overflow-hidden w-full h-full">
+                     <div className="whitespace-nowrap transition-transform duration-500 ease-in-out h-full" style={{ transform: `translateX(-${currentIndex * 100}%)` }}>
+                        {paymentTiers.map((tier, index) => (
+                           <div key={index} className="inline-flex items-center justify-center w-full h-full p-2">
+                                <div className="w-full h-full bg-gradient-to-br from-gray-800 to-gray-900 border border-purple-500/30 rounded-xl p-6 text-center flex flex-col justify-center shadow-lg shadow-purple-900/30">
+                                    <div className="absolute top-3 right-3 bg-purple-600 text-white text-xs font-bold px-3 py-1 rounded-full">Nivel {tier.level}</div>
+                                    <h4 className="text-white font-bold text-4xl md:text-5xl mb-3 tracking-tight">{tier.totalPayment}</h4>
+                                    <p className="text-purple-400 font-semibold text-lg mb-5">Meta: {tier.seedsGoal} semillas</p>
+                                    
+                                    <div className="text-left space-y-3 text-sm border-t border-purple-500/20 pt-4">
+                                        <p><strong className="font-semibold text-gray-300">Remuneración:</strong> <span className="text-gray-400 ml-1.5">{tier.remuneration}</span></p>
+                                        <p><strong className="font-semibold text-gray-300">Horas Requeridas:</strong> <span className="text-gray-400 ml-1.5">{tier.dailyHours}</span></p>
+                                    </div>
+                                </div>
+                           </div>
+                        ))}
                     </div>
                 </div>
+
+                <button onClick={nextSlide} className="absolute -right-4 md:-right-12 top-1/2 -translate-y-1/2 z-10 p-2 bg-black/40 rounded-full hover:bg-purple-600 transition-colors focus:outline-none focus:ring-2 focus:ring-purple-400">
+                    <ChevronRightIcon className="w-6 h-6" />
+                </button>
             </div>
-             
-            <div className="flex justify-center gap-2 mt-4">
-                {paymentData.map((_, index) => (
-                    <button
-                        key={index}
-                        onClick={() => setCurrentIndex(index)}
-                        className={`w-2.5 h-2.5 rounded-full transition-all ${index === currentIndex ? 'bg-purple-500 scale-125' : 'bg-gray-600 hover:bg-gray-400'}`}
-                        aria-label={`Ir al nivel ${paymentData[index].level}`}
-                    />
+             <div className="flex justify-center gap-2 mt-4">
+                {paymentTiers.map((_, i) => (
+                    <div key={i} onClick={() => setCurrentIndex(i)} className={`transition-all w-2.5 h-2.5 bg-white rounded-full cursor-pointer ${currentIndex === i ? "p-1.5 bg-purple-500" : "bg-opacity-50"}`} />
                 ))}
             </div>
         </div>
     );
 };
 
-const InfoAccordionItem: React.FC<{ item: InfoTab, isOpen: boolean, onClick: () => void }> = ({ item, isOpen, onClick }) => (
-    <div className="bg-gray-900/50 rounded-lg border border-purple-500/30 mb-4 transition-all duration-300 hover:border-purple-400 hover:shadow-[0_0_20px_rgba(168,85,247,0.4)]">
-        <button 
-            onClick={() => onClick()} 
-            className="w-full flex justify-between items-center text-left p-6"
-            aria-expanded={isOpen}
-        >
-            <span className="text-lg font-semibold text-white">{item.title}</span>
-            <ChevronDownIcon className={`w-6 h-6 text-purple-400 transition-transform duration-300 ${isOpen ? 'rotate-180' : ''}`} />
-        </button>
-        <div className={`overflow-hidden transition-all duration-500 ease-in-out ${isOpen ? 'max-h-[1000px]' : 'max-h-0'}`}>
-            <div className="text-gray-300 px-6 pb-6 space-y-4">
-                {item.content}
+
+const InfoItemDisplay: React.FC<{ item: InfoTab; initialOpen?: boolean }> = ({ item, initialOpen = false }) => {
+    const [isOpen, setIsOpen] = useState(initialOpen);
+
+    return (
+        <div className="bg-gray-900/50 rounded-lg border border-purple-500/30 mb-4 overflow-hidden transition-all duration-300 hover:border-purple-400">
+            <button
+                onClick={() => setIsOpen(!isOpen)}
+                className="w-full flex justify-between items-center p-5 text-left font-medium text-white transition-colors hover:bg-purple-900/20"
+                aria-expanded={isOpen}
+            >
+                <h3 className="text-lg font-semibold">{item.title}</h3>
+                <ChevronDownIcon className={`w-6 h-6 transform transition-transform duration-300 ${isOpen ? 'rotate-180' : ''}`} />
+            </button>
+            <div className={`transition-all duration-700 ease-in-out overflow-hidden ${isOpen ? 'max-h-[1000px] opacity-100' : 'max-h-0 opacity-0'}`}>
+                 <div className="p-6 border-t border-purple-500/30 text-gray-300 space-y-4">
+                    {item.content}
+                </div>
             </div>
         </div>
-    </div>
-);
+    );
+};
 
 const GeneralInfo: React.FC = () => {
-    const [openIndex, setOpenIndex] = useState<number | null>(0);
-    const [isInfoExpanded, setIsInfoExpanded] = useState(false);
-
-    const onToggle = (index: number) => {
-        setOpenIndex(prev => (prev === index ? null : index));
-    };
-
     const infoData: InfoTab[] = [
         {
             title: '¿Qué es un PK?',
@@ -942,40 +885,24 @@ const GeneralInfo: React.FC = () => {
         { title: 'Horas de Transmisión', content: <p>Las horas de transmisión son un factor clave para tu crecimiento y monetización. Establecemos metas de horas mensuales que, al cumplirse, desbloquean recompensas y bonificaciones. La consistencia es fundamental para el éxito.</p> },
         { 
             title: 'Tabla de pagos bigo live', 
-            content: <PaymentInfoCarousel /> 
+            content: <PaymentCarousel /> 
         }
     ];
     
     return (
         <Section id="info">
             <h2 className="text-3xl md:text-4xl font-bold text-white text-center mb-10">Información General</h2>
-
-            <div className="max-w-4xl mx-auto text-center">
-                <button
-                    onClick={() => setIsInfoExpanded(!isInfoExpanded)}
-                    className="inline-flex items-center justify-center gap-3 text-left py-3 px-6 bg-gray-900/50 rounded-lg border border-purple-500/30 mb-3 transition-all duration-300 hover:border-purple-400 hover:bg-gray-900/70 focus:outline-none focus:ring-2 focus:ring-purple-500"
-                    aria-expanded={isInfoExpanded}
-                    aria-controls="info-list"
-                >
-                    <span className="text-lg font-semibold text-white">Ver Información General</span>
-                    <ChevronDownIcon className={`w-6 h-6 text-purple-400 transition-transform duration-300 flex-shrink-0 ${isInfoExpanded ? 'rotate-180' : ''}`} />
-                </button>
-            </div>
-
             <div
                 id="info-list"
-                className={`max-w-4xl mx-auto overflow-hidden transition-all duration-700 ease-in-out ${isInfoExpanded ? 'max-h-[2000px] opacity-100' : 'max-h-0 opacity-0'}`}
+                className="max-w-4xl mx-auto"
             >
-                <div className="pt-4">
-                    {infoData.map((item, index) => (
-                        <InfoAccordionItem 
-                            key={index}
-                            item={item} 
-                            isOpen={openIndex === index} 
-                            onClick={() => onToggle(index)} 
-                        />
-                    ))}
-                </div>
+                {infoData.map((item, index) => (
+                    <InfoItemDisplay 
+                        key={index}
+                        item={item} 
+                        initialOpen={item.title === 'Tabla de pagos bigo live'}
+                    />
+                ))}
             </div>
         </Section>
     );
@@ -1279,27 +1206,29 @@ const Contact: React.FC = () => (
         <p className="text-gray-400 text-center max-w-2xl mx-auto mb-12">
             ¿Tienes preguntas más específicas o prefieres hablar directamente con un manager? Contáctanos a través de WhatsApp. Estamos aquí para ayudarte.
         </p>
-        <div className="flex flex-col sm:flex-row justify-center items-center gap-8">
-             <a
-                href="https://wa.me/528118807625"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="group w-full max-w-xs p-8 bg-gray-900/50 rounded-xl border border-purple-500/30 text-center transition-all duration-300 hover:border-purple-400 hover:shadow-[0_0_20px_rgba(168,85,247,0.5)] transform hover:-translate-y-1"
-            >
+        <div className="flex justify-center">
+             <div className="w-full max-w-md p-6 bg-gray-900/50 rounded-xl border border-purple-500/30 text-center transition-all duration-300 hover:border-purple-400 hover:shadow-[0_0_20px_rgba(168,85,247,0.5)]">
                 <WhatsappIcon className="w-12 h-12 mb-4 mx-auto text-green-400" />
-                <h3 className="text-xl font-semibold text-white mb-2">Manager 1</h3>
-                <p className="text-gray-300 group-hover:text-white font-medium">Soporte General</p>
-            </a>
-             <a
-                href="https://wa.me/593967364089"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="group w-full max-w-xs p-8 bg-gray-900/50 rounded-xl border border-purple-500/30 text-center transition-all duration-300 hover:border-purple-400 hover:shadow-[0_0_20px_rgba(168,85,247,0.5)] transform hover:-translate-y-1"
-            >
-                <WhatsappIcon className="w-12 h-12 mb-4 mx-auto text-green-400" />
-                <h3 className="text-xl font-semibold text-white mb-2">Manager 2</h3>
-                <p className="text-gray-300 group-hover:text-white font-medium">Nuevos Ingresos</p>
-            </a>
+                <h3 className="text-xl font-semibold text-white mb-4">Contactar Managers</h3>
+                <div className="space-y-4">
+                    <a
+                        href="https://wa.me/528118807625"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="group block w-full p-3 bg-gray-800/60 rounded-lg border border-transparent hover:border-purple-500/50 hover:bg-gray-800/90 transition-all duration-300"
+                    >
+                         <span className="text-gray-300 group-hover:text-white font-medium">Manager 1 - Soporte General</span>
+                    </a>
+                     <a
+                        href="https://wa.me/593967364089"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="group block w-full p-3 bg-gray-800/60 rounded-lg border border-transparent hover:border-purple-500/50 hover:bg-gray-800/90 transition-all duration-300"
+                    >
+                         <span className="text-gray-300 group-hover:text-white font-medium">Manager 2 - Nuevos Ingresos</span>
+                    </a>
+                </div>
+            </div>
         </div>
     </Section>
 );
@@ -1342,17 +1271,12 @@ export default function App() {
                                 
                 const infoSection = document.getElementById('info');
                 if (infoSection) {
-                    // A small timeout allows the state to update and accordion to start opening before scrolling
-                    setTimeout(() => {
-                        infoSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
-                        // We can't directly open the accordion from here easily without more state lifting
-                        // but we can try to click the button if it's not expanded
-                        const infoButton = document.querySelector('#info button[aria-controls="info-list"]');
-                        if (infoButton && infoButton.getAttribute('aria-expanded') === 'false') {
-                           (infoButton as HTMLElement).click();
-                        }
-
-                    }, 100);
+                    infoSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                    
+                    const infoButton = document.querySelector('#info-list > div:last-child button');
+                    if (infoButton && infoButton.getAttribute('aria-expanded') === 'false') {
+                       (infoButton as HTMLElement).click();
+                    }
                 }
             }
         };
@@ -1498,19 +1422,6 @@ export default function App() {
                 .faq-answer ul li::before { content: '✓'; position: absolute; left: 0; color: #A855F7; font-weight: bold; }
                 .faq-answer a { color: #C4B5FD; text-decoration: underline; }
                 .faq-answer a:hover { color: #D8B4FE; }
-                @keyframes pulse-effect {
-                    0% {
-                        box-shadow: 0 0 0 0 rgba(168, 85, 247, 0.7);
-                        opacity: 1;
-                    }
-                    100% {
-                        box-shadow: 0 0 0 100px rgba(168, 85, 247, 0);
-                        opacity: 0;
-                    }
-                }
-                .animate-pulse-effect {
-                    animation: pulse-effect 1s ease-out;
-                }
             `}</style>
             <Header onOpenJoinModal={() => setIsJoinModalOpen(true)} onOpenAboutModal={() => setIsAboutUsModalOpen(true)} />
             <main>
