@@ -471,17 +471,6 @@ const Header: React.FC<{ onOpenJoinModal: () => void; onOpenAboutModal: () => vo
     };
     
     const navLinks = [
-        { name: 'Quiénes somos', href: '#about-us' },
-        { name: 'Experiencia', href: '#experience' },
-        { name: 'FAQ', href: '#faq' },
-        { name: 'Información', href: '#info' },
-        { name: 'Tips', href: '#tips' },
-        { name: 'Talentos', href: '#talents'},
-        { name: 'Socios', href: '#partnership' },
-        { name: 'Contacto', href: '#contact' },
-    ];
-
-    const mobileNavLinks = [
         { name: 'Quiénes Somos', href: '#about-us' },
         { name: 'Nuestra Experiencia', href: '#experience' },
         { name: 'Requisitos para Unirte', href: '#join-modal' },
@@ -497,21 +486,19 @@ const Header: React.FC<{ onOpenJoinModal: () => void; onOpenAboutModal: () => vo
         <header className={`fixed top-0 left-0 right-0 z-40 transition-all duration-300 ${isScrolled || isMenuOpen ? 'bg-black/80 backdrop-blur-sm' : 'bg-transparent'}`}>
             <nav className="container mx-auto px-6 py-4 flex justify-between items-center">
                 <a href="#home" onClick={handleSmoothScroll} className="flex items-center gap-2">
-                    <span className="text-white font-bold text-xl invisible">Agency Moon</span>
+                    <Logo className="h-8 w-auto text-white" />
+                    <span className="text-white font-bold text-xl">Agency Moon</span>
                 </a>
-                <div className="hidden md:flex items-center space-x-8">
-                    {/* Desktop nav links can be added back if needed */}
-                </div>
-                 <div className="md:hidden">
+                 <div>
                     <button onClick={() => setIsMenuOpen(!isMenuOpen)} className="text-white focus:outline-none" aria-label="Abrir menú">
                         {isMenuOpen ? <XIcon className="w-7 h-7" /> : <MenuIcon className="w-7 h-7" />}
                     </button>
                 </div>
             </nav>
             {isMenuOpen && (
-                 <div className="md:hidden absolute top-full left-0 w-full bg-black/90 backdrop-blur-sm animate-fade-in-down-fast">
+                 <div className="absolute top-full left-0 w-full bg-black/90 backdrop-blur-sm animate-fade-in-down-fast">
                     <div className="flex flex-col items-start px-6 py-4 space-y-1">
-                        {mobileNavLinks.map(link => (
+                        {navLinks.map(link => (
                             <a
                                 key={link.name}
                                 href={link.href}
