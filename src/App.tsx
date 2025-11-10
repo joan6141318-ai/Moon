@@ -1248,17 +1248,8 @@ const Contact: React.FC = () => (
 const Footer: React.FC = () => {
     return (
         <footer className="bg-gray-900/50 border-t border-purple-500/20 text-gray-400">
-            <div className="w-full max-w-6xl mx-auto px-6 py-10">
-                <div className="flex flex-col md:flex-row justify-center md:justify-start items-center text-center md:text-left gap-8">
-                    <a href="#home" onClick={handleSmoothScroll} className="flex items-center justify-center md:justify-start gap-3">
-                        <Logo className="h-8 w-auto text-white" />
-                        <span className="text-white font-bold text-xl">Agency Moon</span>
-                    </a>
-                    <p className="max-w-xs">Potenciando a los creadores de contenido para convertir su pasión en una carrera de éxito.</p>
-                </div>
-                <div className="mt-8 pt-6 border-t border-purple-500/20 text-center text-sm">
-                    <p>&copy; {new Date().getFullYear()} Agency Moon. Todos los derechos reservados.</p>
-                </div>
+            <div className="w-full max-w-6xl mx-auto px-6 py-8 text-center text-sm">
+                <p>&copy; {new Date().getFullYear()} Agency Moon. Todos los derechos reservados.</p>
             </div>
         </footer>
     );
