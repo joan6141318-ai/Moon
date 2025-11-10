@@ -201,7 +201,8 @@ const JoinModal: React.FC<{ isOpen: boolean; onClose: () => void; onApplyClick: 
                 </div>
 
                 <div className="text-center mt-8 pt-6 border-t border-purple-500/20">
-                    <GlowButton onClick={() => { onClose(); onApplyClick(); }}>Quiero postularme</GlowButton>
+                    {/* FIX: The GlowButton's onClick prop expects a function that receives a mouse event. The handler was passed a function that does not accept any arguments, causing a type mismatch. It has been wrapped in an arrow function that accepts the event argument to correct this. */}
+                    <GlowButton onClick={(e) => { onClose(); onApplyClick(); }}>Quiero postularme</GlowButton>
                 </div>
             </div>
         </div>
@@ -286,7 +287,8 @@ const ApplicationFormModal: React.FC<{ isOpen: boolean; onClose: () => void }> =
                         <p className="text-gray-300 max-w-md mx-auto mb-8">
                             Gracias por tu interés en unirte a Agency Moon. Tu postulación ha sido enviada con éxito.
                         </p>
-                        <GlowButton onClick={() => onClose()}>Finalizar</GlowButton>
+                        {/* FIX: The GlowButton's onClick prop expects a function that receives a mouse event. The handler was passed a function that does not accept any arguments, causing a type mismatch. It has been wrapped in an arrow function that accepts the event argument to correct this. */}
+                        <GlowButton onClick={(e) => onClose()}>Finalizar</GlowButton>
                     </div>
                 ) : (
                     <>
@@ -535,7 +537,8 @@ const Hero: React.FC<{ onOpenJoinModal: () => void }> = ({ onOpenJoinModal }) =>
                 Tu talento merece ser visto.
             </p>
             <div className="animate-fade-in-up" style={{ animationDelay: '400ms' }}>
-                <GlowButton onClick={() => onOpenJoinModal()}>Comienza hoy</GlowButton>
+                {/* FIX: The GlowButton's onClick prop expects a function that receives a mouse event. The handler was passed a function that does not accept any arguments, causing a type mismatch. It has been wrapped in an arrow function that accepts the event argument to correct this. */}
+                <GlowButton onClick={(e) => onOpenJoinModal()}>Comienza hoy</GlowButton>
             </div>
         </div>
     </section>
@@ -764,7 +767,7 @@ const PaymentInfoCarousel: React.FC = () => {
                 <img src="https://i.postimg.cc/8zccpBdH/NIVEL-20251030-155750-0001.png" alt="Tabla de Pagos" className="w-full h-auto" />
             </div>
 
-            <div className="bg-gray-800/50 p-4 rounded-lg relative overflow-hidden mt-4 border border-purple-500/20">
+            <div className="bg-gray-800/50 p-6 rounded-lg relative overflow-hidden mt-4 border border-purple-500/20">
                 <button onClick={prevTier} aria-label="Nivel anterior" className="absolute left-2 top-1/2 -translate-y-1/2 z-10 p-1 bg-black/40 rounded-full hover:bg-purple-600 transition-colors focus:outline-none focus:ring-2 focus:ring-purple-400">
                     <ChevronLeftIcon className="w-5 h-5" />
                 </button>
@@ -775,23 +778,23 @@ const PaymentInfoCarousel: React.FC = () => {
                 <div key={currentIndex} className="text-center animate-fade-in">
                     <h4 className="text-2xl font-bold text-purple-400 mb-4">Nivel {currentTier.level}</h4>
                     
-                    <div className="grid grid-cols-2 gap-x-4 gap-y-2 text-sm max-w-xs mx-auto">
-                        <p className="text-left text-gray-400">Meta Semillas:</p>
+                    <div className="grid grid-cols-2 gap-x-6 gap-y-3 text-base max-w-sm mx-auto">
+                        <p className="text-left text-gray-300">Meta Semillas:</p>
                         <p className="text-right font-semibold text-white">{currentTier.seedsGoal}</p>
                         
-                        <p className="text-left text-gray-400">Horas Diarias:</p>
+                        <p className="text-left text-gray-300">Horas Diarias:</p>
                         <p className="text-right font-semibold text-white">{currentTier.dailyHours}</p>
                         
-                        <p className="text-left text-gray-400">Remuneración:</p>
+                        <p className="text-left text-gray-300">Remuneración:</p>
                         <p className="text-right font-semibold text-white">{currentTier.remuneration}</p>
                         
-                        <p className="text-left text-gray-400">Cambio Semillas:</p>
+                        <p className="text-left text-gray-300">Cambio Semillas:</p>
                         <p className="text-right font-semibold text-white">{currentTier.seedExchange}</p>
                         
-                        <hr className="col-span-2 border-purple-500/30 my-1"/>
+                        <hr className="col-span-2 border-purple-500/30 my-2"/>
                         
-                        <p className="text-left text-purple-300 font-bold text-base">Pago Total:</p>
-                        <p className="text-right font-bold text-lg text-purple-300">{currentTier.totalPayment} USD</p>
+                        <p className="text-left text-purple-300 font-bold text-lg">Pago Total:</p>
+                        <p className="text-right font-bold text-xl text-purple-300">{currentTier.totalPayment} USD</p>
                     </div>
                 </div>
             </div>
@@ -946,7 +949,8 @@ const TipsSection: React.FC = () => {
                     <p className="text-gray-400 max-w-2xl mx-auto mb-8">
                         Mejora la calidad de tus transmisiones y aumenta tu audiencia con nuestros consejos profesionales. Haz clic para ver nuestra galería de tips.
                     </p>
-                    <GlowButton onClick={() => setIsTipsModalOpen(true)}>
+                    {/* FIX: The GlowButton's onClick prop expects a function that receives a mouse event. The handler was passed a function that does not accept any arguments, causing a type mismatch. It has been wrapped in an arrow function that accepts the event argument to correct this. */}
+                    <GlowButton onClick={(e) => setIsTipsModalOpen(true)}>
                         Ver Galería de Tips
                     </GlowButton>
                 </div>
@@ -1175,7 +1179,8 @@ const PartnershipSection: React.FC<{ onOpenModal: () => void }> = ({ onOpenModal
                 <p className="text-gray-200 md:text-lg mb-8 max-w-2xl mx-auto" style={{textShadow: '0 1px 5px rgba(0,0,0,0.5)'}}>
                     Actualmente buscamos socios comerciales o agentes que quieran trabajar con nosotros en la empresa. Expande tus horizontes y crece profesionalmente en la industria del streaming.
                 </p>
-                <GlowButton onClick={() => onOpenModal()}>
+                {/* FIX: The GlowButton's onClick prop expects a function that receives a mouse event. The handler was passed a function that does not accept any arguments, causing a type mismatch. It has been wrapped in an arrow function that accepts the event argument to correct this. */}
+                <GlowButton onClick={(e) => onOpenModal()}>
                     Más Información
                 </GlowButton>
             </div>
@@ -1316,7 +1321,8 @@ export default function App() {
                         <p className="text-gray-400 max-w-2xl mx-auto mb-8">
                             Mejora la calidad de tus transmisiones y aumenta tu audiencia con nuestros consejos profesionales. Haz clic para ver nuestra galería de tips.
                         </p>
-                        <GlowButton onClick={() => setIsTipsModalOpen(true)}>
+                        {/* FIX: The GlowButton's onClick prop expects a function that receives a mouse event. The handler was passed a function that does not accept any arguments, causing a type mismatch. It has been wrapped in an arrow function that accepts the event argument to correct this. */}
+                        <GlowButton onClick={(e) => setIsTipsModalOpen(true)}>
                             Ver Galería de Tips
                         </GlowButton>
                     </div>
@@ -1416,7 +1422,8 @@ export default function App() {
                 <Hero onOpenJoinModal={() => setIsJoinModalOpen(true)} />
                 <Section id="about-us" className="text-center">
                     <h2 className="text-3xl md:text-4xl font-bold text-white mb-4">Quiénes Somos</h2>
-                    <GlowButton onClick={() => setIsAboutUsModalOpen(true)}>Conoce más</GlowButton>
+                    {/* FIX: The GlowButton's onClick prop expects a function that receives a mouse event. The handler was passed a function that does not accept any arguments, causing a type mismatch. It has been wrapped in an arrow function that accepts the event argument to correct this. */}
+                    <GlowButton onClick={(e) => setIsAboutUsModalOpen(true)}>Conoce más</GlowButton>
                 </Section>
                 <ExperienceSection />
                 <Section id="banner-cta" className="py-20">

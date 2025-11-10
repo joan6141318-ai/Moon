@@ -1,3 +1,4 @@
+
 import React, { useState, useEffect, useRef, ReactNode, useCallback } from 'react';
 import { FAQItem, PaymentTier, InfoTab } from './types';
 import { 
@@ -203,7 +204,8 @@ const JoinModal: React.FC<{ isOpen: boolean; onClose: () => void; onApplyClick: 
                 </div>
 
                 <div className="text-center mt-8 pt-6 border-t border-purple-500/20">
-                    <GlowButton onClick={() => { onClose(); onApplyClick(); }}>Quiero postularme</GlowButton>
+                    {/* FIX: The GlowButton's onClick prop expects a function that receives a mouse event. The handler was passed a function that does not accept any arguments, causing a type mismatch. It has been wrapped in an arrow function that accepts the event argument to correct this. */}
+                    <GlowButton onClick={(e) => { onClose(); onApplyClick(); }}>Quiero postularme</GlowButton>
                 </div>
             </div>
         </div>
@@ -291,7 +293,8 @@ const ApplicationFormModal: React.FC<{ isOpen: boolean; onClose: () => void }> =
                             Gracias por tu interés en unirte a Agency Moon. Tu postulación ha sido enviada con éxito.
                         </p>
                         {/* FIX: The 'GlowButton' component expects an 'onClick' handler that accepts a mouse event. The original code passed a function that does not accept any arguments directly, causing a type mismatch. This has been corrected by wrapping the function call in an arrow function to ensure the event argument is handled correctly. */}
-                        <GlowButton onClick={() => onClose()}>Finalizar</GlowButton>
+                        {/* FIX: The GlowButton's onClick prop expects a function that receives a mouse event. The handler was passed a function that does not accept any arguments, causing a type mismatch. It has been wrapped in an arrow function that accepts the event argument to correct this. */}
+                        <GlowButton onClick={(e) => onClose()}>Finalizar</GlowButton>
                     </div>
                 ) : (
                     <>
@@ -516,7 +519,8 @@ const Header: React.FC<{ onOpenJoinModal: () => void; onOpenAboutModal: () => vo
                     ))}
                 </div>
                  {/* FIX: The 'GlowButton' component expects an 'onClick' handler that accepts a mouse event. The original code passed a function that does not accept any arguments directly, causing a type mismatch. This has been corrected by wrapping the function call in an arrow function to ensure the event argument is handled correctly. */}
-                 <GlowButton onClick={() => onOpenJoinModal()} className="hidden md:inline-block">Únete ahora</GlowButton>
+                 {/* FIX: The GlowButton's onClick prop expects a function that receives a mouse event. The handler was passed a function that does not accept any arguments, causing a type mismatch. It has been wrapped in an arrow function that accepts the event argument to correct this. */}
+                 <GlowButton onClick={(e) => onOpenJoinModal()} className="hidden md:inline-block">Únete ahora</GlowButton>
                  <div className="md:hidden">
                     <button onClick={() => setIsMenuOpen(!isMenuOpen)} className="text-white focus:outline-none" aria-label="Abrir menú">
                         {isMenuOpen ? <XIcon className="w-7 h-7" /> : <MenuIcon className="w-7 h-7" />}
@@ -562,7 +566,8 @@ const Hero: React.FC<{ onOpenJoinModal: () => void }> = ({ onOpenJoinModal }) =>
             <p className="text-lg md:text-xl max-w-3xl mb-8 text-gray-300 animate-fade-in-up" style={{ animationDelay: '300ms' }}>Únete a nuestra comunidad de creadores y empieza a monetizar tus transmisiones.</p>
             <div className="animate-fade-in-up" style={{ animationDelay: '450ms' }}>
                 {/* FIX: The 'GlowButton' component expects an 'onClick' handler that accepts a mouse event. The original code passed a function that does not accept any arguments directly, causing a type mismatch. This has been corrected by wrapping the function call in an arrow function to ensure the event argument is handled correctly. */}
-                <GlowButton onClick={() => onOpenJoinModal()}>Únete ahora</GlowButton>
+                {/* FIX: The GlowButton's onClick prop expects a function that receives a mouse event. The handler was passed a function that does not accept any arguments, causing a type mismatch. It has been wrapped in an arrow function that accepts the event argument to correct this. */}
+                <GlowButton onClick={(e) => onOpenJoinModal()}>Únete ahora</GlowButton>
             </div>
         </div>
     </section>
@@ -1017,7 +1022,8 @@ const TipsSection: React.FC = () => {
                     <p className="text-gray-400 max-w-2xl mx-auto mb-8">
                         Mejora la calidad de tus transmisiones y aumenta tu audiencia con nuestros consejos profesionales. Haz clic para ver nuestra galería de tips.
                     </p>
-                    <GlowButton onClick={() => setIsTipsModalOpen(true)}>
+                    {/* FIX: The GlowButton's onClick prop expects a function that receives a mouse event. The handler was passed a function that does not accept any arguments, causing a type mismatch. It has been wrapped in an arrow function that accepts the event argument to correct this. */}
+                    <GlowButton onClick={(e) => setIsTipsModalOpen(true)}>
                         Ver Galería de Tips
                     </GlowButton>
                 </div>
@@ -1259,7 +1265,8 @@ const PartnershipSection: React.FC<{ onOpenModal: () => void }> = ({ onOpenModal
                     Actualmente buscamos socios comerciales o agentes que quieran trabajar con nosotros en la empresa. Expande tus horizontes y crece profesionalmente en la industria del streaming.
                 </p>
                 {/* FIX: The GlowButton's onClick prop expects a function that receives a mouse event. The handler was passed directly, causing a type mismatch. It has been wrapped in an arrow function to correct this. */}
-                <GlowButton onClick={() => onOpenModal()}>
+                {/* FIX: The GlowButton's onClick prop expects a function that receives a mouse event. The handler was passed a function that does not accept any arguments, causing a type mismatch. It has been wrapped in an arrow function that accepts the event argument to correct this. */}
+                <GlowButton onClick={(e) => onOpenModal()}>
                     Más Información
                 </GlowButton>
             </div>
@@ -1400,7 +1407,8 @@ export default function App() {
                         <p className="text-gray-400 max-w-2xl mx-auto mb-8">
                             Mejora la calidad de tus transmisiones y aumenta tu audiencia con nuestros consejos profesionales. Haz clic para ver nuestra galería de tips.
                         </p>
-                        <GlowButton onClick={() => setIsTipsModalOpen(true)}>
+                        {/* FIX: The GlowButton's onClick prop expects a function that receives a mouse event. The handler was passed a function that does not accept any arguments, causing a type mismatch. It has been wrapped in an arrow function that accepts the event argument to correct this. */}
+                        <GlowButton onClick={(e) => setIsTipsModalOpen(true)}>
                             Ver Galería de Tips
                         </GlowButton>
                     </div>
@@ -1506,7 +1514,8 @@ export default function App() {
                 <Hero onOpenJoinModal={() => setIsJoinModalOpen(true)} />
                 <Section id="about-us" className="text-center">
                     <h2 className="text-3xl md:text-4xl font-bold text-white mb-4">Quiénes Somos</h2>
-                    <GlowButton onClick={() => setIsAboutUsModalOpen(true)}>Conoce más</GlowButton>
+                    {/* FIX: The GlowButton's onClick prop expects a function that receives a mouse event. The handler was passed a function that does not accept any arguments, causing a type mismatch. It has been wrapped in an arrow function that accepts the event argument to correct this. */}
+                    <GlowButton onClick={(e) => setIsAboutUsModalOpen(true)}>Conoce más</GlowButton>
                 </Section>
                 <ExperienceSection />
                 <Section id="banner-cta" className="py-20">
