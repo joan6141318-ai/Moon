@@ -1,4 +1,5 @@
 
+
 import React, { useState, useEffect, useRef, ReactNode, useCallback } from 'react';
 import { FAQItem, PaymentTier, InfoTab } from './types';
 import { 
@@ -1224,17 +1225,17 @@ const Contact: React.FC = () => {
                         href={manager.whatsappLink}
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="group flex items-center bg-gray-900/50 rounded-2xl border border-purple-500/30 p-6 text-left transition-all duration-300 hover:border-purple-400 hover:bg-gray-900/80
+                        className="group flex items-center bg-gray-900/50 rounded-2xl border border-purple-500/30 p-4 text-left transition-all duration-300 hover:border-purple-400 hover:bg-gray-900/80
                                    md:flex-col md:p-8 md:text-center md:hover:shadow-2xl md:hover:shadow-purple-500/20 md:hover:-translate-y-2"
                     >
                         <div className="flex-shrink-0 bg-gray-800/50 rounded-full flex items-center justify-center border-2 border-purple-500/50 group-hover:border-purple-400 transition-colors duration-300
-                                       w-16 h-16 md:w-20 md:h-20 md:mb-6">
-                            <WhatsappIcon className="w-8 h-8 md:w-10 md:h-10 text-white" />
+                                       w-12 h-12 md:w-20 md:h-20 md:mb-6">
+                            <WhatsappIcon className="w-6 h-6 md:w-10 md:h-10 text-white" />
                         </div>
 
-                        <div className="flex-grow ml-5 md:ml-0 md:flex md:flex-col md:flex-grow">
-                            <h3 className="text-lg md:text-xl font-semibold text-white mb-1 md:mb-3">{manager.title}</h3>
-                            <p className="text-gray-400 text-sm md:text-base md:mb-8 md:flex-grow">{manager.description}</p>
+                        <div className="flex-grow ml-4 md:ml-0 md:flex md:flex-col md:flex-grow">
+                            <h3 className="text-base md:text-xl font-semibold text-white md:mb-3">{manager.title}</h3>
+                            <p className="text-gray-400 text-sm hidden md:block md:text-base md:mb-8 md:flex-grow">{manager.description}</p>
                         </div>
                         
                         <div className="hidden md:block mt-auto">
@@ -1244,7 +1245,7 @@ const Contact: React.FC = () => {
                         </div>
 
                         <div className="md:hidden ml-auto text-purple-400 group-hover:text-white transition-colors">
-                            <ChevronRightIcon className="w-8 h-8" />
+                            <ChevronRightIcon className="w-6 h-6" />
                         </div>
                     </a>
                 ))}
