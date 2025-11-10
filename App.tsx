@@ -824,10 +824,12 @@ const PaymentInfoCarousel: React.FC = () => {
             </div>
 
             <div className="bg-gray-800/50 p-4 rounded-lg relative overflow-hidden mt-4 border border-purple-500/20">
-                <button onClick={prevTier} aria-label="Nivel anterior" className="absolute left-2 top-1/2 -translate-y-1/2 z-10 p-1 bg-black/40 rounded-full hover:bg-purple-600 transition-colors focus:outline-none focus:ring-2 focus:ring-purple-400">
+                {/* FIX: The onClick handler for the button passes a mouse event, but `prevTier` expects no arguments. This has been corrected by wrapping `prevTier` in an arrow function to discard the event. */}
+                <button onClick={() => prevTier()} aria-label="Nivel anterior" className="absolute left-2 top-1/2 -translate-y-1/2 z-10 p-1 bg-black/40 rounded-full hover:bg-purple-600 transition-colors focus:outline-none focus:ring-2 focus:ring-purple-400">
                     <ChevronLeftIcon className="w-5 h-5" />
                 </button>
-                <button onClick={nextTier} aria-label="Siguiente nivel" className="absolute right-2 top-1/2 -translate-y-1/2 z-10 p-1 bg-black/40 rounded-full hover:bg-purple-600 transition-colors focus:outline-none focus:ring-2 focus:ring-purple-400">
+                {/* FIX: The onClick handler for the button passes a mouse event, but `nextTier` expects no arguments. This has been corrected by wrapping `nextTier` in an arrow function to discard the event. */}
+                <button onClick={() => nextTier()} aria-label="Siguiente nivel" className="absolute right-2 top-1/2 -translate-y-1/2 z-10 p-1 bg-black/40 rounded-full hover:bg-purple-600 transition-colors focus:outline-none focus:ring-2 focus:ring-purple-400">
                     <ChevronRightIcon className="w-5 h-5" />
                 </button>
 

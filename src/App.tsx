@@ -766,7 +766,8 @@ const PaymentInfoCarousel: React.FC = () => {
 
             <div className="bg-gray-800/50 p-4 rounded-lg mt-4 border border-purple-500/20">
                 <div className="flex items-center justify-between">
-                     <button onClick={prevTier} aria-label="Nivel anterior" className="p-2 bg-black/40 rounded-full hover:bg-purple-600 transition-colors focus:outline-none focus:ring-2 focus:ring-purple-400">
+                     {/* FIX: The onClick handler for the button passes a mouse event, but `prevTier` expects no arguments. This has been corrected by wrapping `prevTier` in an arrow function to discard the event. */}
+                     <button onClick={() => prevTier()} aria-label="Nivel anterior" className="p-2 bg-black/40 rounded-full hover:bg-purple-600 transition-colors focus:outline-none focus:ring-2 focus:ring-purple-400">
                         <ChevronLeftIcon className="w-5 h-5" />
                     </button>
 
@@ -793,7 +794,8 @@ const PaymentInfoCarousel: React.FC = () => {
                         </div>
                     </div>
                     
-                    <button onClick={nextTier} aria-label="Siguiente nivel" className="p-2 bg-black/40 rounded-full hover:bg-purple-600 transition-colors focus:outline-none focus:ring-2 focus:ring-purple-400">
+                    {/* FIX: The onClick handler for the button passes a mouse event, but `nextTier` expects no arguments. This has been corrected by wrapping `nextTier` in an arrow function to discard the event. */}
+                    <button onClick={() => nextTier()} aria-label="Siguiente nivel" className="p-2 bg-black/40 rounded-full hover:bg-purple-600 transition-colors focus:outline-none focus:ring-2 focus:ring-purple-400">
                         <ChevronRightIcon className="w-5 h-5" />
                     </button>
                 </div>
@@ -832,7 +834,7 @@ const InfoAccordionItem: React.FC<{ item: InfoTab, isOpen: boolean, onClick: () 
 );
 
 const GeneralInfo: React.FC = () => {
-    const [openIndex, setOpenIndex] = useState<number | null>(0);
+    const [openIndex, setOpenIndex] = useState<number | null>(null);
 
     const onToggle = (index: number) => {
         setOpenIndex(prev => (prev === index ? null : index));
