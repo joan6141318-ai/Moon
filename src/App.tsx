@@ -780,9 +780,9 @@ const PaymentCarousel: React.FC = () => {
     };
     
     return (
-        <div className="relative w-full max-w-sm mx-auto flex flex-col items-center justify-center">
-            <div className="relative w-full h-[360px] flex items-center justify-center">
-                 <button onClick={prevSlide} className="absolute -left-4 md:-left-12 top-1/2 -translate-y-1/2 z-10 p-2 bg-black/40 rounded-full hover:bg-purple-600 transition-colors focus:outline-none focus:ring-2 focus:ring-purple-400">
+        <div className="relative w-full max-w-xs sm:max-w-sm md:max-w-md mx-auto flex flex-col items-center justify-center py-4">
+            <div className="relative w-full h-[380px] md:h-[400px] flex items-center justify-center">
+                 <button onClick={prevSlide} className="absolute -left-4 sm:-left-6 md:-left-8 top-1/2 -translate-y-1/2 z-10 p-2 bg-black/40 rounded-full hover:bg-purple-600 transition-colors focus:outline-none focus:ring-2 focus:ring-purple-400">
                     <ChevronLeftIcon className="w-6 h-6" />
                 </button>
 
@@ -791,11 +791,11 @@ const PaymentCarousel: React.FC = () => {
                         {paymentTiers.map((tier, index) => (
                            <div key={index} className="inline-flex items-center justify-center w-full h-full p-2">
                                 <div className="w-full h-full bg-gradient-to-br from-gray-800 to-gray-900 border border-purple-500/30 rounded-xl p-6 text-center flex flex-col justify-center shadow-lg shadow-purple-900/30">
-                                    <div className="absolute top-3 right-3 bg-purple-600 text-white text-xs font-bold px-3 py-1 rounded-full">Nivel {tier.level}</div>
-                                    <h4 className="text-white font-bold text-4xl md:text-5xl mb-3 tracking-tight">{tier.totalPayment}</h4>
-                                    <p className="text-purple-400 font-semibold text-lg mb-5">Meta: {tier.seedsGoal} semillas</p>
+                                    <div className="absolute top-4 right-4 bg-purple-600 text-white text-xs font-bold px-3 py-1 rounded-full">Nivel {tier.level}</div>
+                                    <h4 className="text-white font-bold text-4xl sm:text-5xl mb-3 tracking-tight">{tier.totalPayment}</h4>
+                                    <p className="text-purple-400 font-semibold text-lg sm:text-xl mb-5">Meta: {tier.seedsGoal} semillas</p>
                                     
-                                    <div className="text-left space-y-3 text-sm border-t border-purple-500/20 pt-4">
+                                    <div className="text-left space-y-3 text-sm sm:text-base border-t border-purple-500/20 pt-5 mt-auto">
                                         <p><strong className="font-semibold text-gray-300">Remuneración:</strong> <span className="text-gray-400 ml-1.5">{tier.remuneration}</span></p>
                                         <p><strong className="font-semibold text-gray-300">Horas Requeridas:</strong> <span className="text-gray-400 ml-1.5">{tier.dailyHours}</span></p>
                                     </div>
@@ -805,7 +805,7 @@ const PaymentCarousel: React.FC = () => {
                     </div>
                 </div>
 
-                <button onClick={nextSlide} className="absolute -right-4 md:-right-12 top-1/2 -translate-y-1/2 z-10 p-2 bg-black/40 rounded-full hover:bg-purple-600 transition-colors focus:outline-none focus:ring-2 focus:ring-purple-400">
+                <button onClick={nextSlide} className="absolute -right-4 sm:-right-6 md:-right-8 top-1/2 -translate-y-1/2 z-10 p-2 bg-black/40 rounded-full hover:bg-purple-600 transition-colors focus:outline-none focus:ring-2 focus:ring-purple-400">
                     <ChevronRightIcon className="w-6 h-6" />
                 </button>
             </div>
@@ -832,7 +832,7 @@ const InfoItemDisplay: React.FC<{ item: InfoTab; initialOpen?: boolean }> = ({ i
                 <h3 className="text-lg font-semibold">{item.title}</h3>
                 <ChevronDownIcon className={`w-6 h-6 transform transition-transform duration-300 ${isOpen ? 'rotate-180' : ''}`} />
             </button>
-            <div className={`transition-all duration-700 ease-in-out overflow-hidden ${isOpen ? 'max-h-[1000px] opacity-100' : 'max-h-0 opacity-0'}`}>
+            <div className={`transition-all duration-700 ease-in-out overflow-hidden ${isOpen ? 'max-h-[1200px] opacity-100' : 'max-h-0 opacity-0'}`}>
                  <div className="p-6 border-t border-purple-500/30 text-gray-300 space-y-4">
                     {item.content}
                 </div>
