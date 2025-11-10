@@ -127,10 +127,9 @@ const JoinModal: React.FC<{ isOpen: boolean; onClose: () => void; onApplyClick: 
     ];
 
     return (
-        // FIX: The onClick handler for a div expects a function that takes a mouse event, but `onClose` takes no arguments. It has been wrapped in an arrow function to correct the type mismatch.
         <div
             className="fixed inset-0 bg-black/80 backdrop-blur-sm z-50 flex items-center justify-center p-4 animate-fade-in"
-            onClick={() => onClose()}
+            onClick={onClose}
             role="dialog"
             aria-modal="true"
             aria-labelledby="join-modal-title"
@@ -140,8 +139,7 @@ const JoinModal: React.FC<{ isOpen: boolean; onClose: () => void; onApplyClick: 
                 onClick={(e) => e.stopPropagation()}
             >
                 <button
-// FIX: The `onClick` handler expects a function that receives a mouse event, but `onClose` takes no arguments. It has been wrapped in an arrow function to correct the type mismatch.
-                    onClick={() => onClose()}
+                    onClick={onClose}
                     className="absolute top-4 right-4 text-gray-400 hover:text-white transition-colors"
                     aria-label="Cerrar"
                 >
@@ -223,10 +221,9 @@ const ApplicationFormModal: React.FC<{ isOpen: boolean; onClose: () => void }> =
     ];
 
     return (
-        // FIX: The onClick handler for a div expects a function that takes a mouse event, but `onClose` takes no arguments. It has been wrapped in an arrow function to correct the type mismatch.
         <div
             className="fixed inset-0 bg-black/80 backdrop-blur-sm z-50 flex items-center justify-center p-4 animate-fade-in"
-            onClick={() => onClose()}
+            onClick={onClose}
             role="dialog"
             aria-modal="true"
             aria-labelledby="application-form-title"
@@ -236,8 +233,7 @@ const ApplicationFormModal: React.FC<{ isOpen: boolean; onClose: () => void }> =
                 onClick={(e) => e.stopPropagation()}
             >
                 <button
-// FIX: The `onClick` handler expects a function that receives a mouse event, but `onClose` takes no arguments. It has been wrapped in an arrow function to correct the type mismatch.
-                    onClick={() => onClose()}
+                    onClick={onClose}
                     className="absolute top-4 right-4 text-gray-400 hover:text-white transition-colors"
                     aria-label="Cerrar"
                 >
@@ -253,8 +249,7 @@ const ApplicationFormModal: React.FC<{ isOpen: boolean; onClose: () => void }> =
                         <p className="text-gray-300 max-w-md mx-auto mb-8">
                             Gracias por tu interés en unirte a Agency Moon. Tu postulación ha sido enviada con éxito.
                         </p>
-                        {/* FIX: The onClick handler for the GlowButton expects a function that takes a mouse event, but `onClose` takes no arguments. It has been wrapped in an arrow function to correct the type mismatch. */}
-                        <GlowButton onClick={() => onClose()}>Finalizar</GlowButton>
+                        <GlowButton onClick={onClose}>Finalizar</GlowButton>
                     </div>
                 ) : (
                     <>
@@ -335,10 +330,9 @@ const PartnershipModal: React.FC<{ isOpen: boolean; onClose: () => void }> = ({ 
     const prev = () => setCurrentSlide(prev => (prev === 0 ? slides.length - 1 : prev - 1));
 
     return (
-        // FIX: The onClick handler for a div expects a function that takes a mouse event, but `onClose` takes no arguments. It has been wrapped in an arrow function to correct the type mismatch.
         <div
             className="fixed inset-0 bg-black/80 backdrop-blur-sm z-50 flex items-center justify-center p-4 animate-fade-in"
-            onClick={() => onClose()}
+            onClick={onClose}
             role="dialog"
             aria-modal="true"
         >
@@ -347,8 +341,7 @@ const PartnershipModal: React.FC<{ isOpen: boolean; onClose: () => void }> = ({ 
                 onClick={(e) => e.stopPropagation()}
             >
                 <button
-// FIX: The onClick handler for this button expects a function that takes a mouse event, but `prev` takes no arguments. It has been wrapped in an arrow function to correct the type mismatch.
-                    onClick={() => prev()}
+                    onClick={prev}
                     aria-label="Anterior"
                     className="absolute left-0 top-1/2 -translate-y-1/2 z-10 p-2 bg-black/40 rounded-full hover:bg-purple-600 transition-colors focus:outline-none focus:ring-2 focus:ring-purple-400"
                 >
@@ -398,15 +391,13 @@ const PartnershipModal: React.FC<{ isOpen: boolean; onClose: () => void }> = ({ 
                         </div>
                     </div>
                     
-                     <button // FIX: The `onClick` handler expects a function that receives a mouse event, but `onClose` takes no arguments. It has been wrapped in an arrow function to correct the type mismatch.
-                    onClick={() => onClose()} className="absolute top-3 right-3 text-gray-400 hover:text-white transition-colors" aria-label="Cerrar">
+                     <button onClick={onClose} className="absolute top-3 right-3 text-gray-400 hover:text-white transition-colors" aria-label="Cerrar">
                         <XIcon className="w-5 h-5" />
                     </button>
                 </div>
 
                 <button
-// FIX: The onClick handler for this button expects a function that takes a mouse event, but `next` takes no arguments. It has been wrapped in an arrow function to correct the type mismatch.
-                    onClick={() => next()}
+                    onClick={next}
                     aria-label="Siguiente"
                     className="absolute right-0 top-1/2 -translate-y-1/2 z-10 p-2 bg-black/40 rounded-full hover:bg-purple-600 transition-colors focus:outline-none focus:ring-2 focus:ring-purple-400"
                 >
@@ -473,14 +464,14 @@ const Header: React.FC<{ onOpenJoinModal: () => void; activeSection: string; }> 
                                     key={link.name} 
                                     href={link.href} 
                                     onClick={handleMenuClick} 
-                                    className={`transition-colors font-medium text-sm ${isActive ? 'text-purple-400 font-bold text-shadow-purple' : 'text-gray-300 hover:text-white hover:text-shadow-purple'}`}
+                                    className={`transition-colors font-medium text-base ${isActive ? 'text-purple-400 font-bold text-shadow-purple' : 'text-gray-300 hover:text-white hover:text-shadow-purple'}`}
                                  >
                                     {link.name}
                                 </a>
                             );
                         })}
                     </div>
-                    <GlowButton onClick={() => onOpenJoinModal()}>Únete ahora</GlowButton>
+                    <GlowButton onClick={onOpenJoinModal}>Únete ahora</GlowButton>
                 </div>
 
                  <div className="lg:hidden">
@@ -523,14 +514,14 @@ const Hero: React.FC<{ onOpenJoinModal: () => void }> = ({ onOpenJoinModal }) =>
             <div className="absolute inset-0 bg-gradient-to-t from-black via-black/70 to-transparent"></div>
         </div>
         <div className="relative z-10 flex flex-col items-center">
-            <h1 className="text-3xl md:text-4xl font-bold mb-6 animate-fade-in-down tracking-tight whitespace-nowrap">
+            <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold mb-6 animate-fade-in-down tracking-tight whitespace-nowrap">
                 Conecta. Crea. <span className="text-fuchsia-500">Brilla.</span>
             </h1>
-            <p className="text-base mb-12 text-gray-300 animate-fade-in-up font-light" style={{ animationDelay: '150ms' }}>
+            <p className="text-xl md:text-2xl mb-12 text-gray-300 animate-fade-in-up font-light" style={{ animationDelay: '150ms' }}>
                 Tu talento merece ser visto.
             </p>
             <div className="animate-fade-in-up" style={{ animationDelay: '300ms' }}>
-                <GlowButton onClick={() => onOpenJoinModal()} className="rounded-full px-8 py-3">Comienza hoy</GlowButton>
+                <GlowButton onClick={onOpenJoinModal} className="rounded-full px-8 py-3">Comienza hoy</GlowButton>
             </div>
         </div>
     </section>
@@ -748,8 +739,6 @@ const FAQ: React.FC = () => {
 
     return (
         <Section id="faq">
-            <h2 className="text-3xl md:text-4xl font-bold text-white text-center mb-12">Preguntas Frecuentes</h2>
-            
             <div className="max-w-2xl mx-auto mb-8">
                 <div className="block rounded-2xl overflow-hidden shadow-lg shadow-purple-900/50 border border-purple-500/20">
                     <img 
@@ -760,15 +749,15 @@ const FAQ: React.FC = () => {
                 </div>
             </div>
 
-            <div className="max-w-3xl mx-auto">
+            <div className="max-w-3xl mx-auto text-center">
                 <button
                     onClick={() => setIsFaqExpanded(!isFaqExpanded)}
-                    className="w-full flex justify-between items-center text-left p-5 bg-gray-900/50 rounded-lg border border-purple-500/30 mb-3 transition-all duration-300 hover:border-purple-400 hover:bg-gray-900/70"
+                    className="inline-flex justify-center items-center gap-3 text-left py-4 px-8 bg-gray-900/50 rounded-lg border border-purple-500/30 mb-3 transition-all duration-300 hover:border-purple-400 hover:bg-gray-900/70 focus:outline-none focus:ring-2 focus:ring-purple-500"
                     aria-expanded={isFaqExpanded}
                     aria-controls="faq-list"
                 >
-                    <span className="text-xl font-bold text-white">Ver Preguntas Frecuentes</span>
-                    <ChevronDownIcon className={`w-6 h-6 text-purple-400 transition-transform duration-300 flex-shrink-0 ml-4 ${isFaqExpanded ? 'rotate-180' : ''}`} />
+                    <span className="text-xl font-semibold text-white">Preguntas Frecuentes</span>
+                    <ChevronDownIcon className={`w-6 h-6 text-purple-400 transition-transform duration-300 flex-shrink-0 ${isFaqExpanded ? 'rotate-180' : ''}`} />
                 </button>
             </div>
             
@@ -776,14 +765,16 @@ const FAQ: React.FC = () => {
                 id="faq-list"
                 className={`max-w-3xl mx-auto overflow-hidden transition-all duration-700 ease-in-out ${isFaqExpanded ? 'max-h-[2000px] opacity-100' : 'max-h-0 opacity-0'}`}
             >
-                {faqData.map((item, index) => (
-                    <AccordionItem 
-                        key={index} 
-                        item={item} 
-                        isOpen={openIndex === index} 
-                        onClick={() => setOpenIndex(openIndex === index ? null : index)} 
-                    />
-                ))}
+                <div className="pt-4">
+                    {faqData.map((item, index) => (
+                        <AccordionItem 
+                            key={index} 
+                            item={item} 
+                            isOpen={openIndex === index} 
+                            onClick={() => setOpenIndex(openIndex === index ? null : index)} 
+                        />
+                    ))}
+                </div>
             </div>
         </Section>
     );
@@ -881,9 +872,8 @@ const PaymentInfoCarousel: React.FC = () => {
 
 const InfoAccordionItem: React.FC<{ item: InfoTab, isOpen: boolean, onClick: () => void }> = ({ item, isOpen, onClick }) => (
     <div className="bg-gray-900/50 rounded-lg border border-purple-500/30 mb-4 transition-all duration-300 hover:border-purple-400 hover:shadow-[0_0_20px_rgba(168,85,247,0.4)]">
-        {/* FIX: The onClick handler for the button passes a mouse event, but the `onClick` prop expects no arguments. This has been corrected by wrapping `onClick` in an arrow function to discard the event. */}
         <button 
-            onClick={() => onClick()} 
+            onClick={onClick} 
             className="w-full flex justify-between items-center text-left p-6"
             aria-expanded={isOpen}
         >
@@ -898,7 +888,37 @@ const InfoAccordionItem: React.FC<{ item: InfoTab, isOpen: boolean, onClick: () 
     </div>
 );
 
-const GeneralInfo: React.FC<{ openIndex: number | null; onToggle: (index: number) => void }> = ({ openIndex, onToggle }) => {
+const GeneralInfo: React.FC = () => {
+    const [openIndex, setOpenIndex] = useState<number | null>(null);
+    const [isInfoExpanded, setIsInfoExpanded] = useState(false);
+
+    const onToggle = (index: number) => {
+        setOpenIndex(prev => (prev === index ? null : index));
+    };
+
+    useEffect(() => {
+        const handleFaqLinkClick = (e: MouseEvent) => {
+            const target = e.target as HTMLElement;
+            if (target && target.id === 'faq-payment-link') {
+                e.preventDefault();
+                setIsInfoExpanded(true);
+                setOpenIndex(4);
+                
+                const infoSection = document.getElementById('info');
+                if (infoSection) {
+                    setTimeout(() => {
+                        infoSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                    }, 100);
+                }
+            }
+        };
+
+        document.addEventListener('click', handleFaqLinkClick);
+
+        return () => {
+            document.removeEventListener('click', handleFaqLinkClick);
+        };
+    }, []);
 
     const infoData: InfoTab[] = [
         {
@@ -950,15 +970,33 @@ const GeneralInfo: React.FC<{ openIndex: number | null; onToggle: (index: number
     return (
         <Section id="info">
             <h2 className="text-3xl md:text-4xl font-bold text-white text-center mb-10">Información General</h2>
-            <div className="max-w-4xl mx-auto">
-                {infoData.map((item, index) => (
-                    <InfoAccordionItem 
-                        key={index}
-                        item={item} 
-                        isOpen={openIndex === index} 
-                        onClick={() => onToggle(index)} 
-                    />
-                ))}
+            
+            <div className="max-w-4xl mx-auto text-center">
+                <button
+                    onClick={() => setIsInfoExpanded(!isInfoExpanded)}
+                    className="inline-flex justify-center items-center gap-3 text-left py-4 px-8 bg-gray-900/50 rounded-lg border border-purple-500/30 mb-3 transition-all duration-300 hover:border-purple-400 hover:bg-gray-900/70 focus:outline-none focus:ring-2 focus:ring-purple-500"
+                    aria-expanded={isInfoExpanded}
+                    aria-controls="info-list"
+                >
+                    <span className="text-xl font-semibold text-white">Ver Información General</span>
+                    <ChevronDownIcon className={`w-6 h-6 text-purple-400 transition-transform duration-300 flex-shrink-0 ${isInfoExpanded ? 'rotate-180' : ''}`} />
+                </button>
+            </div>
+
+            <div
+                id="info-list"
+                className={`max-w-4xl mx-auto overflow-hidden transition-all duration-700 ease-in-out ${isInfoExpanded ? 'max-h-[2000px] opacity-100' : 'max-h-0 opacity-0'}`}
+            >
+                <div className="pt-4">
+                    {infoData.map((item, index) => (
+                        <InfoAccordionItem 
+                            key={index}
+                            item={item} 
+                            isOpen={openIndex === index} 
+                            onClick={() => onToggle(index)} 
+                        />
+                    ))}
+                </div>
             </div>
         </Section>
     );
@@ -1193,16 +1231,14 @@ const TalentsSection: React.FC = () => {
                 </div>
 
                 <button
-// FIX: The onClick handler for this button expects a function that takes a mouse event, but `prevSlide` takes no arguments. It has been wrapped in an arrow function to correct the type mismatch.
-                    onClick={() => prevSlide()}
+                    onClick={prevSlide}
                     className="absolute top-1/2 -left-4 md:-left-16 -translate-y-1/2 bg-black/50 text-white p-3 rounded-full hover:bg-purple-600 transition-colors z-20 focus:outline-none focus:ring-2 focus:ring-purple-400"
                     aria-label="Anterior Talento"
                 >
                     <ChevronLeftIcon className="w-6 h-6" />
                 </button>
                 <button
-// FIX: The onClick handler for this button expects a function that takes a mouse event, but `nextSlideManual` takes no arguments. It has been wrapped in an arrow function to correct the type mismatch.
-                    onClick={() => nextSlideManual()}
+                    onClick={nextSlideManual}
                     className="absolute top-1/2 -right-4 md:-right-16 -translate-y-1/2 bg-black/50 text-white p-3 rounded-full hover:bg-purple-600 transition-colors z-20 focus:outline-none focus:ring-2 focus:ring-purple-400"
                     aria-label="Siguiente Talento"
                 >
@@ -1240,7 +1276,7 @@ const PartnershipSection: React.FC<{ onOpenModal: () => void }> = ({ onOpenModal
                 <p className="text-gray-200 md:text-lg mb-8 max-w-2xl mx-auto" style={{textShadow: '0 1px 5px rgba(0,0,0,0.5)'}}>
                     Actualmente buscamos socios comerciales o agentes que quieran trabajar con nosotros en la empresa. Expande tus horizontes y crece profesionalmente en la industria del streaming.
                 </p>
-                <GlowButton onClick={() => onOpenModal()}>
+                <GlowButton onClick={onOpenModal}>
                     Más Información
                 </GlowButton>
             </div>
@@ -1293,14 +1329,9 @@ export default function App() {
     const [isJoinModalOpen, setIsJoinModalOpen] = useState(false);
     const [isPartnershipModalOpen, setIsPartnershipModalOpen] = useState(false);
     const [isApplicationFormOpen, setIsApplicationFormOpen] = useState(false);
-    const [openInfoIndex, setOpenInfoIndex] = useState<number | null>(0);
     const [activeSection, setActiveSection] = useState('home');
     
     useIntersectionObserver(setActiveSection);
-    
-    const handleInfoToggle = (index: number) => {
-        setOpenInfoIndex(prev => (prev === index ? null : index));
-    };
     
     // Lock body scroll when any modal is open
     useEffect(() => {
@@ -1316,33 +1347,6 @@ export default function App() {
             document.body.style.overflow = 'auto';
         };
     }, [isJoinModalOpen, isPartnershipModalOpen, isApplicationFormOpen]);
-
-
-    useEffect(() => {
-        const handleFaqLinkClick = (e: MouseEvent) => {
-            const target = e.target as HTMLElement;
-            if (target && target.id === 'faq-payment-link') {
-                e.preventDefault();
-                
-                // The index for "Tabla de pagos bigo live" is 4
-                setOpenInfoIndex(4);
-                
-                const infoSection = document.getElementById('info');
-                if (infoSection) {
-                    // A small timeout allows the state to update and accordion to start opening before scrolling
-                    setTimeout(() => {
-                        infoSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
-                    }, 100);
-                }
-            }
-        };
-
-        document.addEventListener('click', handleFaqLinkClick);
-
-        return () => {
-            document.removeEventListener('click', handleFaqLinkClick);
-        };
-    }, []);
 
     return (
         <div className="bg-black text-white min-h-screen overflow-x-hidden">
@@ -1373,7 +1377,7 @@ export default function App() {
                 <ExperienceSection />
                 <Banner />
                 <FAQ />
-                <GeneralInfo openIndex={openInfoIndex} onToggle={handleInfoToggle} />
+                <GeneralInfo />
                 <TipsSection />
                 <TalentsSection />
                 <PartnershipSection onOpenModal={() => setIsPartnershipModalOpen(true)} />
