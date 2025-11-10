@@ -109,7 +109,6 @@ const AboutUsModal: React.FC<{ isOpen: boolean; onClose: () => void }> = ({ isOp
     ];
 
     return (
-        // FIX: The onClick handler for a div expects a function that takes a mouse event, but `onClose` takes no arguments. It has been wrapped in an arrow function to correct the type mismatch.
         <div
             className="fixed inset-0 bg-black/80 backdrop-blur-sm z-50 flex items-center justify-center p-4 animate-fade-in"
             onClick={() => onClose()}
@@ -122,7 +121,6 @@ const AboutUsModal: React.FC<{ isOpen: boolean; onClose: () => void }> = ({ isOp
                 onClick={(e) => e.stopPropagation()}
             >
                 <button
-// FIX: The `onClick` handler expects a function that receives a mouse event, but `onClose` takes no arguments. It has been wrapped in an arrow function to correct the type mismatch.
                     onClick={() => onClose()}
                     className="absolute top-4 right-4 text-gray-400 hover:text-white transition-colors"
                     aria-label="Cerrar"
@@ -166,7 +164,6 @@ const JoinModal: React.FC<{ isOpen: boolean; onClose: () => void; onApplyClick: 
     ];
 
     return (
-        // FIX: The onClick handler for a div expects a function that takes a mouse event, but `onClose` takes no arguments. It has been wrapped in an arrow function to correct the type mismatch.
         <div
             className="fixed inset-0 bg-black/80 backdrop-blur-sm z-50 flex items-center justify-center p-4 animate-fade-in"
             onClick={() => onClose()}
@@ -179,7 +176,6 @@ const JoinModal: React.FC<{ isOpen: boolean; onClose: () => void; onApplyClick: 
                 onClick={(e) => e.stopPropagation()}
             >
                 <button
-// FIX: The `onClick` handler expects a function that receives a mouse event, but `onClose` takes no arguments. It has been wrapped in an arrow function to correct the type mismatch.
                     onClick={() => onClose()}
                     className="absolute top-4 right-4 text-gray-400 hover:text-white transition-colors"
                     aria-label="Cerrar"
@@ -205,7 +201,6 @@ const JoinModal: React.FC<{ isOpen: boolean; onClose: () => void; onApplyClick: 
                 </div>
 
                 <div className="text-center mt-8 pt-6 border-t border-purple-500/20">
-                    {/* FIX: The GlowButton's onClick prop expects a function that receives a mouse event. The handler was passed a function that does not accept any arguments, causing a type mismatch. It has been wrapped in an arrow function that accepts the event argument to correct this. */}
                     <GlowButton onClick={(e) => { onClose(); onApplyClick(); }}>Quiero postularme</GlowButton>
                 </div>
             </div>
@@ -263,7 +258,6 @@ const ApplicationFormModal: React.FC<{ isOpen: boolean; onClose: () => void }> =
     ];
 
     return (
-        // FIX: The onClick handler for a div expects a function that takes a mouse event, but `onClose` takes no arguments. It has been wrapped in an arrow function to correct the type mismatch.
         <div
             className="fixed inset-0 bg-black/80 backdrop-blur-sm z-50 flex items-center justify-center p-4 animate-fade-in"
             onClick={() => onClose()}
@@ -276,7 +270,6 @@ const ApplicationFormModal: React.FC<{ isOpen: boolean; onClose: () => void }> =
                 onClick={(e) => e.stopPropagation()}
             >
                 <button
-// FIX: The `onClick` handler expects a function that receives a mouse event, but `onClose` takes no arguments. It has been wrapped in an arrow function to correct the type mismatch.
                     onClick={() => onClose()}
                     className="absolute top-4 right-4 text-gray-400 hover:text-white transition-colors"
                     aria-label="Cerrar"
@@ -293,8 +286,6 @@ const ApplicationFormModal: React.FC<{ isOpen: boolean; onClose: () => void }> =
                         <p className="text-gray-300 max-w-md mx-auto mb-8">
                             Gracias por tu interés en unirte a Agency Moon. Tu postulación ha sido enviada con éxito.
                         </p>
-                        {/* FIX: The 'GlowButton' component expects an 'onClick' handler that accepts a mouse event. The original code passed a function that does not accept any arguments directly, causing a type mismatch. This has been corrected by wrapping the function call in an arrow function to ensure the event argument is handled correctly. */}
-                        {/* FIX: The GlowButton's onClick prop expects a function that receives a mouse event. The handler was passed a function that does not accept any arguments, causing a type mismatch. It has been wrapped in an arrow function that accepts the event argument to correct this. */}
                         <GlowButton onClick={(e) => onClose()}>Finalizar</GlowButton>
                     </div>
                 ) : (
@@ -376,7 +367,6 @@ const PartnershipModal: React.FC<{ isOpen: boolean; onClose: () => void }> = ({ 
     const prev = () => setCurrentSlide(prev => (prev === 0 ? slides.length - 1 : prev - 1));
 
     return (
-        // FIX: The onClick handler for a div expects a function that takes a mouse event, but `onClose` takes no arguments. It has been wrapped in an arrow function to correct the type mismatch.
         <div
             className="fixed inset-0 bg-black/80 backdrop-blur-sm z-50 flex items-center justify-center p-4 animate-fade-in"
             onClick={() => onClose()}
@@ -388,7 +378,6 @@ const PartnershipModal: React.FC<{ isOpen: boolean; onClose: () => void }> = ({ 
                 onClick={(e) => e.stopPropagation()}
             >
                 <button
-// FIX: The onClick handler for this button expects a function that takes a mouse event, but `prev` takes no arguments. It has been wrapped in an arrow function to correct the type mismatch.
                     onClick={() => prev()}
                     aria-label="Anterior"
                     className="absolute left-0 top-1/2 -translate-y-1/2 z-10 p-2 bg-black/40 rounded-full hover:bg-purple-600 transition-colors focus:outline-none focus:ring-2 focus:ring-purple-400"
@@ -439,14 +428,13 @@ const PartnershipModal: React.FC<{ isOpen: boolean; onClose: () => void }> = ({ 
                         </div>
                     </div>
                     
-                     <button // FIX: The `onClick` handler expects a function that receives a mouse event, but `onClose` takes no arguments. It has been wrapped in an arrow function to correct the type mismatch.
+                     <button
                     onClick={() => onClose()} className="absolute top-3 right-3 text-gray-400 hover:text-white transition-colors" aria-label="Cerrar">
                         <XIcon className="w-5 h-5" />
                     </button>
                 </div>
 
                 <button
-// FIX: The onClick handler for this button expects a function that takes a mouse event, but `next` takes no arguments. It has been wrapped in an arrow function to correct the type mismatch.
                     onClick={() => next()}
                     aria-label="Siguiente"
                     className="absolute right-0 top-1/2 -translate-y-1/2 z-10 p-2 bg-black/40 rounded-full hover:bg-purple-600 transition-colors focus:outline-none focus:ring-2 focus:ring-purple-400"
@@ -509,7 +497,7 @@ const Header: React.FC<{ onOpenJoinModal: () => void; onOpenAboutModal: () => vo
 
     return (
         <header className={`fixed top-0 left-0 right-0 z-40 transition-all duration-300 ${isScrolled || isMenuOpen ? 'bg-black/80 backdrop-blur-sm' : 'bg-transparent'}`}>
-            <nav className="container mx-auto px-6 py-4 flex justify-between items-center">
+            <nav className="px-6 py-4 flex justify-between items-center">
                 <a href="#home" onClick={handleSmoothScroll} className="flex items-center gap-2">
                     <Logo className="h-8 w-auto text-white" />
                     <span className="text-white font-bold text-xl">Agency Moon</span>
@@ -519,8 +507,6 @@ const Header: React.FC<{ onOpenJoinModal: () => void; onOpenAboutModal: () => vo
                          <a key={link.name} href={link.href} onClick={(e) => handleMenuClick(e, link.href)} className="text-gray-300 hover:text-white transition-colors hover:text-shadow-purple font-medium">{link.name}</a>
                     ))}
                 </div>
-                 {/* FIX: The 'GlowButton' component expects an 'onClick' handler that accepts a mouse event. The original code passed a function that does not accept any arguments directly, causing a type mismatch. This has been corrected by wrapping the function call in an arrow function to ensure the event argument is handled correctly. */}
-                 {/* FIX: The GlowButton's onClick prop expects a function that receives a mouse event. The handler was passed a function that does not accept any arguments, causing a type mismatch. It has been wrapped in an arrow function that accepts the event argument to correct this. */}
                  <GlowButton onClick={(e) => onOpenJoinModal()} className="hidden md:inline-block">Únete ahora</GlowButton>
                  <div className="md:hidden">
                     <button onClick={() => setIsMenuOpen(!isMenuOpen)} className="text-white focus:outline-none" aria-label="Abrir menú">
@@ -566,8 +552,6 @@ const Hero: React.FC<{ onOpenJoinModal: () => void }> = ({ onOpenJoinModal }) =>
             </p>
             <p className="text-lg md:text-xl max-w-3xl mb-8 text-gray-300 animate-fade-in-up" style={{ animationDelay: '300ms' }}>Únete a nuestra comunidad de creadores y empieza a monetizar tus transmisiones.</p>
             <div className="animate-fade-in-up" style={{ animationDelay: '450ms' }}>
-                {/* FIX: The 'GlowButton' component expects an 'onClick' handler that accepts a mouse event. The original code passed a function that does not accept any arguments directly, causing a type mismatch. This has been corrected by wrapping the function call in an arrow function to ensure the event argument is handled correctly. */}
-                {/* FIX: The GlowButton's onClick prop expects a function that receives a mouse event. The handler was passed a function that does not accept any arguments, causing a type mismatch. It has been wrapped in an arrow function that accepts the event argument to correct this. */}
                 <GlowButton onClick={(e) => onOpenJoinModal()}>Únete ahora</GlowButton>
             </div>
         </div>
@@ -675,7 +659,6 @@ const Banner: React.FC = () => {
 
 const AccordionItem: React.FC<{ item: FAQItem, isOpen: boolean, onClick: () => void }> = ({ item, isOpen, onClick }) => (
     <div className="bg-gray-900/50 rounded-lg border border-purple-500/30 mb-3 transition-all duration-300 hover:border-purple-400">
-        {/* FIX: The onClick handler for the button passes a mouse event, but the `onClick` prop expects no arguments. This has been corrected by wrapping `onClick` in an arrow function to discard the event. */}
         <button onClick={() => onClick()} className="w-full flex justify-between items-center text-left p-5" aria-expanded={isOpen}>
             <span className="text-lg font-medium text-white">{item.question}</span>
             <ChevronDownIcon className={`w-6 h-6 text-purple-400 transition-transform duration-300 flex-shrink-0 ml-4 ${isOpen ? 'rotate-180' : ''}`} />
@@ -824,11 +807,9 @@ const PaymentInfoCarousel: React.FC = () => {
             </div>
 
             <div className="bg-gray-800/50 p-4 rounded-lg relative overflow-hidden mt-4 border border-purple-500/20">
-                {/* FIX: The onClick handler for the button passes a mouse event, but `prevTier` expects no arguments. This has been corrected by wrapping `prevTier` in an arrow function to discard the event. */}
                 <button onClick={() => prevTier()} aria-label="Nivel anterior" className="absolute left-2 top-1/2 -translate-y-1/2 z-10 p-1 bg-black/40 rounded-full hover:bg-purple-600 transition-colors focus:outline-none focus:ring-2 focus:ring-purple-400">
                     <ChevronLeftIcon className="w-5 h-5" />
                 </button>
-                {/* FIX: The onClick handler for the button passes a mouse event, but `nextTier` expects no arguments. This has been corrected by wrapping `nextTier` in an arrow function to discard the event. */}
                 <button onClick={() => nextTier()} aria-label="Siguiente nivel" className="absolute right-2 top-1/2 -translate-y-1/2 z-10 p-1 bg-black/40 rounded-full hover:bg-purple-600 transition-colors focus:outline-none focus:ring-2 focus:ring-purple-400">
                     <ChevronRightIcon className="w-5 h-5" />
                 </button>
@@ -873,7 +854,6 @@ const PaymentInfoCarousel: React.FC = () => {
 
 const InfoAccordionItem: React.FC<{ item: InfoTab, isOpen: boolean, onClick: () => void }> = ({ item, isOpen, onClick }) => (
     <div className="bg-gray-900/50 rounded-lg border border-purple-500/30 mb-4 transition-all duration-300 hover:border-purple-400 hover:shadow-[0_0_20px_rgba(168,85,247,0.4)]">
-        {/* FIX: The onClick handler for the button passes a mouse event, but the `onClick` prop expects no arguments. This has been corrected by wrapping `onClick` in an arrow function to discard the event. */}
         <button 
             onClick={() => onClick()} 
             className="w-full flex justify-between items-center text-left p-6"
@@ -1025,7 +1005,6 @@ const TipsSection: React.FC = () => {
                     <p className="text-gray-400 max-w-2xl mx-auto mb-8">
                         Mejora la calidad de tus transmisiones y aumenta tu audiencia con nuestros consejos profesionales. Haz clic para ver nuestra galería de tips.
                     </p>
-                    {/* FIX: The GlowButton's onClick prop expects a function that receives a mouse event. The handler was passed a function that does not accept any arguments, causing a type mismatch. It has been wrapped in an arrow function that accepts the event argument to correct this. */}
                     <GlowButton onClick={(e) => setIsTipsModalOpen(true)}>
                         Ver Galería de Tips
                     </GlowButton>
@@ -1065,9 +1044,6 @@ const TipsSection: React.FC = () => {
                             ))}
 
                             <button
-// FIX: The onClick handler expects a function that receives a mouse event.
-// The `prevTip` function does not expect any arguments.
-// It is wrapped in an arrow function to prevent the event from being passed.
                                 onClick={(e) => { e.stopPropagation(); prevTip(); }}
                                 className="absolute top-1/2 left-2 sm:left-4 -translate-y-1/2 bg-black/50 text-white p-2 rounded-full hover:bg-purple-600 transition-colors z-10"
                                 aria-label="Anterior"
@@ -1075,9 +1051,6 @@ const TipsSection: React.FC = () => {
                                 <ChevronLeftIcon className="w-6 h-6" />
                             </button>
                             <button
-// FIX: The onClick handler expects a function that receives a mouse event.
-// The `nextTip` function does not expect any arguments.
-// It is wrapped in an arrow function to prevent the event from being passed.
                                 onClick={(e) => { e.stopPropagation(); nextTip(); }}
                                 className="absolute top-1/2 right-2 sm:right-4 -translate-y-1/2 bg-black/50 text-white p-2 rounded-full hover:bg-purple-600 transition-colors z-10"
                                 aria-label="Siguiente"
@@ -1149,7 +1122,6 @@ const TalentsSection: React.FC = () => {
         setCurrentIndex(newIndex);
     };
     
-    // FIX: Refactored inline onClick handlers to named functions to resolve event handler type mismatches.
     const handlePrevSlide = (e: React.MouseEvent) => {
         prevSlide();
     };
@@ -1225,9 +1197,6 @@ const TalentsSection: React.FC = () => {
                 </div>
 
                 <button
-// FIX: The onClick handler expects a function that receives a mouse event.
-// The `prevSlide` function does not expect any arguments.
-// It is wrapped in an arrow function to prevent the event from being passed.
                     onClick={handlePrevSlide}
                     className="absolute top-1/2 -left-4 md:-left-16 -translate-y-1/2 bg-black/50 text-white p-3 rounded-full hover:bg-purple-600 transition-colors z-20 focus:outline-none focus:ring-2 focus:ring-purple-400"
                     aria-label="Anterior Talento"
@@ -1235,9 +1204,6 @@ const TalentsSection: React.FC = () => {
                     <ChevronLeftIcon className="w-6 h-6" />
                 </button>
                 <button
-// FIX: The onClick handler expects a function that receives a mouse event.
-// The `nextSlideManual` function does not expect any arguments.
-// It is wrapped in an arrow function to prevent the event from being passed.
                     onClick={handleNextSlide}
                     className="absolute top-1/2 -right-4 md:-right-16 -translate-y-1/2 bg-black/50 text-white p-3 rounded-full hover:bg-purple-600 transition-colors z-20 focus:outline-none focus:ring-2 focus:ring-purple-400"
                     aria-label="Siguiente Talento"
@@ -1277,9 +1243,6 @@ const PartnershipSection: React.FC<{ onOpenModal: () => void }> = ({ onOpenModal
                     <p className="text-gray-200 md:text-lg mb-8 max-w-2xl mx-auto" style={{textShadow: '0 1px 5px rgba(0,0,0,0.5)'}}>
                         Actualmente buscamos socios comerciales o agentes que quieran trabajar con nosotros en la empresa. Expande tus horizontes y crece profesionalmente en la industria del streaming.
                     </p>
-                    {/* FIX: The GlowButton's onClick prop expects a function that receives a mouse event. The handler was passed directly, causing a type mismatch. It has been wrapped in an arrow function to correct this. */}
-                    {/* FIX: The GlowButton's onClick prop expects a function that receives a mouse event. The handler was passed a function that does not accept any arguments, causing a type mismatch. It has been wrapped in an arrow function that accepts the event argument to correct this. */}
-                    {/* FIX: The GlowButton's onClick prop expects a function that receives a mouse event. The handler was passed directly, causing a type mismatch. It has been refactored to an inline arrow function to ensure type correctness. */}
                     <GlowButton onClick={(e) => onOpenModal()}>
                         Más Información
                     </GlowButton>
@@ -1420,7 +1383,6 @@ export default function App() {
                         <p className="text-gray-400 max-w-2xl mx-auto mb-8">
                             Mejora la calidad de tus transmisiones y aumenta tu audiencia con nuestros consejos profesionales. Haz clic para ver nuestra galería de tips.
                         </p>
-                        {/* FIX: The GlowButton's onClick prop expects a function that receives a mouse event. The handler was passed a function that does not accept any arguments, causing a type mismatch. It has been wrapped in an arrow function that accepts the event argument to correct this. */}
                         <GlowButton onClick={(e) => setIsTipsModalOpen(true)}>
                             Ver Galería de Tips
                         </GlowButton>
@@ -1455,9 +1417,6 @@ export default function App() {
                                 ))}
                                 </div>
                                 <button
-// FIX: The onClick handler expects a function that receives a mouse event.
-// The `prevTip` function does not expect any arguments.
-// It is wrapped in an arrow function to prevent the event from being passed.
                                     onClick={(e) => { e.stopPropagation(); prevTip(); }}
                                     className="absolute top-1/2 left-2 sm:-left-12 -translate-y-1/2 bg-black/50 text-white p-2 rounded-full hover:bg-purple-600 transition-colors z-10"
                                     aria-label="Anterior"
@@ -1465,9 +1424,6 @@ export default function App() {
                                     <ChevronLeftIcon className="w-6 h-6" />
                                 </button>
                                 <button
-// FIX: The onClick handler expects a function that receives a mouse event.
-// The `nextTip` function does not expect any arguments.
-// It is wrapped in an arrow function to prevent the event from being passed.
                                     onClick={(e) => { e.stopPropagation(); nextTip(); }}
                                     className="absolute top-1/2 right-2 sm:-right-12 -translate-y-1/2 bg-black/50 text-white p-2 rounded-full hover:bg-purple-600 transition-colors z-10"
                                     aria-label="Siguiente"
@@ -1527,7 +1483,6 @@ export default function App() {
                 <Hero onOpenJoinModal={() => setIsJoinModalOpen(true)} />
                 <Section id="about-us" className="text-center">
                     <h2 className="text-3xl md:text-4xl font-bold text-white mb-4">Quiénes Somos</h2>
-                    {/* FIX: The GlowButton's onClick prop expects a function that receives a mouse event. The handler was passed a function that does not accept any arguments, causing a type mismatch. It has been wrapped in an arrow function that accepts the event argument to correct this. */}
                     <GlowButton onClick={(e) => setIsAboutUsModalOpen(true)}>Conoce más</GlowButton>
                 </Section>
                 <ExperienceSection />
