@@ -88,7 +88,7 @@ const Section: React.FC<{ id: string; children?: ReactNode; className?: string }
 };
 
 const GlowButton: React.FC<{ children: ReactNode, href?: string, className?: string, onClick?: (e: React.MouseEvent<HTMLElement>) => void, type?: 'button' | 'submit' | 'reset' }> = ({ children, href, className, onClick, type }) => {
-    const classes = `inline-block bg-fuchsia-600 text-white font-bold py-3 px-8 rounded-lg transition-all duration-300 hover:bg-fuchsia-700 hover:shadow-[0_0_25px_rgba(192,38,211,0.9)] focus:outline-none focus:ring-4 focus:ring-fuchsia-400/50 transform hover:scale-105 ${className}`;
+    const classes = `inline-block bg-purple-600 text-white font-bold py-3 px-8 rounded-lg transition-all duration-300 hover:bg-purple-700 hover:shadow-[0_0_25px_rgba(168,85,247,0.9)] focus:outline-none focus:ring-4 focus:ring-purple-400/50 transform hover:scale-105 ${className}`;
 
     const handleClick = (e: React.MouseEvent<HTMLElement>) => {
         if (href && href.startsWith('#') && e.currentTarget.tagName === 'A') {
@@ -671,7 +671,8 @@ const Banner: React.FC = () => {
 
 const AccordionItem: React.FC<{ item: FAQItem, isOpen: boolean, onClick: () => void }> = ({ item, isOpen, onClick }) => (
     <div className="bg-gray-900/50 rounded-lg border border-purple-500/30 mb-3 transition-all duration-300 hover:border-purple-400">
-        <button onClick={onClick} className="w-full flex justify-between items-center text-left p-5" aria-expanded={isOpen}>
+        {/* FIX: The onClick handler for the button passes a mouse event, but the `onClick` prop expects no arguments. This has been corrected by wrapping `onClick` in an arrow function to discard the event. */}
+        <button onClick={() => onClick()} className="w-full flex justify-between items-center text-left p-5" aria-expanded={isOpen}>
             <span className="text-lg font-medium text-white">{item.question}</span>
             <ChevronDownIcon className={`w-6 h-6 text-purple-400 transition-transform duration-300 flex-shrink-0 ml-4 ${isOpen ? 'rotate-180' : ''}`} />
         </button>
@@ -852,8 +853,9 @@ const PaymentInfoCarousel: React.FC = () => {
 
 const InfoAccordionItem: React.FC<{ item: InfoTab, isOpen: boolean, onClick: () => void }> = ({ item, isOpen, onClick }) => (
     <div className="bg-gray-900/50 rounded-lg border border-purple-500/30 mb-4 transition-all duration-300 hover:border-purple-400 hover:shadow-[0_0_20px_rgba(168,85,247,0.4)]">
+        {/* FIX: The onClick handler for the button passes a mouse event, but the `onClick` prop expects no arguments. This has been corrected by wrapping `onClick` in an arrow function to discard the event. */}
         <button 
-            onClick={onClick} 
+            onClick={() => onClick()} 
             className="w-full flex justify-between items-center text-left p-6"
             aria-expanded={isOpen}
         >

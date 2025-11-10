@@ -9,26 +9,10 @@ export const Logo: React.FC<{ className?: string }> = ({ className }) => (
 );
 
 export const ChatbotIcon: React.FC<{ className?: string }> = ({ className }) => (
-    <svg className={className} viewBox="0 0 64 64" xmlns="http://www.w3.org/2000/svg" aria-label="Chatbot icon">
-        <defs>
-            <linearGradient id="chatbot-gradient" x1="0" y1="1" x2="1" y2="0">
-                <stop offset="0%" stopColor="#c026d3" />
-                <stop offset="50%" stopColor="#9333ea" />
-                <stop offset="100%" stopColor="#2563eb" />
-            </linearGradient>
-        </defs>
-        {/* Earpieces */}
-        <path d="M8 24C3.58 24 0 27.58 0 32V40C0 44.42 3.58 48 8 48H12V24H8Z" fill="url(#chatbot-gradient)"/>
-        <path d="M56 24C60.42 24 64 27.58 64 32V40C64 44.42 60.42 48 56 48H52V24H56Z" fill="url(#chatbot-gradient)"/>
-        {/* Head */}
-        <path d="M12 16C12 11.58 15.58 8 20 8H44C48.42 8 52 11.58 52 16V52C52 56.42 48.42 60 44 60H20C15.58 60 12 56.42 12 52V16Z" fill="url(#chatbot-gradient)"/>
-        {/* Antenna */}
-        <path d="M34 9.5L29 9.5L33 3.5L28 3.5L31.5 0L31.5 8L34 8Z" fill="#3b82f6" />
-        {/* Face */}
-        <rect x="18" y="20" width="28" height="24" rx="6" fill="white" />
-        <rect x="23" y="26" width="4" height="10" rx="2" fill="black" />
-        <rect x="37" y="26" width="4" height="10" rx="2" fill="black" />
-        <path d="M26 38C26 42 38 42 38 38" stroke="black" strokeWidth="2.5" fill="none" strokeLinecap="round" />
+    <svg className={className} viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg" aria-label="Chatbot icon">
+        <circle cx="16" cy="16" r="16" fill="#7C3AED"/>
+        <path d="M22.9,10.9h-1.1v-1c0-0.9-0.7-1.6-1.6-1.6h-8.2c-0.9,0-1.6,0.7-1.6,1.6v1H9.1c-0.9,0-1.6,0.7-1.6,1.6v5.8 c0,0.9,0.7,1.6,1.6,1.6h1.1v2.1c0,0.4,0.3,0.8,0.8,0.8c0.2,0,0.3-0.1,0.5-0.2l2.6-2.6h7.8c0.9,0,1.6-0.7,1.6-1.6v-5.8 C24.5,11.6,23.8,10.9,22.9,10.9z M13.1,15.8c-0.6,0-1.1-0.5-1.1-1.1s0.5-1.1,1.1-1.1s1.1,0.5,1.1,1.1S13.7,15.8,13.1,15.8z M18.9,15.8c-0.6,0-1.1-0.5-1.1-1.1s0.5-1.1,1.1-1.1c0.6,0,1.1,0.5,1.1,1.1S19.5,15.8,18.9,15.8z" fill="#FFFFFF"/>
+        <circle cx="16" cy="6.6" r="1.3" fill="#FFFFFF"/>
     </svg>
 );
 
