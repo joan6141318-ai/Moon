@@ -11,8 +11,12 @@ export const Logo: React.FC<{ className?: string }> = ({ className }) => (
 export const ChatbotIcon: React.FC<{ className?: string }> = ({ className }) => (
     <svg className={className} viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg">
         <circle cx="16" cy="16" r="16" fill="#7C3AED"/>
-        <path d="M22.9,10.9h-1.1v-1c0-0.9-0.7-1.6-1.6-1.6h-8.2c-0.9,0-1.6,0.7-1.6,1.6v1H9.1c-0.9,0-1.6,0.7-1.6,1.6v5.8 c0,0.9,0.7,1.6,1.6,1.6h1.1v2.1c0,0.4,0.3,0.8,0.8,0.8c0.2,0,0.3-0.1,0.5-0.2l2.6-2.6h7.8c0.9,0,1.6-0.7,1.6-1.6v-5.8 C24.5,11.6,23.8,10.9,22.9,10.9z M13.1,15.8c-0.6,0-1.1-0.5-1.1-1.1s0.5-1.1,1.1-1.1s1.1,0.5,1.1,1.1S13.7,15.8,13.1,15.8z M18.9,15.8c-0.6,0-1.1-0.5-1.1-1.1s0.5-1.1,1.1-1.1c0.6,0,1.1,0.5,1.1,1.1S19.5,15.8,18.9,15.8z" fill="#FFFFFF"/>
-        <circle cx="16" cy="6.6" r="1.3" fill="#FFFFFF"/>
+        <g transform="translate(4, 5) scale(1)">
+            <path d="M21.99 4c0-1.1-.89-2-1.99-2H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h14l4 4-.01-18z" fill="white"/>
+            <circle cx="16" cy="11" r="1.5" fill="#7C3AED" />
+            <circle cx="12" cy="11" r="1.5" fill="#7C3AED" />
+            <circle cx="8" cy="11" r="1.5" fill="#7C3AED" />
+        </g>
     </svg>
 );
 

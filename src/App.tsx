@@ -521,7 +521,7 @@ const Hero: React.FC<{ onOpenJoinModal: () => void }> = ({ onOpenJoinModal }) =>
                 Tu talento merece ser visto.
             </p>
             <div className="animate-fade-in-up" style={{ animationDelay: '300ms' }}>
-                <GlowButton onClick={() => onOpenJoinModal()}>Comienza hoy</GlowButton>
+                <GlowButton onClick={onOpenJoinModal}>Comienza hoy</GlowButton>
             </div>
         </div>
     </section>
@@ -686,7 +686,7 @@ const FAQ: React.FC = () => {
     const [openIndex, setOpenIndex] = useState<number | null>(null);
     const faqData: FAQItem[] = [
         {
-            question: '¿Qué beneficios obtengo si me uno a agencia Agency Moon?',
+            question: '¿Qué beneficios obtengo si me uno a la agencia Agency Moon?',
             answer: `<p>Nos complace que te intereses en nuestro equipo. Nuestro diferenciador es que como emisor obtendrás:</p>
                      <ul>
                          <li><strong>Atención y Soporte 24/7:</strong> Atención personalizada para resolver cualquier duda.</li>
