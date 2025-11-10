@@ -1,5 +1,6 @@
 
 
+
 import React, { useState, useEffect, useRef, ReactNode, useCallback } from 'react';
 import { FAQItem, PaymentTier, InfoTab } from './types';
 import { 
@@ -464,7 +465,7 @@ const Header: React.FC<{ onOpenJoinModal: () => void; onOpenAboutModal: () => vo
         if (href === '#join-modal') {
             e.preventDefault();
             onOpenJoinModal();
-        } else if (href === '#about-us') {
+        } else if (href === '#about-us-modal') {
             e.preventDefault();
             onOpenAboutModal();
         } else {
@@ -473,7 +474,15 @@ const Header: React.FC<{ onOpenJoinModal: () => void; onOpenAboutModal: () => vo
     };
     
     const navLinks = [
-        { name: 'Quiénes Somos', href: '#about-us' },
+        { name: 'Quiénes somos', href: '#about-us-modal' },
+        { name: 'Experiencia', href: '#experience' },
+        { name: 'FAQ', href: '#faq' },
+        { name: 'Socios', href: '#partnership' },
+        { name: 'Contacto', href: '#contact' },
+    ];
+
+    const mobileNavLinks = [
+        { name: 'Quiénes Somos', href: '#about-us-modal' },
         { name: 'Nuestra Experiencia', href: '#experience' },
         { name: 'Requisitos para Unirte', href: '#join-modal' },
         { name: 'Preguntas Frecuentes', href: '#faq' },
@@ -486,21 +495,27 @@ const Header: React.FC<{ onOpenJoinModal: () => void; onOpenAboutModal: () => vo
 
     return (
         <header className={`fixed top-0 left-0 right-0 z-40 transition-all duration-300 ${isScrolled || isMenuOpen ? 'bg-black/80 backdrop-blur-sm' : 'bg-transparent'}`}>
-            <nav className="w-full px-4 sm:px-6 md:px-10 py-3 sm:py-4 flex justify-between items-center transition-all duration-300">
+            <nav className="container mx-auto px-6 py-4 flex justify-between items-center">
                 <a href="#home" onClick={handleSmoothScroll} className="flex items-center gap-2">
-                    <Logo className="h-5 sm:h-8 w-auto text-white transition-all duration-300" />
-                    <span className="text-white font-bold text-base sm:text-xl transition-all duration-300">Agency Moon</span>
+                    <Logo className="h-8 w-auto text-white" />
+                    <span className="text-white font-bold text-xl">Agency Moon</span>
                 </a>
-                 <div>
+                <div className="hidden lg:flex items-center space-x-6">
+                    {navLinks.map(link => (
+                         <a key={link.name} href={link.href} onClick={(e) => handleMenuClick(e, link.href)} className="text-gray-300 hover:text-white transition-colors hover:text-shadow-purple font-medium">{link.name}</a>
+                    ))}
+                     <GlowButton onClick={(e) => onOpenJoinModal()} className="py-2.5 px-6 text-sm">Únete ahora</GlowButton>
+                </div>
+                 <div className="lg:hidden">
                     <button onClick={() => setIsMenuOpen(!isMenuOpen)} className="text-white focus:outline-none" aria-label="Abrir menú">
-                        {isMenuOpen ? <XIcon className="w-5 h-5 sm:w-7 sm:h-7 transition-all duration-300" /> : <MenuIcon className="w-5 h-5 sm:w-7 sm:h-7 transition-all duration-300" />}
+                        {isMenuOpen ? <XIcon className="w-7 h-7" /> : <MenuIcon className="w-7 h-7" />}
                     </button>
                 </div>
             </nav>
             {isMenuOpen && (
-                 <div className="absolute top-full left-0 w-full bg-black/90 backdrop-blur-sm animate-fade-in-down-fast">
+                 <div className="lg:hidden absolute top-full left-0 w-full bg-black/90 backdrop-blur-sm animate-fade-in-down-fast">
                     <div className="flex flex-col items-start px-6 py-4 space-y-1">
-                        {navLinks.map(link => (
+                        {mobileNavLinks.map(link => (
                             <a
                                 key={link.name}
                                 href={link.href}
@@ -911,457 +926,4 @@ const TipsSection: React.FC = () => {
     const tipsImages = [
         'https://i.postimg.cc/xCscRJt2/2-20251030-105515-0001.png',
         'https://i.postimg.cc/YSY9JDRQ/3-20251030-105515-0002.png',
-        'https://i.postimg.cc/JnzfbGs1/4-20251030-105515-0003.png',
-        'https://i.postimg.cc/8PfjRCv2/5-20251030-105515-0004.png',
-        'https://i.postimg.cc/NFrP4TBF/6-20251030-105515-0005.png',
-    ];
-
-    const nextTip = useCallback(() => {
-        setCurrentTipIndex(prevIndex => (prevIndex + 1) % tipsImages.length);
-    }, [tipsImages.length]);
-
-    const prevTip = useCallback(() => {
-        setCurrentTipIndex(prevIndex => (prevIndex - 1 + tipsImages.length) % tipsImages.length);
-    }, [tipsImages.length]);
-
-    useEffect(() => {
-        const handleKeyDown = (event: KeyboardEvent) => {
-            if (!isTipsModalOpen) return;
-            if (event.key === 'ArrowRight') {
-                nextTip();
-            } else if (event.key === 'ArrowLeft') {
-                prevTip();
-            } else if (event.key === 'Escape') {
-                setIsTipsModalOpen(false);
-            }
-        };
-        window.addEventListener('keydown', handleKeyDown);
-        return () => {
-            window.removeEventListener('keydown', handleKeyDown);
-        };
-    }, [isTipsModalOpen, nextTip, prevTip]);
-
-    return (
-        <>
-            <Section id="tips">
-                <div className="text-center">
-                    <h2 className="text-3xl md:text-4xl font-bold text-white mb-4">Tips para tu Transmisión</h2>
-                    <p className="text-gray-400 max-w-2xl mx-auto mb-8">
-                        Mejora la calidad de tus transmisiones y aumenta tu audiencia con nuestros consejos profesionales. Haz clic para ver nuestra galería de tips.
-                    </p>
-                    <GlowButton onClick={(e) => setIsTipsModalOpen(true)}>
-                        Ver Galería de Tips
-                    </GlowButton>
-                </div>
-            </Section>
-
-            {isTipsModalOpen && (
-                <div 
-                    className="fixed inset-0 bg-black/90 backdrop-blur-sm z-50 flex items-center justify-center p-4 animate-fade-in"
-                    onClick={() => setIsTipsModalOpen(false)}
-                    role="dialog"
-                    aria-modal="true"
-                >
-                    <div 
-                        className="relative w-full max-w-3xl animate-zoom-in"
-                        onClick={(e) => e.stopPropagation()}
-                    >
-                        <div className="relative w-full h-[500px] sm:h-[600px]">
-                            {tipsImages.map((src, index) => (
-                                <div
-                                    key={src}
-                                    className={`absolute inset-0 transition-all duration-500 ease-in-out transform-gpu flex items-center justify-center ${
-                                        index === currentTipIndex
-                                            ? 'opacity-100 scale-100 rotate-0'
-                                            : 'opacity-0 scale-90 -rotate-6'
-                                    }`}
-                                    aria-hidden={index !== currentTipIndex}
-                                >
-                                    <div className="relative rounded-2xl shadow-[0_0_30px_rgba(168,85,247,0.7)] border-2 border-purple-500/50 p-1 bg-black">
-                                        <img
-                                            src={src}
-                                            alt={`Tip de transmisión ${index + 1}`}
-                                            className="w-96 h-96 sm:w-[28rem] sm:h-[28rem] object-cover rounded-2xl"
-                                        />
-                                    </div>
-                                </div>
-                            ))}
-
-                            <button
-                                onClick={(e) => { e.stopPropagation(); prevTip(); }}
-                                className="absolute top-1/2 left-2 sm:left-4 -translate-y-1/2 bg-black/50 text-white p-2 rounded-full hover:bg-purple-600 transition-colors z-10"
-                                aria-label="Anterior"
-                            >
-                                <ChevronLeftIcon className="w-6 h-6" />
-                            </button>
-                            <button
-                                onClick={(e) => { e.stopPropagation(); nextTip(); }}
-                                className="absolute top-1/2 right-2 sm:right-4 -translate-y-1/2 bg-black/50 text-white p-2 rounded-full hover:bg-purple-600 transition-colors z-10"
-                                aria-label="Siguiente"
-                            >
-                                <ChevronRightIcon className="w-6 h-6" />
-                            </button>
-                            
-                            <div className="absolute bottom-4 left-1/2 -translate-x-1/2 flex gap-2">
-                                {tipsImages.map((_, index) => (
-                                    <button 
-                                        key={index}
-                                        onClick={() => setCurrentTipIndex(index)}
-                                        className={`w-3 h-3 rounded-full transition-all ${index === currentTipIndex ? 'bg-purple-500 scale-125' : 'bg-gray-600 hover:bg-gray-400'}`}
-                                        aria-label={`Ir al tip ${index + 1}`}
-                                    />
-                                ))}
-                            </div>
-                        </div>
-                       
-                        <button 
-                            onClick={() => setIsTipsModalOpen(false)}
-                            className="absolute -top-3 -right-3 text-white bg-purple-600 rounded-full p-2 hover:bg-purple-700 transition-colors"
-                            aria-label="Cerrar"
-                        >
-                            <XIcon className="w-6 h-6" />
-                        </button>
-                    </div>
-                </div>
-            )}
-        </>
-    );
-};
-
-
-const TalentsSection: React.FC = () => {
-    const talentData = [
-        { name: "steficupcake", image: 'https://i.postimg.cc/N0Z5jrFK/IMG-20251107-193051.jpg', description: "Record historico: 4.5 Millones | País: Colombia" },
-        { name: "Shinysoul_turtle", image: 'https://i.postimg.cc/kBFfgdFT/IMG-20251107-193553.jpg', description: "Record historico: 3.8 Millones | País: México" },
-        { name: "lbm0312", image: 'https://i.postimg.cc/rpn71VcF/In-Shot-20251107-185715214.jpg', description: "Record histórico: 3 Millones | País: Colombia" },
-        { name: "boanquita_", image: 'https://i.postimg.cc/R0Mtzmk6/IMG-20251107-183411.png', description: "Record histórico: 1 Millón | País: Colombia" },
-        { name: "Thunderblack", image: 'https://i.postimg.cc/sDg6cF6w/In-Shot-20251107-192231700.jpg', description: "Record histórico: 1 Millón | País: República Dominicana" },
-        { name: "Tuvenus", image: 'https://i.postimg.cc/BLzQFy5W/IMG-20251107-194701.jpg', description: "Récord histórico: 800k | País: Venezuela" },
-    ];
-
-    const [currentIndex, setCurrentIndex] = useState(0);
-    const [expandedTalentIndex, setExpandedTalentIndex] = useState<number | null>(null);
-    const autoPlayRef = useRef<ReturnType<typeof setInterval>>();
-
-    const nextSlide = useCallback(() => {
-        setCurrentIndex(prev => prev === talentData.length - 1 ? 0 : prev + 1);
-    }, [talentData.length]);
-
-    useEffect(() => {
-        autoPlayRef.current = setInterval(nextSlide, 3000);
-        return () => {
-            if (autoPlayRef.current) clearInterval(autoPlayRef.current);
-        };
-    }, [nextSlide]);
-    
-    const prevSlide = () => {
-        const isFirstSlide = currentIndex === 0;
-        const newIndex = isFirstSlide ? talentData.length - 1 : currentIndex - 1;
-        setCurrentIndex(newIndex);
-    };
-
-    const nextSlideManual = () => {
-        const isLastSlide = currentIndex === talentData.length - 1;
-        const newIndex = isLastSlide ? 0 : currentIndex + 1;
-        setCurrentIndex(newIndex);
-    };
-
-    const handlePrevSlide = (e: React.MouseEvent) => {
-        prevSlide();
-    };
-
-    const handleNextSlide = (e: React.MouseEvent) => {
-        nextSlideManual();
-    };
-
-    return (
-        <Section id="talents">
-            <div className="text-center">
-                <h2 className="text-3xl md:text-4xl font-bold text-white mb-4">Conoce a Nuestros Talentos</h2>
-                <p className="text-gray-400 max-w-2xl mx-auto mb-12">
-                    Descubre a los creadores que forman parte de la familia Agency Moon. Cada uno con un estilo único y una pasión por el streaming.
-                </p>
-            </div>
-            <div 
-                className="relative w-full max-w-[280px] h-[420px] sm:max-w-xs sm:h-[480px] md:max-w-sm md:h-[520px] mx-auto"
-                onMouseEnter={() => { if(autoPlayRef.current) clearInterval(autoPlayRef.current); }}
-                onMouseLeave={() => { autoPlayRef.current = setInterval(nextSlide, 3000); }}
-            >
-                <div className="relative w-full h-full overflow-hidden">
-                    {talentData.map((talent, index) => (
-                        <div
-                            key={index}
-                            className="absolute top-0 left-0 w-full h-full transition-transform duration-500 ease-out"
-                            style={{ transform: `translateX(${(index - currentIndex) * 100}%)` }}
-                            aria-hidden={index !== currentIndex}
-                        >
-                            <div className="relative w-full h-full rounded-2xl overflow-hidden shadow-lg shadow-purple-900/50 border border-purple-500/30 bg-gray-800 transition-all duration-300 hover:border-purple-400 hover:shadow-2xl hover:shadow-purple-500/40 transform hover:-translate-y-2">
-                                <img 
-                                    src={talent.image} 
-                                    alt={`Talento de Agency Moon: ${talent.name}`} 
-                                    className="absolute top-0 left-0 w-full h-full object-cover"
-                                />
-
-                                <div className="absolute bottom-0 left-0 w-full h-full pointer-events-none">
-                                    <div className="absolute bottom-0 left-0 w-full h-4/5 bg-gradient-to-t from-black via-black/80 to-transparent" />
-                                </div>
-                                
-                                <div className="absolute bottom-0 left-0 w-full text-white pointer-events-auto">
-                                    <div 
-                                        className={`overflow-hidden transition-all duration-500 ease-in-out ${expandedTalentIndex === index ? 'max-h-96' : 'max-h-[72px]'}`}
-                                    >
-                                        <div
-                                            className="flex justify-between items-center p-4 cursor-pointer h-[72px]"
-                                            onClick={() => setExpandedTalentIndex(expandedTalentIndex === index ? null : index)}
-                                            aria-expanded={expandedTalentIndex === index}
-                                        >
-                                            <h3 className="text-xl font-bold">{talent.name}</h3>
-                                            <ChevronDownIcon className={`w-6 h-6 text-purple-400 transition-transform duration-300 ${expandedTalentIndex === index ? 'rotate-180' : ''}`} />
-                                        </div>
-
-                                        <div className="px-4 pb-4">
-                                            <div className="text-sm text-gray-300 space-y-2">
-                                                {talent.description.split('|').map((part, i) => {
-                                                    const [key, value] = part.trim().split(':');
-                                                    if (!value) return null;
-                                                    return (
-                                                        <p key={i}>
-                                                            <strong className="font-semibold text-purple-400">{key}:</strong>
-                                                            <span className="ml-1.5">{value.trim()}</span>
-                                                        </p>
-                                                    )
-                                                })}
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                             </div>
-                        </div>
-                    ))}
-                </div>
-
-                <button
-                    onClick={handlePrevSlide}
-                    className="absolute top-1/2 -left-4 md:-left-16 -translate-y-1/2 bg-black/50 text-white p-3 rounded-full hover:bg-purple-600 transition-colors z-20 focus:outline-none focus:ring-2 focus:ring-purple-400"
-                    aria-label="Anterior Talento"
-                >
-                    <ChevronLeftIcon className="w-6 h-6" />
-                </button>
-                <button
-                    onClick={handleNextSlide}
-                    className="absolute top-1/2 -right-4 md:-right-16 -translate-y-1/2 bg-black/50 text-white p-3 rounded-full hover:bg-purple-600 transition-colors z-20 focus:outline-none focus:ring-2 focus:ring-purple-400"
-                    aria-label="Siguiente Talento"
-                >
-                    <ChevronRightIcon className="w-6 h-6" />
-                </button>
-                
-                <div className="absolute -bottom-10 left-1/2 -translate-x-1/2 flex gap-3">
-                    {talentData.map((_, index) => (
-                        <button
-                            key={index}
-                            onClick={() => setCurrentIndex(index)}
-                            className={`w-3 h-3 rounded-full transition-all duration-300 ${index === currentIndex ? 'bg-purple-500 scale-125' : 'bg-gray-600 hover:bg-gray-400'}`}
-                            aria-label={`Ir al talento ${index + 1}`}
-                        />
-                    ))}
-                </div>
-            </div>
-        </Section>
-    );
-};
-
-const PartnershipSection: React.FC<{ onOpenModal: () => void }> = ({ onOpenModal }) => {
-    return (
-        <Section id="partnership">
-            <div className="relative rounded-2xl overflow-hidden shadow-2xl shadow-purple-900/50 border border-purple-500/30 text-center">
-                <img
-                    src="https://images.pexels.com/photos/7645300/pexels-photo-7645300.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1"
-                    alt="Agente de negocios sonriendo en un entorno de oficina moderno"
-                    className="absolute inset-0 w-full h-full object-cover object-center opacity-40"
-                />
-                <div className="absolute inset-0 bg-gradient-to-t from-black via-black/60 to-transparent"></div>
-                <div className="relative z-10 p-8 md:p-12">
-                    <h2 className="text-2xl md:text-4xl font-bold text-white mb-4 leading-tight" style={{textShadow: '0 2px 10px rgba(0,0,0,0.5)'}}>
-                        Forma tu propia agencia o sé uno de nuestros agentes en Latinoamérica
-                    </h2>
-                    <p className="text-gray-200 md:text-lg mb-8 max-w-2xl mx-auto" style={{textShadow: '0 1px 5px rgba(0,0,0,0.5)'}}>
-                        Actualmente buscamos socios comerciales o agentes que quieran trabajar con nosotros en la empresa. Expande tus horizontes y crece profesionalmente en la industria del streaming.
-                    </p>
-                    <GlowButton onClick={(e) => onOpenModal()}>
-                        Más Información
-                    </GlowButton>
-                </div>
-            </div>
-        </Section>
-    );
-};
-
-const Contact: React.FC = () => {
-    const managers = [
-        {
-            title: "Manager 1 - Soporte General",
-            description: "Para resolver dudas, recibir soporte técnico o gestionar cualquier aspecto de tu cuenta.",
-            whatsappLink: "https://wa.me/528118807625",
-        },
-        {
-            title: "Manager 2 - Nuevos Ingresos",
-            description: "Ideal si estás interesado en unirte a nuestra agencia o tienes preguntas sobre el proceso de ingreso.",
-            whatsappLink: "https://wa.me/593967364089",
-        }
-    ];
-
-    return (
-        <Section id="contact">
-            <div className="text-center">
-                <h2 className="text-3xl md:text-4xl font-bold text-white mb-4">Contacto Directo</h2>
-                <p className="text-gray-400 max-w-2xl mx-auto mb-12">
-                    ¿Tienes preguntas más específicas o prefieres hablar directamente con un manager? Contáctanos a través de WhatsApp. Estamos aquí para ayudarte.
-                </p>
-            </div>
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-4xl mx-auto">
-                {managers.map((manager, index) => (
-                    <a 
-                        key={index} 
-                        href={manager.whatsappLink}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="group flex items-center bg-gray-900/50 rounded-2xl border border-purple-500/30 p-4 text-left transition-all duration-300 hover:border-purple-400 hover:bg-gray-900/80
-                                   md:flex-col md:p-8 md:text-center md:hover:shadow-2xl md:hover:shadow-purple-500/20 md:hover:-translate-y-2"
-                    >
-                        <div className="flex-shrink-0 bg-gray-800/50 rounded-full flex items-center justify-center border-2 border-purple-500/50 group-hover:border-purple-400 transition-colors duration-300
-                                       w-12 h-12 md:w-20 md:h-20 md:mb-6">
-                            <WhatsappIcon className="w-6 h-6 md:w-10 md:h-10 text-white" />
-                        </div>
-
-                        <div className="flex-grow ml-4 md:ml-0 md:flex md:flex-col md:flex-grow">
-                            <h3 className="text-base md:text-xl font-semibold text-white md:mb-3">{manager.title}</h3>
-                            <p className="text-gray-400 text-sm hidden md:block md:text-base md:mb-8 md:flex-grow">{manager.description}</p>
-                        </div>
-                        
-                        <div className="hidden md:block mt-auto">
-                           <div className="inline-block bg-purple-600 text-white font-bold py-3 px-8 rounded-full transition-all duration-300 group-hover:bg-purple-700 group-hover:shadow-[0_0_20px_rgba(168,85,247,0.8)] transform group-hover:scale-105">
-                                Enviar Mensaje
-                           </div>
-                        </div>
-
-                        <div className="md:hidden ml-auto text-purple-400 group-hover:text-white transition-colors">
-                            <ChevronRightIcon className="w-6 h-6" />
-                        </div>
-                    </a>
-                ))}
-            </div>
-        </Section>
-    );
-};
-
-
-const Footer: React.FC = () => (
-    <footer className="border-t border-purple-500/20 text-center py-8 text-gray-500">
-        <p>&copy; {new Date().getFullYear()} Agency Moon. Todos los derechos reservados.</p>
-    </footer>
-);
-
-export default function App() {
-    const [isJoinModalOpen, setIsJoinModalOpen] = useState(false);
-    const [isPartnershipModalOpen, setIsPartnershipModalOpen] = useState(false);
-    const [isApplicationFormOpen, setIsApplicationFormOpen] = useState(false);
-    const [isAboutUsModalOpen, setIsAboutUsModalOpen] = useState(false);
-    const [isTipsModalOpen, setIsTipsModalOpen] = useState(false);
-
-    useEffect(() => {
-        const isAnyModalOpen = isJoinModalOpen || isPartnershipModalOpen || isApplicationFormOpen || isAboutUsModalOpen || isTipsModalOpen;
-        if (isAnyModalOpen) {
-            document.body.style.overflow = 'hidden';
-        } else {
-            document.body.style.overflow = 'auto';
-        }
-        
-        return () => {
-            document.body.style.overflow = 'auto';
-        };
-    }, [isJoinModalOpen, isPartnershipModalOpen, isApplicationFormOpen, isAboutUsModalOpen, isTipsModalOpen]);
-
-
-    useEffect(() => {
-        const handleFaqLinkClick = (e: MouseEvent) => {
-            const target = e.target as HTMLElement;
-            if (target && target.id === 'faq-payment-link') {
-                e.preventDefault();
-                                
-                const infoSection = document.getElementById('info');
-                if (infoSection) {
-                    setTimeout(() => {
-                        infoSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
-                        const infoAccordionButton = document.querySelector('#info [aria-expanded="false"][aria-controls="info-list"]');
-                        if (infoAccordionButton) {
-                           (infoAccordionButton as HTMLElement).click();
-                        }
-                    }, 100);
-                }
-            }
-        };
-
-        document.addEventListener('click', handleFaqLinkClick);
-
-        return () => {
-            document.removeEventListener('click', handleFaqLinkClick);
-        };
-    }, []);
-
-    return (
-        <div className="bg-black text-white min-h-screen overflow-x-hidden">
-            <style>{`
-                html { scroll-behavior: smooth; scroll-padding-top: 80px; }
-                .text-shadow-purple { text-shadow: 0 0 8px rgba(168, 85, 247, 0.7); }
-                @keyframes fade-in-down { from { opacity: 0; transform: translateY(-20px); } to { opacity: 1; transform: translateY(0); } }
-                @keyframes fade-in-up { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
-                .animate-fade-in-down { animation: fade-in-down 0.8s ease-out forwards; }
-                .animate-fade-in-up { animation: fade-in-up 0.8s ease-out forwards; }
-                .animation-delay-300 { animation-delay: 300ms; }
-                @keyframes fade-in { from { opacity: 0; } to { opacity: 1; } }
-                .animate-fade-in { animation: fade-in 0.3s ease-out forwards; }
-                @keyframes zoom-in { from { opacity: 0; transform: scale(0.95); } to { opacity: 1; transform: scale(1); } }
-                .animate-zoom-in { animation: zoom-in 0.3s ease-out forwards; }
-                @keyframes fade-in-down-fast { from { opacity: 0; transform: translateY(-10px); } to { opacity: 1; transform: translateY(0); } }
-                .animate-fade-in-down-fast { animation: fade-in-down-fast 0.2s ease-out forwards; }
-                .faq-answer ul { list-style: none; padding-left: 0; margin-top: 0.75rem; }
-                .faq-answer ul li { position: relative; padding-left: 1.5rem; margin-bottom: 0.5rem; }
-                .faq-answer ul li::before { content: '✓'; position: absolute; left: 0; color: #A855F7; font-weight: bold; }
-                .faq-answer a { color: #C4B5FD; text-decoration: underline; }
-                .faq-answer a:hover { color: #D8B4FE; }
-            `}</style>
-            <Header onOpenJoinModal={() => setIsJoinModalOpen(true)} onOpenAboutModal={() => setIsAboutUsModalOpen(true)} />
-            <main>
-                <Hero onOpenJoinModal={() => setIsJoinModalOpen(true)} />
-                <Section id="about-us" className="text-center">
-                    <h2 className="text-3xl md:text-4xl font-bold text-white mb-4">Quiénes Somos</h2>
-                    <GlowButton onClick={(e) => setIsAboutUsModalOpen(true)}>Conoce más</GlowButton>
-                </Section>
-                <ExperienceSection />
-                <Section id="banner-cta" className="py-20">
-                    <Banner />
-                </Section>
-                <FAQ />
-                <GeneralInfo />
-                <TipsSection />
-                <TalentsSection />
-                <PartnershipSection onOpenModal={() => setIsPartnershipModalOpen(true)} />
-                <Contact />
-            </main>
-            <Footer />
-            <JoinModal 
-                isOpen={isJoinModalOpen} 
-                onClose={() => setIsJoinModalOpen(false)} 
-                onApplyClick={() => setIsApplicationFormOpen(true)} 
-            />
-            <ApplicationFormModal 
-                isOpen={isApplicationFormOpen} 
-                onClose={() => setIsApplicationFormOpen(false)} 
-            />
-            <PartnershipModal isOpen={isPartnershipModalOpen} onClose={() => setIsPartnershipModalOpen(false)} />
-            <AboutUsModal isOpen={isAboutUsModalOpen} onClose={() => setIsAboutUsModalOpen(false)} />
-            
-            <Chatbot />
-        </div>
-    );
-}
+        'https://i.postimg.cc/JnzfbGs1/4-20251030-105515-000
