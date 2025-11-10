@@ -1,10 +1,10 @@
 import React from 'react';
 
 export const Logo: React.FC<{ className?: string }> = ({ className }) => (
-    <svg className={className} viewBox="0 0 104 72" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
-        <circle cx="16" cy="44" r="16" />
-        <rect x="40" y="5" width="28" height="62" rx="14" />
-        <rect x="76" y="5" width="28" height="62" rx="14" />
+    <svg className={className} viewBox="0 0 155 100" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+        <circle cx="30" cy="70" r="25"/>
+        <rect width="45" height="90" rx="22.5" transform="translate(50 10) rotate(-30 22.5 45)"/>
+        <rect width="45" height="90" rx="22.5" transform="translate(95 10) rotate(-30 22.5 45)"/>
     </svg>
 );
 
@@ -16,22 +16,22 @@ export const ChatbotIcon: React.FC<{ className?: string }> = ({ className }) => 
                 <stop offset="100%" stopColor="#6366F1" />
             </linearGradient>
         </defs>
-        {/* Main circle with gradient */}
+        
         <circle cx="32" cy="32" r="32" fill="url(#chatbot-gradient-bg)" />
         
-        {/* Chat bubble acting as robot head */}
-        <path d="M44,38 H20 C18.8954,38 18,37.1046 18,36 V24 C18,22.8954 18.8954,22 20,22 H44 C45.1046,22 46,22.8954 46,24 V36 C46,37.1046 45.1046,38 44,38 Z" fill="white" />
-        
-        {/* Speech bubble tail */}
-        <path d="M22,38 L22,42 L28,38 L22,38 Z" fill="white" />
-        
-        {/* Eyes */}
-        <circle cx="27" cy="30" r="3" fill="#7C3AED" />
-        <circle cx="37" cy="30" r="3" fill="#7C3AED" />
-        
-        {/* Antenna */}
-        <line x1="32" y1="22" x2="32" y2="16" stroke="white" strokeWidth="3" strokeLinecap="round" />
-        <circle cx="32" cy="14" r="2.5" fill="white" />
+        <g transform="translate(0, 2)">
+            <path
+                fillRule="evenodd"
+                clipRule="evenodd"
+                fill="white"
+                d="M46,25.5 H18 C16.3,25.5 15,26.8 15,28.5 V33 H12 C11.4,33 11,33.4 11,34 V38 C11,38.6 11.4,39 12,39 H15 V40 C15,44.4 18.6,48 23,48 H41 C45.4,48 49,44.4 49,40 V39 H52 C52.6,39 53,38.6 53,38 V34 C53,33.4 52.6,33 52,33 H49 V28.5 C49,26.8 47.7,25.5 46,25.5 Z M24,37.5 A 3,4 0 1,0 30,37.5 A 3,4 0 1,0 24,37.5 Z M34,37.5 A 3,4 0 1,0 40,37.5 A 3,4 0 1,0 34,37.5 Z"
+            />
+            <path
+                fill="white"
+                d="M32,18.5 m-3,0 a3,3 0 1,0 6,0 a3,3 0 1,0 -6,0"
+            />
+            <line x1="32" y1="25.5" x2="32" y2="21.5" stroke="white" strokeWidth="3.5" strokeLinecap="round" />
+        </g>
     </svg>
 );
 

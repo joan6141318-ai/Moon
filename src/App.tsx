@@ -3,7 +3,7 @@ import { FAQItem, PaymentTier, InfoTab } from './types';
 import { 
     Logo, ChevronDownIcon, YoutubeIcon, WhatsappIcon, XIcon, ChevronLeftIcon, ChevronRightIcon, MenuIcon,
     PercentageIcon, TransparencyIcon, TrainingIcon, SupportMaterialIcon, TalentDatabaseIcon, VerificationIcon, PersonalizedSupportIcon,
-    CheckIcon, StarIcon, TargetIcon, UsersIcon, DollarSignIcon, BarChartIcon, SettingsIcon, RocketIcon
+    CheckIcon, StarIcon, TargetIcon, UsersIcon, DollarSignIcon, GlobeIcon, ClockIcon, PuzzleIcon, RocketIcon, BarChartIcon, SettingsIcon, EighteenPlusIcon
 } from './components/icons';
 import { Chatbot } from './components/Chatbot';
 
@@ -25,39 +25,9 @@ const handleSmoothScroll = (e: React.MouseEvent<HTMLAnchorElement>) => {
     }
 };
 
-// --- Custom Hook for Section Observer ---
-const useIntersectionObserver = (setActiveSection: (id: string) => void) => {
-    const observer = useRef<IntersectionObserver | null>(null);
-
-    useEffect(() => {
-        const sections = document.querySelectorAll('section[id]');
-        
-        observer.current = new IntersectionObserver((entries) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    setActiveSection(entry.target.id);
-                }
-            });
-        }, { 
-            rootMargin: '-80px 0px -40% 0px', // Adjusts for header height and triggers earlier on scroll up
-            threshold: 0.2
-        });
-
-        sections.forEach(section => observer.current?.observe(section));
-
-        return () => {
-            sections.forEach(section => {
-                if (observer.current) {
-                    observer.current.unobserve(section);
-                }
-            });
-        };
-    }, [setActiveSection]);
-};
-
 
 // --- Reusable UI Components ---
-const Section: React.FC<{ id: string; children?: ReactNode; className?: string }> = ({ id, children, className = '' }) => {
+const Section: React.FC<{ id: string; children: ReactNode; className?: string }> = ({ id, children, className = '' }) => {
     const ref = useRef<HTMLDivElement>(null);
     useEffect(() => {
         const observer = new IntersectionObserver(
@@ -84,7 +54,7 @@ const Section: React.FC<{ id: string; children?: ReactNode; className?: string }
         <section
             ref={ref}
             id={id}
-            className={`w-full max-w-7xl mx-auto px-6 py-12 md:py-20 opacity-0 translate-y-4 transition-all duration-700 ease-out ${className}`}
+            className={`w-full max-w-6xl mx-auto px-6 py-12 opacity-0 translate-y-4 transition-all duration-700 ease-out ${className}`}
         >
             {children}
         </section>
@@ -120,6 +90,69 @@ const GlowButton: React.FC<{ children: ReactNode, href?: string, className?: str
 
 
 // --- Modal Components ---
+const AboutUsModal: React.FC<{ isOpen: boolean; onClose: () => void }> = ({ isOpen, onClose }) => {
+    if (!isOpen) return null;
+
+    const missionVision = [
+        { 
+            icon: TargetIcon, 
+            title: "Misión", 
+            description: "Potenciar a los creadores de contenido, brindándoles las mejores oportunidades para que puedan convertir su pasión en una carrera profesional exitosa y sostenible." 
+        },
+        { 
+            icon: StarIcon,
+            title: "Visión", 
+            description: "Ser la agencia líder a nivel mundial en la representación de talentos de streaming, reconocida por nuestra innovación, transparencia y el éxito de nuestros creadores." 
+        }
+    ];
+
+    return (
+        // FIX: The onClick handler for a div expects a function that takes a mouse event, but `onClose` takes no arguments. It has been wrapped in an arrow function to correct the type mismatch.
+        <div
+            className="fixed inset-0 bg-black/80 backdrop-blur-sm z-50 flex items-center justify-center p-4 animate-fade-in"
+            onClick={() => onClose()}
+            role="dialog"
+            aria-modal="true"
+            aria-labelledby="about-us-modal-title"
+        >
+            <div
+                className="relative bg-gradient-to-br from-indigo-950 via-black to-black rounded-2xl p-8 md:p-10 border border-purple-500/30 text-white max-w-3xl w-full animate-zoom-in shadow-2xl shadow-purple-500/20"
+                onClick={(e) => e.stopPropagation()}
+            >
+                <button
+// FIX: The `onClick` handler expects a function that receives a mouse event, but `onClose` takes no arguments. It has been wrapped in an arrow function to correct the type mismatch.
+                    onClick={() => onClose()}
+                    className="absolute top-4 right-4 text-gray-400 hover:text-white transition-colors"
+                    aria-label="Cerrar"
+                >
+                    <XIcon className="w-6 h-6" />
+                </button>
+                <div className="text-center">
+                    <h2 id="about-us-modal-title" className="text-3xl md:text-4xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-purple-400 to-indigo-400 mb-4">Quiénes Somos</h2>
+                    <p className="text-gray-300 max-w-3xl mx-auto mb-8 leading-relaxed text-lg text-center">
+                        Con más de 7 años de trayectoria, Agency Moon se ha consolidado como líder en la representación de talentos para el dinámico mundo del streaming. Nos especializamos en descubrir y potenciar a creadores de contenido, conectándolos con las plataformas más influyentes a nivel global. Nuestra comunidad, que supera los 400 talentos activos, es el testimonio de nuestro compromiso con el crecimiento profesional y el éxito sostenible en la industria.
+                    </p>
+                </div>
+
+                <div className="border-t border-purple-500/20 pt-8 mt-8 grid sm:grid-cols-2 gap-8">
+                    {missionVision.map((item, index) => (
+                         <div key={index} className="flex flex-col items-center text-center gap-4">
+                            <div className="flex-shrink-0 bg-purple-600/20 text-purple-300 rounded-full p-3">
+                                <item.icon className="w-6 h-6" />
+                            </div>
+                            <div>
+                                <h3 className="font-semibold text-white text-xl mb-1">{item.title}</h3>
+                                <p className="text-gray-400 leading-relaxed">{item.description}</p>
+                            </div>
+                        </div>
+                    ))}
+                </div>
+            </div>
+        </div>
+    );
+};
+
+
 const JoinModal: React.FC<{ isOpen: boolean; onClose: () => void; onApplyClick: () => void }> = ({ isOpen, onClose, onApplyClick }) => {
     if (!isOpen) return null;
     
@@ -131,9 +164,10 @@ const JoinModal: React.FC<{ isOpen: boolean; onClose: () => void; onApplyClick: 
     ];
 
     return (
+        // FIX: The onClick handler for a div expects a function that takes a mouse event, but `onClose` takes no arguments. It has been wrapped in an arrow function to correct the type mismatch.
         <div
             className="fixed inset-0 bg-black/80 backdrop-blur-sm z-50 flex items-center justify-center p-4 animate-fade-in"
-            onClick={onClose}
+            onClick={() => onClose()}
             role="dialog"
             aria-modal="true"
             aria-labelledby="join-modal-title"
@@ -143,7 +177,8 @@ const JoinModal: React.FC<{ isOpen: boolean; onClose: () => void; onApplyClick: 
                 onClick={(e) => e.stopPropagation()}
             >
                 <button
-                    onClick={onClose}
+// FIX: The `onClick` handler expects a function that receives a mouse event, but `onClose` takes no arguments. It has been wrapped in an arrow function to correct the type mismatch.
+                    onClick={() => onClose()}
                     className="absolute top-4 right-4 text-gray-400 hover:text-white transition-colors"
                     aria-label="Cerrar"
                 >
@@ -225,9 +260,10 @@ const ApplicationFormModal: React.FC<{ isOpen: boolean; onClose: () => void }> =
     ];
 
     return (
+        // FIX: The onClick handler for a div expects a function that takes a mouse event, but `onClose` takes no arguments. It has been wrapped in an arrow function to correct the type mismatch.
         <div
             className="fixed inset-0 bg-black/80 backdrop-blur-sm z-50 flex items-center justify-center p-4 animate-fade-in"
-            onClick={onClose}
+            onClick={() => onClose()}
             role="dialog"
             aria-modal="true"
             aria-labelledby="application-form-title"
@@ -237,7 +273,8 @@ const ApplicationFormModal: React.FC<{ isOpen: boolean; onClose: () => void }> =
                 onClick={(e) => e.stopPropagation()}
             >
                 <button
-                    onClick={onClose}
+// FIX: The `onClick` handler expects a function that receives a mouse event, but `onClose` takes no arguments. It has been wrapped in an arrow function to correct the type mismatch.
+                    onClick={() => onClose()}
                     className="absolute top-4 right-4 text-gray-400 hover:text-white transition-colors"
                     aria-label="Cerrar"
                 >
@@ -253,7 +290,8 @@ const ApplicationFormModal: React.FC<{ isOpen: boolean; onClose: () => void }> =
                         <p className="text-gray-300 max-w-md mx-auto mb-8">
                             Gracias por tu interés en unirte a Agency Moon. Tu postulación ha sido enviada con éxito.
                         </p>
-                        <GlowButton onClick={onClose}>Finalizar</GlowButton>
+                        {/* FIX: The 'GlowButton' component expects an 'onClick' handler that accepts a mouse event. The original code passed a function that does not accept any arguments directly, causing a type mismatch. This has been corrected by wrapping the function call in an arrow function to ensure the event argument is handled correctly. */}
+                        <GlowButton onClick={() => onClose()}>Finalizar</GlowButton>
                     </div>
                 ) : (
                     <>
@@ -334,9 +372,10 @@ const PartnershipModal: React.FC<{ isOpen: boolean; onClose: () => void }> = ({ 
     const prev = () => setCurrentSlide(prev => (prev === 0 ? slides.length - 1 : prev - 1));
 
     return (
+        // FIX: The onClick handler for a div expects a function that takes a mouse event, but `onClose` takes no arguments. It has been wrapped in an arrow function to correct the type mismatch.
         <div
             className="fixed inset-0 bg-black/80 backdrop-blur-sm z-50 flex items-center justify-center p-4 animate-fade-in"
-            onClick={onClose}
+            onClick={() => onClose()}
             role="dialog"
             aria-modal="true"
         >
@@ -345,7 +384,8 @@ const PartnershipModal: React.FC<{ isOpen: boolean; onClose: () => void }> = ({ 
                 onClick={(e) => e.stopPropagation()}
             >
                 <button
-                    onClick={prev}
+// FIX: The onClick handler for this button expects a function that takes a mouse event, but `prev` takes no arguments. It has been wrapped in an arrow function to correct the type mismatch.
+                    onClick={() => prev()}
                     aria-label="Anterior"
                     className="absolute left-0 top-1/2 -translate-y-1/2 z-10 p-2 bg-black/40 rounded-full hover:bg-purple-600 transition-colors focus:outline-none focus:ring-2 focus:ring-purple-400"
                 >
@@ -395,13 +435,15 @@ const PartnershipModal: React.FC<{ isOpen: boolean; onClose: () => void }> = ({ 
                         </div>
                     </div>
                     
-                     <button onClick={onClose} className="absolute top-3 right-3 text-gray-400 hover:text-white transition-colors" aria-label="Cerrar">
+                     <button // FIX: The `onClick` handler expects a function that receives a mouse event, but `onClose` takes no arguments. It has been wrapped in an arrow function to correct the type mismatch.
+                    onClick={() => onClose()} className="absolute top-3 right-3 text-gray-400 hover:text-white transition-colors" aria-label="Cerrar">
                         <XIcon className="w-5 h-5" />
                     </button>
                 </div>
 
                 <button
-                    onClick={next}
+// FIX: The onClick handler for this button expects a function that takes a mouse event, but `next` takes no arguments. It has been wrapped in an arrow function to correct the type mismatch.
+                    onClick={() => next()}
                     aria-label="Siguiente"
                     className="absolute right-0 top-1/2 -translate-y-1/2 z-10 p-2 bg-black/40 rounded-full hover:bg-purple-600 transition-colors focus:outline-none focus:ring-2 focus:ring-purple-400"
                 >
@@ -415,7 +457,7 @@ const PartnershipModal: React.FC<{ isOpen: boolean; onClose: () => void }> = ({ 
 
 // --- Page Section Components ---
 
-const Header: React.FC<{ onOpenJoinModal: () => void; activeSection: string; }> = ({ onOpenJoinModal, activeSection }) => {
+const Header: React.FC<{ onOpenJoinModal: () => void; onOpenAboutModal: () => void }> = ({ onOpenJoinModal, onOpenAboutModal }) => {
     const [isScrolled, setIsScrolled] = useState(false);
     const [isMenuOpen, setIsMenuOpen] = useState(false);
     
@@ -425,12 +467,14 @@ const Header: React.FC<{ onOpenJoinModal: () => void; activeSection: string; }> 
         return () => window.removeEventListener('scroll', handleScroll);
     }, []);
 
-    const handleMenuClick = (e: React.MouseEvent<HTMLAnchorElement>) => {
+    const handleMenuClick = (e: React.MouseEvent<HTMLAnchorElement>, href: string) => {
         setIsMenuOpen(false);
-        const href = e.currentTarget.getAttribute('href');
         if (href === '#join-modal') {
             e.preventDefault();
             onOpenJoinModal();
+        } else if (href === '#about-us') {
+            e.preventDefault();
+            onOpenAboutModal();
         } else {
             handleSmoothScroll(e);
         }
@@ -446,60 +490,51 @@ const Header: React.FC<{ onOpenJoinModal: () => void; activeSection: string; }> 
         { name: 'Socios', href: '#partnership' },
         { name: 'Contacto', href: '#contact' },
     ];
-    
-    const getIsActive = (href: string) => activeSection === href.substring(1);
 
+    const mobileNavLinks = [
+        { name: 'Quiénes Somos', href: '#about-us' },
+        { name: 'Nuestra Experiencia', href: '#experience' },
+        { name: 'Preguntas Frecuentes', href: '#faq' },
+        { name: 'Información General', href: '#info' },
+        { name: 'Tips de Transmisión', href: '#tips' },
+        { name: 'Nuestros Talentos', href: '#talents' },
+        { name: 'Sé Nuestro Socio', href: '#partnership' },
+        { name: 'Contáctanos', href: '#contact' },
+    ];
 
     return (
         <header className={`fixed top-0 left-0 right-0 z-40 transition-all duration-300 ${isScrolled || isMenuOpen ? 'bg-black/80 backdrop-blur-sm' : 'bg-transparent'}`}>
-            <nav className="w-full max-w-7xl mx-auto px-6 py-4 flex justify-between items-center">
+            <nav className="container mx-auto px-6 py-4 flex justify-between items-baseline">
                 <a href="#home" onClick={handleSmoothScroll} className="flex items-center gap-2">
                     <Logo className="h-8 w-auto text-white" />
-                    <span className="text-white font-bold text-2xl">Agency Moon</span>
+                    <span className="text-white font-bold text-xl">Agency Moon</span>
                 </a>
-
-                {/* Desktop Navigation */}
-                <div className="hidden lg:flex items-center gap-6">
-                    <div className="flex items-center space-x-6">
-                        {navLinks.map(link => {
-                            const isActive = getIsActive(link.href);
-                            return (
-                                 <a 
-                                    key={link.name} 
-                                    href={link.href} 
-                                    onClick={handleMenuClick} 
-                                    className={`transition-colors font-medium text-base ${isActive ? 'text-purple-400 font-bold text-shadow-purple' : 'text-gray-300 hover:text-white hover:text-shadow-purple'}`}
-                                 >
-                                    {link.name}
-                                </a>
-                            );
-                        })}
-                    </div>
-                    <GlowButton onClick={onOpenJoinModal}>Únete ahora</GlowButton>
+                <div className="hidden md:flex items-center space-x-8">
+                    {navLinks.map(link => (
+                         <a key={link.name} href={link.href} onClick={(e) => handleMenuClick(e, link.href)} className="text-gray-300 hover:text-white transition-colors hover:text-shadow-purple font-medium">{link.name}</a>
+                    ))}
                 </div>
-
-                 <div className="lg:hidden">
+                 {/* FIX: The 'GlowButton' component expects an 'onClick' handler that accepts a mouse event. The original code passed a function that does not accept any arguments directly, causing a type mismatch. This has been corrected by wrapping the function call in an arrow function to ensure the event argument is handled correctly. */}
+                 <GlowButton onClick={() => onOpenJoinModal()} className="hidden md:inline-block">Únete ahora</GlowButton>
+                 <div className="md:hidden">
                     <button onClick={() => setIsMenuOpen(!isMenuOpen)} className="text-white focus:outline-none" aria-label="Abrir menú">
                         {isMenuOpen ? <XIcon className="w-7 h-7" /> : <MenuIcon className="w-7 h-7" />}
                     </button>
                 </div>
             </nav>
             {isMenuOpen && (
-                 <div className="lg:hidden absolute top-full left-0 w-full bg-black/90 backdrop-blur-sm animate-fade-in-down-fast">
+                 <div className="md:hidden absolute top-full left-0 w-full bg-black/90 backdrop-blur-sm animate-fade-in-down-fast">
                     <div className="flex flex-col items-start px-6 py-4 space-y-1">
-                        {navLinks.map(link => {
-                             const isActive = getIsActive(link.href);
-                             return (
-                                <a
-                                    key={link.name}
-                                    href={link.href}
-                                    className={`w-full text-left py-3 px-3 rounded-md transition-colors text-lg ${isActive ? 'bg-purple-600/30 text-white font-semibold' : 'text-gray-200 hover:text-white'}`}
-                                    onClick={handleMenuClick}
-                                >
-                                    {link.name}
-                                </a>
-                            );
-                        })}
+                        {mobileNavLinks.map(link => (
+                            <a
+                                key={link.name}
+                                href={link.href}
+                                className="text-gray-200 hover:bg-purple-600/30 hover:text-white w-full text-left py-3 px-3 rounded-md transition-colors text-lg"
+                                onClick={(e) => handleMenuClick(e, link.href)}
+                            >
+                                {link.name}
+                            </a>
+                        ))}
                     </div>
                  </div>
             )}
@@ -511,66 +546,26 @@ const Hero: React.FC<{ onOpenJoinModal: () => void }> = ({ onOpenJoinModal }) =>
     <section id="home" className="h-screen min-h-[700px] w-full flex items-center justify-center relative text-white text-center px-4 overflow-hidden">
         <div className="absolute inset-0 bg-black z-0">
             <img
-                src="https://images.pexels.com/photos/169647/pexels-photo-169647.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1"
-                alt="Edificio de oficinas de noche"
-                className="w-full h-full object-cover opacity-40"
+                src="https://images.pexels.com/photos/1252890/pexels-photo-1252890.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1"
+                alt="Fondo de galaxia púrpura y azul"
+                className="w-full h-full object-cover opacity-50"
             />
             <div className="absolute inset-0 bg-gradient-to-t from-black via-black/70 to-transparent"></div>
+            <div className="absolute inset-0 bg-gradient-to-r from-black via-transparent to-black"></div>
         </div>
         <div className="relative z-10 flex flex-col items-center">
-            <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold mb-6 animate-fade-in-down tracking-tight whitespace-nowrap">
-                Conecta. Crea. <span className="text-fuchsia-500">Brilla.</span>
-            </h1>
-            <p className="text-xl md:text-2xl mb-12 text-gray-300 animate-fade-in-up font-light" style={{ animationDelay: '150ms' }}>
-                Tu talento merece ser visto.
+            <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold mb-4 animate-fade-in-down" style={{textShadow: '0 0 15px rgba(168, 85, 247, 0.7)'}}>Haz brillar tu talento</h1>
+            <p className="text-xl md:text-2xl max-w-3xl my-6 text-gray-300 italic animate-fade-in-up" style={{ animationDelay: '150ms' }}>
+                "Que no te digan que el cielo es el límite cuando hay huellas en la luna"
             </p>
-            <div className="animate-fade-in-up" style={{ animationDelay: '300ms' }}>
-                <GlowButton onClick={onOpenJoinModal} className="rounded-full px-8 py-3">Comienza hoy</GlowButton>
+            <p className="text-lg md:text-xl max-w-3xl mb-8 text-gray-300 animate-fade-in-up" style={{ animationDelay: '300ms' }}>Únete a nuestra comunidad de creadores y empieza a monetizar tus transmisiones.</p>
+            <div className="animate-fade-in-up" style={{ animationDelay: '450ms' }}>
+                {/* FIX: The 'GlowButton' component expects an 'onClick' handler that accepts a mouse event. The original code passed a function that does not accept any arguments directly, causing a type mismatch. This has been corrected by wrapping the function call in an arrow function to ensure the event argument is handled correctly. */}
+                <GlowButton onClick={() => onOpenJoinModal()}>Únete ahora</GlowButton>
             </div>
         </div>
     </section>
 );
-
-
-const AboutUsSection: React.FC = () => {
-    const missionVision = [
-        {
-            icon: TargetIcon,
-            title: "Misión",
-            description: "Potenciar a los creadores de contenido, brindándoles las mejores oportunidades para que puedan convertir su pasión en una carrera profesional exitosa y sostenible."
-        },
-        {
-            icon: StarIcon,
-            title: "Visión",
-            description: "Ser la agencia líder a nivel mundial en la representación de talentos de streaming, reconocida por nuestra innovación, transparencia y el éxito de nuestros creadores."
-        }
-    ];
-
-    return (
-        <Section id="about-us">
-            <div className="text-center">
-                <h2 className="text-3xl md:text-4xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-purple-400 to-indigo-400 mb-4">Quiénes Somos</h2>
-                <p className="text-gray-300 max-w-3xl mx-auto mb-10 leading-relaxed text-lg text-center">
-                    Con más de 7 años de trayectoria, Agency Moon se ha consolidado como líder en la representación de talentos para el dinámico mundo del streaming. Nos especializamos en descubrir y potenciar a creadores de contenido, conectándolos con las plataformas más influyentes a nivel global.
-                </p>
-            </div>
-
-            <div className="border-t border-purple-500/20 pt-10 mt-10 grid sm:grid-cols-2 gap-10">
-                {missionVision.map((item, index) => (
-                    <div key={index} className="flex flex-col items-center text-center gap-4">
-                        <div className="flex-shrink-0 bg-purple-600/20 text-purple-300 rounded-full p-4 border border-purple-500/30">
-                            <item.icon className="w-8 h-8" />
-                        </div>
-                        <div>
-                            <h3 className="font-semibold text-white text-2xl mb-2">{item.title}</h3>
-                            <p className="text-gray-400 leading-relaxed">{item.description}</p>
-                        </div>
-                    </div>
-                ))}
-            </div>
-        </Section>
-    );
-};
 
 const ProgressBar: React.FC<{ label: string; percentage: number; isInView: boolean }> = ({ label, percentage, isInView }) => (
     <div className="mb-6">
@@ -646,36 +641,35 @@ const ExperienceSection: React.FC = () => {
 
 const Banner: React.FC = () => {
     return (
-        <Section id="banner-cta" className="py-0">
-            <div className="relative rounded-2xl overflow-hidden shadow-2xl shadow-purple-900/50 border border-purple-500/30">
-                <img 
-                    src="https://images.pexels.com/photos/6801648/pexels-photo-6801648.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1" 
-                    alt="Gráfico de crecimiento y éxito financiero, representando los logros de la agencia" 
-                    className="absolute inset-0 w-full h-full object-cover object-center"
-                />
-                <div className="absolute inset-0 bg-gradient-to-r from-black/80 via-purple-900/70 to-transparent"></div>
-                <div className="relative z-10 flex items-center justify-start text-left min-h-[280px]">
-                    <div className="max-w-md p-8 md:p-12">
-                        <h2 className="text-3xl md:text-4xl font-bold text-white mb-4 leading-tight" style={{textShadow: '0 2px 10px rgba(0,0,0,0.5)'}}>
-                            Convierte tu Pasión en una Carrera Profesional
-                        </h2>
-                        <p className="text-gray-200 mb-8" style={{textShadow: '0 1px 5px rgba(0,0,0,0.5)'}}>
-                           Te proporcionamos las herramientas, el soporte 24/7 y una comunidad que te impulsa a crecer. Con cero comisiones, todo lo que generas es 100% tuyo. Es hora de que tu talento brille.
-                        </p>
-                        <GlowButton href="#faq">
-                            Descubre Cómo
-                        </GlowButton>
-                    </div>
+        <div className="relative rounded-2xl overflow-hidden shadow-2xl shadow-purple-900/50 border border-purple-500/30">
+            <img 
+                src="https://images.pexels.com/photos/6801648/pexels-photo-6801648.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1" 
+                alt="Gráfico de crecimiento y éxito financiero, representando los logros de la agencia" 
+                className="absolute inset-0 w-full h-full object-cover object-center"
+            />
+            <div className="absolute inset-0 bg-gradient-to-r from-black/80 via-purple-900/70 to-transparent"></div>
+            <div className="relative z-10 flex items-center justify-start text-left min-h-[280px]">
+                <div className="max-w-md p-8 md:p-12">
+                    <h2 className="text-3xl md:text-4xl font-bold text-white mb-4 leading-tight" style={{textShadow: '0 2px 10px rgba(0,0,0,0.5)'}}>
+                        Convierte tu Pasión en una Carrera Profesional
+                    </h2>
+                    <p className="text-gray-200 mb-8" style={{textShadow: '0 1px 5px rgba(0,0,0,0.5)'}}>
+                       Te proporcionamos las herramientas, el soporte 24/7 y una comunidad que te impulsa a crecer. Con cero comisiones, todo lo que generas es 100% tuyo. Es hora de que tu talento brille.
+                    </p>
+                    <GlowButton href="#faq">
+                        Descubre Cómo
+                    </GlowButton>
                 </div>
             </div>
-        </Section>
+        </div>
     );
 };
 
 
 const AccordionItem: React.FC<{ item: FAQItem, isOpen: boolean, onClick: () => void }> = ({ item, isOpen, onClick }) => (
     <div className="bg-gray-900/50 rounded-lg border border-purple-500/30 mb-3 transition-all duration-300 hover:border-purple-400">
-        <button onClick={onClick} className="w-full flex justify-between items-center text-left p-5" aria-expanded={isOpen}>
+        {/* FIX: The onClick handler for the button passes a mouse event, but the `onClick` prop expects no arguments. This has been corrected by wrapping `onClick` in an arrow function to discard the event. */}
+        <button onClick={() => onClick()} className="w-full flex justify-between items-center text-left p-5" aria-expanded={isOpen}>
             <span className="text-lg font-medium text-white">{item.question}</span>
             <ChevronDownIcon className={`w-6 h-6 text-purple-400 transition-transform duration-300 flex-shrink-0 ml-4 ${isOpen ? 'rotate-180' : ''}`} />
         </button>
@@ -688,11 +682,11 @@ const AccordionItem: React.FC<{ item: FAQItem, isOpen: boolean, onClick: () => v
 
 const FAQ: React.FC = () => {
     const [openIndex, setOpenIndex] = useState<number | null>(null);
-    
+    const [isFaqExpanded, setIsFaqExpanded] = useState(false);
     const faqData: FAQItem[] = [
         {
-            question: '¿Qué beneficios obtengo si me uno a la agencia Agency Moon?',
-            answer: `<p>Nos complace que te interesas en nuestro equipo. Nuestro diferenciador es que como emisor obtendrás:</p>
+            question: '¿Qué beneficios obtengo si me uno a agencia Agency Moon?',
+            answer: `<p>Nos complace que te intereses en nuestro equipo. Nuestro diferenciador es que como emisor obtendrás:</p>
                      <ul>
                          <li><strong>Atención y Soporte 24/7:</strong> Atención personalizada para resolver cualquier duda.</li>
                          <li><strong>Información Oficial:</strong> Acceso a actualizaciones y novedades de la plataforma.</li>
@@ -742,12 +736,6 @@ const FAQ: React.FC = () => {
 
     return (
         <Section id="faq">
-            <div className="text-center">
-                <h2 className="text-3xl md:text-4xl font-bold text-white mb-4">Preguntas Frecuentes</h2>
-                <p className="text-gray-400 max-w-3xl mx-auto mb-12">
-                    Encuentra respuestas a las dudas más comunes sobre cómo unirte y crecer en Agency Moon.
-                </p>
-            </div>
             <div className="max-w-2xl mx-auto mb-8">
                 <div className="block rounded-2xl overflow-hidden shadow-lg shadow-purple-900/50 border border-purple-500/20">
                     <img 
@@ -757,16 +745,28 @@ const FAQ: React.FC = () => {
                     />
                 </div>
             </div>
+
+            <div className="max-w-3xl mx-auto text-center">
+                 <button
+                    onClick={() => setIsFaqExpanded(!isFaqExpanded)}
+                    className="inline-flex items-center justify-center gap-3 text-left py-3 px-6 bg-gray-900/50 rounded-lg border border-purple-500/30 mb-3 transition-all duration-300 hover:border-purple-400 hover:bg-gray-900/70 focus:outline-none focus:ring-2 focus:ring-purple-500"
+                    aria-expanded={isFaqExpanded}
+                    aria-controls="faq-list"
+                >
+                    <span className="text-lg font-semibold text-white">Preguntas Frecuentes</span>
+                    <ChevronDownIcon className={`w-6 h-6 text-purple-400 transition-transform duration-300 flex-shrink-0 ${isFaqExpanded ? 'rotate-180' : ''}`} />
+                </button>
+            </div>
             
-            <div id="faq-list" className="max-w-3xl mx-auto">
-                {faqData.map((item, index) => (
-                    <AccordionItem 
-                        key={index} 
-                        item={item} 
-                        isOpen={openIndex === index} 
-                        onClick={() => setOpenIndex(openIndex === index ? null : index)} 
-                    />
-                ))}
+            <div 
+                id="faq-list"
+                className={`max-w-3xl mx-auto overflow-hidden transition-all duration-700 ease-in-out ${isFaqExpanded ? 'max-h-[2000px] opacity-100' : 'max-h-0 opacity-0'}`}
+            >
+                <div className="pt-4">
+                    {faqData.map((item, index) => (
+                        <AccordionItem key={index} item={item} isOpen={openIndex === index} onClick={() => setOpenIndex(openIndex === index ? null : index)} />
+                    ))}
+                </div>
             </div>
         </Section>
     );
@@ -864,8 +864,9 @@ const PaymentInfoCarousel: React.FC = () => {
 
 const InfoAccordionItem: React.FC<{ item: InfoTab, isOpen: boolean, onClick: () => void }> = ({ item, isOpen, onClick }) => (
     <div className="bg-gray-900/50 rounded-lg border border-purple-500/30 mb-4 transition-all duration-300 hover:border-purple-400 hover:shadow-[0_0_20px_rgba(168,85,247,0.4)]">
+        {/* FIX: The onClick handler for the button passes a mouse event, but the `onClick` prop expects no arguments. This has been corrected by wrapping `onClick` in an arrow function to discard the event. */}
         <button 
-            onClick={onClick} 
+            onClick={() => onClick()} 
             className="w-full flex justify-between items-center text-left p-6"
             aria-expanded={isOpen}
         >
@@ -882,33 +883,11 @@ const InfoAccordionItem: React.FC<{ item: InfoTab, isOpen: boolean, onClick: () 
 
 const GeneralInfo: React.FC = () => {
     const [openIndex, setOpenIndex] = useState<number | null>(0);
+    const [isInfoExpanded, setIsInfoExpanded] = useState(false);
 
     const onToggle = (index: number) => {
         setOpenIndex(prev => (prev === index ? null : index));
     };
-
-    useEffect(() => {
-        const handleFaqLinkClick = (e: MouseEvent) => {
-            const target = e.target as HTMLElement;
-            if (target && target.id === 'faq-payment-link') {
-                e.preventDefault();
-                setOpenIndex(4);
-                
-                const infoSection = document.getElementById('info');
-                if (infoSection) {
-                    setTimeout(() => {
-                        infoSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
-                    }, 100);
-                }
-            }
-        };
-
-        document.addEventListener('click', handleFaqLinkClick);
-
-        return () => {
-            document.removeEventListener('click', handleFaqLinkClick);
-        };
-    }, []);
 
     const infoData: InfoTab[] = [
         {
@@ -959,22 +938,34 @@ const GeneralInfo: React.FC = () => {
     
     return (
         <Section id="info">
-            <div className="text-center">
-                <h2 className="text-3xl md:text-4xl font-bold text-white mb-4">Información General</h2>
-                <p className="text-gray-400 max-w-3xl mx-auto mb-12">
-                    Conoce más sobre las herramientas y conceptos clave para tener éxito en tus transmisiones.
-                </p>
+            <h2 className="text-3xl md:text-4xl font-bold text-white text-center mb-10">Información General</h2>
+
+            <div className="max-w-4xl mx-auto text-center">
+                <button
+                    onClick={() => setIsInfoExpanded(!isInfoExpanded)}
+                    className="inline-flex items-center justify-center gap-3 text-left py-3 px-6 bg-gray-900/50 rounded-lg border border-purple-500/30 mb-3 transition-all duration-300 hover:border-purple-400 hover:bg-gray-900/70 focus:outline-none focus:ring-2 focus:ring-purple-500"
+                    aria-expanded={isInfoExpanded}
+                    aria-controls="info-list"
+                >
+                    <span className="text-lg font-semibold text-white">Ver Información General</span>
+                    <ChevronDownIcon className={`w-6 h-6 text-purple-400 transition-transform duration-300 flex-shrink-0 ${isInfoExpanded ? 'rotate-180' : ''}`} />
+                </button>
             </div>
 
-            <div id="info-list" className="max-w-4xl mx-auto">
-                {infoData.map((item, index) => (
-                    <InfoAccordionItem 
-                        key={index}
-                        item={item} 
-                        isOpen={openIndex === index} 
-                        onClick={() => onToggle(index)} 
-                    />
-                ))}
+            <div
+                id="info-list"
+                className={`max-w-4xl mx-auto overflow-hidden transition-all duration-700 ease-in-out ${isInfoExpanded ? 'max-h-[2000px] opacity-100' : 'max-h-0 opacity-0'}`}
+            >
+                <div className="pt-4">
+                    {infoData.map((item, index) => (
+                        <InfoAccordionItem 
+                            key={index}
+                            item={item} 
+                            isOpen={openIndex === index} 
+                            onClick={() => onToggle(index)} 
+                        />
+                    ))}
+                </div>
             </div>
         </Section>
     );
@@ -1042,8 +1033,7 @@ const TipsSection: React.FC = () => {
                         className="relative w-full max-w-3xl animate-zoom-in"
                         onClick={(e) => e.stopPropagation()}
                     >
-                        <div className="relative w-full h-[500px] sm:h-[600px] flex items-center justify-center">
-                            <div className="relative w-80 h-80 sm:w-[26rem] sm:h-[26rem]">
+                        <div className="relative w-full h-[500px] sm:h-[600px]">
                             {tipsImages.map((src, index) => (
                                 <div
                                     key={src}
@@ -1054,35 +1044,42 @@ const TipsSection: React.FC = () => {
                                     }`}
                                     aria-hidden={index !== currentTipIndex}
                                 >
-                                    <div className="relative rounded-2xl shadow-[0_0_30px_rgba(168,85,247,0.7)] border-2 border-purple-500/50 p-1 bg-black w-full h-full">
+                                    <div className="relative rounded-2xl shadow-[0_0_30px_rgba(168,85,247,0.7)] border-2 border-purple-500/50 p-1 bg-black">
                                         <img
                                             src={src}
                                             alt={`Tip de transmisión ${index + 1}`}
-                                            className="w-full h-full object-cover rounded-xl"
+                                            className="w-96 h-96 sm:w-[28rem] sm:h-[28rem] object-cover rounded-2xl"
                                         />
                                     </div>
                                 </div>
                             ))}
-                            </div>
+
                             <button
+// FIX: The onClick handler expects a function that receives a mouse event.
+// The `prevTip` function does not expect any arguments.
+// It is wrapped in an arrow function to prevent the event from being passed.
                                 onClick={(e) => { e.stopPropagation(); prevTip(); }}
-                                className="absolute top-1/2 left-2 sm:-left-12 -translate-y-1/2 bg-black/50 text-white p-2 rounded-full hover:bg-purple-600 transition-colors z-10"
+                                className="absolute top-1/2 left-2 sm:left-4 -translate-y-1/2 bg-black/50 text-white p-2 rounded-full hover:bg-purple-600 transition-colors z-10"
                                 aria-label="Anterior"
                             >
                                 <ChevronLeftIcon className="w-6 h-6" />
                             </button>
                             <button
+// FIX: The onClick handler expects a function that receives a mouse event.
+// The `nextTip` function does not expect any arguments.
+// It is wrapped in an arrow function to prevent the event from being passed.
                                 onClick={(e) => { e.stopPropagation(); nextTip(); }}
-                                className="absolute top-1/2 right-2 sm:-right-12 -translate-y-1/2 bg-black/50 text-white p-2 rounded-full hover:bg-purple-600 transition-colors z-10"
+                                className="absolute top-1/2 right-2 sm:right-4 -translate-y-1/2 bg-black/50 text-white p-2 rounded-full hover:bg-purple-600 transition-colors z-10"
                                 aria-label="Siguiente"
                             >
                                 <ChevronRightIcon className="w-6 h-6" />
                             </button>
-                            <div className="absolute -bottom-8 left-1/2 -translate-x-1/2 flex gap-2">
+                            
+                            <div className="absolute bottom-4 left-1/2 -translate-x-1/2 flex gap-2">
                                 {tipsImages.map((_, index) => (
                                     <button 
                                         key={index}
-                                        onClick={(e) => { e.stopPropagation(); setCurrentTipIndex(index); }}
+                                        onClick={() => setCurrentTipIndex(index)}
                                         className={`w-3 h-3 rounded-full transition-all ${index === currentTipIndex ? 'bg-purple-500 scale-125' : 'bg-gray-600 hover:bg-gray-400'}`}
                                         aria-label={`Ir al tip ${index + 1}`}
                                     />
@@ -1092,7 +1089,7 @@ const TipsSection: React.FC = () => {
                        
                         <button 
                             onClick={() => setIsTipsModalOpen(false)}
-                            className="absolute -top-3 -right-3 text-white bg-purple-600 rounded-full p-2 hover:bg-purple-700 transition-colors z-20"
+                            className="absolute -top-3 -right-3 text-white bg-purple-600 rounded-full p-2 hover:bg-purple-700 transition-colors"
                             aria-label="Cerrar"
                         >
                             <XIcon className="w-6 h-6" />
@@ -1209,14 +1206,20 @@ const TalentsSection: React.FC = () => {
                 </div>
 
                 <button
-                    onClick={prevSlide}
+// FIX: The onClick handler expects a function that receives a mouse event.
+// The `prevSlide` function does not expect any arguments.
+// It is wrapped in an arrow function to prevent the event from being passed.
+                    onClick={() => prevSlide()}
                     className="absolute top-1/2 -left-4 md:-left-16 -translate-y-1/2 bg-black/50 text-white p-3 rounded-full hover:bg-purple-600 transition-colors z-20 focus:outline-none focus:ring-2 focus:ring-purple-400"
                     aria-label="Anterior Talento"
                 >
                     <ChevronLeftIcon className="w-6 h-6" />
                 </button>
                 <button
-                    onClick={nextSlideManual}
+// FIX: The onClick handler expects a function that receives a mouse event.
+// The `nextSlideManual` function does not expect any arguments.
+// It is wrapped in an arrow function to prevent the event from being passed.
+                    onClick={() => nextSlideManual()}
                     className="absolute top-1/2 -right-4 md:-right-16 -translate-y-1/2 bg-black/50 text-white p-3 rounded-full hover:bg-purple-600 transition-colors z-20 focus:outline-none focus:ring-2 focus:ring-purple-400"
                     aria-label="Siguiente Talento"
                 >
@@ -1254,7 +1257,8 @@ const PartnershipSection: React.FC<{ onOpenModal: () => void }> = ({ onOpenModal
                 <p className="text-gray-200 md:text-lg mb-8 max-w-2xl mx-auto" style={{textShadow: '0 1px 5px rgba(0,0,0,0.5)'}}>
                     Actualmente buscamos socios comerciales o agentes que quieran trabajar con nosotros en la empresa. Expande tus horizontes y crece profesionalmente en la industria del streaming.
                 </p>
-                <GlowButton onClick={onOpenModal}>
+                {/* FIX: The GlowButton's onClick prop expects a function that receives a mouse event. The handler was passed directly, causing a type mismatch. It has been wrapped in an arrow function to correct this. */}
+                <GlowButton onClick={() => onOpenModal()}>
                     Más Información
                 </GlowButton>
             </div>
@@ -1297,23 +1301,21 @@ const Contact: React.FC = () => (
 
 
 const Footer: React.FC = () => (
-    <footer className="w-full max-w-7xl mx-auto px-6 border-t border-purple-500/20 text-center py-8 text-gray-500">
+    <footer className="border-t border-purple-500/20 text-center py-8 text-gray-500">
         <p>&copy; {new Date().getFullYear()} Agency Moon. Todos los derechos reservados.</p>
     </footer>
 );
-
 
 export default function App() {
     const [isJoinModalOpen, setIsJoinModalOpen] = useState(false);
     const [isPartnershipModalOpen, setIsPartnershipModalOpen] = useState(false);
     const [isApplicationFormOpen, setIsApplicationFormOpen] = useState(false);
-    const [activeSection, setActiveSection] = useState('home');
-    
-    useIntersectionObserver(setActiveSection);
-    
+    const [isAboutUsModalOpen, setIsAboutUsModalOpen] = useState(false);
+    const [isTipsModalOpen, setIsTipsModalOpen] = useState(false); // State from TipsSection moved here
+
     // Lock body scroll when any modal is open
     useEffect(() => {
-        const isAnyModalOpen = isJoinModalOpen || isPartnershipModalOpen || isApplicationFormOpen;
+        const isAnyModalOpen = isJoinModalOpen || isPartnershipModalOpen || isApplicationFormOpen || isAboutUsModalOpen || isTipsModalOpen;
         if (isAnyModalOpen) {
             document.body.style.overflow = 'hidden';
         } else {
@@ -1324,7 +1326,157 @@ export default function App() {
         return () => {
             document.body.style.overflow = 'auto';
         };
-    }, [isJoinModalOpen, isPartnershipModalOpen, isApplicationFormOpen]);
+    }, [isJoinModalOpen, isPartnershipModalOpen, isApplicationFormOpen, isAboutUsModalOpen, isTipsModalOpen]);
+
+
+    useEffect(() => {
+        const handleFaqLinkClick = (e: MouseEvent) => {
+            const target = e.target as HTMLElement;
+            if (target && target.id === 'faq-payment-link') {
+                e.preventDefault();
+                                
+                const infoSection = document.getElementById('info');
+                if (infoSection) {
+                    // A small timeout allows the state to update and accordion to start opening before scrolling
+                    setTimeout(() => {
+                        infoSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                        // We can't directly open the accordion from here easily without more state lifting
+                        // but we can try to click the button if it's not expanded
+                        const infoButton = document.querySelector('#info button[aria-controls="info-list"]');
+                        if (infoButton && infoButton.getAttribute('aria-expanded') === 'false') {
+                           (infoButton as HTMLElement).click();
+                        }
+
+                    }, 100);
+                }
+            }
+        };
+
+        document.addEventListener('click', handleFaqLinkClick);
+
+        return () => {
+            document.removeEventListener('click', handleFaqLinkClick);
+        };
+    }, []);
+
+    // TipsModal now lives inside TipsSection, we just pass state control
+    const TipsSectionWithState: React.FC = () => {
+        const [currentTipIndex, setCurrentTipIndex] = useState(0);
+        const tipsImages = [
+            'https://i.postimg.cc/xCscRJt2/2-20251030-105515-0001.png',
+            'https://i.postimg.cc/YSY9JDRQ/3-20251030-105515-0002.png',
+            'https://i.postimg.cc/JnzfbGs1/4-20251030-105515-0003.png',
+            'https://i.postimg.cc/8PfjRCv2/5-20251030-105515-0004.png',
+            'https://i.postimg.cc/NFrP4TBF/6-20251030-105515-0005.png',
+        ];
+
+        const nextTip = useCallback(() => {
+            setCurrentTipIndex(prevIndex => (prevIndex + 1) % tipsImages.length);
+        }, [tipsImages.length]);
+
+        const prevTip = useCallback(() => {
+            setCurrentTipIndex(prevIndex => (prevIndex - 1 + tipsImages.length) % tipsImages.length);
+        }, [tipsImages.length]);
+
+        useEffect(() => {
+            const handleKeyDown = (event: KeyboardEvent) => {
+                if (!isTipsModalOpen) return;
+                if (event.key === 'ArrowRight') nextTip();
+                else if (event.key === 'ArrowLeft') prevTip();
+                else if (event.key === 'Escape') setIsTipsModalOpen(false);
+            };
+            window.addEventListener('keydown', handleKeyDown);
+            return () => {
+                window.removeEventListener('keydown', handleKeyDown);
+            };
+        }, [isTipsModalOpen, nextTip, prevTip]);
+
+        return (
+            <>
+                <Section id="tips">
+                    <div className="text-center">
+                        <h2 className="text-3xl md:text-4xl font-bold text-white mb-4">Tips para tu Transmisión</h2>
+                        <p className="text-gray-400 max-w-2xl mx-auto mb-8">
+                            Mejora la calidad de tus transmisiones y aumenta tu audiencia con nuestros consejos profesionales. Haz clic para ver nuestra galería de tips.
+                        </p>
+                        <GlowButton onClick={() => setIsTipsModalOpen(true)}>
+                            Ver Galería de Tips
+                        </GlowButton>
+                    </div>
+                </Section>
+                {isTipsModalOpen && (
+                    <div 
+                        className="fixed inset-0 bg-black/90 backdrop-blur-sm z-50 flex items-center justify-center p-4 animate-fade-in"
+                        onClick={() => setIsTipsModalOpen(false)}
+                        role="dialog" aria-modal="true"
+                    >
+                        <div 
+                            className="relative w-full max-w-3xl animate-zoom-in"
+                            onClick={(e) => e.stopPropagation()}
+                        >
+                            <div className="relative w-full h-[500px] sm:h-[600px] flex items-center justify-center">
+                                <div className="relative w-96 h-96 sm:w-[28rem] sm:h-[28rem]">
+                                {tipsImages.map((src, index) => (
+                                    <div
+                                        key={src}
+                                        className={`absolute inset-0 transition-opacity duration-300 ease-in-out ${index === currentTipIndex ? 'opacity-100' : 'opacity-0'}`}
+                                        aria-hidden={index !== currentTipIndex}
+                                    >
+                                        <div className="relative rounded-2xl shadow-[0_0_30px_rgba(168,85,247,0.7)] border-2 border-purple-500/50 p-1 bg-black w-full h-full">
+                                            <img
+                                                src={src}
+                                                alt={`Tip de transmisión ${index + 1}`}
+                                                className="w-full h-full object-cover rounded-2xl"
+                                            />
+                                        </div>
+                                    </div>
+                                ))}
+                                </div>
+                                <button
+// FIX: The onClick handler expects a function that receives a mouse event.
+// The `prevTip` function does not expect any arguments.
+// It is wrapped in an arrow function to prevent the event from being passed.
+                                    onClick={(e) => { e.stopPropagation(); prevTip(); }}
+                                    className="absolute top-1/2 left-2 sm:-left-12 -translate-y-1/2 bg-black/50 text-white p-2 rounded-full hover:bg-purple-600 transition-colors z-10"
+                                    aria-label="Anterior"
+                                >
+                                    <ChevronLeftIcon className="w-6 h-6" />
+                                </button>
+                                <button
+// FIX: The onClick handler expects a function that receives a mouse event.
+// The `nextTip` function does not expect any arguments.
+// It is wrapped in an arrow function to prevent the event from being passed.
+                                    onClick={(e) => { e.stopPropagation(); nextTip(); }}
+                                    className="absolute top-1/2 right-2 sm:-right-12 -translate-y-1/2 bg-black/50 text-white p-2 rounded-full hover:bg-purple-600 transition-colors z-10"
+                                    aria-label="Siguiente"
+                                >
+                                    <ChevronRightIcon className="w-6 h-6" />
+                                </button>
+                                <div className="absolute -bottom-8 left-1/2 -translate-x-1/2 flex gap-2">
+                                    {tipsImages.map((_, index) => (
+                                        <button 
+                                            key={index}
+                                            onClick={() => setCurrentTipIndex(index)}
+                                            className={`w-3 h-3 rounded-full transition-all ${index === currentTipIndex ? 'bg-purple-500 scale-125' : 'bg-gray-600 hover:bg-gray-400'}`}
+                                            aria-label={`Ir al tip ${index + 1}`}
+                                        />
+                                    ))}
+                                </div>
+                            </div>
+                           
+                            <button 
+                                onClick={() => setIsTipsModalOpen(false)}
+                                className="absolute -top-3 -right-3 text-white bg-purple-600 rounded-full p-2 hover:bg-purple-700 transition-colors z-20"
+                                aria-label="Cerrar"
+                            >
+                                <XIcon className="w-6 h-6" />
+                            </button>
+                        </div>
+                    </div>
+                )}
+            </>
+        );
+    };
 
     return (
         <div className="bg-black text-white min-h-screen overflow-x-hidden">
@@ -1348,15 +1500,20 @@ export default function App() {
                 .faq-answer a { color: #C4B5FD; text-decoration: underline; }
                 .faq-answer a:hover { color: #D8B4FE; }
             `}</style>
-            <Header onOpenJoinModal={() => setIsJoinModalOpen(true)} activeSection={activeSection} />
+            <Header onOpenJoinModal={() => setIsJoinModalOpen(true)} onOpenAboutModal={() => setIsAboutUsModalOpen(true)} />
             <main>
                 <Hero onOpenJoinModal={() => setIsJoinModalOpen(true)} />
-                <AboutUsSection />
+                <Section id="about-us" className="text-center">
+                    <h2 className="text-3xl md:text-4xl font-bold text-white mb-4">Quiénes Somos</h2>
+                    <GlowButton onClick={() => setIsAboutUsModalOpen(true)}>Conoce más</GlowButton>
+                </Section>
                 <ExperienceSection />
-                <Banner />
+                <Section id="banner-cta" className="py-20">
+                    <Banner />
+                </Section>
                 <FAQ />
                 <GeneralInfo />
-                <TipsSection />
+                <TipsSectionWithState />
                 <TalentsSection />
                 <PartnershipSection onOpenModal={() => setIsPartnershipModalOpen(true)} />
                 <Contact />
@@ -1372,6 +1529,7 @@ export default function App() {
                 onClose={() => setIsApplicationFormOpen(false)} 
             />
             <PartnershipModal isOpen={isPartnershipModalOpen} onClose={() => setIsPartnershipModalOpen(false)} />
+            <AboutUsModal isOpen={isAboutUsModalOpen} onClose={() => setIsAboutUsModalOpen(false)} />
             
             <Chatbot />
         </div>
