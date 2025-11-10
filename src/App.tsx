@@ -718,6 +718,8 @@ const FAQ: React.FC = () => {
                 </div>
             </div>
 
+            <h2 className="text-3xl md:text-4xl font-bold text-white text-center mb-10">Preguntas Frecuentes</h2>
+            
             <div className="max-w-3xl mx-auto text-center">
                  <button
                     onClick={() => setIsFaqExpanded(!isFaqExpanded)}
@@ -725,7 +727,7 @@ const FAQ: React.FC = () => {
                     aria-expanded={isFaqExpanded}
                     aria-controls="faq-list"
                 >
-                    <span className="text-lg font-semibold text-white">Preguntas Frecuentes</span>
+                    <span className="text-lg font-semibold text-white">Ver Preguntas Frecuentes</span>
                     <ChevronDownIcon className={`w-6 h-6 text-purple-400 transition-transform duration-300 flex-shrink-0 ${isFaqExpanded ? 'rotate-180' : ''}`} />
                 </button>
             </div>
