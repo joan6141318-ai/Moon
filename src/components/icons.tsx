@@ -9,29 +9,10 @@ export const Logo: React.FC<{ className?: string }> = ({ className }) => (
 );
 
 export const ChatbotIcon: React.FC<{ className?: string }> = ({ className }) => (
-    <svg className={className} viewBox="0 0 64 64" xmlns="http://www.w3.org/2000/svg" aria-label="Chatbot icon">
-        <defs>
-            <linearGradient id="chatbot-gradient-bg" x1="0%" y1="0%" x2="100%" y2="100%">
-                <stop offset="0%" stopColor="#A855F7" />
-                <stop offset="100%" stopColor="#6366F1" />
-            </linearGradient>
-        </defs>
-        
-        <circle cx="32" cy="32" r="32" fill="url(#chatbot-gradient-bg)" />
-        
-        <g transform="translate(0, 2)">
-            <path
-                fillRule="evenodd"
-                clipRule="evenodd"
-                fill="white"
-                d="M46,25.5 H18 C16.3,25.5 15,26.8 15,28.5 V33 H12 C11.4,33 11,33.4 11,34 V38 C11,38.6 11.4,39 12,39 H15 V40 C15,44.4 18.6,48 23,48 H41 C45.4,48 49,44.4 49,40 V39 H52 C52.6,39 53,38.6 53,38 V34 C53,33.4 52.6,33 52,33 H49 V28.5 C49,26.8 47.7,25.5 46,25.5 Z M24,37.5 A 3,4 0 1,0 30,37.5 A 3,4 0 1,0 24,37.5 Z M34,37.5 A 3,4 0 1,0 40,37.5 A 3,4 0 1,0 34,37.5 Z"
-            />
-            <path
-                fill="white"
-                d="M32,18.5 m-3,0 a3,3 0 1,0 6,0 a3,3 0 1,0 -6,0"
-            />
-            <line x1="32" y1="25.5" x2="32" y2="21.5" stroke="white" strokeWidth="3.5" strokeLinecap="round" />
-        </g>
+    <svg className={className} viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg">
+        <circle cx="16" cy="16" r="16" fill="#7C3AED"/>
+        <path d="M22.9,10.9h-1.1v-1c0-0.9-0.7-1.6-1.6-1.6h-8.2c-0.9,0-1.6,0.7-1.6,1.6v1H9.1c-0.9,0-1.6,0.7-1.6,1.6v5.8 c0,0.9,0.7,1.6,1.6,1.6h1.1v2.1c0,0.4,0.3,0.8,0.8,0.8c0.2,0,0.3-0.1,0.5-0.2l2.6-2.6h7.8c0.9,0,1.6-0.7,1.6-1.6v-5.8 C24.5,11.6,23.8,10.9,22.9,10.9z M13.1,15.8c-0.6,0-1.1-0.5-1.1-1.1s0.5-1.1,1.1-1.1s1.1,0.5,1.1,1.1S13.7,15.8,13.1,15.8z M18.9,15.8c-0.6,0-1.1-0.5-1.1-1.1s0.5-1.1,1.1-1.1c0.6,0,1.1,0.5,1.1,1.1S19.5,15.8,18.9,15.8z" fill="#FFFFFF"/>
+        <circle cx="16" cy="6.6" r="1.3" fill="#FFFFFF"/>
     </svg>
 );
 
@@ -348,5 +329,27 @@ export const EighteenPlusIcon: React.FC<{ className?: string }> = ({ className }
         <path d="M15 11h.01"></path>
         <path d="M5.5 11h.01"></path>
         <path d="M5.5 14h.01"></path>
+    </svg>
+);
+
+// --- "Conecta, Crea, Brilla" Icons ---
+export const LinkIcon: React.FC<{ className?: string }> = ({ className }) => (
+    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={className}>
+        <path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.72"></path>
+        <path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.72-1.72"></path>
+    </svg>
+);
+
+export const Edit3Icon: React.FC<{ className?: string }> = ({ className }) => (
+    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={className}>
+        <path d="M12 20h9"></path>
+        <path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"></path>
+    </svg>
+);
+
+export const TrendingUpIcon: React.FC<{ className?: string }> = ({ className }) => (
+    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={className}>
+        <polyline points="23 6 13.5 15.5 8.5 10.5 1 18"></polyline>
+        <polyline points="17 6 23 6 23 12"></polyline>
     </svg>
 );

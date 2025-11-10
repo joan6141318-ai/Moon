@@ -3,7 +3,8 @@ import { FAQItem, PaymentTier, InfoTab } from './types';
 import { 
     Logo, ChevronDownIcon, YoutubeIcon, WhatsappIcon, XIcon, ChevronLeftIcon, ChevronRightIcon, MenuIcon,
     PercentageIcon, TransparencyIcon, TrainingIcon, SupportMaterialIcon, TalentDatabaseIcon, VerificationIcon, PersonalizedSupportIcon,
-    CheckIcon, StarIcon, TargetIcon, UsersIcon, DollarSignIcon, GlobeIcon, ClockIcon, PuzzleIcon, RocketIcon, BarChartIcon, SettingsIcon, EighteenPlusIcon
+    CheckIcon, StarIcon, TargetIcon, UsersIcon, DollarSignIcon, GlobeIcon, ClockIcon, PuzzleIcon, RocketIcon, BarChartIcon, SettingsIcon, EighteenPlusIcon,
+    LinkIcon, Edit3Icon, TrendingUpIcon
 } from './components/icons';
 import { Chatbot } from './components/Chatbot';
 
@@ -107,7 +108,6 @@ const AboutUsModal: React.FC<{ isOpen: boolean; onClose: () => void }> = ({ isOp
     ];
 
     return (
-        // FIX: The onClick handler for a div expects a function that takes a mouse event, but `onClose` takes no arguments. It has been wrapped in an arrow function to correct the type mismatch.
         <div
             className="fixed inset-0 bg-black/80 backdrop-blur-sm z-50 flex items-center justify-center p-4 animate-fade-in"
             onClick={() => onClose()}
@@ -120,7 +120,6 @@ const AboutUsModal: React.FC<{ isOpen: boolean; onClose: () => void }> = ({ isOp
                 onClick={(e) => e.stopPropagation()}
             >
                 <button
-// FIX: The `onClick` handler expects a function that receives a mouse event, but `onClose` takes no arguments. It has been wrapped in an arrow function to correct the type mismatch.
                     onClick={() => onClose()}
                     className="absolute top-4 right-4 text-gray-400 hover:text-white transition-colors"
                     aria-label="Cerrar"
@@ -164,7 +163,6 @@ const JoinModal: React.FC<{ isOpen: boolean; onClose: () => void; onApplyClick: 
     ];
 
     return (
-        // FIX: The onClick handler for a div expects a function that takes a mouse event, but `onClose` takes no arguments. It has been wrapped in an arrow function to correct the type mismatch.
         <div
             className="fixed inset-0 bg-black/80 backdrop-blur-sm z-50 flex items-center justify-center p-4 animate-fade-in"
             onClick={() => onClose()}
@@ -177,7 +175,6 @@ const JoinModal: React.FC<{ isOpen: boolean; onClose: () => void; onApplyClick: 
                 onClick={(e) => e.stopPropagation()}
             >
                 <button
-// FIX: The `onClick` handler expects a function that receives a mouse event, but `onClose` takes no arguments. It has been wrapped in an arrow function to correct the type mismatch.
                     onClick={() => onClose()}
                     className="absolute top-4 right-4 text-gray-400 hover:text-white transition-colors"
                     aria-label="Cerrar"
@@ -260,7 +257,6 @@ const ApplicationFormModal: React.FC<{ isOpen: boolean; onClose: () => void }> =
     ];
 
     return (
-        // FIX: The onClick handler for a div expects a function that takes a mouse event, but `onClose` takes no arguments. It has been wrapped in an arrow function to correct the type mismatch.
         <div
             className="fixed inset-0 bg-black/80 backdrop-blur-sm z-50 flex items-center justify-center p-4 animate-fade-in"
             onClick={() => onClose()}
@@ -273,7 +269,6 @@ const ApplicationFormModal: React.FC<{ isOpen: boolean; onClose: () => void }> =
                 onClick={(e) => e.stopPropagation()}
             >
                 <button
-// FIX: The `onClick` handler expects a function that receives a mouse event, but `onClose` takes no arguments. It has been wrapped in an arrow function to correct the type mismatch.
                     onClick={() => onClose()}
                     className="absolute top-4 right-4 text-gray-400 hover:text-white transition-colors"
                     aria-label="Cerrar"
@@ -290,7 +285,6 @@ const ApplicationFormModal: React.FC<{ isOpen: boolean; onClose: () => void }> =
                         <p className="text-gray-300 max-w-md mx-auto mb-8">
                             Gracias por tu interés en unirte a Agency Moon. Tu postulación ha sido enviada con éxito.
                         </p>
-                        {/* FIX: The 'GlowButton' component expects an 'onClick' handler that accepts a mouse event. The original code passed a function that does not accept any arguments directly, causing a type mismatch. This has been corrected by wrapping the function call in an arrow function to ensure the event argument is handled correctly. */}
                         <GlowButton onClick={() => onClose()}>Finalizar</GlowButton>
                     </div>
                 ) : (
@@ -372,7 +366,6 @@ const PartnershipModal: React.FC<{ isOpen: boolean; onClose: () => void }> = ({ 
     const prev = () => setCurrentSlide(prev => (prev === 0 ? slides.length - 1 : prev - 1));
 
     return (
-        // FIX: The onClick handler for a div expects a function that takes a mouse event, but `onClose` takes no arguments. It has been wrapped in an arrow function to correct the type mismatch.
         <div
             className="fixed inset-0 bg-black/80 backdrop-blur-sm z-50 flex items-center justify-center p-4 animate-fade-in"
             onClick={() => onClose()}
@@ -384,7 +377,6 @@ const PartnershipModal: React.FC<{ isOpen: boolean; onClose: () => void }> = ({ 
                 onClick={(e) => e.stopPropagation()}
             >
                 <button
-// FIX: The onClick handler for this button expects a function that takes a mouse event, but `prev` takes no arguments. It has been wrapped in an arrow function to correct the type mismatch.
                     onClick={() => prev()}
                     aria-label="Anterior"
                     className="absolute left-0 top-1/2 -translate-y-1/2 z-10 p-2 bg-black/40 rounded-full hover:bg-purple-600 transition-colors focus:outline-none focus:ring-2 focus:ring-purple-400"
@@ -435,14 +427,13 @@ const PartnershipModal: React.FC<{ isOpen: boolean; onClose: () => void }> = ({ 
                         </div>
                     </div>
                     
-                     <button // FIX: The `onClick` handler expects a function that receives a mouse event, but `onClose` takes no arguments. It has been wrapped in an arrow function to correct the type mismatch.
+                     <button
                     onClick={() => onClose()} className="absolute top-3 right-3 text-gray-400 hover:text-white transition-colors" aria-label="Cerrar">
                         <XIcon className="w-5 h-5" />
                     </button>
                 </div>
 
                 <button
-// FIX: The onClick handler for this button expects a function that takes a mouse event, but `next` takes no arguments. It has been wrapped in an arrow function to correct the type mismatch.
                     onClick={() => next()}
                     aria-label="Siguiente"
                     className="absolute right-0 top-1/2 -translate-y-1/2 z-10 p-2 bg-black/40 rounded-full hover:bg-purple-600 transition-colors focus:outline-none focus:ring-2 focus:ring-purple-400"
@@ -493,13 +484,14 @@ const Header: React.FC<{ onOpenJoinModal: () => void; onOpenAboutModal: () => vo
 
     const mobileNavLinks = [
         { name: 'Quiénes Somos', href: '#about-us' },
-        { name: 'Nuestra Experiencia', href: '#experience' },
+        { name: 'Experiencia', href: '#experience' },
+        { name: 'Requisitos para Unirte', href: '#join-modal' },
         { name: 'Preguntas Frecuentes', href: '#faq' },
         { name: 'Información General', href: '#info' },
-        { name: 'Tips de Transmisión', href: '#tips' },
-        { name: 'Nuestros Talentos', href: '#talents' },
-        { name: 'Sé Nuestro Socio', href: '#partnership' },
-        { name: 'Contáctanos', href: '#contact' },
+        { name: 'Tips', href: '#tips' },
+        { name: 'Talentos', href: '#talents' },
+        { name: 'Socios', href: '#partnership' },
+        { name: 'Contacto', href: '#contact' },
     ];
 
     return (
@@ -514,7 +506,6 @@ const Header: React.FC<{ onOpenJoinModal: () => void; onOpenAboutModal: () => vo
                          <a key={link.name} href={link.href} onClick={(e) => handleMenuClick(e, link.href)} className="text-gray-300 hover:text-white transition-colors hover:text-shadow-purple font-medium">{link.name}</a>
                     ))}
                 </div>
-                 {/* FIX: The 'GlowButton' component expects an 'onClick' handler that accepts a mouse event. The original code passed a function that does not accept any arguments directly, causing a type mismatch. This has been corrected by wrapping the function call in an arrow function to ensure the event argument is handled correctly. */}
                  <GlowButton onClick={() => onOpenJoinModal()} className="hidden md:inline-block">Únete ahora</GlowButton>
                  <div className="md:hidden">
                     <button onClick={() => setIsMenuOpen(!isMenuOpen)} className="text-white focus:outline-none" aria-label="Abrir menú">
@@ -560,7 +551,6 @@ const Hero: React.FC<{ onOpenJoinModal: () => void }> = ({ onOpenJoinModal }) =>
             </p>
             <p className="text-lg md:text-xl max-w-3xl mb-8 text-gray-300 animate-fade-in-up" style={{ animationDelay: '300ms' }}>Únete a nuestra comunidad de creadores y empieza a monetizar tus transmisiones.</p>
             <div className="animate-fade-in-up" style={{ animationDelay: '450ms' }}>
-                {/* FIX: The 'GlowButton' component expects an 'onClick' handler that accepts a mouse event. The original code passed a function that does not accept any arguments directly, causing a type mismatch. This has been corrected by wrapping the function call in an arrow function to ensure the event argument is handled correctly. */}
                 <GlowButton onClick={() => onOpenJoinModal()}>Únete ahora</GlowButton>
             </div>
         </div>
@@ -639,6 +629,60 @@ const ExperienceSection: React.FC = () => {
     );
 };
 
+const ConectaCreaBrilla: React.FC = () => {
+    const items = [
+        {
+            icon: LinkIcon,
+            title: "Conecta",
+            description: "Únete a una comunidad de más de 400 talentos. Colabora, aprende y crece con otros creadores."
+        },
+        {
+            icon: Edit3Icon,
+            title: "Crea",
+            description: "Te damos las herramientas y el soporte 24/7 para que te enfoques en lo que amas: crear contenido increíble."
+        },
+        {
+            icon: TrendingUpIcon,
+            title: "Brilla",
+            description: "Monetiza tu pasión sin comisiones. Alcanza tus metas y convierte tu talento en una carrera de éxito."
+        }
+    ];
+
+    return (
+        <Section id="conecta-crea-brilla">
+            <div className="text-center">
+                 <h2 className="text-3xl md:text-4xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-purple-400 to-indigo-400 mb-12">Conecta, Crea, Brilla</h2>
+            </div>
+            <div className="grid md:grid-cols-3 gap-8">
+                {items.map((item, index) => {
+                    const isBrilla = item.title === "Brilla";
+                    return (
+                        <div 
+                            key={index} 
+                            className={`p-8 rounded-2xl text-center transition-all duration-300 transform hover:-translate-y-2 ${
+                                isBrilla 
+                                ? 'bg-gradient-to-br from-purple-950 to-black border-2 border-purple-500 shadow-2xl shadow-purple-500/30 hover:shadow-purple-400/50' 
+                                : 'bg-gray-900/50 border border-purple-500/30 hover:border-purple-400 hover:shadow-[0_0_25px_rgba(168,85,247,0.5)]'
+                            }`}
+                        >
+                            <div className={`inline-block rounded-full p-4 mb-6 ${
+                                isBrilla
+                                ? 'bg-purple-600 text-white shadow-lg shadow-purple-500/50'
+                                : 'bg-purple-600/20 text-purple-300'
+                            }`}>
+                                <item.icon className="w-8 h-8" />
+                            </div>
+                            <h3 className="text-2xl font-bold text-white mb-4">{item.title}</h3>
+                            <p className="text-gray-400 leading-relaxed">{item.description}</p>
+                        </div>
+                    )
+                })}
+            </div>
+        </Section>
+    );
+};
+
+
 const Banner: React.FC = () => {
     return (
         <div className="relative rounded-2xl overflow-hidden shadow-2xl shadow-purple-900/50 border border-purple-500/30">
@@ -668,7 +712,6 @@ const Banner: React.FC = () => {
 
 const AccordionItem: React.FC<{ item: FAQItem, isOpen: boolean, onClick: () => void }> = ({ item, isOpen, onClick }) => (
     <div className="bg-gray-900/50 rounded-lg border border-purple-500/30 mb-3 transition-all duration-300 hover:border-purple-400">
-        {/* FIX: The onClick handler for the button passes a mouse event, but the `onClick` prop expects no arguments. This has been corrected by wrapping `onClick` in an arrow function to discard the event. */}
         <button onClick={() => onClick()} className="w-full flex justify-between items-center text-left p-5" aria-expanded={isOpen}>
             <span className="text-lg font-medium text-white">{item.question}</span>
             <ChevronDownIcon className={`w-6 h-6 text-purple-400 transition-transform duration-300 flex-shrink-0 ml-4 ${isOpen ? 'rotate-180' : ''}`} />
@@ -864,7 +907,6 @@ const PaymentInfoCarousel: React.FC = () => {
 
 const InfoAccordionItem: React.FC<{ item: InfoTab, isOpen: boolean, onClick: () => void }> = ({ item, isOpen, onClick }) => (
     <div className="bg-gray-900/50 rounded-lg border border-purple-500/30 mb-4 transition-all duration-300 hover:border-purple-400 hover:shadow-[0_0_20px_rgba(168,85,247,0.4)]">
-        {/* FIX: The onClick handler for the button passes a mouse event, but the `onClick` prop expects no arguments. This has been corrected by wrapping `onClick` in an arrow function to discard the event. */}
         <button 
             onClick={() => onClick()} 
             className="w-full flex justify-between items-center text-left p-6"
@@ -1033,49 +1075,39 @@ const TipsSection: React.FC = () => {
                         className="relative w-full max-w-3xl animate-zoom-in"
                         onClick={(e) => e.stopPropagation()}
                     >
-                        <div className="relative w-full h-[500px] sm:h-[600px]">
-                            {tipsImages.map((src, index) => (
-                                <div
-                                    key={src}
-                                    className={`absolute inset-0 transition-all duration-500 ease-in-out transform-gpu flex items-center justify-center ${
-                                        index === currentTipIndex
-                                            ? 'opacity-100 scale-100 rotate-0'
-                                            : 'opacity-0 scale-90 -rotate-6'
-                                    }`}
-                                    aria-hidden={index !== currentTipIndex}
-                                >
-                                    <div className="relative rounded-2xl shadow-[0_0_30px_rgba(168,85,247,0.7)] border-2 border-purple-500/50 p-1 bg-black">
-                                        <img
-                                            src={src}
-                                            alt={`Tip de transmisión ${index + 1}`}
-                                            className="w-96 h-96 sm:w-[28rem] sm:h-[28rem] object-cover rounded-2xl"
-                                        />
+                        <div className="relative w-full h-[500px] sm:h-[600px] flex items-center justify-center">
+                             <div className="relative w-96 h-96 sm:w-[28rem] sm:h-[28rem]">
+                                {tipsImages.map((src, index) => (
+                                    <div
+                                        key={src}
+                                        className={`absolute inset-0 transition-opacity duration-300 ease-in-out ${index === currentTipIndex ? 'opacity-100' : 'opacity-0'}`}
+                                        aria-hidden={index !== currentTipIndex}
+                                    >
+                                        <div className="relative rounded-2xl shadow-[0_0_30px_rgba(168,85,247,0.7)] border-2 border-purple-500/50 p-1 bg-black w-full h-full">
+                                            <img
+                                                src={src}
+                                                alt={`Tip de transmisión ${index + 1}`}
+                                                className="w-full h-full object-cover rounded-2xl"
+                                            />
+                                        </div>
                                     </div>
-                                </div>
-                            ))}
-
+                                ))}
+                            </div>
                             <button
-// FIX: The onClick handler expects a function that receives a mouse event.
-// The `prevTip` function does not expect any arguments.
-// It is wrapped in an arrow function to prevent the event from being passed.
                                 onClick={(e) => { e.stopPropagation(); prevTip(); }}
-                                className="absolute top-1/2 left-2 sm:left-4 -translate-y-1/2 bg-black/50 text-white p-2 rounded-full hover:bg-purple-600 transition-colors z-10"
+                                className="absolute top-1/2 left-2 sm:-left-12 -translate-y-1/2 bg-black/50 text-white p-2 rounded-full hover:bg-purple-600 transition-colors z-10"
                                 aria-label="Anterior"
                             >
                                 <ChevronLeftIcon className="w-6 h-6" />
                             </button>
                             <button
-// FIX: The onClick handler expects a function that receives a mouse event.
-// The `nextTip` function does not expect any arguments.
-// It is wrapped in an arrow function to prevent the event from being passed.
                                 onClick={(e) => { e.stopPropagation(); nextTip(); }}
-                                className="absolute top-1/2 right-2 sm:right-4 -translate-y-1/2 bg-black/50 text-white p-2 rounded-full hover:bg-purple-600 transition-colors z-10"
+                                className="absolute top-1/2 right-2 sm:-right-12 -translate-y-1/2 bg-black/50 text-white p-2 rounded-full hover:bg-purple-600 transition-colors z-10"
                                 aria-label="Siguiente"
                             >
                                 <ChevronRightIcon className="w-6 h-6" />
                             </button>
-                            
-                            <div className="absolute bottom-4 left-1/2 -translate-x-1/2 flex gap-2">
+                            <div className="absolute -bottom-8 left-1/2 -translate-x-1/2 flex gap-2">
                                 {tipsImages.map((_, index) => (
                                     <button 
                                         key={index}
@@ -1089,7 +1121,7 @@ const TipsSection: React.FC = () => {
                        
                         <button 
                             onClick={() => setIsTipsModalOpen(false)}
-                            className="absolute -top-3 -right-3 text-white bg-purple-600 rounded-full p-2 hover:bg-purple-700 transition-colors"
+                            className="absolute -top-3 -right-3 text-white bg-purple-600 rounded-full p-2 hover:bg-purple-700 transition-colors z-20"
                             aria-label="Cerrar"
                         >
                             <XIcon className="w-6 h-6" />
@@ -1206,9 +1238,6 @@ const TalentsSection: React.FC = () => {
                 </div>
 
                 <button
-// FIX: The onClick handler expects a function that receives a mouse event.
-// The `prevSlide` function does not expect any arguments.
-// It is wrapped in an arrow function to prevent the event from being passed.
                     onClick={() => prevSlide()}
                     className="absolute top-1/2 -left-4 md:-left-16 -translate-y-1/2 bg-black/50 text-white p-3 rounded-full hover:bg-purple-600 transition-colors z-20 focus:outline-none focus:ring-2 focus:ring-purple-400"
                     aria-label="Anterior Talento"
@@ -1216,9 +1245,6 @@ const TalentsSection: React.FC = () => {
                     <ChevronLeftIcon className="w-6 h-6" />
                 </button>
                 <button
-// FIX: The onClick handler expects a function that receives a mouse event.
-// The `nextSlideManual` function does not expect any arguments.
-// It is wrapped in an arrow function to prevent the event from being passed.
                     onClick={() => nextSlideManual()}
                     className="absolute top-1/2 -right-4 md:-right-16 -translate-y-1/2 bg-black/50 text-white p-3 rounded-full hover:bg-purple-600 transition-colors z-20 focus:outline-none focus:ring-2 focus:ring-purple-400"
                     aria-label="Siguiente Talento"
@@ -1257,7 +1283,6 @@ const PartnershipSection: React.FC<{ onOpenModal: () => void }> = ({ onOpenModal
                 <p className="text-gray-200 md:text-lg mb-8 max-w-2xl mx-auto" style={{textShadow: '0 1px 5px rgba(0,0,0,0.5)'}}>
                     Actualmente buscamos socios comerciales o agentes que quieran trabajar con nosotros en la empresa. Expande tus horizontes y crece profesionalmente en la industria del streaming.
                 </p>
-                {/* FIX: The GlowButton's onClick prop expects a function that receives a mouse event. The handler was passed directly, causing a type mismatch. It has been wrapped in an arrow function to correct this. */}
                 <GlowButton onClick={() => onOpenModal()}>
                     Más Información
                 </GlowButton>
@@ -1311,11 +1336,10 @@ export default function App() {
     const [isPartnershipModalOpen, setIsPartnershipModalOpen] = useState(false);
     const [isApplicationFormOpen, setIsApplicationFormOpen] = useState(false);
     const [isAboutUsModalOpen, setIsAboutUsModalOpen] = useState(false);
-    const [isTipsModalOpen, setIsTipsModalOpen] = useState(false); // State from TipsSection moved here
 
     // Lock body scroll when any modal is open
     useEffect(() => {
-        const isAnyModalOpen = isJoinModalOpen || isPartnershipModalOpen || isApplicationFormOpen || isAboutUsModalOpen || isTipsModalOpen;
+        const isAnyModalOpen = isJoinModalOpen || isPartnershipModalOpen || isApplicationFormOpen || isAboutUsModalOpen;
         if (isAnyModalOpen) {
             document.body.style.overflow = 'hidden';
         } else {
@@ -1326,7 +1350,7 @@ export default function App() {
         return () => {
             document.body.style.overflow = 'auto';
         };
-    }, [isJoinModalOpen, isPartnershipModalOpen, isApplicationFormOpen, isAboutUsModalOpen, isTipsModalOpen]);
+    }, [isJoinModalOpen, isPartnershipModalOpen, isApplicationFormOpen, isAboutUsModalOpen]);
 
 
     useEffect(() => {
@@ -1359,125 +1383,6 @@ export default function App() {
         };
     }, []);
 
-    // TipsModal now lives inside TipsSection, we just pass state control
-    const TipsSectionWithState: React.FC = () => {
-        const [currentTipIndex, setCurrentTipIndex] = useState(0);
-        const tipsImages = [
-            'https://i.postimg.cc/xCscRJt2/2-20251030-105515-0001.png',
-            'https://i.postimg.cc/YSY9JDRQ/3-20251030-105515-0002.png',
-            'https://i.postimg.cc/JnzfbGs1/4-20251030-105515-0003.png',
-            'https://i.postimg.cc/8PfjRCv2/5-20251030-105515-0004.png',
-            'https://i.postimg.cc/NFrP4TBF/6-20251030-105515-0005.png',
-        ];
-
-        const nextTip = useCallback(() => {
-            setCurrentTipIndex(prevIndex => (prevIndex + 1) % tipsImages.length);
-        }, [tipsImages.length]);
-
-        const prevTip = useCallback(() => {
-            setCurrentTipIndex(prevIndex => (prevIndex - 1 + tipsImages.length) % tipsImages.length);
-        }, [tipsImages.length]);
-
-        useEffect(() => {
-            const handleKeyDown = (event: KeyboardEvent) => {
-                if (!isTipsModalOpen) return;
-                if (event.key === 'ArrowRight') nextTip();
-                else if (event.key === 'ArrowLeft') prevTip();
-                else if (event.key === 'Escape') setIsTipsModalOpen(false);
-            };
-            window.addEventListener('keydown', handleKeyDown);
-            return () => {
-                window.removeEventListener('keydown', handleKeyDown);
-            };
-        }, [isTipsModalOpen, nextTip, prevTip]);
-
-        return (
-            <>
-                <Section id="tips">
-                    <div className="text-center">
-                        <h2 className="text-3xl md:text-4xl font-bold text-white mb-4">Tips para tu Transmisión</h2>
-                        <p className="text-gray-400 max-w-2xl mx-auto mb-8">
-                            Mejora la calidad de tus transmisiones y aumenta tu audiencia con nuestros consejos profesionales. Haz clic para ver nuestra galería de tips.
-                        </p>
-                        <GlowButton onClick={() => setIsTipsModalOpen(true)}>
-                            Ver Galería de Tips
-                        </GlowButton>
-                    </div>
-                </Section>
-                {isTipsModalOpen && (
-                    <div 
-                        className="fixed inset-0 bg-black/90 backdrop-blur-sm z-50 flex items-center justify-center p-4 animate-fade-in"
-                        onClick={() => setIsTipsModalOpen(false)}
-                        role="dialog" aria-modal="true"
-                    >
-                        <div 
-                            className="relative w-full max-w-3xl animate-zoom-in"
-                            onClick={(e) => e.stopPropagation()}
-                        >
-                            <div className="relative w-full h-[500px] sm:h-[600px] flex items-center justify-center">
-                                <div className="relative w-96 h-96 sm:w-[28rem] sm:h-[28rem]">
-                                {tipsImages.map((src, index) => (
-                                    <div
-                                        key={src}
-                                        className={`absolute inset-0 transition-opacity duration-300 ease-in-out ${index === currentTipIndex ? 'opacity-100' : 'opacity-0'}`}
-                                        aria-hidden={index !== currentTipIndex}
-                                    >
-                                        <div className="relative rounded-2xl shadow-[0_0_30px_rgba(168,85,247,0.7)] border-2 border-purple-500/50 p-1 bg-black w-full h-full">
-                                            <img
-                                                src={src}
-                                                alt={`Tip de transmisión ${index + 1}`}
-                                                className="w-full h-full object-cover rounded-2xl"
-                                            />
-                                        </div>
-                                    </div>
-                                ))}
-                                </div>
-                                <button
-// FIX: The onClick handler expects a function that receives a mouse event.
-// The `prevTip` function does not expect any arguments.
-// It is wrapped in an arrow function to prevent the event from being passed.
-                                    onClick={(e) => { e.stopPropagation(); prevTip(); }}
-                                    className="absolute top-1/2 left-2 sm:-left-12 -translate-y-1/2 bg-black/50 text-white p-2 rounded-full hover:bg-purple-600 transition-colors z-10"
-                                    aria-label="Anterior"
-                                >
-                                    <ChevronLeftIcon className="w-6 h-6" />
-                                </button>
-                                <button
-// FIX: The onClick handler expects a function that receives a mouse event.
-// The `nextTip` function does not expect any arguments.
-// It is wrapped in an arrow function to prevent the event from being passed.
-                                    onClick={(e) => { e.stopPropagation(); nextTip(); }}
-                                    className="absolute top-1/2 right-2 sm:-right-12 -translate-y-1/2 bg-black/50 text-white p-2 rounded-full hover:bg-purple-600 transition-colors z-10"
-                                    aria-label="Siguiente"
-                                >
-                                    <ChevronRightIcon className="w-6 h-6" />
-                                </button>
-                                <div className="absolute -bottom-8 left-1/2 -translate-x-1/2 flex gap-2">
-                                    {tipsImages.map((_, index) => (
-                                        <button 
-                                            key={index}
-                                            onClick={() => setCurrentTipIndex(index)}
-                                            className={`w-3 h-3 rounded-full transition-all ${index === currentTipIndex ? 'bg-purple-500 scale-125' : 'bg-gray-600 hover:bg-gray-400'}`}
-                                            aria-label={`Ir al tip ${index + 1}`}
-                                        />
-                                    ))}
-                                </div>
-                            </div>
-                           
-                            <button 
-                                onClick={() => setIsTipsModalOpen(false)}
-                                className="absolute -top-3 -right-3 text-white bg-purple-600 rounded-full p-2 hover:bg-purple-700 transition-colors z-20"
-                                aria-label="Cerrar"
-                            >
-                                <XIcon className="w-6 h-6" />
-                            </button>
-                        </div>
-                    </div>
-                )}
-            </>
-        );
-    };
-
     return (
         <div className="bg-black text-white min-h-screen overflow-x-hidden">
             <style>{`
@@ -1508,12 +1413,13 @@ export default function App() {
                     <GlowButton onClick={() => setIsAboutUsModalOpen(true)}>Conoce más</GlowButton>
                 </Section>
                 <ExperienceSection />
+                <ConectaCreaBrilla />
                 <Section id="banner-cta" className="py-20">
                     <Banner />
                 </Section>
                 <FAQ />
                 <GeneralInfo />
-                <TipsSectionWithState />
+                <TipsSection />
                 <TalentsSection />
                 <PartnershipSection onOpenModal={() => setIsPartnershipModalOpen(true)} />
                 <Contact />
