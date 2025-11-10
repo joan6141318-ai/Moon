@@ -46,7 +46,11 @@ const useIntersectionObserver = (setActiveSection: (id: string) => void) => {
         sections.forEach(section => observer.current?.observe(section));
 
         return () => {
-            sections.forEach(section => observer.current?.unobserve(section));
+            sections.forEach(section => {
+                if (observer.current) {
+                    observer.current.unobserve(section);
+                }
+            });
         };
     }, [setActiveSection]);
 };
@@ -496,6 +500,9 @@ const Header: React.FC<{ onOpenJoinModal: () => void; activeSection: string; }> 
                                 </a>
                             );
                         })}
+                         <div className="pt-4 w-full">
+                            <GlowButton onClick={onOpenJoinModal} className="w-full">Únete ahora</GlowButton>
+                        </div>
                     </div>
                  </div>
             )}
@@ -684,12 +691,11 @@ const AccordionItem: React.FC<{ item: FAQItem, isOpen: boolean, onClick: () => v
 
 const FAQ: React.FC = () => {
     const [openIndex, setOpenIndex] = useState<number | null>(null);
-    const [isFaqExpanded, setIsFaqExpanded] = useState(false);
     
     const faqData: FAQItem[] = [
         {
             question: '¿Qué beneficios obtengo si me uno a la agencia Agency Moon?',
-            answer: `<p>Nos complace que te intereses en nuestro equipo. Nuestro diferenciador es que como emisor obtendrás:</p>
+            answer: `<p>Nos complace que te interesas en nuestro equipo. Nuestro diferenciador es que como emisor obtendrás:</p>
                      <ul>
                          <li><strong>Atención y Soporte 24/7:</strong> Atención personalizada para resolver cualquier duda.</li>
                          <li><strong>Información Oficial:</strong> Acceso a actualizaciones y novedades de la plataforma.</li>
@@ -739,6 +745,12 @@ const FAQ: React.FC = () => {
 
     return (
         <Section id="faq">
+            <div className="text-center">
+                <h2 className="text-3xl md:text-4xl font-bold text-white mb-4">Preguntas Frecuentes</h2>
+                <p className="text-gray-400 max-w-3xl mx-auto mb-12">
+                    Encuentra respuestas a las dudas más comunes sobre cómo unirte y crecer en Agency Moon.
+                </p>
+            </div>
             <div className="max-w-2xl mx-auto mb-8">
                 <div className="block rounded-2xl overflow-hidden shadow-lg shadow-purple-900/50 border border-purple-500/20">
                     <img 
@@ -748,33 +760,16 @@ const FAQ: React.FC = () => {
                     />
                 </div>
             </div>
-
-            <div className="max-w-3xl mx-auto text-center">
-                <button
-                    onClick={() => setIsFaqExpanded(!isFaqExpanded)}
-                    className="inline-flex flex-col items-center gap-2 py-4 px-6 bg-gray-900/50 rounded-lg border border-purple-500/30 mb-3 transition-all duration-300 hover:border-purple-400 hover:bg-gray-900/70 focus:outline-none focus:ring-2 focus:ring-purple-500"
-                    aria-expanded={isFaqExpanded}
-                    aria-controls="faq-list"
-                >
-                    <span className="text-lg font-semibold text-white">Preguntas Frecuentes</span>
-                    <ChevronDownIcon className={`w-6 h-6 text-purple-400 transition-transform duration-300 ${isFaqExpanded ? 'rotate-180' : ''}`} />
-                </button>
-            </div>
             
-            <div 
-                id="faq-list"
-                className={`max-w-3xl mx-auto overflow-hidden transition-all duration-700 ease-in-out ${isFaqExpanded ? 'max-h-[2000px] opacity-100' : 'max-h-0 opacity-0'}`}
-            >
-                <div className="pt-4">
-                    {faqData.map((item, index) => (
-                        <AccordionItem 
-                            key={index} 
-                            item={item} 
-                            isOpen={openIndex === index} 
-                            onClick={() => setOpenIndex(openIndex === index ? null : index)} 
-                        />
-                    ))}
-                </div>
+            <div id="faq-list" className="max-w-3xl mx-auto">
+                {faqData.map((item, index) => (
+                    <AccordionItem 
+                        key={index} 
+                        item={item} 
+                        isOpen={openIndex === index} 
+                        onClick={() => setOpenIndex(openIndex === index ? null : index)} 
+                    />
+                ))}
             </div>
         </Section>
     );
@@ -889,8 +884,7 @@ const InfoAccordionItem: React.FC<{ item: InfoTab, isOpen: boolean, onClick: () 
 );
 
 const GeneralInfo: React.FC = () => {
-    const [openIndex, setOpenIndex] = useState<number | null>(null);
-    const [isInfoExpanded, setIsInfoExpanded] = useState(false);
+    const [openIndex, setOpenIndex] = useState<number | null>(0);
 
     const onToggle = (index: number) => {
         setOpenIndex(prev => (prev === index ? null : index));
@@ -901,7 +895,6 @@ const GeneralInfo: React.FC = () => {
             const target = e.target as HTMLElement;
             if (target && target.id === 'faq-payment-link') {
                 e.preventDefault();
-                setIsInfoExpanded(true);
                 setOpenIndex(4);
                 
                 const infoSection = document.getElementById('info');
@@ -969,34 +962,22 @@ const GeneralInfo: React.FC = () => {
     
     return (
         <Section id="info">
-            <h2 className="text-3xl md:text-4xl font-bold text-white text-center mb-10">Información General</h2>
-            
-            <div className="max-w-4xl mx-auto text-center">
-                <button
-                    onClick={() => setIsInfoExpanded(!isInfoExpanded)}
-                    className="inline-flex flex-col items-center gap-2 py-4 px-6 bg-gray-900/50 rounded-lg border border-purple-500/30 mb-3 transition-all duration-300 hover:border-purple-400 hover:bg-gray-900/70 focus:outline-none focus:ring-2 focus:ring-purple-500"
-                    aria-expanded={isInfoExpanded}
-                    aria-controls="info-list"
-                >
-                    <span className="text-lg font-semibold text-white">Ver Información General</span>
-                    <ChevronDownIcon className={`w-6 h-6 text-purple-400 transition-transform duration-300 ${isInfoExpanded ? 'rotate-180' : ''}`} />
-                </button>
+            <div className="text-center">
+                <h2 className="text-3xl md:text-4xl font-bold text-white mb-4">Información General</h2>
+                <p className="text-gray-400 max-w-3xl mx-auto mb-12">
+                    Conoce más sobre las herramientas y conceptos clave para tener éxito en tus transmisiones.
+                </p>
             </div>
 
-            <div
-                id="info-list"
-                className={`max-w-4xl mx-auto overflow-hidden transition-all duration-700 ease-in-out ${isInfoExpanded ? 'max-h-[2000px] opacity-100' : 'max-h-0 opacity-0'}`}
-            >
-                <div className="pt-4">
-                    {infoData.map((item, index) => (
-                        <InfoAccordionItem 
-                            key={index}
-                            item={item} 
-                            isOpen={openIndex === index} 
-                            onClick={() => onToggle(index)} 
-                        />
-                    ))}
-                </div>
+            <div id="info-list" className="max-w-4xl mx-auto">
+                {infoData.map((item, index) => (
+                    <InfoAccordionItem 
+                        key={index}
+                        item={item} 
+                        isOpen={openIndex === index} 
+                        onClick={() => onToggle(index)} 
+                    />
+                ))}
             </div>
         </Section>
     );

@@ -30,7 +30,7 @@ Aquí está la base de datos interna de Agency Moon:
   - **Iluminación:** Disponer de una buena iluminación.
   - **Personalidad:** Ser una persona carismática.
 - **¿Hay algún costo por unirse?** No, unirse a Agency Moon es completamente gratuito. No hay costos de inscripción ni cuotas ocultas.
-- **¿Qué beneficios obtengo al unirme?** ¡Nos complace que te intereses en nuestro equipo! Nuestro diferenciador es que como emisor obtendrás:
+- **¿Qué beneficios obtengo al unirme?** ¡Nos complace que te interesas en nuestro equipo! Nuestro diferenciador es que como emisor obtendrás:
   - **Soporte y Atención Personalizada:** Atención 24/7 para resolver cualquier duda o problema.
   - **Información Oficial:** Acceso a actualizaciones y novedades directamente desde la plataforma.
   - **Comunidad y Dinámicas:** Oportunidad de participar en dinámicas oficiales y pertenecer a un grupo exclusivo de creadores.
