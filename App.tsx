@@ -1,6 +1,7 @@
 
 
 
+
 import React, { useState, useEffect, useRef, ReactNode, useCallback } from 'react';
 import { FAQItem, PaymentTier, InfoTab } from './types';
 import { 
@@ -683,7 +684,7 @@ const FAQ: React.FC = () => {
                          <li><strong>Atención y Soporte 24/7:</strong> Atención personalizada para resolver cualquier duda.</li>
                          <li><strong>Información Oficial:</strong> Acceso a actualizaciones y novedades de la plataforma.</li>
                          <li><strong>Comunidad Exclusiva:</strong> Oportunidad de participar en dinámicas y pertenecer a un grupo exclusivo de creadores.</li>
-                         <li><strong>Incentivos Adicionales:</strong> Bonos por cumplimiento de objetivos y acceso a nuestro programa de referidos.</li>
+                         <li><strong>Incentivos Adicionais:</strong> Bonos por cumplimiento de objetivos y acceso a nuestro programa de referidos.</li>
                      </ul>`
         },
         {
@@ -1010,7 +1011,8 @@ const TipsSection: React.FC = () => {
 
                             <button
 // FIX: The onClick handler expects a function that receives a mouse event.
-// Wrapping `prevTip` in an arrow function ensures the correct signature.
+// The `prevTip` function does not expect any arguments.
+// It is wrapped in an arrow function to prevent the event from being passed.
                                 onClick={() => prevTip()}
                                 className="absolute top-1/2 left-2 sm:left-4 -translate-y-1/2 bg-black/50 text-white p-2 rounded-full hover:bg-purple-600 transition-colors z-10"
                                 aria-label="Anterior"
@@ -1019,7 +1021,8 @@ const TipsSection: React.FC = () => {
                             </button>
                             <button
 // FIX: The onClick handler expects a function that receives a mouse event.
-// Wrapping `nextTip` in an arrow function ensures the correct signature.
+// The `nextTip` function does not expect any arguments.
+// It is wrapped in an arrow function to prevent the event from being passed.
                                 onClick={() => nextTip()}
                                 className="absolute top-1/2 right-2 sm:right-4 -translate-y-1/2 bg-black/50 text-white p-2 rounded-full hover:bg-purple-600 transition-colors z-10"
                                 aria-label="Siguiente"
@@ -1159,7 +1162,8 @@ const TalentsSection: React.FC = () => {
 
                 <button
 // FIX: The onClick handler expects a function that receives a mouse event.
-// Wrapping `prevSlide` in an arrow function ensures the correct signature.
+// The `prevSlide` function does not expect any arguments.
+// It is wrapped in an arrow function to prevent the event from being passed.
                     onClick={() => prevSlide()}
                     className="absolute top-1/2 -left-4 md:-left-16 -translate-y-1/2 bg-black/50 text-white p-3 rounded-full hover:bg-purple-600 transition-colors z-20 focus:outline-none focus:ring-2 focus:ring-purple-400"
                     aria-label="Anterior Talento"
@@ -1168,7 +1172,8 @@ const TalentsSection: React.FC = () => {
                 </button>
                 <button
 // FIX: The onClick handler expects a function that receives a mouse event.
-// Wrapping `nextSlideManual` in an arrow function ensures the correct signature.
+// The `nextSlideManual` function does not expect any arguments.
+// It is wrapped in an arrow function to prevent the event from being passed.
                     onClick={() => nextSlideManual()}
                     className="absolute top-1/2 -right-4 md:-right-16 -translate-y-1/2 bg-black/50 text-white p-3 rounded-full hover:bg-purple-600 transition-colors z-20 focus:outline-none focus:ring-2 focus:ring-purple-400"
                     aria-label="Siguiente Talento"
@@ -1385,7 +1390,8 @@ export default function App() {
                                 </div>
                                 <button
 // FIX: The onClick handler expects a function that receives a mouse event.
-// Wrapping `prevTip` in an arrow function ensures the correct signature.
+// The `prevTip` function does not expect any arguments.
+// It is wrapped in an arrow function to prevent the event from being passed.
                                     onClick={() => prevTip()}
                                     className="absolute top-1/2 left-2 sm:-left-12 -translate-y-1/2 bg-black/50 text-white p-2 rounded-full hover:bg-purple-600 transition-colors z-10"
                                     aria-label="Anterior"
@@ -1394,7 +1400,8 @@ export default function App() {
                                 </button>
                                 <button
 // FIX: The onClick handler expects a function that receives a mouse event.
-// Wrapping `nextTip` in an arrow function ensures the correct signature.
+// The `nextTip` function does not expect any arguments.
+// It is wrapped in an arrow function to prevent the event from being passed.
                                     onClick={() => nextTip()}
                                     className="absolute top-1/2 right-2 sm:-right-12 -translate-y-1/2 bg-black/50 text-white p-2 rounded-full hover:bg-purple-600 transition-colors z-10"
                                     aria-label="Siguiente"

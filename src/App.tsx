@@ -514,14 +514,14 @@ const Hero: React.FC<{ onOpenJoinModal: () => void }> = ({ onOpenJoinModal }) =>
             <div className="absolute inset-0 bg-gradient-to-t from-black via-black/70 to-transparent"></div>
         </div>
         <div className="relative z-10 flex flex-col items-center">
-            <h1 className="text-5xl md:text-6xl font-bold mb-6 animate-fade-in-down tracking-tight whitespace-nowrap">
+            <h1 className="text-4xl md:text-5xl font-bold mb-6 animate-fade-in-down tracking-tight whitespace-nowrap">
                 Conecta. Crea. <span className="text-fuchsia-500">Brilla.</span>
             </h1>
             <p className="text-lg md:text-xl mb-12 text-gray-300 animate-fade-in-up font-light" style={{ animationDelay: '150ms' }}>
                 Tu talento merece ser visto.
             </p>
             <div className="animate-fade-in-up" style={{ animationDelay: '300ms' }}>
-                <GlowButton onClick={onOpenJoinModal} className="rounded-full px-10 py-4">Comienza hoy</GlowButton>
+                <GlowButton onClick={onOpenJoinModal} className="rounded-full px-8 py-3">Comienza hoy</GlowButton>
             </div>
         </div>
     </section>
@@ -692,7 +692,7 @@ const FAQ: React.FC = () => {
                          <li><strong>Atención y Soporte 24/7:</strong> Atención personalizada para resolver cualquier duda.</li>
                          <li><strong>Información Oficial:</strong> Acceso a actualizaciones y novedades de la plataforma.</li>
                          <li><strong>Comunidad Exclusiva:</strong> Oportunidad de participar en dinámicas y pertenecer a un grupo exclusivo de creadores.</li>
-                         <li><strong>Incentivos Adicionales:</strong> Bonos por cumplimiento de objetivos y acceso a nuestro programa de referidos.</li>
+                         <li><strong>Incentivos Adicionais:</strong> Bonos por cumplimiento de objetivos y acceso a nuestro programa de referidos.</li>
                      </ul>`
         },
         {
@@ -1019,14 +1019,20 @@ const TipsSection: React.FC = () => {
                             ))}
                             </div>
                             <button
-                                onClick={prevTip}
+// FIX: The onClick handler expects a function that receives a mouse event.
+// The `prevTip` function does not expect any arguments.
+// It is wrapped in an arrow function to prevent the event from being passed.
+                                onClick={() => prevTip()}
                                 className="absolute top-1/2 left-2 sm:-left-12 -translate-y-1/2 bg-black/50 text-white p-2 rounded-full hover:bg-purple-600 transition-colors z-10"
                                 aria-label="Anterior"
                             >
                                 <ChevronLeftIcon className="w-6 h-6" />
                             </button>
                             <button
-                                onClick={nextTip}
+// FIX: The onClick handler for native button elements passes a MouseEvent.
+// The `nextTip` function does not expect any arguments.
+// It is wrapped in an arrow function to prevent the event from being passed.
+                                onClick={() => nextTip()}
                                 className="absolute top-1/2 right-2 sm:-right-12 -translate-y-1/2 bg-black/50 text-white p-2 rounded-full hover:bg-purple-600 transition-colors z-10"
                                 aria-label="Siguiente"
                             >
