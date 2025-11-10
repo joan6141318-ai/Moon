@@ -80,7 +80,7 @@ const Section: React.FC<{ id: string; children?: ReactNode; className?: string }
         <section
             ref={ref}
             id={id}
-            className={`w-full max-w-6xl mx-auto px-6 py-12 md:py-20 opacity-0 translate-y-4 transition-all duration-700 ease-out ${className}`}
+            className={`w-full max-w-7xl mx-auto px-6 py-12 md:py-20 opacity-0 translate-y-4 transition-all duration-700 ease-out ${className}`}
         >
             {children}
         </section>
@@ -448,7 +448,7 @@ const Header: React.FC<{ onOpenJoinModal: () => void; activeSection: string; }> 
 
     return (
         <header className={`fixed top-0 left-0 right-0 z-40 transition-all duration-300 ${isScrolled || isMenuOpen ? 'bg-black/80 backdrop-blur-sm' : 'bg-transparent'}`}>
-            <nav className="container mx-auto px-6 py-4 flex justify-between items-center">
+            <nav className="w-full max-w-7xl mx-auto px-6 py-4 flex justify-between items-center">
                 <a href="#home" onClick={handleSmoothScroll} className="flex items-center gap-2">
                     <Logo className="h-8 w-auto text-white" />
                     <span className="text-white font-bold text-xl">Agency Moon</span>
@@ -1252,7 +1252,7 @@ const Contact: React.FC = () => (
 const Footer: React.FC = () => {
     return (
         <footer className="bg-gray-900/50 border-t border-purple-500/20 text-gray-400">
-            <div className="w-full max-w-6xl mx-auto px-6 py-8 text-center text-sm">
+            <div className="w-full max-w-7xl mx-auto px-6 py-8 text-center text-sm">
                 <p>&copy; {new Date().getFullYear()} Agency Moon. Todos los derechos reservados.</p>
             </div>
         </footer>
