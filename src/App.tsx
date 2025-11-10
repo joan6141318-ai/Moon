@@ -1,5 +1,4 @@
 
-
 import React, { useState, useEffect, useRef, ReactNode, useCallback } from 'react';
 import { FAQItem, PaymentTier, InfoTab } from './types';
 import { 
@@ -494,7 +493,7 @@ const Header: React.FC<{ onOpenJoinModal: () => void; onOpenAboutModal: () => vo
 
     return (
         <header className={`fixed top-0 left-0 right-0 z-40 transition-all duration-300 ${isScrolled || isMenuOpen ? 'bg-black/80 backdrop-blur-sm' : 'bg-transparent'}`}>
-            <nav className="container mx-auto px-6 py-4 flex justify-between items-baseline">
+            <nav className="container mx-auto px-6 py-4 flex justify-between items-center">
                 <a href="#home" onClick={handleSmoothScroll} className="flex items-center gap-2">
                     <Logo className="h-8 w-auto text-white" />
                     <span className="text-white font-bold text-xl">Agency Moon</span>
@@ -1177,29 +1176,27 @@ const Contact: React.FC = () => (
         <p className="text-gray-400 text-center max-w-2xl mx-auto mb-12">
             ¿Tienes preguntas más específicas o prefieres hablar directamente con un manager? Contáctanos a través de WhatsApp. Estamos aquí para ayudarte.
         </p>
-        <div className="flex justify-center">
-             <div className="w-full max-w-md p-6 bg-gray-900/50 rounded-xl border border-purple-500/30 text-center transition-all duration-300 hover:border-purple-400 hover:shadow-[0_0_20px_rgba(168,85,247,0.5)]">
-                <WhatsappIcon className="w-12 h-12 mb-4 mx-auto text-white" />
-                <h3 className="text-xl font-semibold text-white mb-4">Contactar Managers</h3>
-                <div className="space-y-4">
-                    <a
-                        href="https://wa.me/528118807625"
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="group block w-full p-3 bg-gray-800/60 rounded-lg border border-transparent hover:border-purple-500/50 hover:bg-gray-800/90 transition-all duration-300"
-                    >
-                         <span className="text-gray-300 group-hover:text-white font-medium">Manager 1 - Soporte General</span>
-                    </a>
-                     <a
-                        href="https://wa.me/593967364089"
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="group block w-full p-3 bg-gray-800/60 rounded-lg border border-transparent hover:border-purple-500/50 hover:bg-gray-800/90 transition-all duration-300"
-                    >
-                         <span className="text-gray-300 group-hover:text-white font-medium">Manager 2 - Nuevos Ingresos</span>
-                    </a>
-                </div>
-            </div>
+        <div className="flex flex-col sm:flex-row justify-center items-center gap-8">
+             <a
+                href="https://wa.me/528118807625"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="group w-full max-w-xs p-8 bg-gray-900/50 rounded-xl border border-purple-500/30 text-center transition-all duration-300 hover:border-purple-400 hover:shadow-[0_0_20px_rgba(168,85,247,0.5)] transform hover:-translate-y-1"
+            >
+                <WhatsappIcon className="w-12 h-12 mb-4 mx-auto text-green-400" />
+                <h3 className="text-xl font-semibold text-white mb-2">Manager 1</h3>
+                <p className="text-gray-300 group-hover:text-white font-medium">Soporte General</p>
+            </a>
+             <a
+                href="https://wa.me/593967364089"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="group w-full max-w-xs p-8 bg-gray-900/50 rounded-xl border border-purple-500/30 text-center transition-all duration-300 hover:border-purple-400 hover:shadow-[0_0_20px_rgba(168,85,247,0.5)] transform hover:-translate-y-1"
+            >
+                <WhatsappIcon className="w-12 h-12 mb-4 mx-auto text-green-400" />
+                <h3 className="text-xl font-semibold text-white mb-2">Manager 2</h3>
+                <p className="text-gray-300 group-hover:text-white font-medium">Nuevos Ingresos</p>
+            </a>
         </div>
     </Section>
 );
@@ -1241,17 +1238,7 @@ export default function App() {
                                 
                 const infoSection = document.getElementById('info');
                 if (infoSection) {
-                    // A small timeout allows the state to update and accordion to start opening before scrolling
-                    setTimeout(() => {
-                        infoSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
-                        // We can't directly open the accordion from here easily without more state lifting
-                        // but we can try to click the button if it's not expanded
-                        const infoButton = document.querySelector('#info button[aria-controls="info-list"]');
-                        if (infoButton && infoButton.getAttribute('aria-expanded') === 'false') {
-                           (infoButton as HTMLElement).click();
-                        }
-
-                    }, 100);
+                    infoSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
                 }
             }
         };
