@@ -9,16 +9,29 @@ export const Logo: React.FC<{ className?: string }> = ({ className }) => (
 );
 
 export const ChatbotIcon: React.FC<{ className?: string }> = ({ className }) => (
-    <svg className={className} viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg" aria-label="Chatbot icon">
-        <circle cx="16" cy="16" r="16" fill="#7C3AED"/>
-        <path d="M20.5 19H11.5C10.6716 19 10 18.3284 10 17.5V11.5C10 10.6716 10.6716 10 11.5 10H20.5C21.3284 10 22 10.6716 22 11.5V17.5C22 18.3284 21.3284 19 20.5 19Z" fill="white"/>
-        <path d="M11 19V21L14 19H11Z" fill="white"/>
-        <path d="M13.5 14C13.5 14.5523 13.0523 15 12.5 15C11.9477 15 11.5 14.5523 11.5 14C11.5 13.4477 11.9477 13 12.5 13C13.0523 13 13.5 13.4477 13.5 14Z" fill="#7C3AED"/>
-        <path d="M19.5 14C19.5 14.5523 19.0523 15 18.5 15C17.9477 15 17.5 14.5523 17.5 14C17.5 13.4477 17.9477 13 18.5 13C19.0523 13 19.5 13.4477 19.5 14Z" fill="#7C3AED"/>
-        <path d="M16 6C16.8284 6 17.5 6.67157 17.5 7.5V9H14.5V7.5C14.5 6.67157 15.1716 6 16 6Z" fill="white"/>
-        <path d="M16 8C16.2761 8 16.5 7.77614 16.5 7.5C16.5 7.22386 16.2761 7 16 7C15.7239 7 15.5 7.22386 15.5 7.5C15.5 7.77614 15.7239 8 16 8Z" fill="#7C3AED"/>
-        <circle cx="12" cy="10" r="1.5" fill="white"/>
-        <circle cx="20" cy="10" r="1.5" fill="white"/>
+    <svg className={className} viewBox="0 0 64 64" xmlns="http://www.w3.org/2000/svg" aria-label="Chatbot icon">
+        <defs>
+            <linearGradient id="chatbot-gradient-bg" x1="0%" y1="0%" x2="100%" y2="100%">
+                <stop offset="0%" stopColor="#A855F7" />
+                <stop offset="100%" stopColor="#6366F1" />
+            </linearGradient>
+        </defs>
+        {/* Main circle with gradient */}
+        <circle cx="32" cy="32" r="32" fill="url(#chatbot-gradient-bg)" />
+        
+        {/* Chat bubble acting as robot head */}
+        <path d="M44,38 H20 C18.8954,38 18,37.1046 18,36 V24 C18,22.8954 18.8954,22 20,22 H44 C45.1046,22 46,22.8954 46,24 V36 C46,37.1046 45.1046,38 44,38 Z" fill="white" />
+        
+        {/* Speech bubble tail */}
+        <path d="M22,38 L22,42 L28,38 L22,38 Z" fill="white" />
+        
+        {/* Eyes */}
+        <circle cx="27" cy="30" r="3" fill="#7C3AED" />
+        <circle cx="37" cy="30" r="3" fill="#7C3AED" />
+        
+        {/* Antenna */}
+        <line x1="32" y1="22" x2="32" y2="16" stroke="white" strokeWidth="3" strokeLinecap="round" />
+        <circle cx="32" cy="14" r="2.5" fill="white" />
     </svg>
 );
 

@@ -500,9 +500,6 @@ const Header: React.FC<{ onOpenJoinModal: () => void; activeSection: string; }> 
                                 </a>
                             );
                         })}
-                         <div className="pt-4 w-full">
-                            <GlowButton onClick={onOpenJoinModal} className="w-full">Únete ahora</GlowButton>
-                        </div>
                     </div>
                  </div>
             )}
