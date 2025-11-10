@@ -539,7 +539,6 @@ const Hero: React.FC<{ onOpenJoinModal: () => void }> = ({ onOpenJoinModal }) =>
     </section>
 );
 
-
 const ProgressBar: React.FC<{ label: string; percentage: number; isInView: boolean }> = ({ label, percentage, isInView }) => (
     <div className="mb-6">
         <div className="flex justify-between items-center mb-2 gap-4">
@@ -654,7 +653,6 @@ const AccordionItem: React.FC<{ item: FAQItem, isOpen: boolean, onClick: () => v
 
 const FAQ: React.FC = () => {
     const [openIndex, setOpenIndex] = useState<number | null>(null);
-    const [isFaqExpanded, setIsFaqExpanded] = useState(false);
     const faqData: FAQItem[] = [
         {
             question: '¿Qué beneficios obtengo si me uno a agencia Agency Moon?',
@@ -708,39 +706,13 @@ const FAQ: React.FC = () => {
 
     return (
         <Section id="faq">
-            <div className="max-w-2xl mx-auto mb-8">
-                <div className="block rounded-2xl overflow-hidden shadow-lg shadow-purple-900/50 border border-purple-500/20">
-                    <img 
-                        src='https://i.postimg.cc/s2RrM0nj/IMG-20251107-154910.png' 
-                        alt='Guía de bienvenida para nuevos streamers de Agency Moon' 
-                        className="w-full h-auto"
-                    />
-                </div>
+            <div className="text-center">
+                <h2 className="text-3xl md:text-4xl font-bold text-white mb-10">Preguntas Frecuentes</h2>
             </div>
-
-            <h2 className="text-3xl md:text-4xl font-bold text-white text-center mb-10">Preguntas Frecuentes</h2>
-            
-            <div className="max-w-3xl mx-auto text-center">
-                 <button
-                    onClick={() => setIsFaqExpanded(!isFaqExpanded)}
-                    className="inline-flex items-center justify-center gap-3 text-left py-3 px-6 bg-gray-900/50 rounded-lg border border-purple-500/30 mb-3 transition-all duration-300 hover:border-purple-400 hover:bg-gray-900/70 focus:outline-none focus:ring-2 focus:ring-purple-500"
-                    aria-expanded={isFaqExpanded}
-                    aria-controls="faq-list"
-                >
-                    <span className="text-lg font-semibold text-white">Ver Preguntas Frecuentes</span>
-                    <ChevronDownIcon className={`w-6 h-6 text-purple-400 transition-transform duration-300 flex-shrink-0 ${isFaqExpanded ? 'rotate-180' : ''}`} />
-                </button>
-            </div>
-            
-            <div 
-                id="faq-list"
-                className={`max-w-3xl mx-auto overflow-hidden transition-all duration-700 ease-in-out ${isFaqExpanded ? 'max-h-[2000px] opacity-100' : 'max-h-0 opacity-0'}`}
-            >
-                <div className="pt-4">
-                    {faqData.map((item, index) => (
-                        <AccordionItem key={index} item={item} isOpen={openIndex === index} onClick={() => setOpenIndex(openIndex === index ? null : index)} />
-                    ))}
-                </div>
+            <div className="max-w-3xl mx-auto">
+                {faqData.map((item, index) => (
+                    <AccordionItem key={index} item={item} isOpen={openIndex === index} onClick={() => setOpenIndex(openIndex === index ? null : index)} />
+                ))}
             </div>
         </Section>
     );
@@ -856,7 +828,6 @@ const InfoAccordionItem: React.FC<{ item: InfoTab, isOpen: boolean, onClick: () 
 
 const GeneralInfo: React.FC = () => {
     const [openIndex, setOpenIndex] = useState<number | null>(0);
-    const [isInfoExpanded, setIsInfoExpanded] = useState(false);
 
     const onToggle = (index: number) => {
         setOpenIndex(prev => (prev === index ? null : index));
@@ -911,38 +882,147 @@ const GeneralInfo: React.FC = () => {
     
     return (
         <Section id="info">
-            <h2 className="text-3xl md:text-4xl font-bold text-white text-center mb-10">Información General</h2>
-
-            <div className="max-w-4xl mx-auto text-center">
-                <button
-                    onClick={() => setIsInfoExpanded(!isInfoExpanded)}
-                    className="inline-flex items-center justify-center gap-3 text-left py-3 px-6 bg-gray-900/50 rounded-lg border border-purple-500/30 mb-3 transition-all duration-300 hover:border-purple-400 hover:bg-gray-900/70 focus:outline-none focus:ring-2 focus:ring-purple-500"
-                    aria-expanded={isInfoExpanded}
-                    aria-controls="info-list"
-                >
-                    <span className="text-lg font-semibold text-white">Ver Información General</span>
-                    <ChevronDownIcon className={`w-6 h-6 text-purple-400 transition-transform duration-300 flex-shrink-0 ${isInfoExpanded ? 'rotate-180' : ''}`} />
-                </button>
+            <div className="text-center">
+                <h2 className="text-3xl md:text-4xl font-bold text-white mb-10">Información General</h2>
             </div>
-
-            <div
-                id="info-list"
-                className={`max-w-4xl mx-auto overflow-hidden transition-all duration-700 ease-in-out ${isInfoExpanded ? 'max-h-[2000px] opacity-100' : 'max-h-0 opacity-0'}`}
-            >
-                <div className="pt-4">
-                    {infoData.map((item, index) => (
-                        <InfoAccordionItem 
-                            key={index}
-                            item={item} 
-                            isOpen={openIndex === index} 
-                            onClick={() => onToggle(index)} 
-                        />
-                    ))}
-                </div>
+            <div className="max-w-4xl mx-auto">
+                {infoData.map((item, index) => (
+                    <InfoAccordionItem 
+                        key={index}
+                        item={item} 
+                        isOpen={openIndex === index} 
+                        onClick={() => onToggle(index)} 
+                    />
+                ))}
             </div>
         </Section>
     );
 };
+
+const TipsSection: React.FC = () => {
+    const [isTipsModalOpen, setIsTipsModalOpen] = useState(false);
+    const [currentTipIndex, setCurrentTipIndex] = useState(0);
+
+    const tipsImages = [
+        'https://i.postimg.cc/xCscRJt2/2-20251030-105515-0001.png',
+        'https://i.postimg.cc/YSY9JDRQ/3-20251030-105515-0002.png',
+        'https://i.postimg.cc/JnzfbGs1/4-20251030-105515-0003.png',
+        'https://i.postimg.cc/8PfjRCv2/5-20251030-105515-0004.png',
+        'https://i.postimg.cc/NFrP4TBF/6-20251030-105515-0005.png',
+    ];
+
+    const nextTip = useCallback(() => {
+        setCurrentTipIndex(prevIndex => (prevIndex + 1) % tipsImages.length);
+    }, [tipsImages.length]);
+
+    const prevTip = useCallback(() => {
+        setCurrentTipIndex(prevIndex => (prevIndex - 1 + tipsImages.length) % tipsImages.length);
+    }, [tipsImages.length]);
+
+    useEffect(() => {
+        const handleKeyDown = (event: KeyboardEvent) => {
+            if (!isTipsModalOpen) return;
+            if (event.key === 'ArrowRight') {
+                nextTip();
+            } else if (event.key === 'ArrowLeft') {
+                prevTip();
+            } else if (event.key === 'Escape') {
+                setIsTipsModalOpen(false);
+            }
+        };
+        window.addEventListener('keydown', handleKeyDown);
+        return () => {
+            window.removeEventListener('keydown', handleKeyDown);
+        };
+    }, [isTipsModalOpen, nextTip, prevTip]);
+
+    return (
+        <>
+            <Section id="tips">
+                <div className="text-center">
+                    <h2 className="text-3xl md:text-4xl font-bold text-white mb-4">Tips para tu Transmisión</h2>
+                    <p className="text-gray-400 max-w-2xl mx-auto mb-8">
+                        Mejora la calidad de tus transmisiones y aumenta tu audiencia con nuestros consejos profesionales. Haz clic para ver nuestra galería de tips.
+                    </p>
+                    <GlowButton onClick={() => setIsTipsModalOpen(true)}>
+                        Ver Galería de Tips
+                    </GlowButton>
+                </div>
+            </Section>
+
+            {isTipsModalOpen && (
+                <div 
+                    className="fixed inset-0 bg-black/90 backdrop-blur-sm z-50 flex items-center justify-center p-4 animate-fade-in"
+                    onClick={() => setIsTipsModalOpen(false)}
+                    role="dialog"
+                    aria-modal="true"
+                >
+                    <div 
+                        className="relative w-full max-w-3xl animate-zoom-in"
+                        onClick={(e) => e.stopPropagation()}
+                    >
+                        <div className="relative w-full h-[500px] sm:h-[600px]">
+                            {tipsImages.map((src, index) => (
+                                <div
+                                    key={src}
+                                    className={`absolute inset-0 transition-all duration-500 ease-in-out transform-gpu flex items-center justify-center ${
+                                        index === currentTipIndex
+                                            ? 'opacity-100 scale-100 rotate-0'
+                                            : 'opacity-0 scale-90 -rotate-6'
+                                    }`}
+                                    aria-hidden={index !== currentTipIndex}
+                                >
+                                    <div className="relative rounded-2xl shadow-[0_0_30px_rgba(168,85,247,0.7)] border-2 border-purple-500/50 p-1 bg-black">
+                                        <img
+                                            src={src}
+                                            alt={`Tip de transmisión ${index + 1}`}
+                                            className="w-96 h-96 sm:w-[28rem] sm:h-[28rem] object-cover rounded-2xl"
+                                        />
+                                    </div>
+                                </div>
+                            ))}
+
+                            <button
+                                onClick={(e) => { e.stopPropagation(); prevTip(); }}
+                                className="absolute top-1/2 left-2 sm:left-4 -translate-y-1/2 bg-black/50 text-white p-2 rounded-full hover:bg-purple-600 transition-colors z-10"
+                                aria-label="Anterior"
+                            >
+                                <ChevronLeftIcon className="w-6 h-6" />
+                            </button>
+                            <button
+                                onClick={(e) => { e.stopPropagation(); nextTip(); }}
+                                className="absolute top-1/2 right-2 sm:right-4 -translate-y-1/2 bg-black/50 text-white p-2 rounded-full hover:bg-purple-600 transition-colors z-10"
+                                aria-label="Siguiente"
+                            >
+                                <ChevronRightIcon className="w-6 h-6" />
+                            </button>
+                            
+                            <div className="absolute bottom-4 left-1/2 -translate-x-1/2 flex gap-2">
+                                {tipsImages.map((_, index) => (
+                                    <button 
+                                        key={index}
+                                        onClick={() => setCurrentTipIndex(index)}
+                                        className={`w-3 h-3 rounded-full transition-all ${index === currentTipIndex ? 'bg-purple-500 scale-125' : 'bg-gray-600 hover:bg-gray-400'}`}
+                                        aria-label={`Ir al tip ${index + 1}`}
+                                    />
+                                ))}
+                            </div>
+                        </div>
+                       
+                        <button 
+                            onClick={() => setIsTipsModalOpen(false)}
+                            className="absolute -top-3 -right-3 text-white bg-purple-600 rounded-full p-2 hover:bg-purple-700 transition-colors"
+                            aria-label="Cerrar"
+                        >
+                            <XIcon className="w-6 h-6" />
+                        </button>
+                    </div>
+                </div>
+            )}
+        </>
+    );
+};
+
 
 const TalentsSection: React.FC = () => {
     const talentData = [
@@ -1146,7 +1226,7 @@ export default function App() {
     const [isPartnershipModalOpen, setIsPartnershipModalOpen] = useState(false);
     const [isApplicationFormOpen, setIsApplicationFormOpen] = useState(false);
     const [isAboutUsModalOpen, setIsAboutUsModalOpen] = useState(false);
-    const [isTipsModalOpen, setIsTipsModalOpen] = useState(false);
+    const [isTipsModalOpen, setIsTipsModalOpen] = useState(false); // State from TipsSection moved here
 
     // Lock body scroll when any modal is open
     useEffect(() => {
@@ -1194,6 +1274,7 @@ export default function App() {
         };
     }, []);
 
+    // TipsModal now lives inside TipsSection, we just pass state control
     const TipsSectionWithState: React.FC = () => {
         const [currentTipIndex, setCurrentTipIndex] = useState(0);
         const tipsImages = [
@@ -1339,9 +1420,9 @@ export default function App() {
                 <Section id="banner-cta" className="py-20">
                     <Banner />
                 </Section>
-                <FAQ />
-                <GeneralInfo />
                 <TipsSectionWithState />
+                <GeneralInfo />
+                <FAQ />
                 <TalentsSection />
                 <PartnershipSection onOpenModal={() => setIsPartnershipModalOpen(true)} />
                 <Contact />
