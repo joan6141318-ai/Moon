@@ -1,3 +1,4 @@
+
 import React, { useState, useEffect, useRef, ReactNode, useCallback } from 'react';
 import { FAQItem, PaymentTier, InfoTab } from './types';
 import { 
@@ -526,8 +527,8 @@ const Hero: React.FC<{ onOpenJoinModal: () => void }> = ({ onOpenJoinModal }) =>
             <div className="absolute inset-0 bg-gradient-to-t from-black via-black/50 to-transparent"></div>
         </div>
         <div className="relative z-10 flex flex-col items-center">
-            <h1 className="text-5xl md:text-6xl lg:text-7xl font-bold mb-4 animate-fade-in-down">
-                Conecta. Crea. <span className="text-purple-400">Brilla.</span>
+            <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold mb-4 animate-fade-in-down">
+                Conecta. Crea. <span className="text-purple-500">Brilla.</span>
             </h1>
             <p className="text-lg md:text-xl max-w-3xl mb-8 text-gray-300 animate-fade-in-up" style={{ animationDelay: '200ms' }}>
                 Tu talento merece ser visto.
