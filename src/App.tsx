@@ -484,7 +484,7 @@ const Header: React.FC<{ onOpenJoinModal: () => void; onOpenAboutModal: () => vo
 
     return (
         <header className={`fixed top-0 left-0 right-0 z-40 transition-all duration-300 ${isScrolled || isMenuOpen ? 'bg-black/80 backdrop-blur-sm' : 'bg-transparent'}`}>
-            <nav className="container mx-auto px-6 py-4 flex justify-between items-center">
+            <nav className="w-full px-6 md:px-10 py-4 flex justify-between items-center">
                 <a href="#home" onClick={handleSmoothScroll} className="flex items-center gap-2">
                     <Logo className="h-8 w-auto text-white" />
                     <span className="text-white font-bold text-xl">Agency Moon</span>
