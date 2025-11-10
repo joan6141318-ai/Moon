@@ -3,8 +3,7 @@ import { FAQItem, PaymentTier, InfoTab } from './types';
 import { 
     Logo, ChevronDownIcon, YoutubeIcon, WhatsappIcon, XIcon, ChevronLeftIcon, ChevronRightIcon, MenuIcon,
     PercentageIcon, TransparencyIcon, TrainingIcon, SupportMaterialIcon, TalentDatabaseIcon, VerificationIcon, PersonalizedSupportIcon,
-    CheckIcon, StarIcon, TargetIcon, UsersIcon, DollarSignIcon, GlobeIcon, ClockIcon, PuzzleIcon, RocketIcon, BarChartIcon, SettingsIcon, EighteenPlusIcon,
-    LinkIcon, Edit3Icon, TrendingUpIcon
+    CheckIcon, StarIcon, TargetIcon, UsersIcon, DollarSignIcon, GlobeIcon, ClockIcon, PuzzleIcon, RocketIcon, BarChartIcon, SettingsIcon, EighteenPlusIcon
 } from './components/icons';
 import { Chatbot } from './components/Chatbot';
 
@@ -63,7 +62,7 @@ const Section: React.FC<{ id: string; children: ReactNode; className?: string }>
 };
 
 const GlowButton: React.FC<{ children: ReactNode, href?: string, className?: string, onClick?: (e: React.MouseEvent<HTMLElement>) => void, type?: 'button' | 'submit' | 'reset' }> = ({ children, href, className, onClick, type }) => {
-    const classes = `inline-block bg-purple-600 text-white font-bold py-3 px-8 rounded-lg transition-all duration-300 hover:bg-purple-700 hover:shadow-[0_0_25px_rgba(168,85,247,0.9)] focus:outline-none focus:ring-4 focus:ring-purple-400/50 transform hover:scale-105 ${className}`;
+    const classes = `inline-block bg-purple-600 text-white font-bold py-3 px-8 rounded-full transition-all duration-300 hover:bg-purple-700 hover:shadow-[0_0_25px_rgba(168,85,247,0.9)] focus:outline-none focus:ring-4 focus:ring-purple-400/50 transform hover:scale-105 ${className}`;
 
     const handleClick = (e: React.MouseEvent<HTMLElement>) => {
         if (href && href.startsWith('#') && e.currentTarget.tagName === 'A') {
@@ -448,59 +447,6 @@ const PartnershipModal: React.FC<{ isOpen: boolean; onClose: () => void }> = ({ 
 
 // --- Page Section Components ---
 
-const ConectaCreaBrilla: React.FC = () => {
-    const items = [
-        {
-            icon: LinkIcon,
-            title: "Conecta",
-            description: "Únete a una comunidad de más de 400 talentos. Colabora, aprende y crece con otros creadores."
-        },
-        {
-            icon: Edit3Icon,
-            title: "Crea",
-            description: "Te damos las herramientas y el soporte 24/7 para que te enfoques en lo que amas: crear contenido increíble."
-        },
-        {
-            icon: TrendingUpIcon,
-            title: "Brilla",
-            description: "Monetiza tu pasión sin comisiones. Alcanza tus metas y convierte tu talento en una carrera de éxito."
-        }
-    ];
-
-    return (
-        <Section id="conecta-crea-brilla">
-            <div className="text-center">
-                 <h2 className="text-3xl md:text-4xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-purple-400 to-indigo-400 mb-12">Conecta, Crea, Brilla</h2>
-            </div>
-            <div className="grid md:grid-cols-3 gap-8">
-                {items.map((item, index) => {
-                    const isBrilla = item.title === "Brilla";
-                    return (
-                        <div 
-                            key={index} 
-                            className={`p-8 rounded-2xl text-center transition-all duration-300 transform hover:-translate-y-2 ${
-                                isBrilla 
-                                ? 'bg-gradient-to-br from-purple-950 to-black border-2 border-purple-500 shadow-2xl shadow-purple-500/30 hover:shadow-purple-400/50' 
-                                : 'bg-gray-900/50 border border-purple-500/30 hover:border-purple-400 hover:shadow-[0_0_25px_rgba(168,85,247,0.5)]'
-                            }`}
-                        >
-                            <div className={`inline-block rounded-full p-4 mb-6 ${
-                                isBrilla
-                                ? 'bg-purple-600 text-white shadow-lg shadow-purple-500/50'
-                                : 'bg-purple-600/20 text-purple-300'
-                            }`}>
-                                <item.icon className="w-8 h-8" />
-                            </div>
-                            <h3 className="text-2xl font-bold text-white mb-4">{item.title}</h3>
-                            <p className="text-gray-400 leading-relaxed">{item.description}</p>
-                        </div>
-                    )
-                })}
-            </div>
-        </Section>
-    );
-};
-
 const Header: React.FC<{ onOpenJoinModal: () => void; onOpenAboutModal: () => void }> = ({ onOpenJoinModal, onOpenAboutModal }) => {
     const [isScrolled, setIsScrolled] = useState(false);
     const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -549,17 +495,13 @@ const Header: React.FC<{ onOpenJoinModal: () => void; onOpenAboutModal: () => vo
 
     return (
         <header className={`fixed top-0 left-0 right-0 z-40 transition-all duration-300 ${isScrolled || isMenuOpen ? 'bg-black/80 backdrop-blur-sm' : 'bg-transparent'}`}>
-            <nav className="container mx-auto px-6 py-4 flex justify-between items-baseline">
+            <nav className="container mx-auto px-6 py-4 flex justify-between items-center">
                 <a href="#home" onClick={handleSmoothScroll} className="flex items-center gap-2">
-                    <Logo className="h-8 w-auto text-white" />
-                    <span className="text-white font-bold text-xl">Agency Moon</span>
+                    <span className="text-white font-bold text-xl invisible">Agency Moon</span>
                 </a>
                 <div className="hidden md:flex items-center space-x-8">
-                    {navLinks.map(link => (
-                         <a key={link.name} href={link.href} onClick={(e) => handleMenuClick(e, link.href)} className="text-gray-300 hover:text-white transition-colors hover:text-shadow-purple font-medium">{link.name}</a>
-                    ))}
+                    {/* Desktop nav links can be added back if needed */}
                 </div>
-                 <GlowButton onClick={() => onOpenJoinModal()} className="hidden md:inline-block">Únete ahora</GlowButton>
                  <div className="md:hidden">
                     <button onClick={() => setIsMenuOpen(!isMenuOpen)} className="text-white focus:outline-none" aria-label="Abrir menú">
                         {isMenuOpen ? <XIcon className="w-7 h-7" /> : <MenuIcon className="w-7 h-7" />}
@@ -590,25 +532,26 @@ const Hero: React.FC<{ onOpenJoinModal: () => void }> = ({ onOpenJoinModal }) =>
     <section id="home" className="h-screen min-h-[700px] w-full flex items-center justify-center relative text-white text-center px-4 overflow-hidden">
         <div className="absolute inset-0 bg-black z-0">
             <img
-                src="https://images.pexels.com/photos/1252890/pexels-photo-1252890.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1"
-                alt="Fondo de galaxia púrpura y azul"
-                className="w-full h-full object-cover opacity-50"
+                src="https://images.pexels.com/photos/169647/pexels-photo-169647.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1"
+                alt="Edificio de oficinas de noche con luces"
+                className="w-full h-full object-cover opacity-40"
             />
-            <div className="absolute inset-0 bg-gradient-to-t from-black via-black/70 to-transparent"></div>
-            <div className="absolute inset-0 bg-gradient-to-r from-black via-transparent to-black"></div>
+            <div className="absolute inset-0 bg-gradient-to-t from-black via-black/50 to-transparent"></div>
         </div>
         <div className="relative z-10 flex flex-col items-center">
-            <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold mb-4 animate-fade-in-down" style={{textShadow: '0 0 15px rgba(168, 85, 247, 0.7)'}}>Haz brillar tu talento</h1>
-            <p className="text-xl md:text-2xl max-w-3xl my-6 text-gray-300 italic animate-fade-in-up" style={{ animationDelay: '150ms' }}>
-                "Que no te digan que el cielo es el límite cuando hay huellas en la luna"
+            <h1 className="text-5xl md:text-6xl lg:text-7xl font-bold mb-4 animate-fade-in-down">
+                Conecta. Crea. <span className="text-purple-400">Brilla.</span>
+            </h1>
+            <p className="text-lg md:text-xl max-w-3xl mb-8 text-gray-300 animate-fade-in-up" style={{ animationDelay: '200ms' }}>
+                Tu talento merece ser visto.
             </p>
-            <p className="text-lg md:text-xl max-w-3xl mb-8 text-gray-300 animate-fade-in-up" style={{ animationDelay: '300ms' }}>Únete a nuestra comunidad de creadores y empieza a monetizar tus transmisiones.</p>
-            <div className="animate-fade-in-up" style={{ animationDelay: '450ms' }}>
-                <GlowButton onClick={() => onOpenJoinModal()}>Únete ahora</GlowButton>
+            <div className="animate-fade-in-up" style={{ animationDelay: '400ms' }}>
+                <GlowButton onClick={() => onOpenJoinModal()}>Comienza hoy</GlowButton>
             </div>
         </div>
     </section>
 );
+
 
 const ProgressBar: React.FC<{ label: string; percentage: number; isInView: boolean }> = ({ label, percentage, isInView }) => (
     <div className="mb-6">
@@ -1404,7 +1347,6 @@ export default function App() {
                     <GlowButton onClick={() => setIsAboutUsModalOpen(true)}>Conoce más</GlowButton>
                 </Section>
                 <ExperienceSection />
-                <ConectaCreaBrilla />
                 <Section id="banner-cta" className="py-20">
                     <Banner />
                 </Section>
