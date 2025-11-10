@@ -1,4 +1,5 @@
 
+
 import React, { useState, useEffect, useRef, ReactNode, useCallback } from 'react';
 import { FAQItem, PaymentTier, InfoTab } from './types';
 import { 
@@ -485,14 +486,14 @@ const Header: React.FC<{ onOpenJoinModal: () => void; onOpenAboutModal: () => vo
 
     return (
         <header className={`fixed top-0 left-0 right-0 z-40 transition-all duration-300 ${isScrolled || isMenuOpen ? 'bg-black/80 backdrop-blur-sm' : 'bg-transparent'}`}>
-            <nav className="w-full px-6 md:px-10 py-4 flex justify-between items-center">
+            <nav className="w-full px-4 sm:px-6 md:px-10 py-3 sm:py-4 flex justify-between items-center transition-all duration-300">
                 <a href="#home" onClick={handleSmoothScroll} className="flex items-center gap-2">
-                    <Logo className="h-8 w-auto text-white" />
-                    <span className="text-white font-bold text-xl">Agency Moon</span>
+                    <Logo className="h-6 sm:h-8 w-auto text-white transition-all duration-300" />
+                    <span className="text-white font-bold text-lg sm:text-xl transition-all duration-300">Agency Moon</span>
                 </a>
                  <div>
                     <button onClick={() => setIsMenuOpen(!isMenuOpen)} className="text-white focus:outline-none" aria-label="Abrir menú">
-                        {isMenuOpen ? <XIcon className="w-7 h-7" /> : <MenuIcon className="w-7 h-7" />}
+                        {isMenuOpen ? <XIcon className="w-6 h-6 sm:w-7 sm:h-7 transition-all duration-300" /> : <MenuIcon className="w-6 h-6 sm:w-7 sm:h-7 transition-all duration-300" />}
                     </button>
                 </div>
             </nav>
@@ -527,8 +528,8 @@ const Hero: React.FC<{ onOpenJoinModal: () => void }> = ({ onOpenJoinModal }) =>
             <div className="absolute inset-0 bg-gradient-to-t from-black via-black/50 to-transparent"></div>
         </div>
         <div className="relative z-10 flex flex-col items-center">
-            <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold mb-4 animate-fade-in-down">
-                Conecta. Crea. <span className="text-purple-500">Brilla.</span>
+            <h1 className="text-[2.5rem] leading-tight sm:text-5xl md:text-6xl lg:text-7xl font-bold mb-4 animate-fade-in-down">
+                Conecta. Crea. <span className="text-fuchsia-500">Brilla.</span>
             </h1>
             <p className="text-lg md:text-xl max-w-3xl mb-8 text-gray-300 animate-fade-in-up" style={{ animationDelay: '200ms' }}>
                 Tu talento merece ser visto.
