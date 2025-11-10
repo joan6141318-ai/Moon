@@ -3,7 +3,7 @@ import { FAQItem, PaymentTier, InfoTab } from './types';
 import { 
     Logo, ChevronDownIcon, YoutubeIcon, WhatsappIcon, XIcon, ChevronLeftIcon, ChevronRightIcon, MenuIcon,
     PercentageIcon, TransparencyIcon, TrainingIcon, SupportMaterialIcon, TalentDatabaseIcon, VerificationIcon, PersonalizedSupportIcon,
-    CheckIcon, StarIcon, TargetIcon, UsersIcon, DollarSignIcon, GlobeIcon, ClockIcon, PuzzleIcon, RocketIcon, BarChartIcon, SettingsIcon,
+    CheckIcon, StarIcon, TargetIcon, UsersIcon, DollarSignIcon, BarChartIcon, SettingsIcon, RocketIcon,
     InstagramIcon, TiktokIcon
 } from './components/icons';
 import { Chatbot } from './components/Chatbot';
@@ -41,7 +41,7 @@ const useIntersectionObserver = (setActiveSection: (id: string) => void) => {
             });
         }, { 
             rootMargin: '-80px 0px -40% 0px', // Adjusts for header height and triggers earlier on scroll up
-            threshold: 0.5 
+            threshold: 0.2
         });
 
         sections.forEach(section => observer.current?.observe(section));
@@ -250,7 +250,7 @@ const ApplicationFormModal: React.FC<{ isOpen: boolean; onClose: () => void }> =
                         <p className="text-gray-300 max-w-md mx-auto mb-8">
                             Gracias por tu interés en unirte a Agency Moon. Tu postulación ha sido enviada con éxito.
                         </p>
-                        <GlowButton onClick={() => onClose()}>Finalizar</GlowButton>
+                        <GlowButton onClick={onClose}>Finalizar</GlowButton>
                     </div>
                 ) : (
                     <>
@@ -422,8 +422,9 @@ const Header: React.FC<{ onOpenJoinModal: () => void; activeSection: string; }> 
         return () => window.removeEventListener('scroll', handleScroll);
     }, []);
 
-    const handleMenuClick = (e: React.MouseEvent<HTMLAnchorElement>, href: string) => {
+    const handleMenuClick = (e: React.MouseEvent<HTMLAnchorElement>) => {
         setIsMenuOpen(false);
+        const href = e.currentTarget.getAttribute('href');
         if (href === '#join-modal') {
             e.preventDefault();
             onOpenJoinModal();
@@ -443,19 +444,6 @@ const Header: React.FC<{ onOpenJoinModal: () => void; activeSection: string; }> 
         { name: 'Socios', href: '#partnership' },
         { name: 'Contacto', href: '#contact' },
     ];
-
-    const mobileNavLinks = [
-        { name: 'Quiénes Somos', href: '#about-us' },
-        { name: 'Nuestra Experiencia', href: '#experience' },
-        { name: 'Requisitos para Unirte', href: '#join-modal' },
-        { name: 'Preguntas Frecuentes', href: '#faq' },
-        { name: 'Información General', href: '#info' },
-        { name: 'Tips de Transmisión', href: '#tips' },
-        { name: 'Nuestros Talentos', href: '#talents' },
-        { name: 'Testimonios', href: '#testimonials'},
-        { name: 'Sé Nuestro Socio', href: '#partnership' },
-        { name: 'Contáctanos', href: '#contact' },
-    ];
     
     const getIsActive = (href: string) => activeSection === href.substring(1);
 
@@ -467,22 +455,22 @@ const Header: React.FC<{ onOpenJoinModal: () => void; activeSection: string; }> 
                     <Logo className="h-8 w-auto text-white" />
                     <span className="text-white font-bold text-xl">Agency Moon</span>
                 </a>
-                <div className="hidden lg:flex items-center space-x-8">
+                <div className="hidden lg:flex items-center space-x-6">
                     {navLinks.map(link => {
                         const isActive = getIsActive(link.href);
                         return (
                              <a 
                                 key={link.name} 
                                 href={link.href} 
-                                onClick={(e) => handleMenuClick(e, link.href)} 
-                                className={`transition-colors font-medium ${isActive ? 'text-purple-400 font-bold text-shadow-purple' : 'text-gray-300 hover:text-white hover:text-shadow-purple'}`}
+                                onClick={handleMenuClick} 
+                                className={`transition-colors font-medium text-sm ${isActive ? 'text-purple-400 font-bold text-shadow-purple' : 'text-gray-300 hover:text-white hover:text-shadow-purple'}`}
                              >
                                 {link.name}
                             </a>
                         );
                     })}
                 </div>
-                 <GlowButton onClick={() => onOpenJoinModal()} className="hidden lg:inline-block">Únete ahora</GlowButton>
+                 <GlowButton onClick={onOpenJoinModal} className="hidden lg:inline-block">Únete ahora</GlowButton>
                  <div className="lg:hidden">
                     <button onClick={() => setIsMenuOpen(!isMenuOpen)} className="text-white focus:outline-none" aria-label="Abrir menú">
                         {isMenuOpen ? <XIcon className="w-7 h-7" /> : <MenuIcon className="w-7 h-7" />}
@@ -492,19 +480,20 @@ const Header: React.FC<{ onOpenJoinModal: () => void; activeSection: string; }> 
             {isMenuOpen && (
                  <div className="lg:hidden absolute top-full left-0 w-full bg-black/90 backdrop-blur-sm animate-fade-in-down-fast">
                     <div className="flex flex-col items-start px-6 py-4 space-y-1">
-                        {mobileNavLinks.map(link => {
+                        {navLinks.map(link => {
                              const isActive = getIsActive(link.href);
                              return (
                                 <a
                                     key={link.name}
                                     href={link.href}
                                     className={`w-full text-left py-3 px-3 rounded-md transition-colors text-lg ${isActive ? 'bg-purple-600/30 text-white font-semibold' : 'text-gray-200 hover:bg-purple-600/30 hover:text-white'}`}
-                                    onClick={(e) => handleMenuClick(e, link.href)}
+                                    onClick={handleMenuClick}
                                 >
                                     {link.name}
                                 </a>
                             );
                         })}
+                        <GlowButton onClick={onOpenJoinModal} className="w-full mt-4">Únete ahora</GlowButton>
                     </div>
                  </div>
             )}
@@ -530,7 +519,7 @@ const Hero: React.FC<{ onOpenJoinModal: () => void }> = ({ onOpenJoinModal }) =>
             </p>
             <p className="text-lg md:text-xl max-w-3xl mb-8 text-gray-300 animate-fade-in-up" style={{ animationDelay: '300ms' }}>Únete a nuestra comunidad de creadores y empieza a monetizar tus transmisiones.</p>
             <div className="animate-fade-in-up" style={{ animationDelay: '450ms' }}>
-                <GlowButton onClick={() => onOpenJoinModal()}>Únete ahora</GlowButton>
+                <GlowButton onClick={onOpenJoinModal}>Únete ahora</GlowButton>
             </div>
         </div>
     </section>
@@ -1009,7 +998,11 @@ const TipsSection: React.FC = () => {
                             {tipsImages.map((src, index) => (
                                 <div
                                     key={src}
-                                    className={`absolute inset-0 transition-opacity duration-300 ease-in-out ${index === currentTipIndex ? 'opacity-100' : 'opacity-0'}`}
+                                    className={`absolute inset-0 transition-all duration-500 ease-in-out transform-gpu flex items-center justify-center ${
+                                        index === currentTipIndex
+                                            ? 'opacity-100 scale-100 rotate-0'
+                                            : 'opacity-0 scale-90 -rotate-6'
+                                    }`}
                                     aria-hidden={index !== currentTipIndex}
                                 >
                                     <div className="relative rounded-2xl shadow-[0_0_30px_rgba(168,85,247,0.7)] border-2 border-purple-500/50 p-1 bg-black w-full h-full">
@@ -1412,7 +1405,6 @@ export default function App() {
                 @keyframes fade-in-up { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
                 .animate-fade-in-down { animation: fade-in-down 0.8s ease-out forwards; }
                 .animate-fade-in-up { animation: fade-in-up 0.8s ease-out forwards; }
-                .animation-delay-300 { animation-delay: 300ms; }
                 @keyframes fade-in { from { opacity: 0; } to { opacity: 1; } }
                 .animate-fade-in { animation: fade-in 0.3s ease-out forwards; }
                 @keyframes zoom-in { from { opacity: 0; transform: scale(0.95); } to { opacity: 1; transform: scale(1); } }

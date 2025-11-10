@@ -127,18 +127,12 @@ export const YoutubeIcon: React.FC<{ className?: string }> = ({ className }) => 
         xmlns="http://www.w3.org/2000/svg" 
         className={className}
         aria-hidden="true"
+        fill="currentColor"
     >
-        <defs>
-            <linearGradient id="youtube-gradient" x1="0%" y1="0%" x2="100%" y2="100%">
-                <stop offset="0%" stopColor="#A855F7" />
-                <stop offset="100%" stopColor="#6366F1" />
-            </linearGradient>
-        </defs>
         <path 
-            fill="url(#youtube-gradient)"
             d="M27.313 3.133C26.977 1.895 25.996.915 24.758.58C22.593 0 14 0 14 0S5.407 0 3.242.58C1.994.915 1.023 1.895.687 3.133C0 5.358 0 10 0 10s0 4.642.687 6.867c.336 1.238 1.317 2.218 2.555 2.555C5.407 19.999 14 19.999 14 19.999s8.593 0 10.758-.579c1.238-.337 2.219-1.317 2.555-2.555C28 14.642 28 10 28 10s0-4.642-.687-6.867z"
         />
-        <path fill="#FFFFFF" d="M11.2 14.266V5.734L18.4 10l-7.2 4.266z" />
+        <path fill="#000000" d="M11.2 14.266V5.734L18.4 10l-7.2 4.266z" />
     </svg>
 );
 
@@ -273,39 +267,6 @@ export const DollarSignIcon: React.FC<{ className?: string }> = ({ className }) 
     </svg>
 );
 
-export const GlobeIcon: React.FC<{ className?: string }> = ({ className }) => (
-    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={className}>
-        <circle cx="12" cy="12" r="10"></circle>
-        <line x1="2" y1="12" x2="22" y2="12"></line>
-        <path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"></path>
-    </svg>
-);
-
-export const ClockIcon: React.FC<{ className?: string }> = ({ className }) => (
-    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={className}>
-        <circle cx="12" cy="12" r="10"></circle>
-        <polyline points="12 6 12 12 16 14"></polyline>
-    </svg>
-);
-
-export const PuzzleIcon: React.FC<{ className?: string }> = ({ className }) => (
-    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={className}>
-        <path d="M19.43,12.57a2,2,0,0,0-1.83-1.22H17a2,2,0,0,0-2-2V8.65a2,2,0,0,0-1.22-1.83L11.43,5.43a2,2,0,0,0-2.13.24L8.43,6.54a2,2,0,0,0-.24,2.13L9.57,11.43a2,2,0,0,0,1.83,1.22H12a2,2,0,0,0,2,2v.72a2,2,0,0,0,1.22,1.83l2.35,1.39a2,2,0,0,0,2.13-.24l.87-.87a2,2,0,0,0,.24-2.13Z"/>
-        <path d="M12.57,19.43a2,2,0,0,0,1.22,1.83l1.39,2.35a2,2,0,0,0,2.13.24l.87-.87a2,2,0,0,0,.24-2.13l-1.39-2.35a2,2,0,0,0-1.83-1.22H16a2,2,0,0,0-2,2v.72"/>
-        <path d="M5.43,11.43a2,2,0,0,0,1.22-1.83V9a2,2,0,0,0-2-2H4a2,2,0,0,0-2,2v.72a2,2,0,0,0,1.22,1.83l2.35,1.39a2,2,0,0,0,2.13-.24l.87-.87a2,2,0,0,0,.24-2.13Z"/>
-    </svg>
-);
-
-export const RocketIcon: React.FC<{ className?: string }> = ({ className }) => (
-    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={className}>
-        <path d="M4.5 16.5c-1.5 1.26-2 5-2 5s3.74-.5 5-2c.71-.84.7-2.3.05-3.11S5.34 15.66 4.5 16.5z"/>
-        <path d="M17.5 7.5c1.5-1.26 2-5 2-5s-3.74.5-5 2c-.71.84-.7 2.3-.05 3.11s2.05 1.54 2.55.84z"/>
-        <path d="M14.5 9.5L9.5 14.5"/>
-        <path d="M22 2l-3 7-3.5 2.5 3 7.5L22 22"/>
-        <path d="M2 22l3-7 3.5-2.5-3-7.5L2 2"/>
-    </svg>
-);
-
 export const BarChartIcon: React.FC<{ className?: string }> = ({ className }) => (
     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={className}>
         <line x1="12" y1="20" x2="12" y2="10"></line>
@@ -321,6 +282,17 @@ export const SettingsIcon: React.FC<{ className?: string }> = ({ className }) =>
     </svg>
 );
 
+export const RocketIcon: React.FC<{ className?: string }> = ({ className }) => (
+    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={className}>
+        <path d="M4.5 16.5c-1.5 1.26-2 5-2 5s3.74-.5 5-2c.71-.84.7-2.3.05-3.11S5.34 15.66 4.5 16.5z"/>
+        <path d="M17.5 7.5c1.5-1.26 2-5 2-5s-3.74.5-5 2c-.71.84-.7 2.3-.05 3.11s2.05 1.54 2.55.84z"/>
+        <path d="M14.5 9.5L9.5 14.5"/>
+        <path d="M22 2l-3 7-3.5 2.5 3 7.5L22 22"/>
+        <path d="M2 22l3-7 3.5-2.5-3-7.5L2 2"/>
+    </svg>
+);
+
+// --- Social Icons ---
 export const InstagramIcon: React.FC<{ className?: string }> = ({ className }) => (
     <svg
         xmlns="http://www.w3.org/2000/svg"
