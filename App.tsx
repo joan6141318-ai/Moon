@@ -1,17 +1,3 @@
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 import React, { useState, useEffect, useRef, ReactNode, useCallback } from 'react';
 import { FAQItem, PaymentTier, InfoTab } from './types';
 import { 
@@ -526,7 +512,7 @@ const Header: React.FC<{ onOpenJoinModal: () => void; onOpenAboutModal: () => vo
                 </a>
                 <div className="hidden md:flex items-center space-x-8">
                     {navLinks.map(link => (
-                         <a key={link.name} href={link.href} onClick={(e) => handleMenuClick(e, link.href)} className="text-gray-300 hover:text-white transition-colors hover:text-shadow-purple">{link.name}</a>
+                         <a key={link.name} href={link.href} onClick={(e) => handleMenuClick(e, link.href)} className="text-gray-300 hover:text-white transition-colors hover:text-shadow-purple font-medium">{link.name}</a>
                     ))}
                 </div>
                  {/* FIX: The 'GlowButton' component expects an 'onClick' handler that accepts a mouse event. The original code passed a function that does not accept any arguments directly, causing a type mismatch. This has been corrected by wrapping the function call in an arrow function to ensure the event argument is handled correctly. */}
@@ -697,6 +683,7 @@ const AccordionItem: React.FC<{ item: FAQItem, isOpen: boolean, onClick: () => v
 
 const FAQ: React.FC = () => {
     const [openIndex, setOpenIndex] = useState<number | null>(null);
+    const [isFaqExpanded, setIsFaqExpanded] = useState(false);
     const faqData: FAQItem[] = [
         {
             question: '¿Qué beneficios obtengo si me uno a agencia Agency Moon?',
@@ -750,12 +737,8 @@ const FAQ: React.FC = () => {
 
     return (
         <Section id="faq">
-            <h2 className="text-3xl md:text-4xl font-bold text-white text-center mb-12">Preguntas Frecuentes</h2>
-            
-            <div className="max-w-2xl mx-auto mb-12">
-                <div
-                    className="block rounded-2xl overflow-hidden shadow-lg shadow-purple-900/50 border border-purple-500/20"
-                >
+            <div className="max-w-2xl mx-auto mb-8">
+                <div className="block rounded-2xl overflow-hidden shadow-lg shadow-purple-900/50 border border-purple-500/20">
                     <img 
                         src='https://i.postimg.cc/s2RrM0nj/IMG-20251107-154910.png' 
                         alt='Guía de bienvenida para nuevos streamers de Agency Moon' 
@@ -764,10 +747,27 @@ const FAQ: React.FC = () => {
                 </div>
             </div>
 
-            <div className="max-w-3xl mx-auto">
-                {faqData.map((item, index) => (
-                    <AccordionItem key={index} item={item} isOpen={openIndex === index} onClick={() => setOpenIndex(openIndex === index ? null : index)} />
-                ))}
+            <div className="max-w-3xl mx-auto text-center">
+                 <button
+                    onClick={() => setIsFaqExpanded(!isFaqExpanded)}
+                    className="inline-flex items-center justify-center gap-3 text-left py-3 px-6 bg-gray-900/50 rounded-lg border border-purple-500/30 mb-3 transition-all duration-300 hover:border-purple-400 hover:bg-gray-900/70 focus:outline-none focus:ring-2 focus:ring-purple-500"
+                    aria-expanded={isFaqExpanded}
+                    aria-controls="faq-list"
+                >
+                    <span className="text-lg font-semibold text-white">Preguntas Frecuentes</span>
+                    <ChevronDownIcon className={`w-6 h-6 text-purple-400 transition-transform duration-300 flex-shrink-0 ${isFaqExpanded ? 'rotate-180' : ''}`} />
+                </button>
+            </div>
+            
+            <div 
+                id="faq-list"
+                className={`max-w-3xl mx-auto overflow-hidden transition-all duration-700 ease-in-out ${isFaqExpanded ? 'max-h-[2000px] opacity-100' : 'max-h-0 opacity-0'}`}
+            >
+                <div className="pt-4">
+                    {faqData.map((item, index) => (
+                        <AccordionItem key={index} item={item} isOpen={openIndex === index} onClick={() => setOpenIndex(openIndex === index ? null : index)} />
+                    ))}
+                </div>
             </div>
         </Section>
     );
@@ -871,7 +871,7 @@ const InfoAccordionItem: React.FC<{ item: InfoTab, isOpen: boolean, onClick: () 
             className="w-full flex justify-between items-center text-left p-6"
             aria-expanded={isOpen}
         >
-            <span className="text-xl font-bold text-white">{item.title}</span>
+            <span className="text-lg font-semibold text-white">{item.title}</span>
             <ChevronDownIcon className={`w-6 h-6 text-purple-400 transition-transform duration-300 ${isOpen ? 'rotate-180' : ''}`} />
         </button>
         <div className={`overflow-hidden transition-all duration-500 ease-in-out ${isOpen ? 'max-h-[1000px]' : 'max-h-0'}`}>
@@ -882,7 +882,13 @@ const InfoAccordionItem: React.FC<{ item: InfoTab, isOpen: boolean, onClick: () 
     </div>
 );
 
-const GeneralInfo: React.FC<{ openIndex: number | null; onToggle: (index: number) => void }> = ({ openIndex, onToggle }) => {
+const GeneralInfo: React.FC = () => {
+    const [openIndex, setOpenIndex] = useState<number | null>(0);
+    const [isInfoExpanded, setIsInfoExpanded] = useState(false);
+
+    const onToggle = (index: number) => {
+        setOpenIndex(prev => (prev === index ? null : index));
+    };
 
     const infoData: InfoTab[] = [
         {
@@ -934,15 +940,33 @@ const GeneralInfo: React.FC<{ openIndex: number | null; onToggle: (index: number
     return (
         <Section id="info">
             <h2 className="text-3xl md:text-4xl font-bold text-white text-center mb-10">Información General</h2>
-            <div className="max-w-4xl mx-auto">
-                {infoData.map((item, index) => (
-                    <InfoAccordionItem 
-                        key={index}
-                        item={item} 
-                        isOpen={openIndex === index} 
-                        onClick={() => onToggle(index)} 
-                    />
-                ))}
+
+            <div className="max-w-4xl mx-auto text-center">
+                <button
+                    onClick={() => setIsInfoExpanded(!isInfoExpanded)}
+                    className="inline-flex items-center justify-center gap-3 text-left py-3 px-6 bg-gray-900/50 rounded-lg border border-purple-500/30 mb-3 transition-all duration-300 hover:border-purple-400 hover:bg-gray-900/70 focus:outline-none focus:ring-2 focus:ring-purple-500"
+                    aria-expanded={isInfoExpanded}
+                    aria-controls="info-list"
+                >
+                    <span className="text-lg font-semibold text-white">Ver Información General</span>
+                    <ChevronDownIcon className={`w-6 h-6 text-purple-400 transition-transform duration-300 flex-shrink-0 ${isInfoExpanded ? 'rotate-180' : ''}`} />
+                </button>
+            </div>
+
+            <div
+                id="info-list"
+                className={`max-w-4xl mx-auto overflow-hidden transition-all duration-700 ease-in-out ${isInfoExpanded ? 'max-h-[2000px] opacity-100' : 'max-h-0 opacity-0'}`}
+            >
+                <div className="pt-4">
+                    {infoData.map((item, index) => (
+                        <InfoAccordionItem 
+                            key={index}
+                            item={item} 
+                            isOpen={openIndex === index} 
+                            onClick={() => onToggle(index)} 
+                        />
+                    ))}
+                </div>
             </div>
         </Section>
     );
@@ -1289,12 +1313,7 @@ export default function App() {
     const [isApplicationFormOpen, setIsApplicationFormOpen] = useState(false);
     const [isAboutUsModalOpen, setIsAboutUsModalOpen] = useState(false);
     const [isTipsModalOpen, setIsTipsModalOpen] = useState(false); // State from TipsSection moved here
-    const [openInfoIndex, setOpenInfoIndex] = useState<number | null>(0);
 
-    const handleInfoToggle = (index: number) => {
-        setOpenInfoIndex(prev => (prev === index ? null : index));
-    };
-    
     // Lock body scroll when any modal is open
     useEffect(() => {
         const isAnyModalOpen = isJoinModalOpen || isPartnershipModalOpen || isApplicationFormOpen || isAboutUsModalOpen || isTipsModalOpen;
@@ -1316,15 +1335,19 @@ export default function App() {
             const target = e.target as HTMLElement;
             if (target && target.id === 'faq-payment-link') {
                 e.preventDefault();
-                
-                // The index for "Tabla de pagos bigo live" is 4
-                setOpenInfoIndex(4);
-                
+                                
                 const infoSection = document.getElementById('info');
                 if (infoSection) {
                     // A small timeout allows the state to update and accordion to start opening before scrolling
                     setTimeout(() => {
                         infoSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                        // We can't directly open the accordion from here easily without more state lifting
+                        // but we can try to click the button if it's not expanded
+                        const infoButton = document.querySelector('#info button[aria-controls="info-list"]');
+                        if (infoButton && infoButton.getAttribute('aria-expanded') === 'false') {
+                           (infoButton as HTMLElement).click();
+                        }
+
                     }, 100);
                 }
             }
@@ -1490,7 +1513,7 @@ export default function App() {
                     <Banner />
                 </Section>
                 <FAQ />
-                <GeneralInfo openIndex={openInfoIndex} onToggle={handleInfoToggle} />
+                <GeneralInfo />
                 <TipsSectionWithState />
                 <TalentsSection />
                 <PartnershipSection onOpenModal={() => setIsPartnershipModalOpen(true)} />
