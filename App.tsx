@@ -693,7 +693,7 @@ const FAQ: React.FC = () => {
     const faqData: FAQItem[] = [
         {
             question: '¿Qué beneficios obtengo si me uno a agencia Agency Moon?',
-            answer: `<p>Nos complace que te intereses en nuestro equipo. Nuestro diferenciador es que como emisor obtendrás:</p>
+            answer: `<p>Nos complace que te interesas en nuestro equipo. Nuestro diferenciador es que como emisor obtendrás:</p>
                      <ul>
                          <li><strong>Atención y Soporte 24/7:</strong> Atención personalizada para resolver cualquier duda.</li>
                          <li><strong>Información Oficial:</strong> Acceso a actualizaciones y novedades de la plataforma.</li>
@@ -1261,11 +1261,6 @@ const TalentsSection: React.FC = () => {
 };
 
 const PartnershipSection: React.FC<{ onOpenModal: () => void }> = ({ onOpenModal }) => {
-    // FIX: Refactored the inline arrow function to a named handler to resolve a potential type mismatch with the GlowButton's onClick prop.
-    const handleOpenModal = (e: React.MouseEvent<HTMLElement>) => {
-        onOpenModal();
-    };
-
     return (
         <Section id="partnership">
             <div className="relative rounded-2xl overflow-hidden shadow-2xl shadow-purple-900/50 border border-purple-500/30 text-center">
@@ -1284,7 +1279,8 @@ const PartnershipSection: React.FC<{ onOpenModal: () => void }> = ({ onOpenModal
                     </p>
                     {/* FIX: The GlowButton's onClick prop expects a function that receives a mouse event. The handler was passed directly, causing a type mismatch. It has been wrapped in an arrow function to correct this. */}
                     {/* FIX: The GlowButton's onClick prop expects a function that receives a mouse event. The handler was passed a function that does not accept any arguments, causing a type mismatch. It has been wrapped in an arrow function that accepts the event argument to correct this. */}
-                    <GlowButton onClick={handleOpenModal}>
+                    {/* FIX: The GlowButton's onClick prop expects a function that receives a mouse event. The handler was passed directly, causing a type mismatch. It has been refactored to an inline arrow function to ensure type correctness. */}
+                    <GlowButton onClick={(e) => onOpenModal()}>
                         Más Información
                     </GlowButton>
                 </div>
