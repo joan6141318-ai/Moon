@@ -515,17 +515,22 @@ const Hero: React.FC<{ onOpenJoinModal: () => void }> = ({ onOpenJoinModal }) =>
             <div className="absolute inset-0 bg-gradient-to-r from-black via-transparent to-black"></div>
         </div>
         <div className="relative z-10 flex flex-col items-center">
-            <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold mb-4 animate-fade-in-down" style={{textShadow: '0 0 15px rgba(168, 85, 247, 0.7)'}}>Haz brillar tu talento</h1>
-            <p className="text-xl md:text-2xl max-w-3xl my-6 text-gray-300 italic animate-fade-in-up" style={{ animationDelay: '150ms' }}>
-                "Que no te digan que el cielo es el límite cuando hay huellas en la luna"
+            <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold mb-4 animate-fade-in-down">
+                Conecta . Crea . <span className="bg-clip-text text-transparent bg-gradient-to-r from-fuchsia-400 to-purple-500" style={{textShadow: '0 0 20px rgba(217, 70, 239, 0.5)'}}>Brilla</span> .
+            </h1>
+            <p className="text-xl md:text-2xl mt-4 mb-24 text-gray-200 animate-fade-in-up font-light tracking-wide" style={{ animationDelay: '150ms' }}>
+                Tu talento merece ser visto
             </p>
-            <p className="text-lg md:text-xl max-w-3xl mb-8 text-gray-300 animate-fade-in-up" style={{ animationDelay: '300ms' }}>Únete a nuestra comunidad de creadores y empieza a monetizar tus transmisiones.</p>
+            <p className="text-lg md:text-xl max-w-3xl mb-8 text-gray-300 animate-fade-in-up" style={{ animationDelay: '300ms' }}>
+                Únete a nuestra comunidad de creadores y empieza a monetizar tus transmisiones.
+            </p>
             <div className="animate-fade-in-up" style={{ animationDelay: '450ms' }}>
                 <GlowButton onClick={onOpenJoinModal}>Únete ahora</GlowButton>
             </div>
         </div>
     </section>
 );
+
 
 const AboutUsSection: React.FC = () => {
     const missionVision = [
