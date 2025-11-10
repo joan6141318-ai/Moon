@@ -9,14 +9,26 @@ export const Logo: React.FC<{ className?: string }> = ({ className }) => (
 );
 
 export const ChatbotIcon: React.FC<{ className?: string }> = ({ className }) => (
-    <svg className={className} viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg">
-        <circle cx="16" cy="16" r="16" fill="#7C3AED"/>
-        <g transform="translate(4, 5) scale(1)">
-            <path d="M21.99 4c0-1.1-.89-2-1.99-2H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h14l4 4-.01-18z" fill="white"/>
-            <circle cx="16" cy="11" r="1.5" fill="#7C3AED" />
-            <circle cx="12" cy="11" r="1.5" fill="#7C3AED" />
-            <circle cx="8" cy="11" r="1.5" fill="#7C3AED" />
-        </g>
+    <svg className={className} viewBox="0 0 64 64" xmlns="http://www.w3.org/2000/svg" aria-label="Chatbot icon">
+        <defs>
+            <linearGradient id="chatbot-gradient" x1="0" y1="1" x2="1" y2="0">
+                <stop offset="0%" stopColor="#c026d3" />
+                <stop offset="50%" stopColor="#9333ea" />
+                <stop offset="100%" stopColor="#2563eb" />
+            </linearGradient>
+        </defs>
+        {/* Earpieces */}
+        <path d="M8 24C3.58 24 0 27.58 0 32V40C0 44.42 3.58 48 8 48H12V24H8Z" fill="url(#chatbot-gradient)"/>
+        <path d="M56 24C60.42 24 64 27.58 64 32V40C64 44.42 60.42 48 56 48H52V24H56Z" fill="url(#chatbot-gradient)"/>
+        {/* Head */}
+        <path d="M12 16C12 11.58 15.58 8 20 8H44C48.42 8 52 11.58 52 16V52C52 56.42 48.42 60 44 60H20C15.58 60 12 56.42 12 52V16Z" fill="url(#chatbot-gradient)"/>
+        {/* Antenna */}
+        <path d="M34 9.5L29 9.5L33 3.5L28 3.5L31.5 0L31.5 8L34 8Z" fill="#3b82f6" />
+        {/* Face */}
+        <rect x="18" y="20" width="28" height="24" rx="6" fill="white" />
+        <rect x="23" y="26" width="4" height="10" rx="2" fill="black" />
+        <rect x="37" y="26" width="4" height="10" rx="2" fill="black" />
+        <path d="M26 38C26 42 38 42 38 38" stroke="black" strokeWidth="2.5" fill="none" strokeLinecap="round" />
     </svg>
 );
 
