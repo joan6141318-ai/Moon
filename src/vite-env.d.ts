@@ -1,5 +1,7 @@
-// Este archivo proporciona las definiciones de tipo para las variables de entorno de Vite.
-// Más información: https://vitejs.dev/guide/features.html#intellisense-for-typescript
+// FIX: Removed the reference to "vite/client" to resolve a "Cannot find type definition file" error.
+
+// NOTE: This file provides type definitions for Vite's environment variables.
+// More info: https://vitejs.dev/guide/features.html#intellisense-for-typescript
 
 // FIX: Resolved the "Cannot redeclare block-scoped variable 'process'" error.
 // Instead of redeclaring the global `process` object, this now augments the
