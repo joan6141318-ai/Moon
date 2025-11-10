@@ -472,17 +472,6 @@ const Header: React.FC<{ onOpenJoinModal: () => void; onOpenAboutModal: () => vo
         }
     };
     
-    const navLinks = [
-        { name: 'Quiénes somos', href: '#about-us' },
-        { name: 'Experiencia', href: '#experience' },
-        { name: 'FAQ', href: '#faq' },
-        { name: 'Información', href: '#info' },
-        { name: 'Tips', href: '#tips' },
-        { name: 'Talentos', href: '#talents'},
-        { name: 'Socios', href: '#partnership' },
-        { name: 'Contacto', href: '#contact' },
-    ];
-
     const mobileNavLinks = [
         { name: 'Quiénes Somos', href: '#about-us' },
         { name: 'Nuestra Experiencia', href: '#experience' },
@@ -502,26 +491,20 @@ const Header: React.FC<{ onOpenJoinModal: () => void; onOpenAboutModal: () => vo
                     <Logo className="h-8 w-auto text-white" />
                     <span className="text-white font-bold text-xl">Agency Moon</span>
                 </a>
-                <div className="hidden md:flex items-center space-x-8">
-                    {navLinks.map(link => (
-                         <a key={link.name} href={link.href} onClick={(e) => handleMenuClick(e, link.href)} className="text-gray-300 hover:text-white transition-colors hover:text-shadow-purple font-medium">{link.name}</a>
-                    ))}
-                </div>
-                 <GlowButton onClick={(e) => onOpenJoinModal()} className="hidden md:inline-block">Únete ahora</GlowButton>
-                 <div className="md:hidden">
+                <div>
                     <button onClick={() => setIsMenuOpen(!isMenuOpen)} className="text-white focus:outline-none" aria-label="Abrir menú">
                         {isMenuOpen ? <XIcon className="w-7 h-7" /> : <MenuIcon className="w-7 h-7" />}
                     </button>
                 </div>
             </nav>
             {isMenuOpen && (
-                 <div className="md:hidden absolute top-full left-0 w-full bg-black/90 backdrop-blur-sm animate-fade-in-down-fast">
+                 <div className="absolute top-full left-0 w-full bg-black/90 backdrop-blur-sm animate-fade-in-down-fast">
                     <div className="flex flex-col items-start px-6 py-4 space-y-1">
                         {mobileNavLinks.map(link => (
                             <a
                                 key={link.name}
                                 href={link.href}
-                                className="text-gray-200 hover:bg-purple-600/30 hover:text-white w-full text-left py-3 px-3 rounded-md transition-colors text-lg"
+                                className="text-white font-semibold hover:bg-purple-600/30 w-full text-left py-3 px-3 rounded-md transition-colors text-lg"
                                 onClick={(e) => handleMenuClick(e, link.href)}
                             >
                                 {link.name}
@@ -534,29 +517,67 @@ const Header: React.FC<{ onOpenJoinModal: () => void; onOpenAboutModal: () => vo
     );
 };
 
-const Hero: React.FC<{ onOpenJoinModal: () => void }> = ({ onOpenJoinModal }) => (
-    <section id="home" className="h-screen min-h-[700px] w-full flex items-center justify-center relative text-white text-center px-4 overflow-hidden">
-        <div className="absolute inset-0 bg-black z-0">
-            <img
-                src="https://images.pexels.com/photos/1252890/pexels-photo-1252890.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1"
-                alt="Fondo de galaxia púrpura y azul"
-                className="w-full h-full object-cover opacity-50"
-            />
-            <div className="absolute inset-0 bg-gradient-to-t from-black via-black/70 to-transparent"></div>
-            <div className="absolute inset-0 bg-gradient-to-r from-black via-transparent to-black"></div>
-        </div>
-        <div className="relative z-10 flex flex-col items-center">
-            <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold mb-4 animate-fade-in-down" style={{textShadow: '0 0 15px rgba(168, 85, 247, 0.7)'}}>Haz brillar tu talento</h1>
-            <p className="text-xl md:text-2xl max-w-3xl my-6 text-gray-300 italic animate-fade-in-up" style={{ animationDelay: '150ms' }}>
-                "Que no te digan que el cielo es el límite cuando hay huellas en la luna"
-            </p>
-            <p className="text-lg md:text-xl max-w-3xl mb-8 text-gray-300 animate-fade-in-up" style={{ animationDelay: '300ms' }}>Únete a nuestra comunidad de creadores y empieza a monetizar tus transmisiones.</p>
-            <div className="animate-fade-in-up" style={{ animationDelay: '450ms' }}>
-                <GlowButton onClick={(e) => onOpenJoinModal()}>Únete ahora</GlowButton>
+const Hero: React.FC<{ onOpenJoinModal: () => void }> = ({ onOpenJoinModal }) => {
+    const [pulsations, setPulsations] = useState<{ id: number; x: number; y: number }[]>([]);
+    const nextId = useRef(0);
+
+    const handlePulsate = (e: React.MouseEvent<HTMLElement>) => {
+        const rect = e.currentTarget.getBoundingClientRect();
+        const x = e.clientX - rect.left;
+        const y = e.clientY - rect.top;
+        const newPulsation = { id: nextId.current++, x, y };
+        
+        setPulsations(prev => [...prev, newPulsation]);
+
+        setTimeout(() => {
+            setPulsations(prev => prev.filter(p => p.id !== newPulsation.id));
+        }, 1000); 
+    };
+
+    return (
+        <section
+            id="home"
+            className="h-screen min-h-[700px] w-full flex items-center justify-center relative text-white text-center px-4 overflow-hidden"
+            onClick={handlePulsate}
+        >
+            <div className="absolute inset-0 bg-black z-0">
+                <img
+                    src="https://images.pexels.com/photos/1252890/pexels-photo-1252890.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1"
+                    alt="Fondo de galaxia púrpura y azul"
+                    className="w-full h-full object-cover opacity-50"
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-black via-black/70 to-transparent"></div>
+                <div className="absolute inset-0 bg-gradient-to-r from-black via-transparent to-black"></div>
             </div>
-        </div>
-    </section>
-);
+
+            {pulsations.map(p => (
+                <div
+                    key={p.id}
+                    className="absolute rounded-full pointer-events-none animate-pulse-effect"
+                    style={{
+                        left: p.x,
+                        top: p.y,
+                        width: '50px',
+                        height: '50px',
+                        transform: 'translate(-50%, -50%)',
+                    }}
+                />
+            ))}
+            
+            <div className="relative z-10 flex flex-col items-center">
+                <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold mb-4 animate-fade-in-down" style={{textShadow: '0 0 15px rgba(168, 85, 247, 0.7)'}}>Haz brillar tu talento</h1>
+                <p className="text-xl md:text-2xl max-w-3xl my-6 text-gray-300 italic animate-fade-in-up" style={{ animationDelay: '150ms' }}>
+                    "Que no te digan que el cielo es el límite cuando hay huellas en la luna"
+                </p>
+                <p className="text-lg md:text-xl max-w-3xl mb-8 text-gray-300 animate-fade-in-up" style={{ animationDelay: '300ms' }}>Únete a nuestra comunidad de creadores y empieza a monetizar tus transmisiones.</p>
+                <div className="animate-fade-in-up" style={{ animationDelay: '450ms' }}>
+                    <GlowButton onClick={(e) => { e.stopPropagation(); onOpenJoinModal(); }}>Únete ahora</GlowButton>
+                </div>
+            </div>
+        </section>
+    );
+};
+
 
 const ProgressBar: React.FC<{ label: string; percentage: number; isInView: boolean }> = ({ label, percentage, isInView }) => (
     <div className="mb-6">
@@ -1477,6 +1498,19 @@ export default function App() {
                 .faq-answer ul li::before { content: '✓'; position: absolute; left: 0; color: #A855F7; font-weight: bold; }
                 .faq-answer a { color: #C4B5FD; text-decoration: underline; }
                 .faq-answer a:hover { color: #D8B4FE; }
+                @keyframes pulse-effect {
+                    0% {
+                        box-shadow: 0 0 0 0 rgba(168, 85, 247, 0.7);
+                        opacity: 1;
+                    }
+                    100% {
+                        box-shadow: 0 0 0 100px rgba(168, 85, 247, 0);
+                        opacity: 0;
+                    }
+                }
+                .animate-pulse-effect {
+                    animation: pulse-effect 1s ease-out;
+                }
             `}</style>
             <Header onOpenJoinModal={() => setIsJoinModalOpen(true)} onOpenAboutModal={() => setIsAboutUsModalOpen(true)} />
             <main>
