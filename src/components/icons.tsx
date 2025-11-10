@@ -1,18 +1,24 @@
 import React from 'react';
 
 export const Logo: React.FC<{ className?: string }> = ({ className }) => (
-    <svg className={className} viewBox="0 0 155 100" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
-        <circle cx="30" cy="70" r="25"/>
-        <rect width="45" height="90" rx="22.5" transform="translate(50 10) rotate(-30 22.5 45)"/>
-        <rect width="45" height="90" rx="22.5" transform="translate(95 10) rotate(-30 22.5 45)"/>
+    <svg className={className} viewBox="0 0 104 72" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+        <circle cx="16" cy="44" r="16" />
+        <rect x="40" y="5" width="28" height="62" rx="14" />
+        <rect x="76" y="5" width="28" height="62" rx="14" />
     </svg>
 );
 
 export const ChatbotIcon: React.FC<{ className?: string }> = ({ className }) => (
     <svg className={className} viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg" aria-label="Chatbot icon">
         <circle cx="16" cy="16" r="16" fill="#7C3AED"/>
-        <path d="M22.9,10.9h-1.1v-1c0-0.9-0.7-1.6-1.6-1.6h-8.2c-0.9,0-1.6,0.7-1.6,1.6v1H9.1c-0.9,0-1.6,0.7-1.6,1.6v5.8 c0,0.9,0.7,1.6,1.6,1.6h1.1v2.1c0,0.4,0.3,0.8,0.8,0.8c0.2,0,0.3-0.1,0.5-0.2l2.6-2.6h7.8c0.9,0,1.6-0.7,1.6-1.6v-5.8 C24.5,11.6,23.8,10.9,22.9,10.9z M13.1,15.8c-0.6,0-1.1-0.5-1.1-1.1s0.5-1.1,1.1-1.1s1.1,0.5,1.1,1.1S13.7,15.8,13.1,15.8z M18.9,15.8c-0.6,0-1.1-0.5-1.1-1.1s0.5-1.1,1.1-1.1c0.6,0,1.1,0.5,1.1,1.1S19.5,15.8,18.9,15.8z" fill="#FFFFFF"/>
-        <circle cx="16" cy="6.6" r="1.3" fill="#FFFFFF"/>
+        <path d="M20.5 19H11.5C10.6716 19 10 18.3284 10 17.5V11.5C10 10.6716 10.6716 10 11.5 10H20.5C21.3284 10 22 10.6716 22 11.5V17.5C22 18.3284 21.3284 19 20.5 19Z" fill="white"/>
+        <path d="M11 19V21L14 19H11Z" fill="white"/>
+        <path d="M13.5 14C13.5 14.5523 13.0523 15 12.5 15C11.9477 15 11.5 14.5523 11.5 14C11.5 13.4477 11.9477 13 12.5 13C13.0523 13 13.5 13.4477 13.5 14Z" fill="#7C3AED"/>
+        <path d="M19.5 14C19.5 14.5523 19.0523 15 18.5 15C17.9477 15 17.5 14.5523 17.5 14C17.5 13.4477 17.9477 13 18.5 13C19.0523 13 19.5 13.4477 19.5 14Z" fill="#7C3AED"/>
+        <path d="M16 6C16.8284 6 17.5 6.67157 17.5 7.5V9H14.5V7.5C14.5 6.67157 15.1716 6 16 6Z" fill="white"/>
+        <path d="M16 8C16.2761 8 16.5 7.77614 16.5 7.5C16.5 7.22386 16.2761 7 16 7C15.7239 7 15.5 7.22386 15.5 7.5C15.5 7.77614 15.7239 8 16 8Z" fill="#7C3AED"/>
+        <circle cx="12" cy="10" r="1.5" fill="white"/>
+        <circle cx="20" cy="10" r="1.5" fill="white"/>
     </svg>
 );
 
@@ -127,12 +133,18 @@ export const YoutubeIcon: React.FC<{ className?: string }> = ({ className }) => 
         xmlns="http://www.w3.org/2000/svg" 
         className={className}
         aria-hidden="true"
-        fill="currentColor"
     >
+        <defs>
+            <linearGradient id="youtube-gradient" x1="0%" y1="0%" x2="100%" y2="100%">
+                <stop offset="0%" stopColor="#A855F7" />
+                <stop offset="100%" stopColor="#6366F1" />
+            </linearGradient>
+        </defs>
         <path 
+            fill="url(#youtube-gradient)"
             d="M27.313 3.133C26.977 1.895 25.996.915 24.758.58C22.593 0 14 0 14 0S5.407 0 3.242.58C1.994.915 1.023 1.895.687 3.133C0 5.358 0 10 0 10s0 4.642.687 6.867c.336 1.238 1.317 2.218 2.555 2.555C5.407 19.999 14 19.999 14 19.999s8.593 0 10.758-.579c1.238-.337 2.219-1.317 2.555-2.555C28 14.642 28 10 28 10s0-4.642-.687-6.867z"
         />
-        <path fill="#000000" d="M11.2 14.266V5.734L18.4 10l-7.2 4.266z" />
+        <path fill="#FFFFFF" d="M11.2 14.266V5.734L18.4 10l-7.2 4.266z" />
     </svg>
 );
 
@@ -267,6 +279,39 @@ export const DollarSignIcon: React.FC<{ className?: string }> = ({ className }) 
     </svg>
 );
 
+export const GlobeIcon: React.FC<{ className?: string }> = ({ className }) => (
+    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={className}>
+        <circle cx="12" cy="12" r="10"></circle>
+        <line x1="2" y1="12" x2="22" y2="12"></line>
+        <path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"></path>
+    </svg>
+);
+
+export const ClockIcon: React.FC<{ className?: string }> = ({ className }) => (
+    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={className}>
+        <circle cx="12" cy="12" r="10"></circle>
+        <polyline points="12 6 12 12 16 14"></polyline>
+    </svg>
+);
+
+export const PuzzleIcon: React.FC<{ className?: string }> = ({ className }) => (
+    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={className}>
+        <path d="M19.43,12.57a2,2,0,0,0-1.83-1.22H17a2,2,0,0,0-2-2V8.65a2,2,0,0,0-1.22-1.83L11.43,5.43a2,2,0,0,0-2.13.24L8.43,6.54a2,2,0,0,0-.24,2.13L9.57,11.43a2,2,0,0,0,1.83,1.22H12a2,2,0,0,0,2,2v.72a2,2,0,0,0,1.22,1.83l2.35,1.39a2,2,0,0,0,2.13-.24l.87-.87a2,2,0,0,0,.24-2.13Z"/>
+        <path d="M12.57,19.43a2,2,0,0,0,1.22,1.83l1.39,2.35a2,2,0,0,0,2.13.24l.87-.87a2,2,0,0,0,.24-2.13l-1.39-2.35a2,2,0,0,0-1.83-1.22H16a2,2,0,0,0-2,2v.72"/>
+        <path d="M5.43,11.43a2,2,0,0,0,1.22-1.83V9a2,2,0,0,0-2-2H4a2,2,0,0,0-2,2v.72a2,2,0,0,0,1.22,1.83l2.35,1.39a2,2,0,0,0,2.13-.24l.87-.87a2,2,0,0,0,.24-2.13Z"/>
+    </svg>
+);
+
+export const RocketIcon: React.FC<{ className?: string }> = ({ className }) => (
+    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={className}>
+        <path d="M4.5 16.5c-1.5 1.26-2 5-2 5s3.74-.5 5-2c.71-.84.7-2.3.05-3.11S5.34 15.66 4.5 16.5z"/>
+        <path d="M17.5 7.5c1.5-1.26 2-5 2-5s-3.74.5-5 2c-.71.84-.7 2.3-.05 3.11s2.05 1.54 2.55.84z"/>
+        <path d="M14.5 9.5L9.5 14.5"/>
+        <path d="M22 2l-3 7-3.5 2.5 3 7.5L22 22"/>
+        <path d="M2 22l3-7 3.5-2.5-3-7.5L2 2"/>
+    </svg>
+);
+
 export const BarChartIcon: React.FC<{ className?: string }> = ({ className }) => (
     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={className}>
         <line x1="12" y1="20" x2="12" y2="10"></line>
@@ -282,12 +327,13 @@ export const SettingsIcon: React.FC<{ className?: string }> = ({ className }) =>
     </svg>
 );
 
-export const RocketIcon: React.FC<{ className?: string }> = ({ className }) => (
+export const EighteenPlusIcon: React.FC<{ className?: string }> = ({ className }) => (
     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={className}>
-        <path d="M4.5 16.5c-1.5 1.26-2 5-2 5s3.74-.5 5-2c.71-.84.7-2.3.05-3.11S5.34 15.66 4.5 16.5z"/>
-        <path d="M17.5 7.5c1.5-1.26 2-5 2-5s-3.74.5-5 2c-.71.84-.7 2.3-.05 3.11s2.05 1.54 2.55.84z"/>
-        <path d="M14.5 9.5L9.5 14.5"/>
-        <path d="M22 2l-3 7-3.5 2.5 3 7.5L22 22"/>
-        <path d="M2 22l3-7 3.5-2.5-3-7.5L2 2"/>
+        <circle cx="12" cy="12" r="10"></circle>
+        <path d="M8 12h8"></path>
+        <path d="M12 8v8"></path>
+        <path d="M15 11h.01"></path>
+        <path d="M5.5 11h.01"></path>
+        <path d="M5.5 14h.01"></path>
     </svg>
 );

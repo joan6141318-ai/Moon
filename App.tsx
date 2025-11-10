@@ -6,6 +6,12 @@
 
 
 
+
+
+
+
+
+
 import React, { useState, useEffect, useRef, ReactNode, useCallback } from 'react';
 import { FAQItem, PaymentTier, InfoTab } from './types';
 import { 
@@ -115,9 +121,10 @@ const AboutUsModal: React.FC<{ isOpen: boolean; onClose: () => void }> = ({ isOp
     ];
 
     return (
+        // FIX: The onClick handler for a div expects a function that takes a mouse event, but `onClose` takes no arguments. It has been wrapped in an arrow function to correct the type mismatch.
         <div
             className="fixed inset-0 bg-black/80 backdrop-blur-sm z-50 flex items-center justify-center p-4 animate-fade-in"
-            onClick={onClose}
+            onClick={() => onClose()}
             role="dialog"
             aria-modal="true"
             aria-labelledby="about-us-modal-title"
@@ -127,7 +134,8 @@ const AboutUsModal: React.FC<{ isOpen: boolean; onClose: () => void }> = ({ isOp
                 onClick={(e) => e.stopPropagation()}
             >
                 <button
-                    onClick={onClose}
+// FIX: The `onClick` handler expects a function that receives a mouse event, but `onClose` takes no arguments. It has been wrapped in an arrow function to correct the type mismatch.
+                    onClick={() => onClose()}
                     className="absolute top-4 right-4 text-gray-400 hover:text-white transition-colors"
                     aria-label="Cerrar"
                 >
@@ -170,9 +178,10 @@ const JoinModal: React.FC<{ isOpen: boolean; onClose: () => void; onApplyClick: 
     ];
 
     return (
+        // FIX: The onClick handler for a div expects a function that takes a mouse event, but `onClose` takes no arguments. It has been wrapped in an arrow function to correct the type mismatch.
         <div
             className="fixed inset-0 bg-black/80 backdrop-blur-sm z-50 flex items-center justify-center p-4 animate-fade-in"
-            onClick={onClose}
+            onClick={() => onClose()}
             role="dialog"
             aria-modal="true"
             aria-labelledby="join-modal-title"
@@ -182,7 +191,8 @@ const JoinModal: React.FC<{ isOpen: boolean; onClose: () => void; onApplyClick: 
                 onClick={(e) => e.stopPropagation()}
             >
                 <button
-                    onClick={onClose}
+// FIX: The `onClick` handler expects a function that receives a mouse event, but `onClose` takes no arguments. It has been wrapped in an arrow function to correct the type mismatch.
+                    onClick={() => onClose()}
                     className="absolute top-4 right-4 text-gray-400 hover:text-white transition-colors"
                     aria-label="Cerrar"
                 >
@@ -264,9 +274,10 @@ const ApplicationFormModal: React.FC<{ isOpen: boolean; onClose: () => void }> =
     ];
 
     return (
+        // FIX: The onClick handler for a div expects a function that takes a mouse event, but `onClose` takes no arguments. It has been wrapped in an arrow function to correct the type mismatch.
         <div
             className="fixed inset-0 bg-black/80 backdrop-blur-sm z-50 flex items-center justify-center p-4 animate-fade-in"
-            onClick={onClose}
+            onClick={() => onClose()}
             role="dialog"
             aria-modal="true"
             aria-labelledby="application-form-title"
@@ -276,7 +287,8 @@ const ApplicationFormModal: React.FC<{ isOpen: boolean; onClose: () => void }> =
                 onClick={(e) => e.stopPropagation()}
             >
                 <button
-                    onClick={onClose}
+// FIX: The `onClick` handler expects a function that receives a mouse event, but `onClose` takes no arguments. It has been wrapped in an arrow function to correct the type mismatch.
+                    onClick={() => onClose()}
                     className="absolute top-4 right-4 text-gray-400 hover:text-white transition-colors"
                     aria-label="Cerrar"
                 >
@@ -374,9 +386,10 @@ const PartnershipModal: React.FC<{ isOpen: boolean; onClose: () => void }> = ({ 
     const prev = () => setCurrentSlide(prev => (prev === 0 ? slides.length - 1 : prev - 1));
 
     return (
+        // FIX: The onClick handler for a div expects a function that takes a mouse event, but `onClose` takes no arguments. It has been wrapped in an arrow function to correct the type mismatch.
         <div
             className="fixed inset-0 bg-black/80 backdrop-blur-sm z-50 flex items-center justify-center p-4 animate-fade-in"
-            onClick={onClose}
+            onClick={() => onClose()}
             role="dialog"
             aria-modal="true"
         >
@@ -385,7 +398,8 @@ const PartnershipModal: React.FC<{ isOpen: boolean; onClose: () => void }> = ({ 
                 onClick={(e) => e.stopPropagation()}
             >
                 <button
-                    onClick={prev}
+// FIX: The onClick handler for this button expects a function that takes a mouse event, but `prev` takes no arguments. It has been wrapped in an arrow function to correct the type mismatch.
+                    onClick={() => prev()}
                     aria-label="Anterior"
                     className="absolute left-0 top-1/2 -translate-y-1/2 z-10 p-2 bg-black/40 rounded-full hover:bg-purple-600 transition-colors focus:outline-none focus:ring-2 focus:ring-purple-400"
                 >
@@ -435,13 +449,15 @@ const PartnershipModal: React.FC<{ isOpen: boolean; onClose: () => void }> = ({ 
                         </div>
                     </div>
                     
-                     <button onClick={onClose} className="absolute top-3 right-3 text-gray-400 hover:text-white transition-colors" aria-label="Cerrar">
+                     <button // FIX: The `onClick` handler expects a function that receives a mouse event, but `onClose` takes no arguments. It has been wrapped in an arrow function to correct the type mismatch.
+                    onClick={() => onClose()} className="absolute top-3 right-3 text-gray-400 hover:text-white transition-colors" aria-label="Cerrar">
                         <XIcon className="w-5 h-5" />
                     </button>
                 </div>
 
                 <button
-                    onClick={next}
+// FIX: The onClick handler for this button expects a function that takes a mouse event, but `next` takes no arguments. It has been wrapped in an arrow function to correct the type mismatch.
+                    onClick={() => next()}
                     aria-label="Siguiente"
                     className="absolute right-0 top-1/2 -translate-y-1/2 z-10 p-2 bg-black/40 rounded-full hover:bg-purple-600 transition-colors focus:outline-none focus:ring-2 focus:ring-purple-400"
                 >
@@ -1019,7 +1035,7 @@ const TipsSection: React.FC = () => {
 // FIX: The onClick handler expects a function that receives a mouse event.
 // The `prevTip` function does not expect any arguments.
 // It is wrapped in an arrow function to prevent the event from being passed.
-                                onClick={() => prevTip()}
+                                onClick={(e) => { e.stopPropagation(); prevTip(); }}
                                 className="absolute top-1/2 left-2 sm:left-4 -translate-y-1/2 bg-black/50 text-white p-2 rounded-full hover:bg-purple-600 transition-colors z-10"
                                 aria-label="Anterior"
                             >
@@ -1029,7 +1045,7 @@ const TipsSection: React.FC = () => {
 // FIX: The onClick handler expects a function that receives a mouse event.
 // The `nextTip` function does not expect any arguments.
 // It is wrapped in an arrow function to prevent the event from being passed.
-                                onClick={() => nextTip()}
+                                onClick={(e) => { e.stopPropagation(); nextTip(); }}
                                 className="absolute top-1/2 right-2 sm:right-4 -translate-y-1/2 bg-black/50 text-white p-2 rounded-full hover:bg-purple-600 transition-colors z-10"
                                 aria-label="Siguiente"
                             >
@@ -1398,7 +1414,7 @@ export default function App() {
 // FIX: The onClick handler expects a function that receives a mouse event.
 // The `prevTip` function does not expect any arguments.
 // It is wrapped in an arrow function to prevent the event from being passed.
-                                    onClick={() => prevTip()}
+                                    onClick={(e) => { e.stopPropagation(); prevTip(); }}
                                     className="absolute top-1/2 left-2 sm:-left-12 -translate-y-1/2 bg-black/50 text-white p-2 rounded-full hover:bg-purple-600 transition-colors z-10"
                                     aria-label="Anterior"
                                 >
@@ -1408,7 +1424,7 @@ export default function App() {
 // FIX: The onClick handler expects a function that receives a mouse event.
 // The `nextTip` function does not expect any arguments.
 // It is wrapped in an arrow function to prevent the event from being passed.
-                                    onClick={() => nextTip()}
+                                    onClick={(e) => { e.stopPropagation(); nextTip(); }}
                                     className="absolute top-1/2 right-2 sm:-right-12 -translate-y-1/2 bg-black/50 text-white p-2 rounded-full hover:bg-purple-600 transition-colors z-10"
                                     aria-label="Siguiente"
                                 >
