@@ -1,5 +1,6 @@
 
 
+
 import React, { useState, useEffect, useRef, ReactNode, useCallback } from 'react';
 import { FAQItem, PaymentTier, InfoTab } from './types';
 import { 
@@ -1092,4 +1093,390 @@ const TalentsSection: React.FC = () => {
             >
                 <div className="relative w-full h-full overflow-hidden">
                     {talentData.map((talent, index) => (
-                        <
+                        <div
+                            key={index}
+                            className="absolute top-0 left-0 w-full h-full transition-transform duration-500 ease-out"
+                            style={{ transform: `translateX(${(index - currentIndex) * 100}%)` }}
+                            aria-hidden={index !== currentIndex}
+                        >
+                            <div className="relative w-full h-full rounded-2xl overflow-hidden shadow-lg shadow-purple-900/50 border border-purple-500/30 bg-gray-800 transition-all duration-300 hover:border-purple-400 hover:shadow-2xl hover:shadow-purple-500/40 transform hover:-translate-y-2">
+                                <img 
+                                    src={talent.image} 
+                                    alt={`Talento de Agency Moon: ${talent.name}`} 
+                                    className="absolute top-0 left-0 w-full h-full object-cover"
+                                />
+
+                                <div className="absolute bottom-0 left-0 w-full h-full pointer-events-none">
+                                    <div className="absolute bottom-0 left-0 w-full h-4/5 bg-gradient-to-t from-black via-black/80 to-transparent" />
+                                </div>
+                                
+                                <div className="absolute bottom-0 left-0 w-full text-white pointer-events-auto">
+                                    <div 
+                                        className={`overflow-hidden transition-all duration-500 ease-in-out ${expandedTalentIndex === index ? 'max-h-96' : 'max-h-[72px]'}`}
+                                    >
+                                        <div
+                                            className="flex justify-between items-center p-4 cursor-pointer h-[72px]"
+                                            onClick={() => setExpandedTalentIndex(expandedTalentIndex === index ? null : index)}
+                                            aria-expanded={expandedTalentIndex === index}
+                                        >
+                                            <h3 className="text-xl font-bold">{talent.name}</h3>
+                                            <ChevronDownIcon className={`w-6 h-6 text-purple-400 transition-transform duration-300 ${expandedTalentIndex === index ? 'rotate-180' : ''}`} />
+                                        </div>
+
+                                        <div className="px-4 pb-4">
+                                            <div className="text-sm text-gray-300 space-y-2">
+                                                {talent.description.split('|').map((part, i) => {
+                                                    const [key, value] = part.trim().split(':');
+                                                    if (!value) return null;
+                                                    return (
+                                                        <p key={i}>
+                                                            <strong className="font-semibold text-purple-400">{key}:</strong>
+                                                            <span className="ml-1.5">{value.trim()}</span>
+                                                        </p>
+                                                    )
+                                                })}
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                             </div>
+                        </div>
+                    ))}
+                </div>
+
+                <button
+                    onClick={handlePrevSlide}
+                    className="absolute top-1/2 -left-4 md:-left-16 -translate-y-1/2 bg-black/50 text-white p-3 rounded-full hover:bg-purple-600 transition-colors z-20 focus:outline-none focus:ring-2 focus:ring-purple-400"
+                    aria-label="Anterior Talento"
+                >
+                    <ChevronLeftIcon className="w-6 h-6" />
+                </button>
+                <button
+                    onClick={handleNextSlide}
+                    className="absolute top-1/2 -right-4 md:-right-16 -translate-y-1/2 bg-black/50 text-white p-3 rounded-full hover:bg-purple-600 transition-colors z-20 focus:outline-none focus:ring-2 focus:ring-purple-400"
+                    aria-label="Siguiente Talento"
+                >
+                    <ChevronRightIcon className="w-6 h-6" />
+                </button>
+                
+                <div className="absolute -bottom-10 left-1/2 -translate-x-1/2 flex gap-3">
+                    {talentData.map((_, index) => (
+                        <button
+                            key={index}
+                            onClick={() => setCurrentIndex(index)}
+                            className={`w-3 h-3 rounded-full transition-all duration-300 ${index === currentIndex ? 'bg-purple-500 scale-125' : 'bg-gray-600 hover:bg-gray-400'}`}
+                            aria-label={`Ir al talento ${index + 1}`}
+                        />
+                    ))}
+                </div>
+            </div>
+        </Section>
+    );
+};
+
+const PartnershipSection: React.FC<{ onOpenModal: () => void }> = ({ onOpenModal }) => {
+    return (
+        <Section id="partnership">
+            <div className="relative rounded-2xl overflow-hidden shadow-2xl shadow-purple-900/50 border border-purple-500/30 text-center">
+                <img
+                    src="https://images.pexels.com/photos/7645300/pexels-photo-7645300.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1"
+                    alt="Agente de negocios sonriendo en un entorno de oficina moderno"
+                    className="absolute inset-0 w-full h-full object-cover object-center opacity-40"
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-black via-black/60 to-transparent"></div>
+                <div className="relative z-10 p-8 md:p-12">
+                    <h2 className="text-2xl md:text-4xl font-bold text-white mb-4 leading-tight" style={{textShadow: '0 2px 10px rgba(0,0,0,0.5)'}}>
+                        Forma tu propia agencia o sé uno de nuestros agentes en Latinoamérica
+                    </h2>
+                    <p className="text-gray-200 md:text-lg mb-8 max-w-2xl mx-auto" style={{textShadow: '0 1px 5px rgba(0,0,0,0.5)'}}>
+                        Actualmente buscamos socios comerciales o agentes que quieran trabajar con nosotros en la empresa. Expande tus horizontes y crece profesionalmente en la industria del streaming.
+                    </p>
+                    <GlowButton onClick={(e) => onOpenModal()}>
+                        Más Información
+                    </GlowButton>
+                </div>
+            </div>
+        </Section>
+    );
+};
+
+const Contact: React.FC = () => {
+    const managers = [
+        {
+            title: "Manager 1 - Soporte General",
+            description: "Para resolver dudas, recibir soporte técnico o gestionar cualquier aspecto de tu cuenta.",
+            whatsappLink: "https://wa.me/528118807625",
+        },
+        {
+            title: "Manager 2 - Nuevos Ingresos",
+            description: "Ideal si estás interesado en unirte a nuestra agencia o tienes preguntas sobre el proceso de ingreso.",
+            whatsappLink: "https://wa.me/593967364089",
+        }
+    ];
+
+    return (
+        <Section id="contact">
+            <div className="text-center">
+                <h2 className="text-3xl md:text-4xl font-bold text-white mb-4">Contacto Directo</h2>
+                <p className="text-gray-400 max-w-2xl mx-auto mb-12">
+                    ¿Tienes preguntas más específicas o prefieres hablar directamente con un manager? Contáctanos a través de WhatsApp. Estamos aquí para ayudarte.
+                </p>
+            </div>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-4xl mx-auto">
+                {managers.map((manager, index) => (
+                    <div 
+                        key={index} 
+                        className="group flex flex-col bg-gray-900/50 rounded-2xl border border-purple-500/30 p-8 text-center transition-all duration-300 hover:border-purple-400 hover:shadow-2xl hover:shadow-purple-500/20 hover:-translate-y-2"
+                    >
+                        <div className="mb-6 w-20 h-20 mx-auto flex-shrink-0 bg-gray-800/50 rounded-full flex items-center justify-center border-2 border-purple-500/50 group-hover:border-purple-400 transition-colors duration-300">
+                            <WhatsappIcon className="w-10 h-10 text-white" />
+                        </div>
+                        <div className="flex flex-col flex-grow">
+                            <h3 className="text-xl font-semibold text-white mb-3">{manager.title}</h3>
+                            <p className="text-gray-400 mb-8 flex-grow">{manager.description}</p>
+                            <a
+                                href={manager.whatsappLink}
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                className="mt-auto inline-block bg-purple-600 text-white font-bold py-3 px-8 rounded-full transition-all duration-300 hover:bg-purple-700 hover:shadow-[0_0_20px_rgba(168,85,247,0.8)] focus:outline-none focus:ring-4 focus:ring-purple-400/50 transform group-hover:scale-105"
+                            >
+                                Enviar Mensaje
+                            </a>
+                        </div>
+                    </div>
+                ))}
+            </div>
+        </Section>
+    );
+};
+
+
+const Footer: React.FC = () => (
+    <footer className="border-t border-purple-500/20 text-center py-8 text-gray-500">
+        <p>&copy; {new Date().getFullYear()} Agency Moon. Todos los derechos reservados.</p>
+    </footer>
+);
+
+export default function App() {
+    const [isJoinModalOpen, setIsJoinModalOpen] = useState(false);
+    const [isPartnershipModalOpen, setIsPartnershipModalOpen] = useState(false);
+    const [isApplicationFormOpen, setIsApplicationFormOpen] = useState(false);
+    const [isAboutUsModalOpen, setIsAboutUsModalOpen] = useState(false);
+    const [isTipsModalOpen, setIsTipsModalOpen] = useState(false); // State from TipsSection moved here
+
+    // Lock body scroll when any modal is open
+    useEffect(() => {
+        const isAnyModalOpen = isJoinModalOpen || isPartnershipModalOpen || isApplicationFormOpen || isAboutUsModalOpen || isTipsModalOpen;
+        if (isAnyModalOpen) {
+            document.body.style.overflow = 'hidden';
+        } else {
+            document.body.style.overflow = 'auto';
+        }
+        
+        // Cleanup function
+        return () => {
+            document.body.style.overflow = 'auto';
+        };
+    }, [isJoinModalOpen, isPartnershipModalOpen, isApplicationFormOpen, isAboutUsModalOpen, isTipsModalOpen]);
+
+
+    useEffect(() => {
+        const handleFaqLinkClick = (e: MouseEvent) => {
+            const target = e.target as HTMLElement;
+            if (target && target.id === 'faq-payment-link') {
+                e.preventDefault();
+                                
+                const infoSection = document.getElementById('info');
+                if (infoSection) {
+                    // A small timeout allows the state to update and accordion to start opening before scrolling
+                    setTimeout(() => {
+                        infoSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                        // We can't directly open the accordion from here easily without more state lifting
+                        // but we can try to click the button if it's not expanded
+                        const infoButton = document.querySelector('#info button[aria-controls="info-list"]');
+                        if (infoButton && infoButton.getAttribute('aria-expanded') === 'false') {
+                           (infoButton as HTMLElement).click();
+                        }
+
+                    }, 100);
+                }
+            }
+        };
+
+        document.addEventListener('click', handleFaqLinkClick);
+
+        return () => {
+            document.removeEventListener('click', handleFaqLinkClick);
+        };
+    }, []);
+
+    // TipsModal now lives inside TipsSection, we just pass state control
+    const TipsSectionWithState: React.FC = () => {
+        const [currentTipIndex, setCurrentTipIndex] = useState(0);
+        const tipsImages = [
+            'https://i.postimg.cc/xCscRJt2/2-20251030-105515-0001.png',
+            'https://i.postimg.cc/YSY9JDRQ/3-20251030-105515-0002.png',
+            'https://i.postimg.cc/JnzfbGs1/4-20251030-105515-0003.png',
+            'https://i.postimg.cc/8PfjRCv2/5-20251030-105515-0004.png',
+            'https://i.postimg.cc/NFrP4TBF/6-20251030-105515-0005.png',
+        ];
+
+        const nextTip = useCallback(() => {
+            setCurrentTipIndex(prevIndex => (prevIndex + 1) % tipsImages.length);
+        }, [tipsImages.length]);
+
+        const prevTip = useCallback(() => {
+            setCurrentTipIndex(prevIndex => (prevIndex - 1 + tipsImages.length) % tipsImages.length);
+        }, [tipsImages.length]);
+
+        useEffect(() => {
+            const handleKeyDown = (event: KeyboardEvent) => {
+                if (!isTipsModalOpen) return;
+                if (event.key === 'ArrowRight') nextTip();
+                else if (event.key === 'ArrowLeft') prevTip();
+                else if (event.key === 'Escape') setIsTipsModalOpen(false);
+            };
+            window.addEventListener('keydown', handleKeyDown);
+            return () => {
+                window.removeEventListener('keydown', handleKeyDown);
+            };
+        }, [isTipsModalOpen, nextTip, prevTip]);
+
+        return (
+            <>
+                <Section id="tips">
+                    <div className="text-center">
+                        <h2 className="text-3xl md:text-4xl font-bold text-white mb-4">Tips para tu Transmisión</h2>
+                        <p className="text-gray-400 max-w-2xl mx-auto mb-8">
+                            Mejora la calidad de tus transmisiones y aumenta tu audiencia con nuestros consejos profesionales. Haz clic para ver nuestra galería de tips.
+                        </p>
+                        <GlowButton onClick={(e) => setIsTipsModalOpen(true)}>
+                            Ver Galería de Tips
+                        </GlowButton>
+                    </div>
+                </Section>
+                {isTipsModalOpen && (
+                    <div 
+                        className="fixed inset-0 bg-black/90 backdrop-blur-sm z-50 flex items-center justify-center p-4 animate-fade-in"
+                        onClick={() => setIsTipsModalOpen(false)}
+                        role="dialog" aria-modal="true"
+                    >
+                        <div 
+                            className="relative w-full max-w-3xl animate-zoom-in"
+                            onClick={(e) => e.stopPropagation()}
+                        >
+                            <div className="relative w-full h-[500px] sm:h-[600px] flex items-center justify-center">
+                                <div className="relative w-96 h-96 sm:w-[28rem] sm:h-[28rem]">
+                                {tipsImages.map((src, index) => (
+                                    <div
+                                        key={src}
+                                        className={`absolute inset-0 transition-opacity duration-300 ease-in-out ${index === currentTipIndex ? 'opacity-100' : 'opacity-0'}`}
+                                        aria-hidden={index !== currentTipIndex}
+                                    >
+                                        <div className="relative rounded-2xl shadow-[0_0_30px_rgba(168,85,247,0.7)] border-2 border-purple-500/50 p-1 bg-black w-full h-full">
+                                            <img
+                                                src={src}
+                                                alt={`Tip de transmisión ${index + 1}`}
+                                                className="w-full h-full object-cover rounded-2xl"
+                                            />
+                                        </div>
+                                    </div>
+                                ))}
+                                </div>
+                                <button
+                                    onClick={(e) => { e.stopPropagation(); prevTip(); }}
+                                    className="absolute top-1/2 left-2 sm:-left-12 -translate-y-1/2 bg-black/50 text-white p-2 rounded-full hover:bg-purple-600 transition-colors z-10"
+                                    aria-label="Anterior"
+                                >
+                                    <ChevronLeftIcon className="w-6 h-6" />
+                                </button>
+                                <button
+                                    onClick={(e) => { e.stopPropagation(); nextTip(); }}
+                                    className="absolute top-1/2 right-2 sm:-right-12 -translate-y-1/2 bg-black/50 text-white p-2 rounded-full hover:bg-purple-600 transition-colors z-10"
+                                    aria-label="Siguiente"
+                                >
+                                    <ChevronRightIcon className="w-6 h-6" />
+                                </button>
+                                <div className="absolute -bottom-8 left-1/2 -translate-x-1/2 flex gap-2">
+                                    {tipsImages.map((_, index) => (
+                                        <button 
+                                            key={index}
+                                            onClick={() => setCurrentTipIndex(index)}
+                                            className={`w-3 h-3 rounded-full transition-all ${index === currentTipIndex ? 'bg-purple-500 scale-125' : 'bg-gray-600 hover:bg-gray-400'}`}
+                                            aria-label={`Ir al tip ${index + 1}`}
+                                        />
+                                    ))}
+                                </div>
+                            </div>
+                           
+                            <button 
+                                onClick={() => setIsTipsModalOpen(false)}
+                                className="absolute -top-3 -right-3 text-white bg-purple-600 rounded-full p-2 hover:bg-purple-700 transition-colors z-20"
+                                aria-label="Cerrar"
+                            >
+                                <XIcon className="w-6 h-6" />
+                            </button>
+                        </div>
+                    </div>
+                )}
+            </>
+        );
+    };
+
+    return (
+        <div className="bg-black text-white min-h-screen overflow-x-hidden">
+            <style>{`
+                html { scroll-behavior: smooth; scroll-padding-top: 80px; }
+                .text-shadow-purple { text-shadow: 0 0 8px rgba(168, 85, 247, 0.7); }
+                @keyframes fade-in-down { from { opacity: 0; transform: translateY(-20px); } to { opacity: 1; transform: translateY(0); } }
+                @keyframes fade-in-up { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+                .animate-fade-in-down { animation: fade-in-down 0.8s ease-out forwards; }
+                .animate-fade-in-up { animation: fade-in-up 0.8s ease-out forwards; }
+                .animation-delay-300 { animation-delay: 300ms; }
+                @keyframes fade-in { from { opacity: 0; } to { opacity: 1; } }
+                .animate-fade-in { animation: fade-in 0.3s ease-out forwards; }
+                @keyframes zoom-in { from { opacity: 0; transform: scale(0.95); } to { opacity: 1; transform: scale(1); } }
+                .animate-zoom-in { animation: zoom-in 0.3s ease-out forwards; }
+                @keyframes fade-in-down-fast { from { opacity: 0; transform: translateY(-10px); } to { opacity: 1; transform: translateY(0); } }
+                .animate-fade-in-down-fast { animation: fade-in-down-fast 0.2s ease-out forwards; }
+                .faq-answer ul { list-style: none; padding-left: 0; margin-top: 0.75rem; }
+                .faq-answer ul li { position: relative; padding-left: 1.5rem; margin-bottom: 0.5rem; }
+                .faq-answer ul li::before { content: '✓'; position: absolute; left: 0; color: #A855F7; font-weight: bold; }
+                .faq-answer a { color: #C4B5FD; text-decoration: underline; }
+                .faq-answer a:hover { color: #D8B4FE; }
+            `}</style>
+            <Header onOpenJoinModal={() => setIsJoinModalOpen(true)} onOpenAboutModal={() => setIsAboutUsModalOpen(true)} />
+            <main>
+                <Hero onOpenJoinModal={() => setIsJoinModalOpen(true)} />
+                <Section id="about-us" className="text-center">
+                    <h2 className="text-3xl md:text-4xl font-bold text-white mb-4">Quiénes Somos</h2>
+                    <GlowButton onClick={(e) => setIsAboutUsModalOpen(true)}>Conoce más</GlowButton>
+                </Section>
+                <ExperienceSection />
+                <Section id="banner-cta" className="py-20">
+                    <Banner />
+                </Section>
+                <FAQ />
+                <GeneralInfo />
+                <TipsSectionWithState />
+                <TalentsSection />
+                <PartnershipSection onOpenModal={() => setIsPartnershipModalOpen(true)} />
+                <Contact />
+            </main>
+            <Footer />
+            <JoinModal 
+                isOpen={isJoinModalOpen} 
+                onClose={() => setIsJoinModalOpen(false)} 
+                onApplyClick={() => setIsApplicationFormOpen(true)} 
+            />
+            <ApplicationFormModal 
+                isOpen={isApplicationFormOpen} 
+                onClose={() => setIsApplicationFormOpen(false)} 
+            />
+            <PartnershipModal isOpen={isPartnershipModalOpen} onClose={() => setIsPartnershipModalOpen(false)} />
+            <AboutUsModal isOpen={isAboutUsModalOpen} onClose={() => setIsAboutUsModalOpen(false)} />
+            
+            <Chatbot />
+        </div>
+    );
+}
