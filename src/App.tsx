@@ -514,14 +514,14 @@ const Hero: React.FC<{ onOpenJoinModal: () => void }> = ({ onOpenJoinModal }) =>
             <div className="absolute inset-0 bg-gradient-to-t from-black via-black/70 to-transparent"></div>
         </div>
         <div className="relative z-10 flex flex-col items-center">
-            <h1 className="text-5xl md:text-6xl lg:text-7xl font-bold mb-6 animate-fade-in-down tracking-tight">
+            <h1 className="text-5xl md:text-6xl font-bold mb-6 animate-fade-in-down tracking-tight whitespace-nowrap">
                 Conecta. Crea. <span className="text-fuchsia-500">Brilla.</span>
             </h1>
-            <p className="text-xl md:text-2xl mb-12 text-gray-300 animate-fade-in-up font-light" style={{ animationDelay: '150ms' }}>
+            <p className="text-lg md:text-xl mb-12 text-gray-300 animate-fade-in-up font-light" style={{ animationDelay: '150ms' }}>
                 Tu talento merece ser visto.
             </p>
             <div className="animate-fade-in-up" style={{ animationDelay: '300ms' }}>
-                <GlowButton onClick={onOpenJoinModal}>Comienza hoy</GlowButton>
+                <GlowButton onClick={onOpenJoinModal} className="rounded-full px-10 py-4">Comienza hoy</GlowButton>
             </div>
         </div>
     </section>
