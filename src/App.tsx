@@ -453,22 +453,27 @@ const Header: React.FC<{ onOpenJoinModal: () => void; activeSection: string; }> 
                     <Logo className="h-8 w-auto text-white" />
                     <span className="text-white font-bold text-xl">Agency Moon</span>
                 </a>
-                <div className="hidden lg:flex items-center space-x-6">
-                    {navLinks.map(link => {
-                        const isActive = getIsActive(link.href);
-                        return (
-                             <a 
-                                key={link.name} 
-                                href={link.href} 
-                                onClick={handleMenuClick} 
-                                className={`transition-colors font-medium text-sm ${isActive ? 'text-purple-400 font-bold text-shadow-purple' : 'text-gray-300 hover:text-white hover:text-shadow-purple'}`}
-                             >
-                                {link.name}
-                            </a>
-                        );
-                    })}
+
+                {/* Desktop Navigation */}
+                <div className="hidden lg:flex items-center gap-6">
+                    <div className="flex items-center space-x-6">
+                        {navLinks.map(link => {
+                            const isActive = getIsActive(link.href);
+                            return (
+                                 <a 
+                                    key={link.name} 
+                                    href={link.href} 
+                                    onClick={handleMenuClick} 
+                                    className={`transition-colors font-medium text-sm ${isActive ? 'text-purple-400 font-bold text-shadow-purple' : 'text-gray-300 hover:text-white hover:text-shadow-purple'}`}
+                                 >
+                                    {link.name}
+                                </a>
+                            );
+                        })}
+                    </div>
+                    <GlowButton onClick={onOpenJoinModal}>Únete ahora</GlowButton>
                 </div>
-                 <GlowButton onClick={onOpenJoinModal} className="hidden lg:inline-block">Únete ahora</GlowButton>
+
                  <div className="lg:hidden">
                     <button onClick={() => setIsMenuOpen(!isMenuOpen)} className="text-white focus:outline-none" aria-label="Abrir menú">
                         {isMenuOpen ? <XIcon className="w-7 h-7" /> : <MenuIcon className="w-7 h-7" />}
