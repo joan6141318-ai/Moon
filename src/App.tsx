@@ -671,9 +671,9 @@ const Banner: React.FC = () => {
 
 const AccordionItem: React.FC<{ item: FAQItem, isOpen: boolean, onClick: () => void }> = ({ item, isOpen, onClick }) => (
     <div className="bg-gray-900/50 rounded-lg border border-purple-500/30 mb-3 transition-all duration-300 hover:border-purple-400">
-        <button onClick={onClick} className="w-full flex flex-col items-center text-center p-5 gap-2" aria-expanded={isOpen}>
+        <button onClick={onClick} className="w-full flex justify-between items-center text-left p-5" aria-expanded={isOpen}>
             <span className="text-lg font-medium text-white">{item.question}</span>
-            <ChevronDownIcon className={`w-6 h-6 text-purple-400 transition-transform duration-300 ${isOpen ? 'rotate-180' : ''}`} />
+            <ChevronDownIcon className={`w-6 h-6 text-purple-400 transition-transform duration-300 flex-shrink-0 ml-4 ${isOpen ? 'rotate-180' : ''}`} />
         </button>
         <div className={`overflow-hidden transition-all duration-500 ease-in-out ${isOpen ? 'max-h-[500px]' : 'max-h-0'}`}>
             <div className="text-gray-300 px-5 pb-5 text-base leading-relaxed faq-answer" dangerouslySetInnerHTML={{ __html: item.answer }} />
@@ -752,12 +752,12 @@ const FAQ: React.FC = () => {
             <div className="max-w-3xl mx-auto text-center">
                 <button
                     onClick={() => setIsFaqExpanded(!isFaqExpanded)}
-                    className="inline-flex justify-center items-center gap-3 text-left py-4 px-8 bg-gray-900/50 rounded-lg border border-purple-500/30 mb-3 transition-all duration-300 hover:border-purple-400 hover:bg-gray-900/70 focus:outline-none focus:ring-2 focus:ring-purple-500"
+                    className="inline-flex flex-col items-center gap-2 py-4 px-6 bg-gray-900/50 rounded-lg border border-purple-500/30 mb-3 transition-all duration-300 hover:border-purple-400 hover:bg-gray-900/70 focus:outline-none focus:ring-2 focus:ring-purple-500"
                     aria-expanded={isFaqExpanded}
                     aria-controls="faq-list"
                 >
-                    <span className="text-xl font-semibold text-white">Preguntas Frecuentes</span>
-                    <ChevronDownIcon className={`w-6 h-6 text-purple-400 transition-transform duration-300 flex-shrink-0 ${isFaqExpanded ? 'rotate-180' : ''}`} />
+                    <span className="text-lg font-semibold text-white">Preguntas Frecuentes</span>
+                    <ChevronDownIcon className={`w-6 h-6 text-purple-400 transition-transform duration-300 ${isFaqExpanded ? 'rotate-180' : ''}`} />
                 </button>
             </div>
             
@@ -874,10 +874,10 @@ const InfoAccordionItem: React.FC<{ item: InfoTab, isOpen: boolean, onClick: () 
     <div className="bg-gray-900/50 rounded-lg border border-purple-500/30 mb-4 transition-all duration-300 hover:border-purple-400 hover:shadow-[0_0_20px_rgba(168,85,247,0.4)]">
         <button 
             onClick={onClick} 
-            className="w-full flex flex-col items-center text-center p-6 gap-2"
+            className="w-full flex justify-between items-center text-left p-6"
             aria-expanded={isOpen}
         >
-            <span className="text-xl font-bold text-white">{item.title}</span>
+            <span className="text-lg font-semibold text-white">{item.title}</span>
             <ChevronDownIcon className={`w-6 h-6 text-purple-400 transition-transform duration-300 ${isOpen ? 'rotate-180' : ''}`} />
         </button>
         <div className={`overflow-hidden transition-all duration-500 ease-in-out ${isOpen ? 'max-h-[1000px]' : 'max-h-0'}`}>
@@ -974,12 +974,12 @@ const GeneralInfo: React.FC = () => {
             <div className="max-w-4xl mx-auto text-center">
                 <button
                     onClick={() => setIsInfoExpanded(!isInfoExpanded)}
-                    className="inline-flex justify-center items-center gap-3 text-left py-4 px-8 bg-gray-900/50 rounded-lg border border-purple-500/30 mb-3 transition-all duration-300 hover:border-purple-400 hover:bg-gray-900/70 focus:outline-none focus:ring-2 focus:ring-purple-500"
+                    className="inline-flex flex-col items-center gap-2 py-4 px-6 bg-gray-900/50 rounded-lg border border-purple-500/30 mb-3 transition-all duration-300 hover:border-purple-400 hover:bg-gray-900/70 focus:outline-none focus:ring-2 focus:ring-purple-500"
                     aria-expanded={isInfoExpanded}
                     aria-controls="info-list"
                 >
-                    <span className="text-xl font-semibold text-white">Ver Información General</span>
-                    <ChevronDownIcon className={`w-6 h-6 text-purple-400 transition-transform duration-300 flex-shrink-0 ${isInfoExpanded ? 'rotate-180' : ''}`} />
+                    <span className="text-lg font-semibold text-white">Ver Información General</span>
+                    <ChevronDownIcon className={`w-6 h-6 text-purple-400 transition-transform duration-300 ${isInfoExpanded ? 'rotate-180' : ''}`} />
                 </button>
             </div>
 
