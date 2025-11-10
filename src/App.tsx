@@ -448,6 +448,59 @@ const PartnershipModal: React.FC<{ isOpen: boolean; onClose: () => void }> = ({ 
 
 // --- Page Section Components ---
 
+const ConectaCreaBrilla: React.FC = () => {
+    const items = [
+        {
+            icon: LinkIcon,
+            title: "Conecta",
+            description: "Únete a una comunidad de más de 400 talentos. Colabora, aprende y crece con otros creadores."
+        },
+        {
+            icon: Edit3Icon,
+            title: "Crea",
+            description: "Te damos las herramientas y el soporte 24/7 para que te enfoques en lo que amas: crear contenido increíble."
+        },
+        {
+            icon: TrendingUpIcon,
+            title: "Brilla",
+            description: "Monetiza tu pasión sin comisiones. Alcanza tus metas y convierte tu talento en una carrera de éxito."
+        }
+    ];
+
+    return (
+        <Section id="conecta-crea-brilla">
+            <div className="text-center">
+                 <h2 className="text-3xl md:text-4xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-purple-400 to-indigo-400 mb-12">Conecta, Crea, Brilla</h2>
+            </div>
+            <div className="grid md:grid-cols-3 gap-8">
+                {items.map((item, index) => {
+                    const isBrilla = item.title === "Brilla";
+                    return (
+                        <div 
+                            key={index} 
+                            className={`p-8 rounded-2xl text-center transition-all duration-300 transform hover:-translate-y-2 ${
+                                isBrilla 
+                                ? 'bg-gradient-to-br from-purple-950 to-black border-2 border-purple-500 shadow-2xl shadow-purple-500/30 hover:shadow-purple-400/50' 
+                                : 'bg-gray-900/50 border border-purple-500/30 hover:border-purple-400 hover:shadow-[0_0_25px_rgba(168,85,247,0.5)]'
+                            }`}
+                        >
+                            <div className={`inline-block rounded-full p-4 mb-6 ${
+                                isBrilla
+                                ? 'bg-purple-600 text-white shadow-lg shadow-purple-500/50'
+                                : 'bg-purple-600/20 text-purple-300'
+                            }`}>
+                                <item.icon className="w-8 h-8" />
+                            </div>
+                            <h3 className="text-2xl font-bold text-white mb-4">{item.title}</h3>
+                            <p className="text-gray-400 leading-relaxed">{item.description}</p>
+                        </div>
+                    )
+                })}
+            </div>
+        </Section>
+    );
+};
+
 const Header: React.FC<{ onOpenJoinModal: () => void; onOpenAboutModal: () => void }> = ({ onOpenJoinModal, onOpenAboutModal }) => {
     const [isScrolled, setIsScrolled] = useState(false);
     const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -484,14 +537,14 @@ const Header: React.FC<{ onOpenJoinModal: () => void; onOpenAboutModal: () => vo
 
     const mobileNavLinks = [
         { name: 'Quiénes Somos', href: '#about-us' },
-        { name: 'Experiencia', href: '#experience' },
+        { name: 'Nuestra Experiencia', href: '#experience' },
         { name: 'Requisitos para Unirte', href: '#join-modal' },
         { name: 'Preguntas Frecuentes', href: '#faq' },
         { name: 'Información General', href: '#info' },
-        { name: 'Tips', href: '#tips' },
-        { name: 'Talentos', href: '#talents' },
-        { name: 'Socios', href: '#partnership' },
-        { name: 'Contacto', href: '#contact' },
+        { name: 'Tips de Transmisión', href: '#tips' },
+        { name: 'Nuestros Talentos', href: '#talents' },
+        { name: 'Sé Nuestro Socio', href: '#partnership' },
+        { name: 'Contáctanos', href: '#contact' },
     ];
 
     return (
@@ -628,60 +681,6 @@ const ExperienceSection: React.FC = () => {
         </Section>
     );
 };
-
-const ConectaCreaBrilla: React.FC = () => {
-    const items = [
-        {
-            icon: LinkIcon,
-            title: "Conecta",
-            description: "Únete a una comunidad de más de 400 talentos. Colabora, aprende y crece con otros creadores."
-        },
-        {
-            icon: Edit3Icon,
-            title: "Crea",
-            description: "Te damos las herramientas y el soporte 24/7 para que te enfoques en lo que amas: crear contenido increíble."
-        },
-        {
-            icon: TrendingUpIcon,
-            title: "Brilla",
-            description: "Monetiza tu pasión sin comisiones. Alcanza tus metas y convierte tu talento en una carrera de éxito."
-        }
-    ];
-
-    return (
-        <Section id="conecta-crea-brilla">
-            <div className="text-center">
-                 <h2 className="text-3xl md:text-4xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-purple-400 to-indigo-400 mb-12">Conecta, Crea, Brilla</h2>
-            </div>
-            <div className="grid md:grid-cols-3 gap-8">
-                {items.map((item, index) => {
-                    const isBrilla = item.title === "Brilla";
-                    return (
-                        <div 
-                            key={index} 
-                            className={`p-8 rounded-2xl text-center transition-all duration-300 transform hover:-translate-y-2 ${
-                                isBrilla 
-                                ? 'bg-gradient-to-br from-purple-950 to-black border-2 border-purple-500 shadow-2xl shadow-purple-500/30 hover:shadow-purple-400/50' 
-                                : 'bg-gray-900/50 border border-purple-500/30 hover:border-purple-400 hover:shadow-[0_0_25px_rgba(168,85,247,0.5)]'
-                            }`}
-                        >
-                            <div className={`inline-block rounded-full p-4 mb-6 ${
-                                isBrilla
-                                ? 'bg-purple-600 text-white shadow-lg shadow-purple-500/50'
-                                : 'bg-purple-600/20 text-purple-300'
-                            }`}>
-                                <item.icon className="w-8 h-8" />
-                            </div>
-                            <h3 className="text-2xl font-bold text-white mb-4">{item.title}</h3>
-                            <p className="text-gray-400 leading-relaxed">{item.description}</p>
-                        </div>
-                    )
-                })}
-            </div>
-        </Section>
-    );
-};
-
 
 const Banner: React.FC = () => {
     return (
@@ -1013,127 +1012,6 @@ const GeneralInfo: React.FC = () => {
     );
 };
 
-const TipsSection: React.FC = () => {
-    const [isTipsModalOpen, setIsTipsModalOpen] = useState(false);
-    const [currentTipIndex, setCurrentTipIndex] = useState(0);
-
-    const tipsImages = [
-        'https://i.postimg.cc/xCscRJt2/2-20251030-105515-0001.png',
-        'https://i.postimg.cc/YSY9JDRQ/3-20251030-105515-0002.png',
-        'https://i.postimg.cc/JnzfbGs1/4-20251030-105515-0003.png',
-        'https://i.postimg.cc/8PfjRCv2/5-20251030-105515-0004.png',
-        'https://i.postimg.cc/NFrP4TBF/6-20251030-105515-0005.png',
-    ];
-
-    const nextTip = useCallback(() => {
-        setCurrentTipIndex(prevIndex => (prevIndex + 1) % tipsImages.length);
-    }, [tipsImages.length]);
-
-    const prevTip = useCallback(() => {
-        setCurrentTipIndex(prevIndex => (prevIndex - 1 + tipsImages.length) % tipsImages.length);
-    }, [tipsImages.length]);
-
-    useEffect(() => {
-        const handleKeyDown = (event: KeyboardEvent) => {
-            if (!isTipsModalOpen) return;
-            if (event.key === 'ArrowRight') {
-                nextTip();
-            } else if (event.key === 'ArrowLeft') {
-                prevTip();
-            } else if (event.key === 'Escape') {
-                setIsTipsModalOpen(false);
-            }
-        };
-        window.addEventListener('keydown', handleKeyDown);
-        return () => {
-            window.removeEventListener('keydown', handleKeyDown);
-        };
-    }, [isTipsModalOpen, nextTip, prevTip]);
-
-    return (
-        <>
-            <Section id="tips">
-                <div className="text-center">
-                    <h2 className="text-3xl md:text-4xl font-bold text-white mb-4">Tips para tu Transmisión</h2>
-                    <p className="text-gray-400 max-w-2xl mx-auto mb-8">
-                        Mejora la calidad de tus transmisiones y aumenta tu audiencia con nuestros consejos profesionales. Haz clic para ver nuestra galería de tips.
-                    </p>
-                    <GlowButton onClick={() => setIsTipsModalOpen(true)}>
-                        Ver Galería de Tips
-                    </GlowButton>
-                </div>
-            </Section>
-
-            {isTipsModalOpen && (
-                <div 
-                    className="fixed inset-0 bg-black/90 backdrop-blur-sm z-50 flex items-center justify-center p-4 animate-fade-in"
-                    onClick={() => setIsTipsModalOpen(false)}
-                    role="dialog"
-                    aria-modal="true"
-                >
-                    <div 
-                        className="relative w-full max-w-3xl animate-zoom-in"
-                        onClick={(e) => e.stopPropagation()}
-                    >
-                        <div className="relative w-full h-[500px] sm:h-[600px] flex items-center justify-center">
-                             <div className="relative w-96 h-96 sm:w-[28rem] sm:h-[28rem]">
-                                {tipsImages.map((src, index) => (
-                                    <div
-                                        key={src}
-                                        className={`absolute inset-0 transition-opacity duration-300 ease-in-out ${index === currentTipIndex ? 'opacity-100' : 'opacity-0'}`}
-                                        aria-hidden={index !== currentTipIndex}
-                                    >
-                                        <div className="relative rounded-2xl shadow-[0_0_30px_rgba(168,85,247,0.7)] border-2 border-purple-500/50 p-1 bg-black w-full h-full">
-                                            <img
-                                                src={src}
-                                                alt={`Tip de transmisión ${index + 1}`}
-                                                className="w-full h-full object-cover rounded-2xl"
-                                            />
-                                        </div>
-                                    </div>
-                                ))}
-                            </div>
-                            <button
-                                onClick={(e) => { e.stopPropagation(); prevTip(); }}
-                                className="absolute top-1/2 left-2 sm:-left-12 -translate-y-1/2 bg-black/50 text-white p-2 rounded-full hover:bg-purple-600 transition-colors z-10"
-                                aria-label="Anterior"
-                            >
-                                <ChevronLeftIcon className="w-6 h-6" />
-                            </button>
-                            <button
-                                onClick={(e) => { e.stopPropagation(); nextTip(); }}
-                                className="absolute top-1/2 right-2 sm:-right-12 -translate-y-1/2 bg-black/50 text-white p-2 rounded-full hover:bg-purple-600 transition-colors z-10"
-                                aria-label="Siguiente"
-                            >
-                                <ChevronRightIcon className="w-6 h-6" />
-                            </button>
-                            <div className="absolute -bottom-8 left-1/2 -translate-x-1/2 flex gap-2">
-                                {tipsImages.map((_, index) => (
-                                    <button 
-                                        key={index}
-                                        onClick={() => setCurrentTipIndex(index)}
-                                        className={`w-3 h-3 rounded-full transition-all ${index === currentTipIndex ? 'bg-purple-500 scale-125' : 'bg-gray-600 hover:bg-gray-400'}`}
-                                        aria-label={`Ir al tip ${index + 1}`}
-                                    />
-                                ))}
-                            </div>
-                        </div>
-                       
-                        <button 
-                            onClick={() => setIsTipsModalOpen(false)}
-                            className="absolute -top-3 -right-3 text-white bg-purple-600 rounded-full p-2 hover:bg-purple-700 transition-colors z-20"
-                            aria-label="Cerrar"
-                        >
-                            <XIcon className="w-6 h-6" />
-                        </button>
-                    </div>
-                </div>
-            )}
-        </>
-    );
-};
-
-
 const TalentsSection: React.FC = () => {
     const talentData = [
         { name: "steficupcake", image: 'https://i.postimg.cc/N0Z5jrFK/IMG-20251107-193051.jpg', description: "Record historico: 4.5 Millones | País: Colombia" },
@@ -1336,10 +1214,11 @@ export default function App() {
     const [isPartnershipModalOpen, setIsPartnershipModalOpen] = useState(false);
     const [isApplicationFormOpen, setIsApplicationFormOpen] = useState(false);
     const [isAboutUsModalOpen, setIsAboutUsModalOpen] = useState(false);
+    const [isTipsModalOpen, setIsTipsModalOpen] = useState(false);
 
     // Lock body scroll when any modal is open
     useEffect(() => {
-        const isAnyModalOpen = isJoinModalOpen || isPartnershipModalOpen || isApplicationFormOpen || isAboutUsModalOpen;
+        const isAnyModalOpen = isJoinModalOpen || isPartnershipModalOpen || isApplicationFormOpen || isAboutUsModalOpen || isTipsModalOpen;
         if (isAnyModalOpen) {
             document.body.style.overflow = 'hidden';
         } else {
@@ -1350,7 +1229,7 @@ export default function App() {
         return () => {
             document.body.style.overflow = 'auto';
         };
-    }, [isJoinModalOpen, isPartnershipModalOpen, isApplicationFormOpen, isAboutUsModalOpen]);
+    }, [isJoinModalOpen, isPartnershipModalOpen, isApplicationFormOpen, isAboutUsModalOpen, isTipsModalOpen]);
 
 
     useEffect(() => {
@@ -1382,6 +1261,118 @@ export default function App() {
             document.removeEventListener('click', handleFaqLinkClick);
         };
     }, []);
+
+    const TipsSectionWithState: React.FC = () => {
+        const [currentTipIndex, setCurrentTipIndex] = useState(0);
+        const tipsImages = [
+            'https://i.postimg.cc/xCscRJt2/2-20251030-105515-0001.png',
+            'https://i.postimg.cc/YSY9JDRQ/3-20251030-105515-0002.png',
+            'https://i.postimg.cc/JnzfbGs1/4-20251030-105515-0003.png',
+            'https://i.postimg.cc/8PfjRCv2/5-20251030-105515-0004.png',
+            'https://i.postimg.cc/NFrP4TBF/6-20251030-105515-0005.png',
+        ];
+
+        const nextTip = useCallback(() => {
+            setCurrentTipIndex(prevIndex => (prevIndex + 1) % tipsImages.length);
+        }, [tipsImages.length]);
+
+        const prevTip = useCallback(() => {
+            setCurrentTipIndex(prevIndex => (prevIndex - 1 + tipsImages.length) % tipsImages.length);
+        }, [tipsImages.length]);
+
+        useEffect(() => {
+            const handleKeyDown = (event: KeyboardEvent) => {
+                if (!isTipsModalOpen) return;
+                if (event.key === 'ArrowRight') nextTip();
+                else if (event.key === 'ArrowLeft') prevTip();
+                else if (event.key === 'Escape') setIsTipsModalOpen(false);
+            };
+            window.addEventListener('keydown', handleKeyDown);
+            return () => {
+                window.removeEventListener('keydown', handleKeyDown);
+            };
+        }, [isTipsModalOpen, nextTip, prevTip]);
+
+        return (
+            <>
+                <Section id="tips">
+                    <div className="text-center">
+                        <h2 className="text-3xl md:text-4xl font-bold text-white mb-4">Tips para tu Transmisión</h2>
+                        <p className="text-gray-400 max-w-2xl mx-auto mb-8">
+                            Mejora la calidad de tus transmisiones y aumenta tu audiencia con nuestros consejos profesionales. Haz clic para ver nuestra galería de tips.
+                        </p>
+                        <GlowButton onClick={() => setIsTipsModalOpen(true)}>
+                            Ver Galería de Tips
+                        </GlowButton>
+                    </div>
+                </Section>
+                {isTipsModalOpen && (
+                    <div 
+                        className="fixed inset-0 bg-black/90 backdrop-blur-sm z-50 flex items-center justify-center p-4 animate-fade-in"
+                        onClick={() => setIsTipsModalOpen(false)}
+                        role="dialog" aria-modal="true"
+                    >
+                        <div 
+                            className="relative w-full max-w-3xl animate-zoom-in"
+                            onClick={(e) => e.stopPropagation()}
+                        >
+                            <div className="relative w-full h-[500px] sm:h-[600px] flex items-center justify-center">
+                                <div className="relative w-96 h-96 sm:w-[28rem] sm:h-[28rem]">
+                                {tipsImages.map((src, index) => (
+                                    <div
+                                        key={src}
+                                        className={`absolute inset-0 transition-opacity duration-300 ease-in-out ${index === currentTipIndex ? 'opacity-100' : 'opacity-0'}`}
+                                        aria-hidden={index !== currentTipIndex}
+                                    >
+                                        <div className="relative rounded-2xl shadow-[0_0_30px_rgba(168,85,247,0.7)] border-2 border-purple-500/50 p-1 bg-black w-full h-full">
+                                            <img
+                                                src={src}
+                                                alt={`Tip de transmisión ${index + 1}`}
+                                                className="w-full h-full object-cover rounded-2xl"
+                                            />
+                                        </div>
+                                    </div>
+                                ))}
+                                </div>
+                                <button
+                                    onClick={(e) => { e.stopPropagation(); prevTip(); }}
+                                    className="absolute top-1/2 left-2 sm:-left-12 -translate-y-1/2 bg-black/50 text-white p-2 rounded-full hover:bg-purple-600 transition-colors z-10"
+                                    aria-label="Anterior"
+                                >
+                                    <ChevronLeftIcon className="w-6 h-6" />
+                                </button>
+                                <button
+                                    onClick={(e) => { e.stopPropagation(); nextTip(); }}
+                                    className="absolute top-1/2 right-2 sm:-right-12 -translate-y-1/2 bg-black/50 text-white p-2 rounded-full hover:bg-purple-600 transition-colors z-10"
+                                    aria-label="Siguiente"
+                                >
+                                    <ChevronRightIcon className="w-6 h-6" />
+                                </button>
+                                <div className="absolute -bottom-8 left-1/2 -translate-x-1/2 flex gap-2">
+                                    {tipsImages.map((_, index) => (
+                                        <button 
+                                            key={index}
+                                            onClick={() => setCurrentTipIndex(index)}
+                                            className={`w-3 h-3 rounded-full transition-all ${index === currentTipIndex ? 'bg-purple-500 scale-125' : 'bg-gray-600 hover:bg-gray-400'}`}
+                                            aria-label={`Ir al tip ${index + 1}`}
+                                        />
+                                    ))}
+                                </div>
+                            </div>
+                           
+                            <button 
+                                onClick={() => setIsTipsModalOpen(false)}
+                                className="absolute -top-3 -right-3 text-white bg-purple-600 rounded-full p-2 hover:bg-purple-700 transition-colors z-20"
+                                aria-label="Cerrar"
+                            >
+                                <XIcon className="w-6 h-6" />
+                            </button>
+                        </div>
+                    </div>
+                )}
+            </>
+        );
+    };
 
     return (
         <div className="bg-black text-white min-h-screen overflow-x-hidden">
@@ -1419,7 +1410,7 @@ export default function App() {
                 </Section>
                 <FAQ />
                 <GeneralInfo />
-                <TipsSection />
+                <TipsSectionWithState />
                 <TalentsSection />
                 <PartnershipSection onOpenModal={() => setIsPartnershipModalOpen(true)} />
                 <Contact />
