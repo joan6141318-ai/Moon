@@ -1,4 +1,5 @@
 
+
 import React, { useState, useEffect, useRef, ReactNode, useCallback } from 'react';
 import { FAQItem, PaymentTier, InfoTab } from './types';
 import { 
@@ -1145,6 +1146,15 @@ const TalentsSection: React.FC = () => {
         const newIndex = isLastSlide ? 0 : currentIndex + 1;
         setCurrentIndex(newIndex);
     };
+    
+    // FIX: Refactored inline onClick handlers to named functions to resolve event handler type mismatches.
+    const handlePrevSlide = (e: React.MouseEvent) => {
+        prevSlide();
+    };
+
+    const handleNextSlide = (e: React.MouseEvent) => {
+        nextSlideManual();
+    };
 
     return (
         <Section id="talents">
@@ -1216,7 +1226,7 @@ const TalentsSection: React.FC = () => {
 // FIX: The onClick handler expects a function that receives a mouse event.
 // The `prevSlide` function does not expect any arguments.
 // It is wrapped in an arrow function to prevent the event from being passed.
-                    onClick={() => prevSlide()}
+                    onClick={handlePrevSlide}
                     className="absolute top-1/2 -left-4 md:-left-16 -translate-y-1/2 bg-black/50 text-white p-3 rounded-full hover:bg-purple-600 transition-colors z-20 focus:outline-none focus:ring-2 focus:ring-purple-400"
                     aria-label="Anterior Talento"
                 >
@@ -1226,7 +1236,7 @@ const TalentsSection: React.FC = () => {
 // FIX: The onClick handler expects a function that receives a mouse event.
 // The `nextSlideManual` function does not expect any arguments.
 // It is wrapped in an arrow function to prevent the event from being passed.
-                    onClick={() => nextSlideManual()}
+                    onClick={handleNextSlide}
                     className="absolute top-1/2 -right-4 md:-right-16 -translate-y-1/2 bg-black/50 text-white p-3 rounded-full hover:bg-purple-600 transition-colors z-20 focus:outline-none focus:ring-2 focus:ring-purple-400"
                     aria-label="Siguiente Talento"
                 >
@@ -1248,31 +1258,38 @@ const TalentsSection: React.FC = () => {
     );
 };
 
-const PartnershipSection: React.FC<{ onOpenModal: () => void }> = ({ onOpenModal }) => (
-    <Section id="partnership">
-        <div className="relative rounded-2xl overflow-hidden shadow-2xl shadow-purple-900/50 border border-purple-500/30 text-center">
-            <img 
-                src="https://images.pexels.com/photos/7645300/pexels-photo-7645300.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1"
-                alt="Agente de negocios sonriendo en un entorno de oficina moderno" 
-                className="absolute inset-0 w-full h-full object-cover object-center opacity-40"
-            />
-            <div className="absolute inset-0 bg-gradient-to-t from-black via-black/60 to-transparent"></div>
-            <div className="relative z-10 p-8 md:p-12">
-                <h2 className="text-2xl md:text-4xl font-bold text-white mb-4 leading-tight" style={{textShadow: '0 2px 10px rgba(0,0,0,0.5)'}}>
-                    Forma tu propia agencia o sé uno de nuestros agentes en Latinoamérica
-                </h2>
-                <p className="text-gray-200 md:text-lg mb-8 max-w-2xl mx-auto" style={{textShadow: '0 1px 5px rgba(0,0,0,0.5)'}}>
-                    Actualmente buscamos socios comerciales o agentes que quieran trabajar con nosotros en la empresa. Expande tus horizontes y crece profesionalmente en la industria del streaming.
-                </p>
-                {/* FIX: The GlowButton's onClick prop expects a function that receives a mouse event. The handler was passed directly, causing a type mismatch. It has been wrapped in an arrow function to correct this. */}
-                {/* FIX: The GlowButton's onClick prop expects a function that receives a mouse event. The handler was passed a function that does not accept any arguments, causing a type mismatch. It has been wrapped in an arrow function that accepts the event argument to correct this. */}
-                <GlowButton onClick={(e) => onOpenModal()}>
-                    Más Información
-                </GlowButton>
+const PartnershipSection: React.FC<{ onOpenModal: () => void }> = ({ onOpenModal }) => {
+    // FIX: Refactored the inline arrow function to a named handler to resolve a potential type mismatch with the GlowButton's onClick prop.
+    const handleOpenModal = (e: React.MouseEvent<HTMLElement>) => {
+        onOpenModal();
+    };
+
+    return (
+        <Section id="partnership">
+            <div className="relative rounded-2xl overflow-hidden shadow-2xl shadow-purple-900/50 border border-purple-500/30 text-center">
+                <img
+                    src="https://images.pexels.com/photos/7645300/pexels-photo-7645300.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1"
+                    alt="Agente de negocios sonriendo en un entorno de oficina moderno"
+                    className="absolute inset-0 w-full h-full object-cover object-center opacity-40"
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-black via-black/60 to-transparent"></div>
+                <div className="relative z-10 p-8 md:p-12">
+                    <h2 className="text-2xl md:text-4xl font-bold text-white mb-4 leading-tight" style={{textShadow: '0 2px 10px rgba(0,0,0,0.5)'}}>
+                        Forma tu propia agencia o sé uno de nuestros agentes en Latinoamérica
+                    </h2>
+                    <p className="text-gray-200 md:text-lg mb-8 max-w-2xl mx-auto" style={{textShadow: '0 1px 5px rgba(0,0,0,0.5)'}}>
+                        Actualmente buscamos socios comerciales o agentes que quieran trabajar con nosotros en la empresa. Expande tus horizontes y crece profesionalmente en la industria del streaming.
+                    </p>
+                    {/* FIX: The GlowButton's onClick prop expects a function that receives a mouse event. The handler was passed directly, causing a type mismatch. It has been wrapped in an arrow function to correct this. */}
+                    {/* FIX: The GlowButton's onClick prop expects a function that receives a mouse event. The handler was passed a function that does not accept any arguments, causing a type mismatch. It has been wrapped in an arrow function that accepts the event argument to correct this. */}
+                    <GlowButton onClick={handleOpenModal}>
+                        Más Información
+                    </GlowButton>
+                </div>
             </div>
-        </div>
-    </Section>
-);
+        </Section>
+    );
+};
 
 const Contact: React.FC = () => (
     <Section id="contact">

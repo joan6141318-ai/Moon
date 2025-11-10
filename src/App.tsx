@@ -201,7 +201,6 @@ const JoinModal: React.FC<{ isOpen: boolean; onClose: () => void; onApplyClick: 
                 </div>
 
                 <div className="text-center mt-8 pt-6 border-t border-purple-500/20">
-                    {/* FIX: The GlowButton's onClick prop expects a function that receives a mouse event. The handler was passed a function that does not accept any arguments, causing a type mismatch. It has been wrapped in an arrow function that accepts the event argument to correct this. */}
                     <GlowButton onClick={(e) => { onClose(); onApplyClick(); }}>Quiero postularme</GlowButton>
                 </div>
             </div>
@@ -287,7 +286,6 @@ const ApplicationFormModal: React.FC<{ isOpen: boolean; onClose: () => void }> =
                         <p className="text-gray-300 max-w-md mx-auto mb-8">
                             Gracias por tu interés en unirte a Agency Moon. Tu postulación ha sido enviada con éxito.
                         </p>
-                        {/* FIX: The GlowButton's onClick prop expects a function that receives a mouse event. The handler was passed a function that does not accept any arguments, causing a type mismatch. It has been wrapped in an arrow function that accepts the event argument to correct this. */}
                         <GlowButton onClick={(e) => onClose()}>Finalizar</GlowButton>
                     </div>
                 ) : (
@@ -537,7 +535,6 @@ const Hero: React.FC<{ onOpenJoinModal: () => void }> = ({ onOpenJoinModal }) =>
                 Tu talento merece ser visto.
             </p>
             <div className="animate-fade-in-up" style={{ animationDelay: '400ms' }}>
-                {/* FIX: The GlowButton's onClick prop expects a function that receives a mouse event. The handler was passed a function that does not accept any arguments, causing a type mismatch. It has been wrapped in an arrow function that accepts the event argument to correct this. */}
                 <GlowButton onClick={(e) => onOpenJoinModal()}>Comienza hoy</GlowButton>
             </div>
         </div>
@@ -767,35 +764,38 @@ const PaymentInfoCarousel: React.FC = () => {
                 <img src="https://i.postimg.cc/8zccpBdH/NIVEL-20251030-155750-0001.png" alt="Tabla de Pagos" className="w-full h-auto" />
             </div>
 
-            <div className="bg-gray-800/50 p-6 rounded-lg relative overflow-hidden mt-4 border border-purple-500/20">
-                <button onClick={prevTier} aria-label="Nivel anterior" className="absolute left-2 top-1/2 -translate-y-1/2 z-10 p-1 bg-black/40 rounded-full hover:bg-purple-600 transition-colors focus:outline-none focus:ring-2 focus:ring-purple-400">
-                    <ChevronLeftIcon className="w-5 h-5" />
-                </button>
-                <button onClick={nextTier} aria-label="Siguiente nivel" className="absolute right-2 top-1/2 -translate-y-1/2 z-10 p-1 bg-black/40 rounded-full hover:bg-purple-600 transition-colors focus:outline-none focus:ring-2 focus:ring-purple-400">
-                    <ChevronRightIcon className="w-5 h-5" />
-                </button>
+            <div className="bg-gray-800/50 p-4 rounded-lg mt-4 border border-purple-500/20">
+                <div className="flex items-center justify-between">
+                     <button onClick={prevTier} aria-label="Nivel anterior" className="p-2 bg-black/40 rounded-full hover:bg-purple-600 transition-colors focus:outline-none focus:ring-2 focus:ring-purple-400">
+                        <ChevronLeftIcon className="w-5 h-5" />
+                    </button>
 
-                <div key={currentIndex} className="text-center animate-fade-in">
-                    <h4 className="text-2xl font-bold text-purple-400 mb-4">Nivel {currentTier.level}</h4>
-                    
-                    <div className="grid grid-cols-2 gap-x-6 gap-y-3 text-base max-w-sm mx-auto">
-                        <p className="text-left text-gray-300">Meta Semillas:</p>
-                        <p className="text-right font-semibold text-white">{currentTier.seedsGoal}</p>
+                    <div key={currentIndex} className="text-center animate-fade-in px-2 w-full">
+                        <h4 className="text-xl sm:text-2xl font-bold text-purple-400 mb-2 sm:mb-4">Nivel {currentTier.level}</h4>
                         
-                        <p className="text-left text-gray-300">Horas Diarias:</p>
-                        <p className="text-right font-semibold text-white">{currentTier.dailyHours}</p>
-                        
-                        <p className="text-left text-gray-300">Remuneración:</p>
-                        <p className="text-right font-semibold text-white">{currentTier.remuneration}</p>
-                        
-                        <p className="text-left text-gray-300">Cambio Semillas:</p>
-                        <p className="text-right font-semibold text-white">{currentTier.seedExchange}</p>
-                        
-                        <hr className="col-span-2 border-purple-500/30 my-2"/>
-                        
-                        <p className="text-left text-purple-300 font-bold text-lg">Pago Total:</p>
-                        <p className="text-right font-bold text-xl text-purple-300">{currentTier.totalPayment} USD</p>
+                        <div className="grid grid-cols-2 gap-x-4 sm:gap-x-6 gap-y-3 text-sm sm:text-base max-w-sm mx-auto">
+                            <p className="text-left text-gray-300">Meta Semillas:</p>
+                            <p className="text-right font-semibold text-white">{currentTier.seedsGoal}</p>
+                            
+                            <p className="text-left text-gray-300">Horas Diarias:</p>
+                            <p className="text-right font-semibold text-white">{currentTier.dailyHours}</p>
+                            
+                            <p className="text-left text-gray-300">Remuneración:</p>
+                            <p className="text-right font-semibold text-white">{currentTier.remuneration}</p>
+                            
+                            <p className="text-left text-gray-300">Cambio Semillas:</p>
+                            <p className="text-right font-semibold text-white">{currentTier.seedExchange}</p>
+                            
+                            <hr className="col-span-2 border-purple-500/30 my-2"/>
+                            
+                            <p className="text-left text-purple-300 font-bold text-base sm:text-lg">Pago Total:</p>
+                            <p className="text-right font-bold text-lg sm:text-xl text-purple-300">{currentTier.totalPayment} USD</p>
+                        </div>
                     </div>
+                    
+                    <button onClick={nextTier} aria-label="Siguiente nivel" className="p-2 bg-black/40 rounded-full hover:bg-purple-600 transition-colors focus:outline-none focus:ring-2 focus:ring-purple-400">
+                        <ChevronRightIcon className="w-5 h-5" />
+                    </button>
                 </div>
             </div>
              
@@ -949,7 +949,6 @@ const TipsSection: React.FC = () => {
                     <p className="text-gray-400 max-w-2xl mx-auto mb-8">
                         Mejora la calidad de tus transmisiones y aumenta tu audiencia con nuestros consejos profesionales. Haz clic para ver nuestra galería de tips.
                     </p>
-                    {/* FIX: The GlowButton's onClick prop expects a function that receives a mouse event. The handler was passed a function that does not accept any arguments, causing a type mismatch. It has been wrapped in an arrow function that accepts the event argument to correct this. */}
                     <GlowButton onClick={(e) => setIsTipsModalOpen(true)}>
                         Ver Galería de Tips
                     </GlowButton>
@@ -1067,6 +1066,15 @@ const TalentsSection: React.FC = () => {
         setCurrentIndex(newIndex);
     };
 
+    // FIX: Refactored inline onClick handlers to named functions to resolve event handler type mismatches.
+    const handlePrevSlide = (e: React.MouseEvent) => {
+        prevSlide();
+    };
+
+    const handleNextSlide = (e: React.MouseEvent) => {
+        nextSlideManual();
+    };
+
     return (
         <Section id="talents">
             <div className="text-center">
@@ -1134,14 +1142,14 @@ const TalentsSection: React.FC = () => {
                 </div>
 
                 <button
-                    onClick={() => prevSlide()}
+                    onClick={handlePrevSlide}
                     className="absolute top-1/2 -left-4 md:-left-16 -translate-y-1/2 bg-black/50 text-white p-3 rounded-full hover:bg-purple-600 transition-colors z-20 focus:outline-none focus:ring-2 focus:ring-purple-400"
                     aria-label="Anterior Talento"
                 >
                     <ChevronLeftIcon className="w-6 h-6" />
                 </button>
                 <button
-                    onClick={() => nextSlideManual()}
+                    onClick={handleNextSlide}
                     className="absolute top-1/2 -right-4 md:-right-16 -translate-y-1/2 bg-black/50 text-white p-3 rounded-full hover:bg-purple-600 transition-colors z-20 focus:outline-none focus:ring-2 focus:ring-purple-400"
                     aria-label="Siguiente Talento"
                 >
@@ -1163,30 +1171,36 @@ const TalentsSection: React.FC = () => {
     );
 };
 
-const PartnershipSection: React.FC<{ onOpenModal: () => void }> = ({ onOpenModal }) => (
-    <Section id="partnership">
-        <div className="relative rounded-2xl overflow-hidden shadow-2xl shadow-purple-900/50 border border-purple-500/30 text-center">
-            <img 
-                src="https://images.pexels.com/photos/7645300/pexels-photo-7645300.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1"
-                alt="Agente de negocios sonriendo en un entorno de oficina moderno" 
-                className="absolute inset-0 w-full h-full object-cover object-center opacity-40"
-            />
-            <div className="absolute inset-0 bg-gradient-to-t from-black via-black/60 to-transparent"></div>
-            <div className="relative z-10 p-8 md:p-12">
-                <h2 className="text-2xl md:text-4xl font-bold text-white mb-4 leading-tight" style={{textShadow: '0 2px 10px rgba(0,0,0,0.5)'}}>
-                    Forma tu propia agencia o sé uno de nuestros agentes en Latinoamérica
-                </h2>
-                <p className="text-gray-200 md:text-lg mb-8 max-w-2xl mx-auto" style={{textShadow: '0 1px 5px rgba(0,0,0,0.5)'}}>
-                    Actualmente buscamos socios comerciales o agentes que quieran trabajar con nosotros en la empresa. Expande tus horizontes y crece profesionalmente en la industria del streaming.
-                </p>
-                {/* FIX: The GlowButton's onClick prop expects a function that receives a mouse event. The handler was passed a function that does not accept any arguments, causing a type mismatch. It has been wrapped in an arrow function that accepts the event argument to correct this. */}
-                <GlowButton onClick={(e) => onOpenModal()}>
-                    Más Información
-                </GlowButton>
+const PartnershipSection: React.FC<{ onOpenModal: () => void }> = ({ onOpenModal }) => {
+    // FIX: Refactored the inline arrow function to a named handler to resolve a potential type mismatch with the GlowButton's onClick prop.
+    const handleOpenModal = (e: React.MouseEvent<HTMLElement>) => {
+        onOpenModal();
+    };
+
+    return (
+        <Section id="partnership">
+            <div className="relative rounded-2xl overflow-hidden shadow-2xl shadow-purple-900/50 border border-purple-500/30 text-center">
+                <img
+                    src="https://images.pexels.com/photos/7645300/pexels-photo-7645300.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1"
+                    alt="Agente de negocios sonriendo en un entorno de oficina moderno"
+                    className="absolute inset-0 w-full h-full object-cover object-center opacity-40"
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-black via-black/60 to-transparent"></div>
+                <div className="relative z-10 p-8 md:p-12">
+                    <h2 className="text-2xl md:text-4xl font-bold text-white mb-4 leading-tight" style={{textShadow: '0 2px 10px rgba(0,0,0,0.5)'}}>
+                        Forma tu propia agencia o sé uno de nuestros agentes en Latinoamérica
+                    </h2>
+                    <p className="text-gray-200 md:text-lg mb-8 max-w-2xl mx-auto" style={{textShadow: '0 1px 5px rgba(0,0,0,0.5)'}}>
+                        Actualmente buscamos socios comerciales o agentes que quieran trabajar con nosotros en la empresa. Expande tus horizontes y crece profesionalmente en la industria del streaming.
+                    </p>
+                    <GlowButton onClick={handleOpenModal}>
+                        Más Información
+                    </GlowButton>
+                </div>
             </div>
-        </div>
-    </Section>
-);
+        </Section>
+    );
+};
 
 const Contact: React.FC = () => (
     <Section id="contact">
@@ -1321,7 +1335,6 @@ export default function App() {
                         <p className="text-gray-400 max-w-2xl mx-auto mb-8">
                             Mejora la calidad de tus transmisiones y aumenta tu audiencia con nuestros consejos profesionales. Haz clic para ver nuestra galería de tips.
                         </p>
-                        {/* FIX: The GlowButton's onClick prop expects a function that receives a mouse event. The handler was passed a function that does not accept any arguments, causing a type mismatch. It has been wrapped in an arrow function that accepts the event argument to correct this. */}
                         <GlowButton onClick={(e) => setIsTipsModalOpen(true)}>
                             Ver Galería de Tips
                         </GlowButton>
@@ -1422,7 +1435,6 @@ export default function App() {
                 <Hero onOpenJoinModal={() => setIsJoinModalOpen(true)} />
                 <Section id="about-us" className="text-center">
                     <h2 className="text-3xl md:text-4xl font-bold text-white mb-4">Quiénes Somos</h2>
-                    {/* FIX: The GlowButton's onClick prop expects a function that receives a mouse event. The handler was passed a function that does not accept any arguments, causing a type mismatch. It has been wrapped in an arrow function that accepts the event argument to correct this. */}
                     <GlowButton onClick={(e) => setIsAboutUsModalOpen(true)}>Conoce más</GlowButton>
                 </Section>
                 <ExperienceSection />
