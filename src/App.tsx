@@ -1,4 +1,5 @@
 
+
 import React, { useState, useEffect, useRef, ReactNode, useCallback } from 'react';
 import { FAQItem, PaymentTier, InfoTab } from './types';
 import { 
@@ -63,7 +64,7 @@ const Section: React.FC<{ id: string; children: ReactNode; className?: string }>
 };
 
 const GlowButton: React.FC<{ children: ReactNode, href?: string, className?: string, onClick?: (e: React.MouseEvent<HTMLElement>) => void, type?: 'button' | 'submit' | 'reset' }> = ({ children, href, className, onClick, type }) => {
-    const classes = `inline-block bg-purple-600 text-white font-bold py-3 px-8 rounded-full transition-all duration-300 hover:bg-purple-700 hover:shadow-[0_0_25px_rgba(168,85,247,0.9)] focus:outline-none focus:ring-4 focus:ring-purple-400/50 transform hover:scale-105 ${className}`;
+    const classes = `inline-block bg-purple-600 text-white font-bold py-3 px-8 rounded-lg transition-all duration-300 hover:bg-purple-700 hover:shadow-[0_0_25px_rgba(168,85,247,0.9)] focus:outline-none focus:ring-4 focus:ring-purple-400/50 transform hover:scale-105 ${className}`;
 
     const handleClick = (e: React.MouseEvent<HTMLElement>) => {
         if (href && href.startsWith('#') && e.currentTarget.tagName === 'A') {
@@ -108,6 +109,7 @@ const AboutUsModal: React.FC<{ isOpen: boolean; onClose: () => void }> = ({ isOp
     ];
 
     return (
+        // FIX: The onClick handler for a div expects a function that takes a mouse event, but `onClose` takes no arguments. It has been wrapped in an arrow function to correct the type mismatch.
         <div
             className="fixed inset-0 bg-black/80 backdrop-blur-sm z-50 flex items-center justify-center p-4 animate-fade-in"
             onClick={() => onClose()}
@@ -120,6 +122,7 @@ const AboutUsModal: React.FC<{ isOpen: boolean; onClose: () => void }> = ({ isOp
                 onClick={(e) => e.stopPropagation()}
             >
                 <button
+// FIX: The `onClick` handler expects a function that receives a mouse event, but `onClose` takes no arguments. It has been wrapped in an arrow function to correct the type mismatch.
                     onClick={() => onClose()}
                     className="absolute top-4 right-4 text-gray-400 hover:text-white transition-colors"
                     aria-label="Cerrar"
@@ -163,6 +166,7 @@ const JoinModal: React.FC<{ isOpen: boolean; onClose: () => void; onApplyClick: 
     ];
 
     return (
+        // FIX: The onClick handler for a div expects a function that takes a mouse event, but `onClose` takes no arguments. It has been wrapped in an arrow function to correct the type mismatch.
         <div
             className="fixed inset-0 bg-black/80 backdrop-blur-sm z-50 flex items-center justify-center p-4 animate-fade-in"
             onClick={() => onClose()}
@@ -175,6 +179,7 @@ const JoinModal: React.FC<{ isOpen: boolean; onClose: () => void; onApplyClick: 
                 onClick={(e) => e.stopPropagation()}
             >
                 <button
+// FIX: The `onClick` handler expects a function that receives a mouse event, but `onClose` takes no arguments. It has been wrapped in an arrow function to correct the type mismatch.
                     onClick={() => onClose()}
                     className="absolute top-4 right-4 text-gray-400 hover:text-white transition-colors"
                     aria-label="Cerrar"
@@ -200,6 +205,7 @@ const JoinModal: React.FC<{ isOpen: boolean; onClose: () => void; onApplyClick: 
                 </div>
 
                 <div className="text-center mt-8 pt-6 border-t border-purple-500/20">
+                    {/* FIX: The GlowButton's onClick prop expects a function that receives a mouse event. The handler was passed a function that does not accept any arguments, causing a type mismatch. It has been wrapped in an arrow function that accepts the event argument to correct this. */}
                     <GlowButton onClick={(e) => { onClose(); onApplyClick(); }}>Quiero postularme</GlowButton>
                 </div>
             </div>
@@ -257,6 +263,7 @@ const ApplicationFormModal: React.FC<{ isOpen: boolean; onClose: () => void }> =
     ];
 
     return (
+        // FIX: The onClick handler for a div expects a function that takes a mouse event, but `onClose` takes no arguments. It has been wrapped in an arrow function to correct the type mismatch.
         <div
             className="fixed inset-0 bg-black/80 backdrop-blur-sm z-50 flex items-center justify-center p-4 animate-fade-in"
             onClick={() => onClose()}
@@ -269,6 +276,7 @@ const ApplicationFormModal: React.FC<{ isOpen: boolean; onClose: () => void }> =
                 onClick={(e) => e.stopPropagation()}
             >
                 <button
+// FIX: The `onClick` handler expects a function that receives a mouse event, but `onClose` takes no arguments. It has been wrapped in an arrow function to correct the type mismatch.
                     onClick={() => onClose()}
                     className="absolute top-4 right-4 text-gray-400 hover:text-white transition-colors"
                     aria-label="Cerrar"
@@ -285,6 +293,8 @@ const ApplicationFormModal: React.FC<{ isOpen: boolean; onClose: () => void }> =
                         <p className="text-gray-300 max-w-md mx-auto mb-8">
                             Gracias por tu interés en unirte a Agency Moon. Tu postulación ha sido enviada con éxito.
                         </p>
+                        {/* FIX: The 'GlowButton' component expects an 'onClick' handler that accepts a mouse event. The original code passed a function that does not accept any arguments directly, causing a type mismatch. This has been corrected by wrapping the function call in an arrow function to ensure the event argument is handled correctly. */}
+                        {/* FIX: The GlowButton's onClick prop expects a function that receives a mouse event. The handler was passed a function that does not accept any arguments, causing a type mismatch. It has been wrapped in an arrow function that accepts the event argument to correct this. */}
                         <GlowButton onClick={(e) => onClose()}>Finalizar</GlowButton>
                     </div>
                 ) : (
@@ -366,6 +376,7 @@ const PartnershipModal: React.FC<{ isOpen: boolean; onClose: () => void }> = ({ 
     const prev = () => setCurrentSlide(prev => (prev === 0 ? slides.length - 1 : prev - 1));
 
     return (
+        // FIX: The onClick handler for a div expects a function that takes a mouse event, but `onClose` takes no arguments. It has been wrapped in an arrow function to correct the type mismatch.
         <div
             className="fixed inset-0 bg-black/80 backdrop-blur-sm z-50 flex items-center justify-center p-4 animate-fade-in"
             onClick={() => onClose()}
@@ -377,6 +388,7 @@ const PartnershipModal: React.FC<{ isOpen: boolean; onClose: () => void }> = ({ 
                 onClick={(e) => e.stopPropagation()}
             >
                 <button
+// FIX: The onClick handler for this button expects a function that takes a mouse event, but `prev` takes no arguments. It has been wrapped in an arrow function to correct the type mismatch.
                     onClick={() => prev()}
                     aria-label="Anterior"
                     className="absolute left-0 top-1/2 -translate-y-1/2 z-10 p-2 bg-black/40 rounded-full hover:bg-purple-600 transition-colors focus:outline-none focus:ring-2 focus:ring-purple-400"
@@ -427,13 +439,14 @@ const PartnershipModal: React.FC<{ isOpen: boolean; onClose: () => void }> = ({ 
                         </div>
                     </div>
                     
-                     <button
+                     <button // FIX: The `onClick` handler expects a function that receives a mouse event, but `onClose` takes no arguments. It has been wrapped in an arrow function to correct the type mismatch.
                     onClick={() => onClose()} className="absolute top-3 right-3 text-gray-400 hover:text-white transition-colors" aria-label="Cerrar">
                         <XIcon className="w-5 h-5" />
                     </button>
                 </div>
 
                 <button
+// FIX: The onClick handler for this button expects a function that takes a mouse event, but `next` takes no arguments. It has been wrapped in an arrow function to correct the type mismatch.
                     onClick={() => next()}
                     aria-label="Siguiente"
                     className="absolute right-0 top-1/2 -translate-y-1/2 z-10 p-2 bg-black/40 rounded-full hover:bg-purple-600 transition-colors focus:outline-none focus:ring-2 focus:ring-purple-400"
@@ -463,7 +476,7 @@ const Header: React.FC<{ onOpenJoinModal: () => void; onOpenAboutModal: () => vo
         if (href === '#join-modal') {
             e.preventDefault();
             onOpenJoinModal();
-        } else if (href === '#about-us-modal') {
+        } else if (href === '#about-us') {
             e.preventDefault();
             onOpenAboutModal();
         } else {
@@ -472,15 +485,18 @@ const Header: React.FC<{ onOpenJoinModal: () => void; onOpenAboutModal: () => vo
     };
     
     const navLinks = [
-        { name: 'Quiénes somos', href: '#about-us-modal' },
+        { name: 'Quiénes somos', href: '#about-us' },
         { name: 'Experiencia', href: '#experience' },
         { name: 'FAQ', href: '#faq' },
+        { name: 'Información', href: '#info' },
+        { name: 'Tips', href: '#tips' },
+        { name: 'Talentos', href: '#talents'},
         { name: 'Socios', href: '#partnership' },
         { name: 'Contacto', href: '#contact' },
     ];
 
     const mobileNavLinks = [
-        { name: 'Quiénes Somos', href: '#about-us-modal' },
+        { name: 'Quiénes Somos', href: '#about-us' },
         { name: 'Nuestra Experiencia', href: '#experience' },
         { name: 'Requisitos para Unirte', href: '#join-modal' },
         { name: 'Preguntas Frecuentes', href: '#faq' },
@@ -498,26 +514,28 @@ const Header: React.FC<{ onOpenJoinModal: () => void; onOpenAboutModal: () => vo
                     <Logo className="h-8 w-auto text-white" />
                     <span className="text-white font-bold text-xl">Agency Moon</span>
                 </a>
-                <div className="hidden lg:flex items-center space-x-6">
+                <div className="hidden md:flex items-center space-x-8">
                     {navLinks.map(link => (
                          <a key={link.name} href={link.href} onClick={(e) => handleMenuClick(e, link.href)} className="text-gray-300 hover:text-white transition-colors hover:text-shadow-purple font-medium">{link.name}</a>
                     ))}
-                     <GlowButton onClick={(e) => onOpenJoinModal()} className="py-2.5 px-6 text-sm">Únete ahora</GlowButton>
                 </div>
-                 <div className="lg:hidden">
+                 {/* FIX: The 'GlowButton' component expects an 'onClick' handler that accepts a mouse event. The original code passed a function that does not accept any arguments directly, causing a type mismatch. This has been corrected by wrapping the function call in an arrow function to ensure the event argument is handled correctly. */}
+                 {/* FIX: The GlowButton's onClick prop expects a function that receives a mouse event. The handler was passed a function that does not accept any arguments, causing a type mismatch. It has been wrapped in an arrow function that accepts the event argument to correct this. */}
+                 <GlowButton onClick={(e) => onOpenJoinModal()} className="hidden md:inline-block">Únete ahora</GlowButton>
+                 <div className="md:hidden">
                     <button onClick={() => setIsMenuOpen(!isMenuOpen)} className="text-white focus:outline-none" aria-label="Abrir menú">
                         {isMenuOpen ? <XIcon className="w-7 h-7" /> : <MenuIcon className="w-7 h-7" />}
                     </button>
                 </div>
             </nav>
             {isMenuOpen && (
-                 <div className="lg:hidden absolute top-full left-0 w-full bg-black/90 backdrop-blur-sm animate-fade-in-down-fast">
-                    <div className="flex flex-col items-start px-6 py-4">
+                 <div className="md:hidden absolute top-full left-0 w-full bg-black/90 backdrop-blur-sm animate-fade-in-down-fast">
+                    <div className="flex flex-col items-start px-6 py-4 space-y-1">
                         {mobileNavLinks.map(link => (
                             <a
                                 key={link.name}
                                 href={link.href}
-                                className="text-white font-medium hover:bg-purple-600/30 w-full text-left py-2.5 px-4 rounded-md transition-colors text-base"
+                                className="text-gray-200 hover:bg-purple-600/30 hover:text-white w-full text-left py-3 px-3 rounded-md transition-colors text-lg"
                                 onClick={(e) => handleMenuClick(e, link.href)}
                             >
                                 {link.name}
@@ -530,72 +548,31 @@ const Header: React.FC<{ onOpenJoinModal: () => void; onOpenAboutModal: () => vo
     );
 };
 
-const Hero: React.FC<{ onOpenJoinModal: () => void }> = ({ onOpenJoinModal }) => {
-    interface Pulse {
-        id: number;
-        x: number;
-        y: number;
-    }
-    const [pulses, setPulses] = useState<Pulse[]>([]);
-    const heroRef = useRef<HTMLElement>(null);
-
-    const handleHeroClick = (e: React.MouseEvent<HTMLElement>) => {
-        const rect = heroRef.current?.getBoundingClientRect();
-        if (!rect) return;
-
-        const x = e.clientX - rect.left;
-        const y = e.clientY - rect.top;
-        
-        const newPulse = { id: Date.now(), x, y };
-        setPulses(prev => [...prev, newPulse]);
-
-        setTimeout(() => {
-            setPulses(prev => prev.filter(p => p.id !== newPulse.id));
-        }, 750); // Match animation duration
-    };
-    
-    return (
-        <section 
-            id="home" 
-            ref={heroRef}
-            onClick={handleHeroClick}
-            className="h-screen min-h-[700px] w-full flex items-center justify-center relative text-white text-center px-4 overflow-hidden cursor-pointer"
-        >
-            <div className="absolute inset-0 bg-black z-0">
-                <img
-                    src="https://images.pexels.com/photos/169647/pexels-photo-169647.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1"
-                    alt="Edificio de oficinas de noche con luces"
-                    className="w-full h-full object-cover opacity-40"
-                />
-                <div className="absolute inset-0 bg-gradient-to-t from-black via-black/50 to-transparent"></div>
+const Hero: React.FC<{ onOpenJoinModal: () => void }> = ({ onOpenJoinModal }) => (
+    <section id="home" className="h-screen min-h-[700px] w-full flex items-center justify-center relative text-white text-center px-4 overflow-hidden">
+        <div className="absolute inset-0 bg-black z-0">
+            <img
+                src="https://images.pexels.com/photos/1252890/pexels-photo-1252890.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1"
+                alt="Fondo de galaxia púrpura y azul"
+                className="w-full h-full object-cover opacity-50"
+            />
+            <div className="absolute inset-0 bg-gradient-to-t from-black via-black/70 to-transparent"></div>
+            <div className="absolute inset-0 bg-gradient-to-r from-black via-transparent to-black"></div>
+        </div>
+        <div className="relative z-10 flex flex-col items-center">
+            <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold mb-4 animate-fade-in-down" style={{textShadow: '0 0 15px rgba(168, 85, 247, 0.7)'}}>Haz brillar tu talento</h1>
+            <p className="text-xl md:text-2xl max-w-3xl my-6 text-gray-300 italic animate-fade-in-up" style={{ animationDelay: '150ms' }}>
+                "Que no te digan que el cielo es el límite cuando hay huellas en la luna"
+            </p>
+            <p className="text-lg md:text-xl max-w-3xl mb-8 text-gray-300 animate-fade-in-up" style={{ animationDelay: '300ms' }}>Únete a nuestra comunidad de creadores y empieza a monetizar tus transmisiones.</p>
+            <div className="animate-fade-in-up" style={{ animationDelay: '450ms' }}>
+                {/* FIX: The 'GlowButton' component expects an 'onClick' handler that accepts a mouse event. The original code passed a function that does not accept any arguments directly, causing a type mismatch. This has been corrected by wrapping the function call in an arrow function to ensure the event argument is handled correctly. */}
+                {/* FIX: The GlowButton's onClick prop expects a function that receives a mouse event. The handler was passed a function that does not accept any arguments, causing a type mismatch. It has been wrapped in an arrow function that accepts the event argument to correct this. */}
+                <GlowButton onClick={(e) => onOpenJoinModal()}>Únete ahora</GlowButton>
             </div>
-            
-            {pulses.map(pulse => (
-                <div
-                    key={pulse.id}
-                    className="pulse-effect"
-                    style={{ top: `${pulse.y}px`, left: `${pulse.x}px` }}
-                    aria-hidden="true"
-                />
-            ))}
-
-            <div className="relative z-10 flex flex-col items-center pointer-events-none">
-                <h1 className="text-[2.5rem] leading-tight sm:text-5xl md:text-6xl lg:text-7xl font-bold mb-4 animate-fade-in-down">
-                    Conecta. Crea. <span className="text-fuchsia-500">Brilla.</span>
-                </h1>
-                <p className="text-lg md:text-xl max-w-3xl mb-8 text-gray-300 animate-fade-in-up" style={{ animationDelay: '200ms' }}>
-                    Tu talento merece ser visto.
-                </p>
-                <div className="animate-fade-in-up pointer-events-auto" style={{ animationDelay: '400ms' }}>
-                    <GlowButton onClick={(e) => {
-                        e.stopPropagation(); // Prevent hero click handler from firing when button is clicked
-                        onOpenJoinModal();
-                    }}>Comienza hoy</GlowButton>
-                </div>
-            </div>
-        </section>
-    );
-};
+        </div>
+    </section>
+);
 
 const ProgressBar: React.FC<{ label: string; percentage: number; isInView: boolean }> = ({ label, percentage, isInView }) => (
     <div className="mb-6">
@@ -698,6 +675,7 @@ const Banner: React.FC = () => {
 
 const AccordionItem: React.FC<{ item: FAQItem, isOpen: boolean, onClick: () => void }> = ({ item, isOpen, onClick }) => (
     <div className="bg-gray-900/50 rounded-lg border border-purple-500/30 mb-3 transition-all duration-300 hover:border-purple-400">
+        {/* FIX: The onClick handler for the button passes a mouse event, but the `onClick` prop expects no arguments. This has been corrected by wrapping `onClick` in an arrow function to discard the event. */}
         <button onClick={() => onClick()} className="w-full flex justify-between items-center text-left p-5" aria-expanded={isOpen}>
             <span className="text-lg font-medium text-white">{item.question}</span>
             <ChevronDownIcon className={`w-6 h-6 text-purple-400 transition-transform duration-300 flex-shrink-0 ml-4 ${isOpen ? 'rotate-180' : ''}`} />
@@ -711,6 +689,7 @@ const AccordionItem: React.FC<{ item: FAQItem, isOpen: boolean, onClick: () => v
 
 const FAQ: React.FC = () => {
     const [openIndex, setOpenIndex] = useState<number | null>(null);
+    const [isFaqExpanded, setIsFaqExpanded] = useState(false);
     const faqData: FAQItem[] = [
         {
             question: '¿Qué beneficios obtengo si me uno a agencia Agency Moon?',
@@ -764,13 +743,37 @@ const FAQ: React.FC = () => {
 
     return (
         <Section id="faq">
-            <div className="text-center">
-                <h2 className="text-3xl md:text-4xl font-bold text-white mb-10">Preguntas Frecuentes</h2>
+            <div className="max-w-2xl mx-auto mb-8">
+                <div className="block rounded-2xl overflow-hidden shadow-lg shadow-purple-900/50 border border-purple-500/20">
+                    <img 
+                        src='https://i.postimg.cc/s2RrM0nj/IMG-20251107-154910.png' 
+                        alt='Guía de bienvenida para nuevos streamers de Agency Moon' 
+                        className="w-full h-auto"
+                    />
+                </div>
             </div>
-            <div className="max-w-3xl mx-auto">
-                {faqData.map((item, index) => (
-                    <AccordionItem key={index} item={item} isOpen={openIndex === index} onClick={() => setOpenIndex(openIndex === index ? null : index)} />
-                ))}
+
+            <div className="max-w-3xl mx-auto text-center">
+                 <button
+                    onClick={() => setIsFaqExpanded(!isFaqExpanded)}
+                    className="inline-flex items-center justify-center gap-3 text-left py-3 px-6 bg-gray-900/50 rounded-lg border border-purple-500/30 mb-3 transition-all duration-300 hover:border-purple-400 hover:bg-gray-900/70 focus:outline-none focus:ring-2 focus:ring-purple-500"
+                    aria-expanded={isFaqExpanded}
+                    aria-controls="faq-list"
+                >
+                    <span className="text-lg font-semibold text-white">Preguntas Frecuentes</span>
+                    <ChevronDownIcon className={`w-6 h-6 text-purple-400 transition-transform duration-300 flex-shrink-0 ${isFaqExpanded ? 'rotate-180' : ''}`} />
+                </button>
+            </div>
+            
+            <div 
+                id="faq-list"
+                className={`max-w-3xl mx-auto overflow-hidden transition-all duration-700 ease-in-out ${isFaqExpanded ? 'max-h-[2000px] opacity-100' : 'max-h-0 opacity-0'}`}
+            >
+                <div className="pt-4">
+                    {faqData.map((item, index) => (
+                        <AccordionItem key={index} item={item} isOpen={openIndex === index} onClick={() => setOpenIndex(openIndex === index ? null : index)} />
+                    ))}
+                </div>
             </div>
         </Section>
     );
@@ -820,38 +823,37 @@ const PaymentInfoCarousel: React.FC = () => {
                 <img src="https://i.postimg.cc/8zccpBdH/NIVEL-20251030-155750-0001.png" alt="Tabla de Pagos" className="w-full h-auto" />
             </div>
 
-            <div className="bg-gray-800/50 p-4 rounded-lg mt-4 border border-purple-500/20">
-                <div className="flex items-center justify-between">
-                     <button onClick={() => prevTier()} aria-label="Nivel anterior" className="p-2 bg-black/40 rounded-full hover:bg-purple-600 transition-colors focus:outline-none focus:ring-2 focus:ring-purple-400">
-                        <ChevronLeftIcon className="w-5 h-5" />
-                    </button>
+            <div className="bg-gray-800/50 p-4 rounded-lg relative overflow-hidden mt-4 border border-purple-500/20">
+                {/* FIX: The onClick handler for the button passes a mouse event, but `prevTier` expects no arguments. This has been corrected by wrapping `prevTier` in an arrow function to discard the event. */}
+                <button onClick={() => prevTier()} aria-label="Nivel anterior" className="absolute left-2 top-1/2 -translate-y-1/2 z-10 p-1 bg-black/40 rounded-full hover:bg-purple-600 transition-colors focus:outline-none focus:ring-2 focus:ring-purple-400">
+                    <ChevronLeftIcon className="w-5 h-5" />
+                </button>
+                {/* FIX: The onClick handler for the button passes a mouse event, but `nextTier` expects no arguments. This has been corrected by wrapping `nextTier` in an arrow function to discard the event. */}
+                <button onClick={() => nextTier()} aria-label="Siguiente nivel" className="absolute right-2 top-1/2 -translate-y-1/2 z-10 p-1 bg-black/40 rounded-full hover:bg-purple-600 transition-colors focus:outline-none focus:ring-2 focus:ring-purple-400">
+                    <ChevronRightIcon className="w-5 h-5" />
+                </button>
 
-                    <div key={currentIndex} className="text-center animate-fade-in px-2 w-full">
-                        <h4 className="text-xl sm:text-2xl font-bold text-purple-400 mb-2 sm:mb-4">Nivel {currentTier.level}</h4>
-                        
-                        <div className="grid grid-cols-2 gap-x-4 sm:gap-x-6 gap-y-3 text-sm sm:text-base max-w-sm mx-auto">
-                            <p className="text-left text-gray-300">Meta Semillas:</p>
-                            <p className="text-right font-semibold text-white">{currentTier.seedsGoal}</p>
-                            
-                            <p className="text-left text-gray-300">Horas Diarias:</p>
-                            <p className="text-right font-semibold text-white">{currentTier.dailyHours}</p>
-                            
-                            <p className="text-left text-gray-300">Remuneración:</p>
-                            <p className="text-right font-semibold text-white">{currentTier.remuneration}</p>
-                            
-                            <p className="text-left text-gray-300">Cambio Semillas:</p>
-                            <p className="text-right font-semibold text-white">{currentTier.seedExchange}</p>
-                            
-                            <hr className="col-span-2 border-purple-500/30 my-2"/>
-                            
-                            <p className="text-left text-purple-300 font-bold text-base sm:text-lg">Pago Total:</p>
-                            <p className="text-right font-bold text-lg sm:text-xl text-purple-300">{currentTier.totalPayment} USD</p>
-                        </div>
-                    </div>
+                <div key={currentIndex} className="text-center animate-fade-in">
+                    <h4 className="text-2xl font-bold text-purple-400 mb-4">Nivel {currentTier.level}</h4>
                     
-                    <button onClick={() => nextTier()} aria-label="Siguiente nivel" className="p-2 bg-black/40 rounded-full hover:bg-purple-600 transition-colors focus:outline-none focus:ring-2 focus:ring-purple-400">
-                        <ChevronRightIcon className="w-5 h-5" />
-                    </button>
+                    <div className="grid grid-cols-2 gap-x-4 gap-y-2 text-sm max-w-xs mx-auto">
+                        <p className="text-left text-gray-400">Meta Semillas:</p>
+                        <p className="text-right font-semibold text-white">{currentTier.seedsGoal}</p>
+                        
+                        <p className="text-left text-gray-400">Horas Diarias:</p>
+                        <p className="text-right font-semibold text-white">{currentTier.dailyHours}</p>
+                        
+                        <p className="text-left text-gray-400">Remuneración:</p>
+                        <p className="text-right font-semibold text-white">{currentTier.remuneration}</p>
+                        
+                        <p className="text-left text-gray-400">Cambio Semillas:</p>
+                        <p className="text-right font-semibold text-white">{currentTier.seedExchange}</p>
+                        
+                        <hr className="col-span-2 border-purple-500/30 my-1"/>
+                        
+                        <p className="text-left text-purple-300 font-bold text-base">Pago Total:</p>
+                        <p className="text-right font-bold text-lg text-purple-300">{currentTier.totalPayment} USD</p>
+                    </div>
                 </div>
             </div>
              
@@ -871,6 +873,7 @@ const PaymentInfoCarousel: React.FC = () => {
 
 const InfoAccordionItem: React.FC<{ item: InfoTab, isOpen: boolean, onClick: () => void }> = ({ item, isOpen, onClick }) => (
     <div className="bg-gray-900/50 rounded-lg border border-purple-500/30 mb-4 transition-all duration-300 hover:border-purple-400 hover:shadow-[0_0_20px_rgba(168,85,247,0.4)]">
+        {/* FIX: The onClick handler for the button passes a mouse event, but the `onClick` prop expects no arguments. This has been corrected by wrapping `onClick` in an arrow function to discard the event. */}
         <button 
             onClick={() => onClick()} 
             className="w-full flex justify-between items-center text-left p-6"
@@ -879,7 +882,7 @@ const InfoAccordionItem: React.FC<{ item: InfoTab, isOpen: boolean, onClick: () 
             <span className="text-lg font-semibold text-white">{item.title}</span>
             <ChevronDownIcon className={`w-6 h-6 text-purple-400 transition-transform duration-300 ${isOpen ? 'rotate-180' : ''}`} />
         </button>
-        <div className={`overflow-hidden transition-all duration-500 ease-in-out ${isOpen ? 'max-h-[1500px]' : 'max-h-0'}`}>
+        <div className={`overflow-hidden transition-all duration-500 ease-in-out ${isOpen ? 'max-h-[1000px]' : 'max-h-0'}`}>
             <div className="text-gray-300 px-6 pb-6 space-y-4">
                 {item.content}
             </div>
@@ -888,7 +891,8 @@ const InfoAccordionItem: React.FC<{ item: InfoTab, isOpen: boolean, onClick: () 
 );
 
 const GeneralInfo: React.FC = () => {
-    const [openIndex, setOpenIndex] = useState<number | null>(null);
+    const [openIndex, setOpenIndex] = useState<number | null>(0);
+    const [isInfoExpanded, setIsInfoExpanded] = useState(false);
 
     const onToggle = (index: number) => {
         setOpenIndex(prev => (prev === index ? null : index));
@@ -943,18 +947,34 @@ const GeneralInfo: React.FC = () => {
     
     return (
         <Section id="info">
-            <div className="text-center">
-                <h2 className="text-3xl md:text-4xl font-bold text-white mb-10">Información General</h2>
+            <h2 className="text-3xl md:text-4xl font-bold text-white text-center mb-10">Información General</h2>
+
+            <div className="max-w-4xl mx-auto text-center">
+                <button
+                    onClick={() => setIsInfoExpanded(!isInfoExpanded)}
+                    className="inline-flex items-center justify-center gap-3 text-left py-3 px-6 bg-gray-900/50 rounded-lg border border-purple-500/30 mb-3 transition-all duration-300 hover:border-purple-400 hover:bg-gray-900/70 focus:outline-none focus:ring-2 focus:ring-purple-500"
+                    aria-expanded={isInfoExpanded}
+                    aria-controls="info-list"
+                >
+                    <span className="text-lg font-semibold text-white">Ver Información General</span>
+                    <ChevronDownIcon className={`w-6 h-6 text-purple-400 transition-transform duration-300 flex-shrink-0 ${isInfoExpanded ? 'rotate-180' : ''}`} />
+                </button>
             </div>
-            <div className="max-w-4xl mx-auto">
-                {infoData.map((item, index) => (
-                    <InfoAccordionItem 
-                        key={index}
-                        item={item} 
-                        isOpen={openIndex === index} 
-                        onClick={() => onToggle(index)} 
-                    />
-                ))}
+
+            <div
+                id="info-list"
+                className={`max-w-4xl mx-auto overflow-hidden transition-all duration-700 ease-in-out ${isInfoExpanded ? 'max-h-[2000px] opacity-100' : 'max-h-0 opacity-0'}`}
+            >
+                <div className="pt-4">
+                    {infoData.map((item, index) => (
+                        <InfoAccordionItem 
+                            key={index}
+                            item={item} 
+                            isOpen={openIndex === index} 
+                            onClick={() => onToggle(index)} 
+                        />
+                    ))}
+                </div>
             </div>
         </Section>
     );
@@ -1005,6 +1025,7 @@ const TipsSection: React.FC = () => {
                     <p className="text-gray-400 max-w-2xl mx-auto mb-8">
                         Mejora la calidad de tus transmisiones y aumenta tu audiencia con nuestros consejos profesionales. Haz clic para ver nuestra galería de tips.
                     </p>
+                    {/* FIX: The GlowButton's onClick prop expects a function that receives a mouse event. The handler was passed a function that does not accept any arguments, causing a type mismatch. It has been wrapped in an arrow function that accepts the event argument to correct this. */}
                     <GlowButton onClick={(e) => setIsTipsModalOpen(true)}>
                         Ver Galería de Tips
                     </GlowButton>
@@ -1019,46 +1040,66 @@ const TipsSection: React.FC = () => {
                     aria-modal="true"
                 >
                     <div 
-                        className="relative w-full max-w-lg animate-zoom-in"
+                        className="relative w-full max-w-3xl animate-zoom-in"
                         onClick={(e) => e.stopPropagation()}
                     >
-                        <div className="relative">
-                            <img
-                                src={tipsImages[currentTipIndex]}
-                                alt={`Tip de transmisión ${currentTipIndex + 1}`}
-                                className="rounded-2xl shadow-[0_0_30px_rgba(168,85,247,0.7)] border-2 border-purple-500/50 w-full h-auto"
-                            />
-                        </div>
-
-                        <button
-                            onClick={(e) => { e.stopPropagation(); prevTip(); }}
-                            className="absolute top-1/2 -left-4 sm:-left-12 -translate-y-1/2 bg-black/50 text-white p-2 rounded-full hover:bg-purple-600 transition-colors z-10"
-                            aria-label="Anterior"
-                        >
-                            <ChevronLeftIcon className="w-6 h-6" />
-                        </button>
-                        <button
-                            onClick={(e) => { e.stopPropagation(); nextTip(); }}
-                            className="absolute top-1/2 -right-4 sm:-right-12 -translate-y-1/2 bg-black/50 text-white p-2 rounded-full hover:bg-purple-600 transition-colors z-10"
-                            aria-label="Siguiente"
-                        >
-                            <ChevronRightIcon className="w-6 h-6" />
-                        </button>
-                        
-                        <div className="absolute -bottom-8 left-1/2 -translate-x-1/2 flex gap-2">
-                            {tipsImages.map((_, index) => (
-                                <button 
-                                    key={index}
-                                    onClick={() => setCurrentTipIndex(index)}
-                                    className={`w-3 h-3 rounded-full transition-all ${index === currentTipIndex ? 'bg-purple-500 scale-125' : 'bg-gray-600 hover:bg-gray-400'}`}
-                                    aria-label={`Ir al tip ${index + 1}`}
-                                />
+                        <div className="relative w-full h-[500px] sm:h-[600px]">
+                            {tipsImages.map((src, index) => (
+                                <div
+                                    key={src}
+                                    className={`absolute inset-0 transition-all duration-500 ease-in-out transform-gpu flex items-center justify-center ${
+                                        index === currentTipIndex
+                                            ? 'opacity-100 scale-100 rotate-0'
+                                            : 'opacity-0 scale-90 -rotate-6'
+                                    }`}
+                                    aria-hidden={index !== currentTipIndex}
+                                >
+                                    <div className="relative rounded-2xl shadow-[0_0_30px_rgba(168,85,247,0.7)] border-2 border-purple-500/50 p-1 bg-black">
+                                        <img
+                                            src={src}
+                                            alt={`Tip de transmisión ${index + 1}`}
+                                            className="w-96 h-96 sm:w-[28rem] sm:h-[28rem] object-cover rounded-2xl"
+                                        />
+                                    </div>
+                                </div>
                             ))}
+
+                            <button
+// FIX: The onClick handler expects a function that receives a mouse event.
+// The `prevTip` function does not expect any arguments.
+// It is wrapped in an arrow function to prevent the event from being passed.
+                                onClick={(e) => { e.stopPropagation(); prevTip(); }}
+                                className="absolute top-1/2 left-2 sm:left-4 -translate-y-1/2 bg-black/50 text-white p-2 rounded-full hover:bg-purple-600 transition-colors z-10"
+                                aria-label="Anterior"
+                            >
+                                <ChevronLeftIcon className="w-6 h-6" />
+                            </button>
+                            <button
+// FIX: The onClick handler expects a function that receives a mouse event.
+// The `nextTip` function does not expect any arguments.
+// It is wrapped in an arrow function to prevent the event from being passed.
+                                onClick={(e) => { e.stopPropagation(); nextTip(); }}
+                                className="absolute top-1/2 right-2 sm:right-4 -translate-y-1/2 bg-black/50 text-white p-2 rounded-full hover:bg-purple-600 transition-colors z-10"
+                                aria-label="Siguiente"
+                            >
+                                <ChevronRightIcon className="w-6 h-6" />
+                            </button>
+                            
+                            <div className="absolute bottom-4 left-1/2 -translate-x-1/2 flex gap-2">
+                                {tipsImages.map((_, index) => (
+                                    <button 
+                                        key={index}
+                                        onClick={() => setCurrentTipIndex(index)}
+                                        className={`w-3 h-3 rounded-full transition-all ${index === currentTipIndex ? 'bg-purple-500 scale-125' : 'bg-gray-600 hover:bg-gray-400'}`}
+                                        aria-label={`Ir al tip ${index + 1}`}
+                                    />
+                                ))}
+                            </div>
                         </div>
                        
                         <button 
                             onClick={() => setIsTipsModalOpen(false)}
-                            className="absolute -top-3 -right-3 text-white bg-purple-600 rounded-full p-2 hover:bg-purple-700 transition-colors z-20"
+                            className="absolute -top-3 -right-3 text-white bg-purple-600 rounded-full p-2 hover:bg-purple-700 transition-colors"
                             aria-label="Cerrar"
                         >
                             <XIcon className="w-6 h-6" />
@@ -1082,18 +1123,39 @@ const TalentsSection: React.FC = () => {
     ];
 
     const [currentIndex, setCurrentIndex] = useState(0);
+    const [expandedTalentIndex, setExpandedTalentIndex] = useState<number | null>(null);
+    const autoPlayRef = useRef<ReturnType<typeof setInterval>>();
 
     const nextSlide = useCallback(() => {
-        setCurrentIndex(prev => (prev + 1) % talentData.length);
+        setCurrentIndex(prev => prev === talentData.length - 1 ? 0 : prev + 1);
     }, [talentData.length]);
 
     useEffect(() => {
-        const timer = setInterval(nextSlide, 4000);
-        return () => clearInterval(timer);
+        autoPlayRef.current = setInterval(nextSlide, 3000);
+        return () => {
+            if (autoPlayRef.current) clearInterval(autoPlayRef.current);
+        };
     }, [nextSlide]);
     
-    const goToSlide = (index: number) => {
-        setCurrentIndex(index);
+    const prevSlide = () => {
+        const isFirstSlide = currentIndex === 0;
+        const newIndex = isFirstSlide ? talentData.length - 1 : currentIndex - 1;
+        setCurrentIndex(newIndex);
+    };
+
+    const nextSlideManual = () => {
+        const isLastSlide = currentIndex === talentData.length - 1;
+        const newIndex = isLastSlide ? 0 : currentIndex + 1;
+        setCurrentIndex(newIndex);
+    };
+    
+    // FIX: Refactored inline onClick handlers to named functions to resolve event handler type mismatches.
+    const handlePrevSlide = (e: React.MouseEvent) => {
+        prevSlide();
+    };
+
+    const handleNextSlide = (e: React.MouseEvent) => {
+        nextSlideManual();
     };
 
     return (
@@ -1104,36 +1166,90 @@ const TalentsSection: React.FC = () => {
                     Descubre a los creadores que forman parte de la familia Agency Moon. Cada uno con un estilo único y una pasión por el streaming.
                 </p>
             </div>
-            <div className="relative w-full max-w-sm h-[520px] mx-auto">
-                <div className="relative h-full overflow-hidden rounded-2xl">
+            <div 
+                className="relative w-full max-w-[280px] h-[420px] sm:max-w-xs sm:h-[480px] md:max-w-sm md:h-[520px] mx-auto"
+                onMouseEnter={() => { if(autoPlayRef.current) clearInterval(autoPlayRef.current); }}
+                onMouseLeave={() => { autoPlayRef.current = setInterval(nextSlide, 3000); }}
+            >
+                <div className="relative w-full h-full overflow-hidden">
                     {talentData.map((talent, index) => (
                         <div
                             key={index}
-                            className="absolute w-full h-full transition-opacity duration-700 ease-in-out"
-                            style={{ opacity: index === currentIndex ? 1 : 0 }}
+                            className="absolute top-0 left-0 w-full h-full transition-transform duration-500 ease-out"
+                            style={{ transform: `translateX(${(index - currentIndex) * 100}%)` }}
                             aria-hidden={index !== currentIndex}
                         >
-                            <div className="w-full h-full rounded-2xl overflow-hidden shadow-lg shadow-purple-900/50 border border-purple-500/30 bg-gray-800">
+                            <div className="relative w-full h-full rounded-2xl overflow-hidden shadow-lg shadow-purple-900/50 border border-purple-500/30 bg-gray-800 transition-all duration-300 hover:border-purple-400 hover:shadow-2xl hover:shadow-purple-500/40 transform hover:-translate-y-2">
                                 <img 
                                     src={talent.image} 
                                     alt={`Talento de Agency Moon: ${talent.name}`} 
-                                    className="w-full h-full object-cover"
+                                    className="absolute top-0 left-0 w-full h-full object-cover"
                                 />
 
-                                <div className="absolute bottom-0 left-0 w-full p-4 bg-gradient-to-t from-black via-black/70 to-transparent">
-                                    <h3 className="text-xl font-bold text-white">{talent.name}</h3>
-                                    <p className="text-sm text-gray-300">{talent.description}</p>
+                                <div className="absolute bottom-0 left-0 w-full h-full pointer-events-none">
+                                    <div className="absolute bottom-0 left-0 w-full h-4/5 bg-gradient-to-t from-black via-black/80 to-transparent" />
+                                </div>
+                                
+                                <div className="absolute bottom-0 left-0 w-full text-white pointer-events-auto">
+                                    <div 
+                                        className={`overflow-hidden transition-all duration-500 ease-in-out ${expandedTalentIndex === index ? 'max-h-96' : 'max-h-[72px]'}`}
+                                    >
+                                        <div
+                                            className="flex justify-between items-center p-4 cursor-pointer h-[72px]"
+                                            onClick={() => setExpandedTalentIndex(expandedTalentIndex === index ? null : index)}
+                                            aria-expanded={expandedTalentIndex === index}
+                                        >
+                                            <h3 className="text-xl font-bold">{talent.name}</h3>
+                                            <ChevronDownIcon className={`w-6 h-6 text-purple-400 transition-transform duration-300 ${expandedTalentIndex === index ? 'rotate-180' : ''}`} />
+                                        </div>
+
+                                        <div className="px-4 pb-4">
+                                            <div className="text-sm text-gray-300 space-y-2">
+                                                {talent.description.split('|').map((part, i) => {
+                                                    const [key, value] = part.trim().split(':');
+                                                    if (!value) return null;
+                                                    return (
+                                                        <p key={i}>
+                                                            <strong className="font-semibold text-purple-400">{key}:</strong>
+                                                            <span className="ml-1.5">{value.trim()}</span>
+                                                        </p>
+                                                    )
+                                                })}
+                                            </div>
+                                        </div>
+                                    </div>
                                 </div>
                              </div>
                         </div>
                     ))}
                 </div>
+
+                <button
+// FIX: The onClick handler expects a function that receives a mouse event.
+// The `prevSlide` function does not expect any arguments.
+// It is wrapped in an arrow function to prevent the event from being passed.
+                    onClick={handlePrevSlide}
+                    className="absolute top-1/2 -left-4 md:-left-16 -translate-y-1/2 bg-black/50 text-white p-3 rounded-full hover:bg-purple-600 transition-colors z-20 focus:outline-none focus:ring-2 focus:ring-purple-400"
+                    aria-label="Anterior Talento"
+                >
+                    <ChevronLeftIcon className="w-6 h-6" />
+                </button>
+                <button
+// FIX: The onClick handler expects a function that receives a mouse event.
+// The `nextSlideManual` function does not expect any arguments.
+// It is wrapped in an arrow function to prevent the event from being passed.
+                    onClick={handleNextSlide}
+                    className="absolute top-1/2 -right-4 md:-right-16 -translate-y-1/2 bg-black/50 text-white p-3 rounded-full hover:bg-purple-600 transition-colors z-20 focus:outline-none focus:ring-2 focus:ring-purple-400"
+                    aria-label="Siguiente Talento"
+                >
+                    <ChevronRightIcon className="w-6 h-6" />
+                </button>
                 
-                <div className="absolute bottom-4 left-1/2 -translate-x-1/2 flex gap-3 z-10">
+                <div className="absolute -bottom-10 left-1/2 -translate-x-1/2 flex gap-3">
                     {talentData.map((_, index) => (
                         <button
                             key={index}
-                            onClick={() => goToSlide(index)}
+                            onClick={() => setCurrentIndex(index)}
                             className={`w-3 h-3 rounded-full transition-all duration-300 ${index === currentIndex ? 'bg-purple-500 scale-125' : 'bg-gray-600 hover:bg-gray-400'}`}
                             aria-label={`Ir al talento ${index + 1}`}
                         />
@@ -1161,6 +1277,9 @@ const PartnershipSection: React.FC<{ onOpenModal: () => void }> = ({ onOpenModal
                     <p className="text-gray-200 md:text-lg mb-8 max-w-2xl mx-auto" style={{textShadow: '0 1px 5px rgba(0,0,0,0.5)'}}>
                         Actualmente buscamos socios comerciales o agentes que quieran trabajar con nosotros en la empresa. Expande tus horizontes y crece profesionalmente en la industria del streaming.
                     </p>
+                    {/* FIX: The GlowButton's onClick prop expects a function that receives a mouse event. The handler was passed directly, causing a type mismatch. It has been wrapped in an arrow function to correct this. */}
+                    {/* FIX: The GlowButton's onClick prop expects a function that receives a mouse event. The handler was passed a function that does not accept any arguments, causing a type mismatch. It has been wrapped in an arrow function that accepts the event argument to correct this. */}
+                    {/* FIX: The GlowButton's onClick prop expects a function that receives a mouse event. The handler was passed directly, causing a type mismatch. It has been refactored to an inline arrow function to ensure type correctness. */}
                     <GlowButton onClick={(e) => onOpenModal()}>
                         Más Información
                     </GlowButton>
@@ -1213,10 +1332,11 @@ export default function App() {
     const [isPartnershipModalOpen, setIsPartnershipModalOpen] = useState(false);
     const [isApplicationFormOpen, setIsApplicationFormOpen] = useState(false);
     const [isAboutUsModalOpen, setIsAboutUsModalOpen] = useState(false);
+    const [isTipsModalOpen, setIsTipsModalOpen] = useState(false); // State from TipsSection moved here
 
     // Lock body scroll when any modal is open
     useEffect(() => {
-        const isAnyModalOpen = isJoinModalOpen || isPartnershipModalOpen || isApplicationFormOpen || isAboutUsModalOpen;
+        const isAnyModalOpen = isJoinModalOpen || isPartnershipModalOpen || isApplicationFormOpen || isAboutUsModalOpen || isTipsModalOpen;
         if (isAnyModalOpen) {
             document.body.style.overflow = 'hidden';
         } else {
@@ -1227,7 +1347,7 @@ export default function App() {
         return () => {
             document.body.style.overflow = 'auto';
         };
-    }, [isJoinModalOpen, isPartnershipModalOpen, isApplicationFormOpen, isAboutUsModalOpen]);
+    }, [isJoinModalOpen, isPartnershipModalOpen, isApplicationFormOpen, isAboutUsModalOpen, isTipsModalOpen]);
 
 
     useEffect(() => {
@@ -1238,7 +1358,17 @@ export default function App() {
                                 
                 const infoSection = document.getElementById('info');
                 if (infoSection) {
-                    infoSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                    // A small timeout allows the state to update and accordion to start opening before scrolling
+                    setTimeout(() => {
+                        infoSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                        // We can't directly open the accordion from here easily without more state lifting
+                        // but we can try to click the button if it's not expanded
+                        const infoButton = document.querySelector('#info button[aria-controls="info-list"]');
+                        if (infoButton && infoButton.getAttribute('aria-expanded') === 'false') {
+                           (infoButton as HTMLElement).click();
+                        }
+
+                    }, 100);
                 }
             }
         };
@@ -1249,6 +1379,126 @@ export default function App() {
             document.removeEventListener('click', handleFaqLinkClick);
         };
     }, []);
+
+    // TipsModal now lives inside TipsSection, we just pass state control
+    const TipsSectionWithState: React.FC = () => {
+        const [currentTipIndex, setCurrentTipIndex] = useState(0);
+        const tipsImages = [
+            'https://i.postimg.cc/xCscRJt2/2-20251030-105515-0001.png',
+            'https://i.postimg.cc/YSY9JDRQ/3-20251030-105515-0002.png',
+            'https://i.postimg.cc/JnzfbGs1/4-20251030-105515-0003.png',
+            'https://i.postimg.cc/8PfjRCv2/5-20251030-105515-0004.png',
+            'https://i.postimg.cc/NFrP4TBF/6-20251030-105515-0005.png',
+        ];
+
+        const nextTip = useCallback(() => {
+            setCurrentTipIndex(prevIndex => (prevIndex + 1) % tipsImages.length);
+        }, [tipsImages.length]);
+
+        const prevTip = useCallback(() => {
+            setCurrentTipIndex(prevIndex => (prevIndex - 1 + tipsImages.length) % tipsImages.length);
+        }, [tipsImages.length]);
+
+        useEffect(() => {
+            const handleKeyDown = (event: KeyboardEvent) => {
+                if (!isTipsModalOpen) return;
+                if (event.key === 'ArrowRight') nextTip();
+                else if (event.key === 'ArrowLeft') prevTip();
+                else if (event.key === 'Escape') setIsTipsModalOpen(false);
+            };
+            window.addEventListener('keydown', handleKeyDown);
+            return () => {
+                window.removeEventListener('keydown', handleKeyDown);
+            };
+        }, [isTipsModalOpen, nextTip, prevTip]);
+
+        return (
+            <>
+                <Section id="tips">
+                    <div className="text-center">
+                        <h2 className="text-3xl md:text-4xl font-bold text-white mb-4">Tips para tu Transmisión</h2>
+                        <p className="text-gray-400 max-w-2xl mx-auto mb-8">
+                            Mejora la calidad de tus transmisiones y aumenta tu audiencia con nuestros consejos profesionales. Haz clic para ver nuestra galería de tips.
+                        </p>
+                        {/* FIX: The GlowButton's onClick prop expects a function that receives a mouse event. The handler was passed a function that does not accept any arguments, causing a type mismatch. It has been wrapped in an arrow function that accepts the event argument to correct this. */}
+                        <GlowButton onClick={(e) => setIsTipsModalOpen(true)}>
+                            Ver Galería de Tips
+                        </GlowButton>
+                    </div>
+                </Section>
+                {isTipsModalOpen && (
+                    <div 
+                        className="fixed inset-0 bg-black/90 backdrop-blur-sm z-50 flex items-center justify-center p-4 animate-fade-in"
+                        onClick={() => setIsTipsModalOpen(false)}
+                        role="dialog" aria-modal="true"
+                    >
+                        <div 
+                            className="relative w-full max-w-3xl animate-zoom-in"
+                            onClick={(e) => e.stopPropagation()}
+                        >
+                            <div className="relative w-full h-[500px] sm:h-[600px] flex items-center justify-center">
+                                <div className="relative w-96 h-96 sm:w-[28rem] sm:h-[28rem]">
+                                {tipsImages.map((src, index) => (
+                                    <div
+                                        key={src}
+                                        className={`absolute inset-0 transition-opacity duration-300 ease-in-out ${index === currentTipIndex ? 'opacity-100' : 'opacity-0'}`}
+                                        aria-hidden={index !== currentTipIndex}
+                                    >
+                                        <div className="relative rounded-2xl shadow-[0_0_30px_rgba(168,85,247,0.7)] border-2 border-purple-500/50 p-1 bg-black w-full h-full">
+                                            <img
+                                                src={src}
+                                                alt={`Tip de transmisión ${index + 1}`}
+                                                className="w-full h-full object-cover rounded-2xl"
+                                            />
+                                        </div>
+                                    </div>
+                                ))}
+                                </div>
+                                <button
+// FIX: The onClick handler expects a function that receives a mouse event.
+// The `prevTip` function does not expect any arguments.
+// It is wrapped in an arrow function to prevent the event from being passed.
+                                    onClick={(e) => { e.stopPropagation(); prevTip(); }}
+                                    className="absolute top-1/2 left-2 sm:-left-12 -translate-y-1/2 bg-black/50 text-white p-2 rounded-full hover:bg-purple-600 transition-colors z-10"
+                                    aria-label="Anterior"
+                                >
+                                    <ChevronLeftIcon className="w-6 h-6" />
+                                </button>
+                                <button
+// FIX: The onClick handler expects a function that receives a mouse event.
+// The `nextTip` function does not expect any arguments.
+// It is wrapped in an arrow function to prevent the event from being passed.
+                                    onClick={(e) => { e.stopPropagation(); nextTip(); }}
+                                    className="absolute top-1/2 right-2 sm:-right-12 -translate-y-1/2 bg-black/50 text-white p-2 rounded-full hover:bg-purple-600 transition-colors z-10"
+                                    aria-label="Siguiente"
+                                >
+                                    <ChevronRightIcon className="w-6 h-6" />
+                                </button>
+                                <div className="absolute -bottom-8 left-1/2 -translate-x-1/2 flex gap-2">
+                                    {tipsImages.map((_, index) => (
+                                        <button 
+                                            key={index}
+                                            onClick={() => setCurrentTipIndex(index)}
+                                            className={`w-3 h-3 rounded-full transition-all ${index === currentTipIndex ? 'bg-purple-500 scale-125' : 'bg-gray-600 hover:bg-gray-400'}`}
+                                            aria-label={`Ir al tip ${index + 1}`}
+                                        />
+                                    ))}
+                                </div>
+                            </div>
+                           
+                            <button 
+                                onClick={() => setIsTipsModalOpen(false)}
+                                className="absolute -top-3 -right-3 text-white bg-purple-600 rounded-full p-2 hover:bg-purple-700 transition-colors z-20"
+                                aria-label="Cerrar"
+                            >
+                                <XIcon className="w-6 h-6" />
+                            </button>
+                        </div>
+                    </div>
+                )}
+            </>
+        );
+    };
 
     return (
         <div className="bg-black text-white min-h-screen overflow-x-hidden">
@@ -1271,38 +1521,22 @@ export default function App() {
                 .faq-answer ul li::before { content: '✓'; position: absolute; left: 0; color: #A855F7; font-weight: bold; }
                 .faq-answer a { color: #C4B5FD; text-decoration: underline; }
                 .faq-answer a:hover { color: #D8B4FE; }
-                .pulse-effect {
-                    position: absolute;
-                    border-radius: 50%;
-                    transform: translate(-50%, -50%);
-                    animation: pulse-animation 0.75s ease-out forwards;
-                    pointer-events: none;
-                    border: 2px solid #f0abfc; /* fuchsia-200 */
-                    box-shadow: 0 0 15px #d946ef, 0 0 25px #d946ef, inset 0 0 10px #d946ef; /* fuchsia-500 */
-                }
-                @keyframes pulse-animation {
-                    0% {
-                        width: 0rem;
-                        height: 0rem;
-                        opacity: 0.8;
-                    }
-                    100% {
-                        width: 10rem;
-                        height: 10rem;
-                        opacity: 0;
-                    }
-                }
             `}</style>
             <Header onOpenJoinModal={() => setIsJoinModalOpen(true)} onOpenAboutModal={() => setIsAboutUsModalOpen(true)} />
             <main>
                 <Hero onOpenJoinModal={() => setIsJoinModalOpen(true)} />
+                <Section id="about-us" className="text-center">
+                    <h2 className="text-3xl md:text-4xl font-bold text-white mb-4">Quiénes Somos</h2>
+                    {/* FIX: The GlowButton's onClick prop expects a function that receives a mouse event. The handler was passed a function that does not accept any arguments, causing a type mismatch. It has been wrapped in an arrow function that accepts the event argument to correct this. */}
+                    <GlowButton onClick={(e) => setIsAboutUsModalOpen(true)}>Conoce más</GlowButton>
+                </Section>
                 <ExperienceSection />
                 <Section id="banner-cta" className="py-20">
                     <Banner />
                 </Section>
                 <FAQ />
                 <GeneralInfo />
-                <TipsSection />
+                <TipsSectionWithState />
                 <TalentsSection />
                 <PartnershipSection onOpenModal={() => setIsPartnershipModalOpen(true)} />
                 <Contact />
