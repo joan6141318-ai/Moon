@@ -1,7 +1,4 @@
 
-
-
-
 import React, { useState, useEffect, useRef, ReactNode, useCallback } from 'react';
 import { FAQItem, PaymentTier, InfoTab } from './types';
 import { 
@@ -533,29 +530,72 @@ const Header: React.FC<{ onOpenJoinModal: () => void; onOpenAboutModal: () => vo
     );
 };
 
-const Hero: React.FC<{ onOpenJoinModal: () => void }> = ({ onOpenJoinModal }) => (
-    <section id="home" className="h-screen min-h-[700px] w-full flex items-center justify-center relative text-white text-center px-4 overflow-hidden">
-        <div className="absolute inset-0 bg-black z-0">
-            <img
-                src="https://images.pexels.com/photos/169647/pexels-photo-169647.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1"
-                alt="Edificio de oficinas de noche con luces"
-                className="w-full h-full object-cover opacity-40"
-            />
-            <div className="absolute inset-0 bg-gradient-to-t from-black via-black/50 to-transparent"></div>
-        </div>
-        <div className="relative z-10 flex flex-col items-center">
-            <h1 className="text-[2.5rem] leading-tight sm:text-5xl md:text-6xl lg:text-7xl font-bold mb-4 animate-fade-in-down">
-                Conecta. Crea. <span className="text-fuchsia-500">Brilla.</span>
-            </h1>
-            <p className="text-lg md:text-xl max-w-3xl mb-8 text-gray-300 animate-fade-in-up" style={{ animationDelay: '200ms' }}>
-                Tu talento merece ser visto.
-            </p>
-            <div className="animate-fade-in-up" style={{ animationDelay: '400ms' }}>
-                <GlowButton onClick={(e) => onOpenJoinModal()}>Comienza hoy</GlowButton>
+const Hero: React.FC<{ onOpenJoinModal: () => void }> = ({ onOpenJoinModal }) => {
+    interface Pulse {
+        id: number;
+        x: number;
+        y: number;
+    }
+    const [pulses, setPulses] = useState<Pulse[]>([]);
+    const heroRef = useRef<HTMLElement>(null);
+
+    const handleHeroClick = (e: React.MouseEvent<HTMLElement>) => {
+        const rect = heroRef.current?.getBoundingClientRect();
+        if (!rect) return;
+
+        const x = e.clientX - rect.left;
+        const y = e.clientY - rect.top;
+        
+        const newPulse = { id: Date.now(), x, y };
+        setPulses(prev => [...prev, newPulse]);
+
+        setTimeout(() => {
+            setPulses(prev => prev.filter(p => p.id !== newPulse.id));
+        }, 750); // Match animation duration
+    };
+    
+    return (
+        <section 
+            id="home" 
+            ref={heroRef}
+            onClick={handleHeroClick}
+            className="h-screen min-h-[700px] w-full flex items-center justify-center relative text-white text-center px-4 overflow-hidden cursor-pointer"
+        >
+            <div className="absolute inset-0 bg-black z-0">
+                <img
+                    src="https://images.pexels.com/photos/169647/pexels-photo-169647.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1"
+                    alt="Edificio de oficinas de noche con luces"
+                    className="w-full h-full object-cover opacity-40"
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-black via-black/50 to-transparent"></div>
             </div>
-        </div>
-    </section>
-);
+            
+            {pulses.map(pulse => (
+                <div
+                    key={pulse.id}
+                    className="pulse-effect"
+                    style={{ top: `${pulse.y}px`, left: `${pulse.x}px` }}
+                    aria-hidden="true"
+                />
+            ))}
+
+            <div className="relative z-10 flex flex-col items-center pointer-events-none">
+                <h1 className="text-[2.5rem] leading-tight sm:text-5xl md:text-6xl lg:text-7xl font-bold mb-4 animate-fade-in-down">
+                    Conecta. Crea. <span className="text-fuchsia-500">Brilla.</span>
+                </h1>
+                <p className="text-lg md:text-xl max-w-3xl mb-8 text-gray-300 animate-fade-in-up" style={{ animationDelay: '200ms' }}>
+                    Tu talento merece ser visto.
+                </p>
+                <div className="animate-fade-in-up pointer-events-auto" style={{ animationDelay: '400ms' }}>
+                    <GlowButton onClick={(e) => {
+                        e.stopPropagation(); // Prevent hero click handler from firing when button is clicked
+                        onOpenJoinModal();
+                    }}>Comienza hoy</GlowButton>
+                </div>
+            </div>
+        </section>
+    );
+};
 
 const ProgressBar: React.FC<{ label: string; percentage: number; isInView: boolean }> = ({ label, percentage, isInView }) => (
     <div className="mb-6">
@@ -1243,6 +1283,27 @@ export default function App() {
                 .faq-answer ul li::before { content: '✓'; position: absolute; left: 0; color: #A855F7; font-weight: bold; }
                 .faq-answer a { color: #C4B5FD; text-decoration: underline; }
                 .faq-answer a:hover { color: #D8B4FE; }
+                .pulse-effect {
+                    position: absolute;
+                    border-radius: 50%;
+                    transform: translate(-50%, -50%);
+                    animation: pulse-animation 0.75s ease-out forwards;
+                    pointer-events: none;
+                    border: 2px solid #f0abfc; /* fuchsia-200 */
+                    box-shadow: 0 0 15px #d946ef, 0 0 25px #d946ef, inset 0 0 10px #d946ef; /* fuchsia-500 */
+                }
+                @keyframes pulse-animation {
+                    0% {
+                        width: 0rem;
+                        height: 0rem;
+                        opacity: 0.8;
+                    }
+                    100% {
+                        width: 10rem;
+                        height: 10rem;
+                        opacity: 0;
+                    }
+                }
             `}</style>
             <Header onOpenJoinModal={() => setIsJoinModalOpen(true)} onOpenAboutModal={() => setIsAboutUsModalOpen(true)} />
             <main>
