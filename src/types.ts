@@ -1,4 +1,5 @@
 
+
 import type { ReactNode } from 'react';
 
 export interface ChatMessage {
@@ -18,10 +19,4 @@ export interface PaymentTier {
   remuneration: string;
   seedExchange: string;
   totalPayment: string;
-}
-
-
-export interface InfoTab {
-  title: string;
-  content: ReactNode;
 }

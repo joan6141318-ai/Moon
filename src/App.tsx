@@ -1,7 +1,8 @@
 
 
+
 import React, { useState, useEffect, useRef, ReactNode, useCallback } from 'react';
-import { FAQItem, PaymentTier, InfoTab } from './types';
+import { FAQItem, PaymentTier } from './types';
 import { 
     Logo, ChevronDownIcon, YoutubeIcon, WhatsappIcon, XIcon, ChevronLeftIcon, ChevronRightIcon, MenuIcon,
     PercentageIcon, TransparencyIcon, TrainingIcon, SupportMaterialIcon, TalentDatabaseIcon, VerificationIcon, PersonalizedSupportIcon,
@@ -87,6 +88,29 @@ const GlowButton: React.FC<{ children: ReactNode, href?: string, className?: str
         <button type={type || 'button'} onClick={handleClick} className={classes}>
             {children}
         </button>
+    );
+};
+
+const AccordionItem: React.FC<{ title: string; children: ReactNode; startOpen?: boolean }> = ({ title, children, startOpen = false }) => {
+    const [isOpen, setIsOpen] = useState(startOpen);
+    return (
+        <div className="bg-gray-900/50 rounded-lg border border-purple-500/30 mb-3 overflow-hidden transition-all duration-300 hover:border-purple-400">
+            <button
+                onClick={() => setIsOpen(!isOpen)}
+                className="w-full flex justify-between items-center p-5 text-left font-medium text-white transition-colors hover:bg-purple-900/20"
+                aria-expanded={isOpen}
+            >
+                <h3 className="text-lg">{title}</h3>
+                <ChevronDownIcon className={`w-5 h-5 transform transition-transform duration-300 ${isOpen ? 'rotate-180' : ''}`} />
+            </button>
+            <div className={`grid transition-all duration-500 ease-in-out ${isOpen ? 'grid-rows-[1fr] opacity-100' : 'grid-rows-[0fr] opacity-0'}`}>
+                <div className="overflow-hidden">
+                    <div className="p-5 pt-0 text-gray-300 text-base leading-relaxed">
+                        {children}
+                    </div>
+                </div>
+            </div>
+        </div>
     );
 };
 
@@ -661,24 +685,11 @@ const Banner: React.FC = () => {
 };
 
 
-const FaqItemDisplay: React.FC<{ item: FAQItem }> = ({ item }) => {
-    const [isOpen, setIsOpen] = useState(false);
-    return (
-        <div className="bg-gray-900/50 rounded-lg border border-purple-500/30 mb-3 overflow-hidden transition-all duration-300 hover:border-purple-400">
-            <button
-                onClick={() => setIsOpen(!isOpen)}
-                className="w-full flex justify-between items-center p-5 text-left font-medium text-white transition-colors hover:bg-purple-900/20"
-                aria-expanded={isOpen}
-            >
-                <h3 className="text-lg">{item.question}</h3>
-                <ChevronDownIcon className={`w-5 h-5 transform transition-transform duration-300 ${isOpen ? 'rotate-180' : ''}`} />
-            </button>
-            <div className={`transition-all duration-500 ease-in-out overflow-hidden ${isOpen ? 'max-h-96 opacity-100' : 'max-h-0 opacity-0'}`}>
-                <div className="p-5 pt-0 text-gray-300 text-base leading-relaxed faq-answer" dangerouslySetInnerHTML={{ __html: item.answer }} />
-            </div>
-        </div>
-    );
-};
+const FaqItemDisplay: React.FC<{ item: FAQItem }> = ({ item }) => (
+    <AccordionItem title={item.question}>
+        <div className="faq-answer" dangerouslySetInnerHTML={{ __html: item.answer }} />
+    </AccordionItem>
+);
 
 
 const FAQ: React.FC = () => {
@@ -755,94 +766,59 @@ const FAQ: React.FC = () => {
     );
 };
 
-const PaymentCarousel: React.FC = () => {
-    const paymentTiers: PaymentTier[] = [
-      { level: 'A', seedsGoal: '2,000', dailyHours: '2 Diarias / 44 Mensuales', remuneration: '$23', seedExchange: 'N/A', totalPayment: '$23 USD' },
-      { level: 'S1', seedsGoal: '10,000', dailyHours: '2 Diarias / 44 Mensuales', remuneration: '$118', seedExchange: 'N/A', totalPayment: '$118 USD' },
-      { level: 'S2', seedsGoal: '20,000', dailyHours: '2 Diarias / 44 Mensuales', remuneration: '$235', seedExchange: 'N/A', totalPayment: '$235 USD' },
-      { level: 'S6', seedsGoal: '200,000', dailyHours: '2 Diarias / 44 Mensuales', remuneration: '$2,353', seedExchange: 'N/A', totalPayment: '$2,353 USD' },
-      { level: 'S10', seedsGoal: '1,000,000', dailyHours: '2 Diarias / 44 Mensuales', remuneration: '$11,765', seedExchange: 'N/A', totalPayment: '$11,765 USD' },
-      { level: 'S12', seedsGoal: '3,000,000', dailyHours: '2 Diarias / 44 Mensuales', remuneration: '$36,786', seedExchange: 'N/A', totalPayment: '$36,786 USD' },
+const PaymentTable: React.FC = () => {
+    const paymentData: Omit<PaymentTier, 'seedExchange' | 'remuneration'>[] = [
+      { level: 'A', seedsGoal: '2,000', dailyHours: '2 / 44', totalPayment: '$23' },
+      { level: 'S1', seedsGoal: '10,000', dailyHours: '2 / 44', totalPayment: '$118' },
+      { level: 'S2', seedsGoal: '20,000', dailyHours: '2 / 44', totalPayment: '$235' },
+      { level: 'S3', seedsGoal: '40,000', dailyHours: '2 / 44', totalPayment: '$471' },
+      { level: 'S4', seedsGoal: '80,000', dailyHours: '2 / 44', totalPayment: '$941' },
+      { level: 'S5', seedsGoal: '120,000', dailyHours: '2 / 44', totalPayment: '$1,412' },
+      { level: 'S6', seedsGoal: '200,000', dailyHours: '2 / 44', totalPayment: '$2,353' },
+      { level: 'S7', seedsGoal: '300,000', dailyHours: '2 / 44', totalPayment: '$3,529' },
+      { level: 'S8', seedsGoal: '500,000', dailyHours: '2 / 44', totalPayment: '$5,882' },
+      { level: 'S9', seedsGoal: '800,000', dailyHours: '2 / 44', totalPayment: '$9,412' },
+      { level: 'S10', seedsGoal: '1,000,000', dailyHours: '2 / 44', totalPayment: '$11,765' },
+      { level: 'S11', seedsGoal: '2,000,000', dailyHours: '2 / 44', totalPayment: '$23,529' },
+      { level: 'S12', seedsGoal: '3,000,000', dailyHours: '2 / 44', totalPayment: '$36,786' },
     ];
-
-    const [currentIndex, setCurrentIndex] = useState(0);
-
-    const prevSlide = () => {
-        const isFirstSlide = currentIndex === 0;
-        const newIndex = isFirstSlide ? paymentTiers.length - 1 : currentIndex - 1;
-        setCurrentIndex(newIndex);
-    };
-
-    const nextSlide = () => {
-        const isLastSlide = currentIndex === paymentTiers.length - 1;
-        const newIndex = isLastSlide ? 0 : currentIndex + 1;
-        setCurrentIndex(newIndex);
-    };
     
     return (
-        <div className="relative w-full max-w-xs sm:max-w-sm md:max-w-md mx-auto flex flex-col items-center justify-center py-4">
-            <div className="relative w-full h-[380px] md:h-[400px] flex items-center justify-center">
-                 <button onClick={prevSlide} className="absolute -left-4 sm:-left-6 md:-left-8 top-1/2 -translate-y-1/2 z-10 p-2 bg-black/40 rounded-full hover:bg-purple-600 transition-colors focus:outline-none focus:ring-2 focus:ring-purple-400">
-                    <ChevronLeftIcon className="w-6 h-6" />
-                </button>
-
-                <div className="overflow-hidden w-full h-full">
-                     <div className="whitespace-nowrap transition-transform duration-500 ease-in-out h-full" style={{ transform: `translateX(-${currentIndex * 100}%)` }}>
-                        {paymentTiers.map((tier, index) => (
-                           <div key={index} className="inline-flex items-center justify-center w-full h-full p-2">
-                                <div className="w-full h-full bg-gradient-to-br from-gray-800 to-gray-900 border border-purple-500/30 rounded-xl p-6 text-center flex flex-col justify-center shadow-lg shadow-purple-900/30">
-                                    <div className="absolute top-4 right-4 bg-purple-600 text-white text-xs font-bold px-3 py-1 rounded-full">Nivel {tier.level}</div>
-                                    <h4 className="text-white font-bold text-4xl sm:text-5xl mb-3 tracking-tight">{tier.totalPayment}</h4>
-                                    <p className="text-purple-400 font-semibold text-lg sm:text-xl mb-5">Meta: {tier.seedsGoal} semillas</p>
-                                    
-                                    <div className="text-left space-y-3 text-sm sm:text-base border-t border-purple-500/20 pt-5 mt-auto">
-                                        <p><strong className="font-semibold text-gray-300">Remuneración:</strong> <span className="text-gray-400 ml-1.5">{tier.remuneration}</span></p>
-                                        <p><strong className="font-semibold text-gray-300">Horas Requeridas:</strong> <span className="text-gray-400 ml-1.5">{tier.dailyHours}</span></p>
-                                    </div>
-                                </div>
-                           </div>
-                        ))}
-                    </div>
-                </div>
-
-                <button onClick={nextSlide} className="absolute -right-4 sm:-right-6 md:-right-8 top-1/2 -translate-y-1/2 z-10 p-2 bg-black/40 rounded-full hover:bg-purple-600 transition-colors focus:outline-none focus:ring-2 focus:ring-purple-400">
-                    <ChevronRightIcon className="w-6 h-6" />
-                </button>
-            </div>
-             <div className="flex justify-center gap-2 mt-4">
-                {paymentTiers.map((_, i) => (
-                    <div key={i} onClick={() => setCurrentIndex(i)} className={`transition-all w-2.5 h-2.5 bg-white rounded-full cursor-pointer ${currentIndex === i ? "p-1.5 bg-purple-500" : "bg-opacity-50"}`} />
-                ))}
-            </div>
-        </div>
-    );
-};
-
-
-const InfoItemDisplay: React.FC<{ item: InfoTab; initialOpen?: boolean }> = ({ item, initialOpen = false }) => {
-    const [isOpen, setIsOpen] = useState(initialOpen);
-
-    return (
-        <div className="bg-gray-900/50 rounded-lg border border-purple-500/30 mb-4 overflow-hidden transition-all duration-300 hover:border-purple-400">
-            <button
-                onClick={() => setIsOpen(!isOpen)}
-                className="w-full flex justify-between items-center p-5 text-left font-medium text-white transition-colors hover:bg-purple-900/20"
-                aria-expanded={isOpen}
-            >
-                <h3 className="text-lg font-semibold">{item.title}</h3>
-                <ChevronDownIcon className={`w-6 h-6 transform transition-transform duration-300 ${isOpen ? 'rotate-180' : ''}`} />
-            </button>
-            <div className={`transition-all duration-700 ease-in-out overflow-hidden ${isOpen ? 'max-h-[1200px] opacity-100' : 'max-h-0 opacity-0'}`}>
-                 <div className="p-6 border-t border-purple-500/30 text-gray-300 space-y-4">
-                    {item.content}
-                </div>
+        <div className="overflow-x-auto relative rounded-lg border border-purple-500/30">
+            <table className="w-full text-sm text-left text-gray-300">
+                <thead className="text-xs text-purple-300 uppercase bg-gray-900/50">
+                    <tr>
+                        <th scope="col" className="px-4 py-3 sm:px-6">Nivel</th>
+                        <th scope="col" className="px-4 py-3 sm:px-6">Meta de Semillas</th>
+                        <th scope="col" className="px-4 py-3 sm:px-6">Horas (Diarias/Mensuales)</th>
+                        <th scope="col" className="px-4 py-3 sm:px-6">Pago Total (USD)</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {paymentData.map((tier) => (
+                        <tr key={tier.level} className="border-b border-gray-700 hover:bg-gray-800/50 transition-colors">
+                            <th scope="row" className="px-4 py-4 sm:px-6 font-medium text-white whitespace-nowrap">{tier.level}</th>
+                            <td className="px-4 py-4 sm:px-6">{tier.seedsGoal}</td>
+                            <td className="px-4 py-4 sm:px-6">{tier.dailyHours}</td>
+                            <td className="px-4 py-4 sm:px-6 font-bold text-green-400">{tier.totalPayment}</td>
+                        </tr>
+                    ))}
+                </tbody>
+            </table>
+            <div className="p-4 bg-gray-900/50 text-gray-400 text-xs sm:text-sm space-y-2 border-t border-purple-500/30">
+                <p><strong className="text-purple-300">Importante:</strong> Para poder monetizar, es fundamental haber cumplido con el objetivo mensual en horas y haber logrado alguna de las metas de semillas establecidas.</p>
+                <p><strong className="text-purple-300">Requisitos de Horas:</strong> Se requieren 2 horas diarias / 44 horas mensuales. Cada transmisión debe durar al menos 1 hora para ser válida, con un máximo de 2 horas válidas contadas por día.</p>
             </div>
         </div>
     );
 };
 
 const GeneralInfo: React.FC = () => {
-    const infoData: InfoTab[] = [
+    const infoData = [
+        {
+            title: 'Tabla de Pagos',
+            content: <PaymentTable />
+        },
         {
             title: '¿Qué es un PK?',
             content: (
@@ -883,30 +859,22 @@ const GeneralInfo: React.FC = () => {
         },
         { title: 'Live Data', content: <p>Te proporcionamos acceso a un panel de control con datos en tiempo real de tus transmisiones. Analiza métricas clave como espectadores, duración, regalos recibidos y más, para optimizar tu contenido y estrategia de crecimiento.</p> },
         { title: 'Horas de Transmisión', content: <p>Las horas de transmisión son un factor clave para tu crecimiento y monetización. Establecemos metas de horas mensuales que, al cumplirse, desbloquean recompensas y bonificaciones. La consistencia es fundamental para el éxito.</p> },
-        { 
-            title: 'Tabla de pagos bigo live', 
-            content: <PaymentCarousel /> 
-        }
     ];
     
     return (
         <Section id="info">
             <h2 className="text-3xl md:text-4xl font-bold text-white text-center mb-10">Información General</h2>
-            <div
-                id="info-list"
-                className="max-w-4xl mx-auto"
-            >
+            <div className="max-w-4xl mx-auto">
                 {infoData.map((item, index) => (
-                    <InfoItemDisplay 
-                        key={index}
-                        item={item} 
-                        initialOpen={item.title === 'Tabla de pagos bigo live'}
-                    />
+                    <AccordionItem key={index} title={item.title} startOpen={item.title === 'Tabla de Pagos'}>
+                        {item.content}
+                    </AccordionItem>
                 ))}
             </div>
         </Section>
     );
 };
+
 
 const TipsSection: React.FC = () => {
     const [isTipsModalOpen, setIsTipsModalOpen] = useState(false);
@@ -1245,7 +1213,7 @@ export default function App() {
     const [isPartnershipModalOpen, setIsPartnershipModalOpen] = useState(false);
     const [isApplicationFormOpen, setIsApplicationFormOpen] = useState(false);
     const [isAboutUsModalOpen, setIsAboutUsModalOpen] = useState(false);
-    const [isTipsModalOpen, setIsTipsModalOpen] = useState(false); // State from TipsSection moved here
+    const [isTipsModalOpen, setIsTipsModalOpen] = useState(false);
 
     // Lock body scroll when any modal is open
     useEffect(() => {
@@ -1273,9 +1241,9 @@ export default function App() {
                 if (infoSection) {
                     infoSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
                     
-                    const infoButton = document.querySelector('#info-list > div:last-child button');
-                    if (infoButton && infoButton.getAttribute('aria-expanded') === 'false') {
-                       (infoButton as HTMLElement).click();
+                    const accordionButton = infoSection.querySelector('button[aria-expanded]');
+                    if (accordionButton && accordionButton.getAttribute('aria-expanded') === 'false') {
+                        (accordionButton as HTMLElement).click();
                     }
                 }
             }
@@ -1287,119 +1255,6 @@ export default function App() {
             document.removeEventListener('click', handleFaqLinkClick);
         };
     }, []);
-
-    // TipsModal now lives inside TipsSection, we just pass state control
-    const TipsSectionWithState: React.FC = () => {
-        const [currentTipIndex, setCurrentTipIndex] = useState(0);
-        const tipsImages = [
-            'https://i.postimg.cc/xCscRJt2/2-20251030-105515-0001.png',
-            'https://i.postimg.cc/YSY9JDRQ/3-20251030-105515-0002.png',
-            'https://i.postimg.cc/JnzfbGs1/4-20251030-105515-0003.png',
-            'https://i.postimg.cc/8PfjRCv2/5-20251030-105515-0004.png',
-            'https://i.postimg.cc/NFrP4TBF/6-20251030-105515-0005.png',
-        ];
-
-        const nextTip = useCallback(() => {
-            setCurrentTipIndex(prevIndex => (prevIndex + 1) % tipsImages.length);
-        }, [tipsImages.length]);
-
-        const prevTip = useCallback(() => {
-            setCurrentTipIndex(prevIndex => (prevIndex - 1 + tipsImages.length) % tipsImages.length);
-        }, [tipsImages.length]);
-
-        useEffect(() => {
-            const handleKeyDown = (event: KeyboardEvent) => {
-                if (!isTipsModalOpen) return;
-                if (event.key === 'ArrowRight') nextTip();
-                else if (event.key === 'ArrowLeft') prevTip();
-                else if (event.key === 'Escape') setIsTipsModalOpen(false);
-            };
-            window.addEventListener('keydown', handleKeyDown);
-            return () => {
-                window.removeEventListener('keydown', handleKeyDown);
-            };
-        }, [isTipsModalOpen, nextTip, prevTip]);
-
-        return (
-            <>
-                <Section id="tips">
-                    <div className="text-center">
-                        <h2 className="text-3xl md:text-4xl font-bold text-white mb-4">Tips para tu Transmisión</h2>
-                        <p className="text-gray-400 max-w-2xl mx-auto mb-8">
-                            Mejora la calidad de tus transmisiones y aumenta tu audiencia con nuestros consejos profesionales. Haz clic para ver nuestra galería de tips.
-                        </p>
-                        <GlowButton onClick={(e) => setIsTipsModalOpen(true)}>
-                            Ver Galería de Tips
-                        </GlowButton>
-                    </div>
-                </Section>
-                {isTipsModalOpen && (
-                    <div 
-                        className="fixed inset-0 bg-black/90 backdrop-blur-sm z-50 flex items-center justify-center p-4 animate-fade-in"
-                        onClick={() => setIsTipsModalOpen(false)}
-                        role="dialog" aria-modal="true"
-                    >
-                        <div 
-                            className="relative w-full max-w-3xl animate-zoom-in"
-                            onClick={(e) => e.stopPropagation()}
-                        >
-                            <div className="relative w-full h-[500px] sm:h-[600px] flex items-center justify-center">
-                                <div className="relative w-96 h-96 sm:w-[28rem] sm:h-[28rem]">
-                                {tipsImages.map((src, index) => (
-                                    <div
-                                        key={src}
-                                        className={`absolute inset-0 transition-opacity duration-300 ease-in-out ${index === currentTipIndex ? 'opacity-100' : 'opacity-0'}`}
-                                        aria-hidden={index !== currentTipIndex}
-                                    >
-                                        <div className="relative rounded-2xl shadow-[0_0_30px_rgba(168,85,247,0.7)] border-2 border-purple-500/50 p-1 bg-black w-full h-full">
-                                            <img
-                                                src={src}
-                                                alt={`Tip de transmisión ${index + 1}`}
-                                                className="w-full h-full object-cover rounded-2xl"
-                                            />
-                                        </div>
-                                    </div>
-                                ))}
-                                </div>
-                                <button
-                                    onClick={(e) => { e.stopPropagation(); prevTip(); }}
-                                    className="absolute top-1/2 left-2 sm:-left-12 -translate-y-1/2 bg-black/50 text-white p-2 rounded-full hover:bg-purple-600 transition-colors z-10"
-                                    aria-label="Anterior"
-                                >
-                                    <ChevronLeftIcon className="w-6 h-6" />
-                                </button>
-                                <button
-                                    onClick={(e) => { e.stopPropagation(); nextTip(); }}
-                                    className="absolute top-1/2 right-2 sm:-right-12 -translate-y-1/2 bg-black/50 text-white p-2 rounded-full hover:bg-purple-600 transition-colors z-10"
-                                    aria-label="Siguiente"
-                                >
-                                    <ChevronRightIcon className="w-6 h-6" />
-                                </button>
-                                <div className="absolute -bottom-8 left-1/2 -translate-x-1/2 flex gap-2">
-                                    {tipsImages.map((_, index) => (
-                                        <button 
-                                            key={index}
-                                            onClick={() => setCurrentTipIndex(index)}
-                                            className={`w-3 h-3 rounded-full transition-all ${index === currentTipIndex ? 'bg-purple-500 scale-125' : 'bg-gray-600 hover:bg-gray-400'}`}
-                                            aria-label={`Ir al tip ${index + 1}`}
-                                        />
-                                    ))}
-                                </div>
-                            </div>
-                           
-                            <button 
-                                onClick={() => setIsTipsModalOpen(false)}
-                                className="absolute -top-3 -right-3 text-white bg-purple-600 rounded-full p-2 hover:bg-purple-700 transition-colors z-20"
-                                aria-label="Cerrar"
-                            >
-                                <XIcon className="w-6 h-6" />
-                            </button>
-                        </div>
-                    </div>
-                )}
-            </>
-        );
-    };
 
     return (
         <div className="bg-black text-white min-h-screen overflow-x-hidden">
@@ -1436,7 +1291,7 @@ export default function App() {
                 </Section>
                 <FAQ />
                 <GeneralInfo />
-                <TipsSectionWithState />
+                <TipsSection />
                 <TalentsSection />
                 <PartnershipSection onOpenModal={() => setIsPartnershipModalOpen(true)} />
                 <Contact />
