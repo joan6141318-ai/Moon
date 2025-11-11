@@ -34,6 +34,7 @@ const App: React.FC = () => {
   const [isChatFabVisible, setIsChatFabVisible] = useState(false);
   const navRef = useRef<HTMLElement>(null);
   const lastHoveredElementRef = useRef<Element | null>(null);
+  const aboutCardRef = useRef<HTMLDivElement>(null);
   
   useEffect(() => {
     const handleKeyDown = (event: KeyboardEvent) => {
@@ -119,6 +120,25 @@ const App: React.FC = () => {
       window.removeEventListener('scroll', handleScroll);
     };
   }, []);
+
+  const handleCardMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
+    const card = aboutCardRef.current;
+    if (!card) return;
+    const { left, top, width, height } = card.getBoundingClientRect();
+    const x = e.clientX - left;
+    const y = e.clientY - top;
+    const rotateX = -1 * ((y - height / 2) / (height / 2)) * 12;
+    const rotateY = ((x - width / 2) / (width / 2)) * 12;
+    card.style.setProperty('--rotateX', `${rotateX}deg`);
+    card.style.setProperty('--rotateY', `${rotateY}deg`);
+  };
+
+  const handleCardMouseLeave = () => {
+    const card = aboutCardRef.current;
+    if (!card) return;
+    card.style.setProperty('--rotateX', '0deg');
+    card.style.setProperty('--rotateY', '0deg');
+  };
 
   const styles: { [key: string]: CSSProperties } = {
     heroSection: {
@@ -266,6 +286,7 @@ const App: React.FC = () => {
       backgroundImage: `linear-gradient(rgba(0, 0, 0, 0.8), rgba(0, 0, 0, 0.8)), url('https://i.postimg.cc/tTsgxSHb/definiciones-de-exito-1.png')`,
       backgroundSize: 'cover',
       backgroundPosition: 'center',
+      perspective: '1000px',
     },
     aboutCard: {
       backgroundColor: 'rgba(18, 18, 18, 0.6)',
@@ -353,7 +374,13 @@ const App: React.FC = () => {
         <h2 style={styles.aboutTitle}>
           Quiénes <span style={styles.aboutHighlight}>Somos</span>
         </h2>
-        <div style={styles.aboutCard}>
+        <div 
+          ref={aboutCardRef} 
+          style={styles.aboutCard} 
+          className="about-card-interactive" 
+          onMouseMove={handleCardMouseMove} 
+          onMouseLeave={handleCardMouseLeave}
+        >
           <h3 style={styles.aboutExperience}>
             Más de 7 años de experiencia
           </h3>
