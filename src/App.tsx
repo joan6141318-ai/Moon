@@ -176,15 +176,6 @@ const App: React.FC = () => {
       flexDirection: 'column',
       alignItems: 'flex-start',
     },
-    menuLink: {
-      color: '#ffffff',
-      textDecoration: 'none',
-      fontSize: '1.15rem',
-      fontWeight: 500,
-      padding: '16px 0',
-      transition: 'color 0.2s ease',
-      width: '100%',
-    },
   };
 
   const menuItems = ['Inicio', 'Sobre nosotros', 'Únete', 'Socios', 'Podcast', 'Preguntas frecuentes', 'Contacto', 'Chat'];
@@ -202,7 +193,7 @@ const App: React.FC = () => {
         </button>
         <nav style={styles.menuNav}>
           {menuItems.map(item => (
-            <a key={item} href="#" style={styles.menuLink} className="menu-link">
+            <a key={item} href="#" className="menu-link">
               {item}
             </a>
           ))}
