@@ -102,15 +102,7 @@ const InfoCard: React.FC<{
 };
 
 
-const AboutSection: React.FC = () => {
-    const [isMobile, setIsMobile] = useState(window.innerWidth < 768);
-
-    useEffect(() => {
-        const handleResize = () => setIsMobile(window.innerWidth < 768);
-        window.addEventListener('resize', handleResize);
-        return () => window.removeEventListener('resize', handleResize);
-    }, []);
-
+const AboutSection: React.FC<{ isMobile: boolean }> = ({ isMobile }) => {
     const styles: { [key: string]: CSSProperties } = {
         section: {
             backgroundColor: '#0d0d0d',
@@ -202,8 +194,15 @@ const App: React.FC = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [selectedMenuItem, setSelectedMenuItem] = useState<string | null>(null);
   const [isChatFabVisible, setIsChatFabVisible] = useState(false);
+  const [isMobile, setIsMobile] = useState(window.innerWidth < 768);
   const navRef = useRef<HTMLElement>(null);
   const lastHoveredElementRef = useRef<Element | null>(null);
+  
+  useEffect(() => {
+    const handleResize = () => setIsMobile(window.innerWidth < 768);
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
+  }, []);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -399,6 +398,8 @@ const App: React.FC = () => {
       right: 0,
       width: '300px',
       height: 'auto',
+      maxHeight: '100vh',
+      overflowY: 'auto',
       backgroundColor: 'rgba(0, 0, 0, 0.9)',
       zIndex: 20,
       transform: isMenuOpen ? 'translateX(0)' : 'translateX(100%)',
@@ -471,7 +472,7 @@ const App: React.FC = () => {
         </main>
       </div>
       
-      <AboutSection />
+      <AboutSection isMobile={isMobile} />
 
       <button style={styles.chatFab} className="chat-fab" aria-label="Abrir chat de ayuda">
         <ChatIcon />
