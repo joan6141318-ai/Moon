@@ -53,44 +53,20 @@ const App: React.FC = () => {
   useEffect(() => {
     const navElement = navRef.current;
     if (!navElement) return;
-
-    const handleTouchStart = (event: TouchEvent) => {
-        // Reiniciar la selección permanente al iniciar una nueva interacción táctil
-        setSelectedMenuItem(null);
-    
-        // Limpiar cualquier estado de hover temporal anterior
-        if (lastTouchElement.current) {
-            lastTouchElement.current.classList.remove('touch-hover');
-        }
-    
-        const touch = event.touches[0];
-        const element = document.elementFromPoint(touch.clientX, touch.clientY);
-    
-        // Aplicar el hover inicial al primer elemento tocado
-        if (element && element.classList.contains('menu-link')) {
-            element.classList.add('touch-hover');
-            lastTouchElement.current = element; // Guardar referencia al elemento con hover
-        } else {
-            lastTouchElement.current = null; // No estamos sobre ningún link
-        }
-    };
     
     const handleTouchMove = (event: TouchEvent) => {
         const touch = event.touches[0];
         const newElement = document.elementFromPoint(touch.clientX, touch.clientY);
         const oldElement = lastTouchElement.current;
     
-        // Si el dedo no se ha movido a un nuevo elemento, no hacer nada
         if (newElement === oldElement) {
             return;
         }
     
-        // Quitar el hover del elemento anterior, si lo había
         if (oldElement) {
             oldElement.classList.remove('touch-hover');
         }
     
-        // Poner el hover en el nuevo elemento si es un link y guardar la referencia
         if (newElement && newElement.classList.contains('menu-link')) {
             newElement.classList.add('touch-hover');
             lastTouchElement.current = newElement;
@@ -99,14 +75,21 @@ const App: React.FC = () => {
         }
     };
 
+    const handleTouchStart = (event: TouchEvent) => {
+        setSelectedMenuItem(null);
+        if (lastTouchElement.current) {
+            lastTouchElement.current.classList.remove('touch-hover');
+            lastTouchElement.current = null;
+        }
+        handleTouchMove(event);
+    };
+
     const handleTouchEnd = () => {
-        // Al levantar el dedo, el último elemento con hover se convierte en el seleccionado
         if (lastTouchElement.current) {
             const selectedText = lastTouchElement.current.textContent;
             if (selectedText) {
               setSelectedMenuItem(selectedText);
             }
-            // Limpiar el estado de hover temporal
             lastTouchElement.current.classList.remove('touch-hover');
             lastTouchElement.current = null;
         }
