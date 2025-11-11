@@ -28,10 +28,8 @@ const Card: React.FC<{ icon: React.ReactNode; title: string; children: React.Rea
     const cardStyle: CSSProperties = {
         backgroundColor: '#1f1f1f',
         borderRadius: '16px',
-        padding: '2rem',
+        padding: 'clamp(1.2rem, 5vw, 2rem)',
         flex: '1',
-        minWidth: '280px',
-        margin: '1rem',
         border: '1px solid rgba(255, 255, 255, 0.1)',
         display: 'flex',
         flexDirection: 'column',
@@ -43,16 +41,16 @@ const Card: React.FC<{ icon: React.ReactNode; title: string; children: React.Rea
     };
 
     const titleStyle: CSSProperties = {
-        fontSize: '1.5rem',
+        fontSize: 'clamp(1.2rem, 4vw, 1.5rem)',
         fontWeight: 600,
         color: '#ffffff',
         margin: '1rem 0 0.5rem 0',
     };
     
     const textStyle: CSSProperties = {
-        fontSize: '0.95rem',
+        fontSize: 'clamp(0.9rem, 2.5vw, 0.95rem)',
         color: '#cccccc',
-        lineHeight: 1.7,
+        lineHeight: 1.6,
     };
     
     return (
@@ -96,9 +94,8 @@ const AboutSection: React.FC = () => {
         },
         cardsContainer: {
             display: 'flex',
-            flexWrap: 'wrap',
             justifyContent: 'center',
-            gap: '1rem',
+            gap: '1.5rem',
             width: '100%',
             maxWidth: '1200px',
         },
