@@ -20,9 +20,9 @@ const ChatIcon = () => (
 );
 
 const XIcon = () => (
-  <svg width="32" height="32" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-    <path d="M18 6L6 18" stroke="white" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
-    <path d="M6 6L18 18" stroke="white" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
+  <svg width="28" height="28" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <path d="M18 6L6 18" stroke="white" strokeWidth="1.2" strokeLinecap="round" strokeLinejoin="round"/>
+    <path d="M6 6L18 18" stroke="white" strokeWidth="1.2" strokeLinecap="round" strokeLinejoin="round"/>
   </svg>
 );
 
@@ -66,6 +66,8 @@ const App: React.FC = () => {
       padding: '10px',
       cursor: 'pointer',
       zIndex: 10,
+      background: 'none',
+      border: 'none',
     },
     mainContent: {
       flex: 1,
@@ -91,7 +93,7 @@ const App: React.FC = () => {
     },
     subtitle: {
       fontSize: 'clamp(0.9rem, 3.5vw, 1.15rem)',
-      color: '#e0e0e0',
+      color: '#f0f0f0',
       maxWidth: '500px',
       margin: '0 0 2rem 0',
       textShadow: '0 2px 5px rgba(0,0,0,0.5)',
@@ -142,23 +144,20 @@ const App: React.FC = () => {
     },
     sideMenu: {
       position: 'fixed',
-      top: '20px',
-      right: '20px',
-      width: '280px',
+      top: 0,
+      right: 0,
+      width: '300px',
       height: 'auto',
-      backgroundColor: 'rgba(25, 25, 25, 0.9)',
-      backdropFilter: 'blur(10px)',
-      WebkitBackdropFilter: 'blur(10px)',
+      backgroundColor: 'rgba(18, 18, 18, 0.95)',
       zIndex: 20,
-      transform: isMenuOpen ? 'translateX(0)' : `translateX(calc(100% + 20px))`,
+      transform: isMenuOpen ? 'translateX(0)' : 'translateX(100%)',
       opacity: isMenuOpen ? 1 : 0,
-      transition: 'transform 0.35s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.35s ease',
+      transition: 'transform 0.4s cubic-bezier(0.25, 1, 0.5, 1), opacity 0.4s ease',
       display: 'flex',
       flexDirection: 'column',
       padding: '20px',
+      paddingBottom: '30px',
       boxSizing: 'border-box',
-      borderRadius: '16px',
-      boxShadow: '0 8px 32px rgba(0,0,0,0.3)',
       visibility: isMenuOpen ? 'visible' : 'hidden',
     },
     closeButton: {
@@ -168,9 +167,10 @@ const App: React.FC = () => {
       cursor: 'pointer',
       background: 'none',
       border: 'none',
+      padding: '5px',
     },
     menuNav: {
-      marginTop: '50px',
+      marginTop: '60px',
       display: 'flex',
       flexDirection: 'column',
       alignItems: 'flex-start',
@@ -178,9 +178,9 @@ const App: React.FC = () => {
     menuLink: {
       color: '#ffffff',
       textDecoration: 'none',
-      fontSize: '1.1rem',
-      fontWeight: 400,
-      padding: '12px 0',
+      fontSize: '1.15rem',
+      fontWeight: 500,
+      padding: '16px 0',
       transition: 'color 0.2s ease',
       width: '100%',
     },
@@ -190,13 +190,13 @@ const App: React.FC = () => {
 
   return (
     <div style={styles.container}>
-      <header style={styles.header} aria-label="Abrir menú principal" onClick={() => setIsMenuOpen(true)}>
+      <button style={styles.header} className="header-button" aria-label="Abrir menú principal" onClick={() => setIsMenuOpen(true)}>
         <HamburgerIcon />
-      </header>
+      </button>
 
       <div style={styles.menuOverlay} onClick={() => setIsMenuOpen(false)}></div>
       <aside style={styles.sideMenu} aria-hidden={!isMenuOpen}>
-        <button style={styles.closeButton} onClick={() => setIsMenuOpen(false)} aria-label="Cerrar menú">
+        <button style={styles.closeButton} className="close-button" onClick={() => setIsMenuOpen(false)} aria-label="Cerrar menú">
           <XIcon />
         </button>
         <nav style={styles.menuNav}>

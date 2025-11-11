@@ -43,9 +43,13 @@
     color: #9b29ac !important;
   }
 
-  .menu-link:focus, .menu-link:active {
-    outline: none;
+  /* Remove tap highlight and focus outline on interactive elements */
+  .cta-button, .chat-fab, .menu-link, .header-button, .close-button {
     -webkit-tap-highlight-color: transparent;
+  }
+
+  .cta-button:focus, .chat-fab:focus, .menu-link:focus, .header-button:focus, .close-button:focus {
+    outline: none;
   }
 </style>
 </head>
