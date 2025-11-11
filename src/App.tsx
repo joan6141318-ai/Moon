@@ -31,6 +31,7 @@ const XIcon = () => (
 const App: React.FC = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [selectedMenuItem, setSelectedMenuItem] = useState<string | null>(null);
+  const [isChatFabVisible, setIsChatFabVisible] = useState(false);
   const navRef = useRef<HTMLElement>(null);
   const lastHoveredElementRef = useRef<Element | null>(null);
   
@@ -108,6 +109,16 @@ const App: React.FC = () => {
         navElement.removeEventListener('touchcancel', handleTouchEnd);
     };
   }, [isMenuOpen]);
+
+  useEffect(() => {
+    const handleScroll = () => {
+      setIsChatFabVisible(window.scrollY > window.innerHeight * 0.8);
+    };
+    window.addEventListener('scroll', handleScroll);
+    return () => {
+      window.removeEventListener('scroll', handleScroll);
+    };
+  }, []);
 
   const styles: { [key: string]: CSSProperties } = {
     heroSection: {
@@ -193,9 +204,9 @@ const App: React.FC = () => {
       border: 'none',
       boxShadow: '0 6px 20px rgba(0,0,0,0.3)',
       zIndex: 10,
-      opacity: 1,
-      visibility: 'visible',
-      transform: 'scale(1)',
+      opacity: isChatFabVisible ? 1 : 0,
+      visibility: isChatFabVisible ? 'visible' : 'hidden',
+      transform: isChatFabVisible ? 'scale(1)' : 'scale(0.5)',
       transition: 'all 0.4s cubic-bezier(0.25, 1, 0.5, 1)',
     },
     menuOverlay: {
@@ -245,6 +256,36 @@ const App: React.FC = () => {
       flexDirection: 'column',
       alignItems: 'stretch',
     },
+    aboutSection: {
+      padding: 'clamp(3rem, 10vw, 6rem) 2rem',
+      display: 'flex',
+      flexDirection: 'column',
+      alignItems: 'center',
+      textAlign: 'center',
+      backgroundColor: '#0d0d0d',
+    },
+    aboutTitle: {
+      fontFamily: "'Poppins', sans-serif",
+      fontSize: 'clamp(2rem, 6vw, 3.5rem)',
+      fontWeight: 800,
+      marginBottom: '1rem',
+    },
+    aboutHighlight: {
+      color: '#9b29ac',
+    },
+    aboutExperience: {
+      fontFamily: "'Poppins', sans-serif",
+      fontSize: 'clamp(1rem, 3vw, 1.25rem)',
+      fontWeight: 500,
+      color: '#e0e0e0',
+      marginBottom: '1.5rem',
+    },
+    aboutDescription: {
+      fontSize: 'clamp(0.9rem, 2.5vw, 1.1rem)',
+      color: '#b0b0b0',
+      maxWidth: '720px',
+      lineHeight: 1.7,
+    },
   };
 
   const menuItems = ['Inicio', 'Sobre nosotros', 'Únete', 'Socios', 'Podcast', 'Preguntas frecuentes', 'Contacto', 'Chat'];
@@ -289,6 +330,18 @@ const App: React.FC = () => {
           </button>
         </main>
       </div>
+      
+      <section style={styles.aboutSection}>
+        <h2 style={styles.aboutTitle}>
+          Quiénes <span style={styles.aboutHighlight}>Somos</span>
+        </h2>
+        <h3 style={styles.aboutExperience}>
+          Más de 7 años de experiencia
+        </h3>
+        <p style={styles.aboutDescription}>
+          Somos una agencia de talentos para plataformas de streaming. Nos especializamos en descubrir y potenciar a creadores de contenido, conectándolos con las plataformas más influyentes a nivel global. Nuestra comunidad, que supera los 400 talentos activos, es el testimonio de nuestro compromiso.
+        </p>
+      </section>
       
       <button style={styles.chatFab} className="chat-fab" aria-label="Abrir chat de ayuda">
         <ChatIcon />
