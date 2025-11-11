@@ -262,7 +262,11 @@ const App: React.FC = () => {
       flexDirection: 'column',
       alignItems: 'center',
       textAlign: 'center',
-      backgroundColor: '#000000',
+      position: 'relative',
+      backgroundImage: `linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)), url('https://i.postimg.cc/tTsgxSHb/definiciones-de-exito-1.png')`,
+      backgroundSize: 'cover',
+      backgroundPosition: 'center',
+      backgroundAttachment: 'fixed',
     },
     aboutCard: {
       backgroundColor: 'rgba(26, 26, 26, 0.5)',
@@ -274,6 +278,7 @@ const App: React.FC = () => {
       backdropFilter: 'blur(10px)',
       WebkitBackdropFilter: 'blur(10px)',
       textAlign: 'left',
+      zIndex: 2,
     },
     aboutTitle: {
       fontFamily: "'Poppins', sans-serif",
