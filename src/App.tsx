@@ -101,7 +101,7 @@ const InfoCard: React.FC<{
 };
 
 const MissionIcon = () => (
-  <svg width="36" height="36" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" stroke="#9b29ac" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+  <svg width="32" height="32" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" stroke="#9b29ac" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
     <circle cx="12" cy="12" r="10" />
     <circle cx="12" cy="12" r="6" />
     <circle cx="12" cy="12" r="2" />
@@ -109,7 +109,7 @@ const MissionIcon = () => (
 );
 
 const VisionIcon = () => (
-  <svg width="36" height="36" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" stroke="#9b29ac" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+  <svg width="32" height="32" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" stroke="#9b29ac" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
     <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z" />
     <circle cx="12" cy="12" r="3" />
   </svg>
@@ -125,7 +125,7 @@ const FeatureCard: React.FC<{
     const cardStyle: CSSProperties = {
         backgroundColor: '#1a1a1a',
         borderRadius: '20px',
-        padding: 'clamp(1.25rem, 4vw, 1.75rem)',
+        padding: 'clamp(1rem, 3vw, 1.25rem)',
         border: '1px solid rgba(255, 255, 255, 0.1)',
         display: 'flex',
         flexDirection: 'column',
@@ -136,16 +136,16 @@ const FeatureCard: React.FC<{
         borderColor: isHovered ? '#9b29ac' : 'rgba(255, 255, 255, 0.1)',
     };
     
-    const iconStyle: CSSProperties = { marginBottom: '1rem' };
+    const iconStyle: CSSProperties = { marginBottom: '0.75rem' };
     const titleStyle: CSSProperties = {
-        fontSize: 'clamp(1.3rem, 4vw, 1.5rem)',
+        fontSize: 'clamp(1.1rem, 3vw, 1.3rem)',
         fontWeight: 600,
         color: '#fff',
-        margin: '0 0 0.75rem 0',
+        margin: '0 0 0.5rem 0',
     };
     const textStyle: CSSProperties = {
-        fontSize: 'clamp(0.9rem, 2.5vw, 1rem)',
-        lineHeight: 1.7,
+        fontSize: 'clamp(0.85rem, 2vw, 0.95rem)',
+        lineHeight: 1.6,
         color: '#d1d1d1',
         margin: 0,
         flexGrow: 1,
@@ -172,7 +172,7 @@ const AboutSection: React.FC<{ isMobile: boolean }> = ({ isMobile }) => {
             display: 'flex',
             flexDirection: 'column',
             alignItems: 'center',
-            gap: '3rem',
+            gap: '2rem',
         },
         title: {
             fontSize: 'clamp(2rem, 5vw, 2.8rem)',
