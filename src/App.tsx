@@ -29,6 +29,7 @@ const XIcon = () => (
 
 const App: React.FC = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [selectedMenuItem, setSelectedMenuItem] = useState<string>('Inicio');
   const navRef = useRef<HTMLElement>(null);
   const lastTouchElement = useRef<Element | null>(null);
 
@@ -69,6 +70,10 @@ const App: React.FC = () => {
 
     const handleTouchEnd = () => {
         if (lastTouchElement.current) {
+            const selectedText = lastTouchElement.current.textContent;
+            if (selectedText) {
+              setSelectedMenuItem(selectedText);
+            }
             lastTouchElement.current.classList.remove('touch-hover');
             lastTouchElement.current = null;
         }
@@ -234,7 +239,15 @@ const App: React.FC = () => {
         </button>
         <nav ref={navRef} style={styles.menuNav}>
           {menuItems.map(item => (
-            <a key={item} href="#" className="menu-link">
+            <a 
+              key={item} 
+              href="#" 
+              className={`menu-link ${selectedMenuItem === item ? 'selected' : ''}`}
+              onClick={(e) => {
+                e.preventDefault();
+                setSelectedMenuItem(item);
+              }}
+            >
               {item}
             </a>
           ))}
