@@ -61,7 +61,7 @@ const App: React.FC = () => {
       textShadow: '0 4px 10px rgba(0,0,0,0.5)',
     },
     highlight: {
-      color: '#FF5E13',
+      color: '#8A2BE2',
     },
     subtitle: {
       fontSize: 'clamp(1rem, 4vw, 1.25rem)',
