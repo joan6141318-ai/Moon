@@ -80,6 +80,7 @@ const App: React.FC = () => {
       zIndex: 5,
     },
     title: {
+      fontFamily: "'Montserrat', sans-serif",
       fontSize: 'clamp(2.8rem, 8vw, 5rem)',
       fontWeight: 800,
       color: '#ffffff',
