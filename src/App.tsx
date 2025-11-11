@@ -47,8 +47,8 @@ const Header = ({ onMenuClick, isScrolled, isMenuOpen }: { onMenuClick: () => vo
     alignItems: 'center',
     padding: '20px 5%',
     zIndex: 1000,
-    transition: 'background-color 0.3s ease-in-out',
-    backgroundColor: isScrolled ? 'rgba(13, 13, 13, 0.85)' : 'transparent',
+    transition: 'background 0.3s ease-in-out',
+    background: isScrolled ? 'linear-gradient(to bottom, rgba(13, 13, 13, 0.85), transparent)' : 'transparent',
   };
 
   const headerButtonStyle: CSSProperties = {
