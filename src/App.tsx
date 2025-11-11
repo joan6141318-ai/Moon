@@ -96,7 +96,7 @@ const App: React.FC = () => {
       fontSize: 'clamp(0.8rem, 3.5vw, 1.1rem)',
       color: '#f0f0f0',
       maxWidth: '500px',
-      margin: '0 0 2rem 0',
+      margin: '0 0 1.5rem 0',
       textShadow: '0 2px 5px rgba(0,0,0,0.5)',
     },
     ctaButton: {
