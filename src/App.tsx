@@ -81,7 +81,7 @@ const App: React.FC = () => {
     },
     title: {
       fontFamily: "'Poppins', sans-serif",
-      fontSize: 'clamp(2.8rem, 8vw, 5rem)',
+      fontSize: 'clamp(2.5rem, 8vw, 5rem)',
       fontWeight: 800,
       color: '#ffffff',
       margin: '0 0 1rem 0',
