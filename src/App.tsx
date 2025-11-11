@@ -36,8 +36,8 @@ const App: React.FC = () => {
     },
     header: {
       position: 'absolute',
-      top: '20px',
-      right: '20px',
+      top: '15px',
+      right: '15px',
       padding: '10px',
       cursor: 'pointer',
       zIndex: 10,
