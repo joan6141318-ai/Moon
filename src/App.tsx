@@ -29,7 +29,7 @@ const App: React.FC = () => {
       flexDirection: 'column',
       position: 'relative',
       backgroundColor: '#1a1a1a',
-      backgroundImage: `linear-gradient(to top, rgba(155, 41, 172, 0.02), transparent 50%), linear-gradient(rgba(10, 5, 15, 0.8), rgba(0, 0, 0, 0.95)), url('https://i.postimg.cc/rR5VqKWd/IMG-20251111-053352.jpg')`,
+      backgroundImage: `linear-gradient(to top, rgba(155, 41, 172, 0.02), transparent 50%), linear-gradient(rgba(10, 5, 15, 0.8), rgba(0, 0, 0, 0.95)), url('https://i.postimg.cc/4yVxtSjg/IMG-20251111-053352.jpg')`,
       backgroundSize: 'cover',
       backgroundPosition: 'center',
       overflow: 'hidden',
