@@ -22,23 +22,32 @@ const styles: { [key: string]: React.CSSProperties } = {
     justifyContent: 'center',
     height: '100vh',
     textAlign: 'center',
-    backgroundColor: '#ffffff',
+    backgroundImage: `url('https://i.postimg.cc/hv5fbmt0/IMG_20251111_053352.jpg')`,
+    backgroundSize: 'cover',
+    backgroundPosition: 'center',
   },
   header: {
     marginBottom: '2rem',
+    backgroundColor: 'rgba(0, 0, 0, 0.5)',
+    padding: '1rem 2rem',
+    borderRadius: '10px',
   },
   title: {
     fontSize: '2.5rem',
-    color: '#333',
+    color: '#ffffff',
     margin: 0,
+    textShadow: '2px 2px 4px rgba(0, 0, 0, 0.7)',
   },
   main: {
-    padding: '0 1rem',
+    backgroundColor: 'rgba(0, 0, 0, 0.5)',
+    padding: '1rem 2rem',
+    borderRadius: '10px',
   },
   text: {
     fontSize: '1.2rem',
-    color: '#666',
+    color: '#ffffff',
     lineHeight: '1.6',
+    textShadow: '1px 1px 3px rgba(0, 0, 0, 0.7)',
   },
 };
 
