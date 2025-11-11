@@ -1,9 +1,10 @@
 
+
 import React, { useState, CSSProperties, useEffect, useRef } from 'react';
 
 // SVG Icon Components
 const HamburgerIcon = () => (
-  <svg width="26" height="26" viewBox="0 0 24 24" fill="none" xmlns="http://www.w.org/2000/svg" style={{ display: 'block' }}>
+  <svg width="26" height="26" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" style={{ display: 'block' }}>
     <path d="M3 12H21" stroke="white" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
     <path d="M3 6H21" stroke="white" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
     <path d="M3 18H21" stroke="white" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
@@ -54,44 +55,58 @@ const App: React.FC = () => {
     if (!navElement) return;
 
     const handleTouchStart = (event: TouchEvent) => {
-        // Reiniciar la selección al iniciar una nueva interacción táctil
+        // Reiniciar la selección permanente al iniciar una nueva interacción táctil
         setSelectedMenuItem(null);
-
+    
+        // Limpiar cualquier estado de hover temporal anterior
         if (lastTouchElement.current) {
             lastTouchElement.current.classList.remove('touch-hover');
-            lastTouchElement.current = null;
         }
-
+    
         const touch = event.touches[0];
         const element = document.elementFromPoint(touch.clientX, touch.clientY);
-
+    
+        // Aplicar el hover inicial al primer elemento tocado
         if (element && element.classList.contains('menu-link')) {
             element.classList.add('touch-hover');
-            lastTouchElement.current = element;
+            lastTouchElement.current = element; // Guardar referencia al elemento con hover
+        } else {
+            lastTouchElement.current = null; // No estamos sobre ningún link
         }
     };
     
     const handleTouchMove = (event: TouchEvent) => {
         const touch = event.touches[0];
-        const element = document.elementFromPoint(touch.clientX, touch.clientY);
-
-        if (lastTouchElement.current && lastTouchElement.current !== element) {
-            lastTouchElement.current.classList.remove('touch-hover');
-            lastTouchElement.current = null;
+        const newElement = document.elementFromPoint(touch.clientX, touch.clientY);
+        const oldElement = lastTouchElement.current;
+    
+        // Si el dedo no se ha movido a un nuevo elemento, no hacer nada
+        if (newElement === oldElement) {
+            return;
         }
-
-        if (element && element.classList.contains('menu-link')) {
-            element.classList.add('touch-hover');
-            lastTouchElement.current = element;
+    
+        // Quitar el hover del elemento anterior, si lo había
+        if (oldElement) {
+            oldElement.classList.remove('touch-hover');
+        }
+    
+        // Poner el hover en el nuevo elemento si es un link y guardar la referencia
+        if (newElement && newElement.classList.contains('menu-link')) {
+            newElement.classList.add('touch-hover');
+            lastTouchElement.current = newElement;
+        } else {
+            lastTouchElement.current = null;
         }
     };
 
     const handleTouchEnd = () => {
+        // Al levantar el dedo, el último elemento con hover se convierte en el seleccionado
         if (lastTouchElement.current) {
             const selectedText = lastTouchElement.current.textContent;
             if (selectedText) {
               setSelectedMenuItem(selectedText);
             }
+            // Limpiar el estado de hover temporal
             lastTouchElement.current.classList.remove('touch-hover');
             lastTouchElement.current = null;
         }
