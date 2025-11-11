@@ -72,7 +72,7 @@ const App: React.FC = () => {
       textShadow: '0 2px 5px rgba(0,0,0,0.5)',
     },
     ctaButton: {
-      backgroundColor: '#9b29ac',
+      backgroundColor: '#7a1ea3',
       color: '#fff',
       border: 'none',
       borderRadius: '50px',
@@ -90,7 +90,7 @@ const App: React.FC = () => {
       position: 'fixed',
       bottom: '30px',
       right: '30px',
-      backgroundColor: '#9b29ac',
+      backgroundColor: '#7a1ea3',
       width: '60px',
       height: '60px',
       borderRadius: '50%',
