@@ -263,13 +263,13 @@ const App: React.FC = () => {
       alignItems: 'center',
       textAlign: 'center',
       position: 'relative',
-      backgroundImage: `linear-gradient(rgba(0, 0, 0, 0.95), rgba(0, 0, 0, 0.95)), url('https://i.postimg.cc/tTsgxSHb/definiciones-de-exito-1.png')`,
+      backgroundImage: `linear-gradient(rgba(0, 0, 0, 0.8), rgba(0, 0, 0, 0.8)), url('https://i.postimg.cc/tTsgxSHb/definiciones-de-exito-1.png')`,
       backgroundSize: 'cover',
       backgroundPosition: 'center',
     },
     aboutCard: {
-      backgroundColor: 'rgba(18, 18, 18, 0.75)',
-      border: '1px solid rgba(255, 255, 255, 0.15)',
+      backgroundColor: 'rgba(18, 18, 18, 0.6)',
+      border: '1px solid rgba(255, 255, 255, 0.1)',
       borderRadius: '20px',
       padding: 'clamp(1.5rem, 5vw, 2.5rem)',
       maxWidth: '650px',
@@ -302,8 +302,7 @@ const App: React.FC = () => {
       color: '#c0c0c0',
       maxWidth: '720px',
       lineHeight: 1.8,
-      textAlign: 'justify',
-      textJustify: 'inter-word',
+      textAlign: 'center',
     },
   };
 
