@@ -239,7 +239,7 @@ const HeroSection = () => {
 };
 
 const AboutSection = () => {
-    const [isCardHovered, setIsCardHovered] = useState(false);
+    const [isCardActive, setIsCardActive] = useState(false);
 
     const aboutSectionStyle: CSSProperties = {
         position: 'relative',
@@ -258,7 +258,7 @@ const AboutSection = () => {
         backgroundPosition: 'center',
         zIndex: 0,
         transition: 'filter 0.5s cubic-bezier(0.23, 1, 0.32, 1)',
-        filter: isCardHovered ? 'blur(8px)' : 'none',
+        filter: isCardActive ? 'blur(8px)' : 'none',
     };
 
     const overlayStyle: CSSProperties = {
@@ -291,6 +291,8 @@ const AboutSection = () => {
         padding: 'clamp(1.5rem, 4vw, 2.5rem)',
         textAlign: 'center',
         boxShadow: '0 0 10px rgba(155, 41, 172, 0.2), 0 0 20px rgba(155, 41, 172, 0.1)',
+        transform: isCardActive ? 'scale(1.05)' : 'scale(1)',
+        cursor: 'pointer',
     };
     
     const experienceTitleStyle: CSSProperties = {
@@ -331,8 +333,7 @@ const AboutSection = () => {
                     <div
                         style={aboutCardStyle}
                         className="about-card-interactive"
-                        onMouseEnter={() => setIsCardHovered(true)}
-                        onMouseLeave={() => setIsCardHovered(false)}
+                        onClick={() => setIsCardActive(!isCardActive)}
                     >
                         <h3 style={experienceTitleStyle}>Más de 7 años de experiencia</h3>
                         <p style={descriptionStyle}>
