@@ -62,19 +62,12 @@ const Header = ({ onMenuClick, isScrolled, isMenuOpen }: { onMenuClick: () => vo
     left: 0,
     right: 0,
     display: 'flex',
-    justifyContent: 'space-between',
+    justifyContent: 'flex-end',
     alignItems: 'center',
     padding: '20px 5%',
     zIndex: 1000,
     transition: 'background-color 0.3s ease-in-out',
     backgroundColor: isScrolled ? 'rgba(13, 13, 13, 0.85)' : 'transparent',
-  };
-
-  const logoStyle: CSSProperties = {
-    fontSize: '1.5rem',
-    fontWeight: 'bold',
-    textDecoration: 'none',
-    color: 'white',
   };
 
   const headerButtonStyle: CSSProperties = {
@@ -88,7 +81,6 @@ const Header = ({ onMenuClick, isScrolled, isMenuOpen }: { onMenuClick: () => vo
 
   return (
     <header style={headerStyle}>
-      <a href="#" style={logoStyle}>Agency</a>
       <button onClick={onMenuClick} style={headerButtonStyle} className="header-button" aria-label={isMenuOpen ? 'Cerrar menú' : 'Abrir menú'}>
         <AnimatedHamburgerIcon isOpen={isMenuOpen} />
       </button>
@@ -211,7 +203,7 @@ const HeroSection = () => {
         textAlign: 'center',
         padding: '0 20px',
         position: 'relative',
-        backgroundImage: 'linear-gradient(to bottom, rgba(13, 13, 13, 0.8) 0%, rgba(13, 13, 13, 0) 50%, rgba(13, 13, 13, 1) 100%), url(https://images.unsplash.com/photo-1522071820081-009f0129c71c?q=80&w=2070&auto=format&fit=crop)',
+        backgroundImage: 'linear-gradient(to bottom, rgba(13, 13, 13, 0.8) 0%, rgba(13, 13, 13, 0) 50%, rgba(13, 13, 13, 1) 100%), url(https://i.postimg.cc/hv5fbmt0/IMG_20251111_053352.jpg)',
         backgroundSize: 'cover',
         backgroundPosition: 'center',
     };
