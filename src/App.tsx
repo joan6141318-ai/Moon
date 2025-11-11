@@ -20,11 +20,9 @@ const styles: { [key: string]: React.CSSProperties } = {
     flexDirection: 'column',
     alignItems: 'center',
     justifyContent: 'center',
-    height: '100vh',
+    minHeight: '100vh',
     textAlign: 'center',
-    backgroundImage: `url('https://i.postimg.cc/hv5fbmt0/IMG_20251111_053352.jpg')`,
-    backgroundSize: 'cover',
-    backgroundPosition: 'center',
+    color: '#ffffff',
   },
   header: {
     marginBottom: '2rem',
