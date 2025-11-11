@@ -65,7 +65,7 @@ const App: React.FC = () => {
       color: '#9b29ac',
     },
     subtitle: {
-      fontSize: 'clamp(1rem, 4vw, 1.25rem)',
+      fontSize: 'clamp(0.9rem, 3.5vw, 1.15rem)',
       color: '#e0e0e0',
       maxWidth: '500px',
       margin: '0 0 2rem 0',
