@@ -63,7 +63,7 @@ const Header = ({ onMenuClick, isScrolled, isMenuOpen }: { onMenuClick: () => vo
   return (
     <header style={headerStyle}>
       <button onClick={onMenuClick} style={headerButtonStyle} className="header-button" aria-label={isMenuOpen ? 'Cerrar menú' : 'Abrir menú'}>
-        <MenuIcon />
+        {isMenuOpen ? <CloseIcon /> : <MenuIcon />}
       </button>
     </header>
   );
