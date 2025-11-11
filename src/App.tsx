@@ -115,8 +115,8 @@ const App: React.FC = () => {
     },
     chatFab: {
       position: 'fixed',
-      bottom: '30px',
-      right: '30px',
+      bottom: '20px',
+      right: '20px',
       backgroundColor: '#7a1ea3',
       width: '60px',
       height: '60px',
