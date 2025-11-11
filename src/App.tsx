@@ -188,13 +188,6 @@ const AboutSection: React.FC<{ isMobile: boolean }> = ({ isMobile }) => {
             maxWidth: '1200px',
             width: '100%',
         },
-        featuresGrid: {
-            display: 'grid',
-            gridTemplateColumns: isMobile ? '1fr' : '1fr 1fr',
-            gap: '1.5rem',
-            maxWidth: '1200px',
-            width: '100%',
-        },
     };
     
     return (
@@ -211,7 +204,7 @@ const AboutSection: React.FC<{ isMobile: boolean }> = ({ isMobile }) => {
                 />
             </div>
 
-            <div style={styles.featuresGrid}>
+            <div className="features-grid">
                  <FeatureCard 
                     icon={<MissionIcon />}
                     title="Misión"

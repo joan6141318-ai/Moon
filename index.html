@@ -76,6 +76,20 @@
     font-weight: 800;
     transform: translateX(10px);
   }
+  
+  .features-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1.5rem;
+    max-width: 1200px;
+    width: 100%;
+  }
+
+  @media (max-width: 768px) {
+    .features-grid {
+      gap: 1rem;
+    }
+  }
 
   /* Remove tap highlight and focus outline on interactive elements */
   .cta-button, .chat-fab, .menu-link, .header-button, .close-button {
