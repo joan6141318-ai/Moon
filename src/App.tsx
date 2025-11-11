@@ -3,7 +3,7 @@ import React, { useState, CSSProperties, useEffect, useRef } from 'react';
 
 // SVG Icon Components
 const HamburgerIcon = () => (
-  <svg width="26" height="26" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" style={{ display: 'block' }}>
+  <svg width="26" height="26" viewBox="0 0 24 24" fill="none" xmlns="http://www.w.org/2000/svg" style={{ display: 'block' }}>
     <path d="M3 12H21" stroke="white" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
     <path d="M3 6H21" stroke="white" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
     <path d="M3 18H21" stroke="white" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
@@ -29,7 +29,7 @@ const XIcon = () => (
 
 const App: React.FC = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
-  const [selectedMenuItem, setSelectedMenuItem] = useState<string>('Inicio');
+  const [selectedMenuItem, setSelectedMenuItem] = useState<string | null>(null);
   const navRef = useRef<HTMLElement>(null);
   const lastTouchElement = useRef<Element | null>(null);
 
@@ -53,6 +53,24 @@ const App: React.FC = () => {
     const navElement = navRef.current;
     if (!navElement) return;
 
+    const handleTouchStart = (event: TouchEvent) => {
+        // Reiniciar la selección al iniciar una nueva interacción táctil
+        setSelectedMenuItem(null);
+
+        if (lastTouchElement.current) {
+            lastTouchElement.current.classList.remove('touch-hover');
+            lastTouchElement.current = null;
+        }
+
+        const touch = event.touches[0];
+        const element = document.elementFromPoint(touch.clientX, touch.clientY);
+
+        if (element && element.classList.contains('menu-link')) {
+            element.classList.add('touch-hover');
+            lastTouchElement.current = element;
+        }
+    };
+    
     const handleTouchMove = (event: TouchEvent) => {
         const touch = event.touches[0];
         const element = document.elementFromPoint(touch.clientX, touch.clientY);
@@ -80,15 +98,19 @@ const App: React.FC = () => {
     };
 
     if (isMenuOpen) {
+        navElement.addEventListener('touchstart', handleTouchStart);
         navElement.addEventListener('touchmove', handleTouchMove);
         navElement.addEventListener('touchend', handleTouchEnd);
         navElement.addEventListener('touchcancel', handleTouchEnd);
     }
 
     return () => {
-        navElement.removeEventListener('touchmove', handleTouchMove);
-        navElement.removeEventListener('touchend', handleTouchEnd);
-        navElement.removeEventListener('touchcancel', handleTouchEnd);
+        if(navElement) {
+            navElement.removeEventListener('touchstart', handleTouchStart);
+            navElement.removeEventListener('touchmove', handleTouchMove);
+            navElement.removeEventListener('touchend', handleTouchEnd);
+            navElement.removeEventListener('touchcancel', handleTouchEnd);
+        }
     };
   }, [isMenuOpen]);
 
