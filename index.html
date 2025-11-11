@@ -20,6 +20,15 @@
 }
 </script>
 <style>
+  html {
+    -ms-overflow-style: none;  /* IE and Edge */
+    scrollbar-width: none;  /* Firefox */
+  }
+
+  html::-webkit-scrollbar {
+    display: none;
+  }
+
   body {
     margin: 0;
     font-family: 'Poppins', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
@@ -29,12 +38,6 @@
     -moz-osx-font-smoothing: grayscale;
     background-color: #0d0d0d;
     color: #fff;
-    -ms-overflow-style: none;  /* IE and Edge */
-    scrollbar-width: none;  /* Firefox */
-  }
-
-  body::-webkit-scrollbar {
-    display: none;
   }
   
   .side-menu {
