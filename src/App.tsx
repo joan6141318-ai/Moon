@@ -22,7 +22,7 @@ const InfoCard: React.FC<{
         display: 'flex',
         alignItems: 'center',
         justifyContent: 'center',
-        padding: 'clamp(1.5rem, 4vw, 2.5rem)',
+        padding: 'clamp(2rem, 6vw, 4rem)',
         boxSizing: 'border-box',
         backgroundImage: `url(${imageUrl})`,
         backgroundSize: 'cover',
@@ -39,18 +39,18 @@ const InfoCard: React.FC<{
         left: 0,
         right: 0,
         bottom: 0,
-        backgroundColor: 'rgba(0, 0, 0, 0.7)',
+        backgroundColor: 'rgba(0, 0, 0, 0.65)',
     };
 
     const contentStyle: CSSProperties = {
         position: 'relative',
         zIndex: 2,
-        maxWidth: '800px',
+        maxWidth: '750px',
     };
 
     const titleStyle: CSSProperties = {
-        fontSize: 'clamp(1.2rem, 3vw, 1.5rem)',
-        fontWeight: 600,
+        fontSize: 'clamp(1.25rem, 3vw, 1.6rem)',
+        fontWeight: 700,
         margin: '0 0 1rem 0',
     };
     
@@ -63,10 +63,10 @@ const InfoCard: React.FC<{
     
     const innerBorderStyle: CSSProperties = {
         position: 'absolute',
-        top: '1rem',
-        left: '1rem',
-        right: '1rem',
-        bottom: '1rem',
+        top: '1.25rem',
+        left: '1.25rem',
+        right: '1.25rem',
+        bottom: '1.25rem',
         border: '1px solid rgba(255, 255, 255, 0.2)',
         borderRadius: '12px',
         opacity: 0.8,
@@ -89,7 +89,7 @@ const InfoCard: React.FC<{
 };
 
 const MissionIcon = () => (
-  <svg width="28" height="28" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" stroke="#9b29ac" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+  <svg width="28" height="28" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" stroke="#c77dff" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
     <circle cx="12" cy="12" r="10" />
     <circle cx="12" cy="12" r="6" />
     <circle cx="12" cy="12" r="2" />
@@ -97,7 +97,7 @@ const MissionIcon = () => (
 );
 
 const VisionIcon = () => (
-  <svg width="28" height="28" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" stroke="#9b29ac" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+  <svg width="28" height="28" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" stroke="#c77dff" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
     <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z" />
     <circle cx="12" cy="12" r="3" />
   </svg>
@@ -111,24 +111,27 @@ const FeatureCard: React.FC<{
     const [isHovered, setIsHovered] = React.useState(false);
 
     const cardStyle: CSSProperties = {
-        backgroundColor: '#1c1c1e',
+        backgroundColor: '#1a1a1c',
         borderRadius: '16px',
-        padding: 'clamp(1.5rem, 4vw, 2.5rem)',
+        padding: 'clamp(1.5rem, 4vw, 2rem) clamp(1.5rem, 4vw, 2.5rem)',
         border: '1px solid rgba(255, 255, 255, 0.1)',
         display: 'flex',
         flexDirection: 'column',
+        alignItems: 'flex-start',
+        textAlign: 'left',
         height: '100%',
         boxSizing: 'border-box',
-        transition: 'border-color 0.3s ease',
+        transition: 'border-color 0.3s ease, transform 0.3s ease',
         borderColor: isHovered ? '#9b29ac' : 'rgba(255, 255, 255, 0.1)',
+        transform: isHovered ? 'translateY(-5px)' : 'translateY(0)',
     };
     
-    const iconStyle: CSSProperties = { marginBottom: '1rem' };
+    const iconStyle: CSSProperties = { marginBottom: '1.25rem' };
     const titleStyle: CSSProperties = {
-        fontSize: 'clamp(1.1rem, 2.5vw, 1.25rem)',
+        fontSize: 'clamp(1.1rem, 2.5vw, 1.2rem)',
         fontWeight: 600,
-        color: '#fff',
-        margin: '0 0 0.5rem 0',
+        color: '#ffffff',
+        margin: '0 0 0.75rem 0',
     };
     const textStyle: CSSProperties = {
         fontSize: 'clamp(0.85rem, 2vw, 0.9rem)',
@@ -155,18 +158,18 @@ const AboutSection: React.FC<{ isMobile: boolean }> = ({ isMobile }) => {
     const styles: { [key: string]: CSSProperties } = {
         section: {
             backgroundColor: '#0d0d0d',
-            padding: 'clamp(3rem, 8vw, 6rem) clamp(1rem, 4vw, 2rem)',
+            padding: 'clamp(3rem, 8vw, 6rem) clamp(1rem, 5vw, 4rem)',
             display: 'flex',
             flexDirection: 'column',
             alignItems: 'center',
-            gap: '2rem',
+            gap: '2.5rem',
         },
         title: {
-            fontSize: 'clamp(2rem, 5vw, 2.8rem)',
+            fontSize: 'clamp(2.2rem, 5vw, 3rem)',
             fontWeight: 800,
             color: '#ffffff',
             textAlign: 'center',
-            marginBottom: '1rem',
+            marginBottom: '1.5rem',
         },
         highlight: {
             color: '#9b29ac',
@@ -187,7 +190,7 @@ const AboutSection: React.FC<{ isMobile: boolean }> = ({ isMobile }) => {
                     title="Más de 7 años de experiencia"
                     text="Somos una agencia de talentos para plataformas de streaming. Nos especializamos en descubrir y potenciar a creadores de contenido, conectándolos con las plataformas más influyentes a nivel global. Nuestra comunidad, que supera los 400 talentos activos, es el testimonio de nuestro compromiso."
                     isMobile={isMobile}
-                    minHeight={isMobile ? '300px' : '400px'}
+                    minHeight={isMobile ? '300px' : '380px'}
                 />
             </div>
 
