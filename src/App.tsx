@@ -148,7 +148,7 @@ const App: React.FC = () => {
       right: 0,
       width: '300px',
       height: 'auto',
-      backgroundColor: 'rgba(13, 13, 13, 0.95)',
+      backgroundColor: 'rgba(0, 0, 0, 0.9)',
       zIndex: 20,
       transform: isMenuOpen ? 'translateX(0)' : 'translateX(100%)',
       opacity: isMenuOpen ? 1 : 0,
