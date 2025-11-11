@@ -184,7 +184,7 @@ const HeroSection = () => {
         textAlign: 'center',
         padding: '0 20px',
         position: 'relative',
-        backgroundImage: 'linear-gradient(to bottom, rgba(13, 13, 13, 0.7) 0%, rgba(13, 13, 13, 0.1) 50%, rgba(13, 13, 13, 1) 100%), url(https://i.postimg.cc/hv5fbmt0/IMG_20251111_053352.jpg)',
+        backgroundImage: 'linear-gradient(to bottom, rgba(13, 13, 13, 0.4) 0%, rgba(13, 13, 13, 0) 40%, rgba(13, 13, 13, 0.95) 100%), url(https://i.postimg.cc/hv5fbmt0/IMG_20251111_053352.jpg)',
         backgroundSize: 'cover',
         backgroundPosition: 'center',
     };
