@@ -7,16 +7,15 @@ const InfoCard: React.FC<{
     title?: string; 
     text?: string;
     imageUrl: string; 
-    gridArea: string; 
-    isMobile: boolean 
-}> = ({ title, text, imageUrl, gridArea, isMobile }) => {
+    isMobile: boolean;
+    minHeight?: string;
+}> = ({ title, text, imageUrl, isMobile, minHeight = '250px' }) => {
     const [isHovered, setIsHovered] = React.useState(false);
 
     const cardStyle: CSSProperties = {
         position: 'relative',
-        height: isMobile ? 'auto' : '100%',
-        minHeight: '250px',
-        gridArea: isMobile ? 'auto' : gridArea,
+        height: '100%',
+        minHeight: minHeight,
         borderRadius: '20px',
         overflow: 'hidden',
         color: 'white',
@@ -101,61 +100,127 @@ const InfoCard: React.FC<{
     );
 };
 
+const MissionIcon = () => (
+  <svg width="36" height="36" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" stroke="#9b29ac" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+    <circle cx="12" cy="12" r="10" />
+    <circle cx="12" cy="12" r="6" />
+    <circle cx="12" cy="12" r="2" />
+  </svg>
+);
+
+const VisionIcon = () => (
+  <svg width="36" height="36" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" stroke="#9b29ac" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+    <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z" />
+    <circle cx="12" cy="12" r="3" />
+  </svg>
+);
+
+const FeatureCard: React.FC<{
+    icon: React.ReactNode;
+    title: string;
+    text: string;
+}> = ({ icon, title, text }) => {
+    const [isHovered, setIsHovered] = React.useState(false);
+
+    const cardStyle: CSSProperties = {
+        backgroundColor: '#1a1a1a',
+        borderRadius: '20px',
+        padding: 'clamp(1.5rem, 5vw, 2rem)',
+        border: '1px solid rgba(255, 255, 255, 0.1)',
+        display: 'flex',
+        flexDirection: 'column',
+        height: '100%',
+        boxSizing: 'border-box',
+        transition: 'transform 0.3s ease, border-color 0.3s ease',
+        transform: isHovered ? 'translateY(-5px)' : 'translateY(0)',
+        borderColor: isHovered ? '#9b29ac' : 'rgba(255, 255, 255, 0.1)',
+    };
+    
+    const iconStyle: CSSProperties = { marginBottom: '1.5rem' };
+    const titleStyle: CSSProperties = {
+        fontSize: 'clamp(1.3rem, 4vw, 1.5rem)',
+        fontWeight: 600,
+        color: '#fff',
+        margin: '0 0 0.75rem 0',
+    };
+    const textStyle: CSSProperties = {
+        fontSize: 'clamp(0.9rem, 2.5vw, 1rem)',
+        lineHeight: 1.7,
+        color: '#d1d1d1',
+        margin: 0,
+        flexGrow: 1,
+    };
+
+    return (
+        <div 
+            style={cardStyle}
+            onMouseEnter={() => setIsHovered(true)}
+            onMouseLeave={() => setIsHovered(false)}
+        >
+            <div style={iconStyle}>{icon}</div>
+            <h3 style={titleStyle}>{title}</h3>
+            <p style={textStyle}>{text}</p>
+        </div>
+    );
+};
 
 const AboutSection: React.FC<{ isMobile: boolean }> = ({ isMobile }) => {
     const styles: { [key: string]: CSSProperties } = {
         section: {
             backgroundColor: '#0d0d0d',
             padding: 'clamp(3rem, 8vw, 6rem) clamp(1rem, 5vw, 2rem)',
+            display: 'flex',
+            flexDirection: 'column',
+            alignItems: 'center',
+            gap: '3rem',
         },
         title: {
             fontSize: 'clamp(2rem, 5vw, 2.8rem)',
             fontWeight: 800,
             color: '#ffffff',
             textAlign: 'center',
-            marginBottom: '3rem',
+            marginBottom: '0',
         },
         highlight: {
             color: '#9b29ac',
         },
-        gridContainer: {
+        mainCardWrapper: {
+            maxWidth: '1200px',
+            width: '100%',
+        },
+        featuresGrid: {
             display: 'grid',
-            gridTemplateColumns: isMobile ? '1fr' : 'repeat(2, 1fr)',
-            gridTemplateRows: isMobile ? 'auto' : 'auto', // Adjusted for content
-            gridTemplateAreas: isMobile ? 'none' : `
-                "main main"
-                "sub1 sub2"
-            `,
+            gridTemplateColumns: isMobile ? '1fr' : '1fr 1fr',
             gap: '1.5rem',
             maxWidth: '1200px',
-            margin: '0 auto',
+            width: '100%',
         },
     };
     
     return (
         <section style={styles.section}>
             <h2 style={styles.title}>Quiénes <span style={styles.highlight}>Somos</span></h2>
-            <div style={styles.gridContainer}>
+            
+            <div style={styles.mainCardWrapper}>
                 <InfoCard 
                     imageUrl="https://images.unsplash.com/photo-1522071820081-009f0129c71c?q=80&w=2070&auto=format&fit=crop"
                     title="Más de 7 años de experiencia"
                     text="Somos una agencia de talentos para plataformas de streaming. Nos especializamos en descubrir y potenciar a creadores de contenido, conectándolos con las plataformas más influyentes a nivel global. Nuestra comunidad, que supera los 400 talentos activos, es el testimonio de nuestro compromiso."
-                    gridArea="main"
                     isMobile={isMobile}
+                    minHeight={isMobile ? '300px' : '400px'}
                 />
-                <InfoCard 
-                    imageUrl="https://images.unsplash.com/photo-1556740738-b6a63e2775d2?q=80&w=2070&auto=format&fit=crop"
+            </div>
+
+            <div style={styles.featuresGrid}>
+                 <FeatureCard 
+                    icon={<MissionIcon />}
                     title="Misión"
                     text="Impulsar el talento emergente, proporcionando las herramientas y la visibilidad necesarias para transformar la pasión en una carrera profesional de éxito."
-                    gridArea="sub1"
-                    isMobile={isMobile}
                 />
-                <InfoCard 
-                    imageUrl="https://images.unsplash.com/photo-1552664730-d307ca884978?q=80&w=2070&auto=format&fit=crop"
+                <FeatureCard 
+                    icon={<VisionIcon />}
                     title="Visión"
                     text="Ser la agencia de talentos líder y más respetada en el ecosistema digital, reconocida por nuestra integridad, innovación y el impacto positivo en la vida de nuestros creadores."
-                    gridArea="sub2"
-                    isMobile={isMobile}
                 />
             </div>
         </section>
