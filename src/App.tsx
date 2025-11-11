@@ -23,12 +23,11 @@ const styles: { [key: string]: React.CSSProperties } = {
     height: '100%',
     textAlign: 'center',
     color: '#ffffff',
+    padding: '2rem',
+    boxSizing: 'border-box',
   },
   header: {
     marginBottom: '2rem',
-    backgroundColor: 'rgba(0, 0, 0, 0.5)',
-    padding: '1rem 2rem',
-    borderRadius: '10px',
   },
   title: {
     fontSize: '2.5rem',
@@ -37,9 +36,6 @@ const styles: { [key: string]: React.CSSProperties } = {
     textShadow: '2px 2px 4px rgba(0, 0, 0, 0.7)',
   },
   main: {
-    backgroundColor: 'rgba(0, 0, 0, 0.5)',
-    padding: '1rem 2rem',
-    borderRadius: '10px',
   },
   text: {
     fontSize: '1.2rem',
