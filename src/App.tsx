@@ -184,9 +184,7 @@ const HeroSection = () => {
         textAlign: 'center',
         padding: '0 20px',
         position: 'relative',
-        backgroundImage: 'linear-gradient(to bottom, rgba(13, 13, 13, 0.4) 0%, rgba(13, 13, 13, 0) 40%, rgba(13, 13, 13, 0.95) 100%), url(https://i.postimg.cc/hv5fbmt0/IMG_20251111_053352.jpg)',
-        backgroundSize: 'cover',
-        backgroundPosition: 'center',
+        background: 'linear-gradient(to bottom, rgba(13, 13, 13, 0.4) 0%, transparent 50%, rgba(13, 13, 13, 0.8) 100%)',
     };
 
     const contentStyle: CSSProperties = {
@@ -224,7 +222,7 @@ const HeroSection = () => {
         <main style={mainStyle}>
             <div style={contentStyle}>
                 <h1 style={titleStyle}>
-                    Conecta. Crea. <span style={{ color: '#c77dff' }}>Brilla.</span>
+                    <span style={{ color: '#c77dff' }}>Brilla.</span>
                 </h1>
                 <p style={subtitleStyle}>Tu talento merece ser visto.</p>
                 <a href="#" style={ctaButtonStyle} className="cta-button">
@@ -243,6 +241,7 @@ const AboutSection = () => {
         alignItems: 'center',
         padding: 'clamp(4rem, 10vw, 8rem) clamp(1rem, 5vw, 3rem)',
         overflow: 'hidden',
+        background: 'linear-gradient(to bottom, rgba(13, 13, 13, 0.8) 0%, rgba(13, 13, 13, 0.9) 100%)',
     };
 
     const contentWrapperStyle: CSSProperties = {
