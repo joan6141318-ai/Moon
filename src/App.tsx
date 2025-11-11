@@ -105,11 +105,11 @@ const App: React.FC = () => {
       borderRadius: '50px',
       padding: '16px 32px',
       fontSize: 'clamp(1rem, 2.5vw, 1.1rem)',
-      fontWeight: 'bold',
+      fontWeight: 600,
       cursor: 'pointer',
-      marginTop: '1rem',
-      textTransform: 'uppercase',
-      letterSpacing: '1px',
+      marginTop: '0.5rem',
+      textTransform: 'none',
+      letterSpacing: '0.5px',
       boxShadow: '0 4px 12px rgba(0, 0, 0, 0.4)',
       transition: 'all 0.3s ease',
     },
@@ -216,7 +216,7 @@ const App: React.FC = () => {
           Tu talento merece ser visto.
         </p>
         <button style={styles.ctaButton} className="cta-button">
-          Comienza hoy
+          comienza hoy
         </button>
       </main>
 
