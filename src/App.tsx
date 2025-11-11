@@ -3,7 +3,7 @@ import React, { CSSProperties } from 'react';
 
 // SVG Icon Components
 const HamburgerIcon = () => (
-  <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" style={{ display: 'block' }}>
+  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" style={{ display: 'block' }}>
     <path d="M3 12H21" stroke="white" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
     <path d="M3 6H21" stroke="white" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
     <path d="M3 18H21" stroke="white" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
@@ -53,7 +53,7 @@ const App: React.FC = () => {
       zIndex: 5,
     },
     title: {
-      fontSize: 'clamp(3rem, 10vw, 5rem)',
+      fontSize: 'clamp(2.5rem, 8vw, 5rem)',
       fontWeight: 800,
       color: '#ffffff',
       margin: '0 0 1rem 0',
