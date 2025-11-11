@@ -262,29 +262,41 @@ const App: React.FC = () => {
       flexDirection: 'column',
       alignItems: 'center',
       textAlign: 'center',
-      backgroundColor: '#0d0d0d',
+      backgroundColor: '#000000',
+    },
+    aboutCard: {
+      backgroundColor: 'rgba(26, 26, 26, 0.5)',
+      border: '1px solid rgba(255, 255, 255, 0.1)',
+      borderRadius: '16px',
+      padding: 'clamp(1.5rem, 5vw, 2.5rem)',
+      maxWidth: '760px',
+      width: '90%',
+      backdropFilter: 'blur(10px)',
+      WebkitBackdropFilter: 'blur(10px)',
+      textAlign: 'left',
     },
     aboutTitle: {
       fontFamily: "'Poppins', sans-serif",
       fontSize: 'clamp(2rem, 6vw, 3.5rem)',
       fontWeight: 800,
-      marginBottom: '1rem',
+      marginBottom: '2rem',
     },
     aboutHighlight: {
       color: '#9b29ac',
+      fontWeight: 600,
     },
     aboutExperience: {
       fontFamily: "'Poppins', sans-serif",
-      fontSize: 'clamp(1rem, 3vw, 1.25rem)',
-      fontWeight: 500,
-      color: '#e0e0e0',
-      marginBottom: '1.5rem',
+      fontSize: 'clamp(1.1rem, 3vw, 1.35rem)',
+      fontWeight: 600,
+      color: '#ffffff',
+      marginBottom: '1rem',
     },
     aboutDescription: {
       fontSize: 'clamp(0.9rem, 2.5vw, 1.1rem)',
-      color: '#b0b0b0',
+      color: '#c0c0c0',
       maxWidth: '720px',
-      lineHeight: 1.7,
+      lineHeight: 1.8,
     },
   };
 
@@ -335,12 +347,14 @@ const App: React.FC = () => {
         <h2 style={styles.aboutTitle}>
           Quiénes <span style={styles.aboutHighlight}>Somos</span>
         </h2>
-        <h3 style={styles.aboutExperience}>
-          Más de 7 años de experiencia
-        </h3>
-        <p style={styles.aboutDescription}>
-          Somos una agencia de talentos para plataformas de streaming. Nos especializamos en descubrir y potenciar a creadores de contenido, conectándolos con las plataformas más influyentes a nivel global. Nuestra comunidad, que supera los 400 talentos activos, es el testimonio de nuestro compromiso.
-        </p>
+        <div style={styles.aboutCard}>
+          <h3 style={styles.aboutExperience}>
+            Más de 7 años de experiencia
+          </h3>
+          <p style={styles.aboutDescription}>
+            Somos una agencia de talentos para plataformas de streaming. Nos especializamos en descubrir y potenciar a creadores de contenido, conectándolos con las plataformas más influyentes a nivel global. Nuestra comunidad, que supera los <span style={styles.aboutHighlight}>400</span> talentos activos, es el testimonio de nuestro compromiso.
+          </p>
+        </div>
       </section>
       
       <button style={styles.chatFab} className="chat-fab" aria-label="Abrir chat de ayuda">
