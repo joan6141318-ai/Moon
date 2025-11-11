@@ -1,5 +1,5 @@
 
-import React, { useState, CSSProperties, useEffect } from 'react';
+import React, { useState, CSSProperties, useEffect, useRef } from 'react';
 
 // SVG Icon Components
 const HamburgerIcon = () => (
@@ -29,6 +29,8 @@ const XIcon = () => (
 
 const App: React.FC = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const navRef = useRef<HTMLElement>(null);
+  const lastTouchElement = useRef<Element | null>(null);
 
   useEffect(() => {
     const handleKeyDown = (event: KeyboardEvent) => {
@@ -43,6 +45,45 @@ const App: React.FC = () => {
 
     return () => {
       document.removeEventListener('keydown', handleKeyDown);
+    };
+  }, [isMenuOpen]);
+
+  useEffect(() => {
+    const navElement = navRef.current;
+    if (!navElement) return;
+
+    const handleTouchMove = (event: TouchEvent) => {
+        const touch = event.touches[0];
+        const element = document.elementFromPoint(touch.clientX, touch.clientY);
+
+        if (lastTouchElement.current && lastTouchElement.current !== element) {
+            lastTouchElement.current.classList.remove('touch-hover');
+            lastTouchElement.current = null;
+        }
+
+        if (element && element.classList.contains('menu-link')) {
+            element.classList.add('touch-hover');
+            lastTouchElement.current = element;
+        }
+    };
+
+    const handleTouchEnd = () => {
+        if (lastTouchElement.current) {
+            lastTouchElement.current.classList.remove('touch-hover');
+            lastTouchElement.current = null;
+        }
+    };
+
+    if (isMenuOpen) {
+        navElement.addEventListener('touchmove', handleTouchMove);
+        navElement.addEventListener('touchend', handleTouchEnd);
+        navElement.addEventListener('touchcancel', handleTouchEnd);
+    }
+
+    return () => {
+        navElement.removeEventListener('touchmove', handleTouchMove);
+        navElement.removeEventListener('touchend', handleTouchEnd);
+        navElement.removeEventListener('touchcancel', handleTouchEnd);
     };
   }, [isMenuOpen]);
 
@@ -191,7 +232,7 @@ const App: React.FC = () => {
         <button style={styles.closeButton} className="close-button" onClick={() => setIsMenuOpen(false)} aria-label="Cerrar menú">
           <XIcon />
         </button>
-        <nav style={styles.menuNav}>
+        <nav ref={navRef} style={styles.menuNav}>
           {menuItems.map(item => (
             <a key={item} href="#" className="menu-link">
               {item}
