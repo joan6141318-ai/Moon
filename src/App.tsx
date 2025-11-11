@@ -1,3 +1,4 @@
+
 import React, { CSSProperties } from 'react';
 
 // SVG Icon Components
@@ -28,7 +29,7 @@ const App: React.FC = () => {
       flexDirection: 'column',
       position: 'relative',
       backgroundColor: '#1a1a1a',
-      backgroundImage: `linear-gradient(rgba(10, 5, 15, 0.7), rgba(0, 0, 0, 0.9)), url('https://i.pinimg.com/originals/a0/27/93/a027931a5b1b427b34692790d0b9856a.jpg')`,
+      backgroundImage: `linear-gradient(rgba(10, 5, 15, 0.7), rgba(0, 0, 0, 0.9)), url('https://images.unsplash.com/photo-1534796636912-3b95b3ab5986?q=80&w=2071&auto=format&fit=crop')`,
       backgroundSize: 'cover',
       backgroundPosition: 'center',
       overflow: 'hidden',
