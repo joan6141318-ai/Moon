@@ -28,9 +28,9 @@ const Card: React.FC<{ icon: React.ReactNode; title: string; children: React.Rea
     const cardStyle: CSSProperties = {
         backgroundColor: '#1f1f1f',
         borderRadius: '16px',
-        padding: 'clamp(1rem, 4vw, 1.5rem)',
+        padding: 'clamp(1.2rem, 5vw, 1.8rem)',
         flex: '1',
-        minWidth: '120px',
+        minWidth: '280px', // Asegura un ancho mínimo razonable en móvil
         border: '1px solid rgba(255, 255, 255, 0.1)',
         display: 'flex',
         flexDirection: 'column',
@@ -42,14 +42,14 @@ const Card: React.FC<{ icon: React.ReactNode; title: string; children: React.Rea
     };
 
     const titleStyle: CSSProperties = {
-        fontSize: 'clamp(1.1rem, 4vw, 1.4rem)',
+        fontSize: 'clamp(1.2rem, 4vw, 1.4rem)',
         fontWeight: 600,
         color: '#ffffff',
         margin: '1rem 0 0.5rem 0',
     };
     
     const textStyle: CSSProperties = {
-        fontSize: 'clamp(0.85rem, 3vw, 0.95rem)',
+        fontSize: 'clamp(0.9rem, 3vw, 1rem)',
         color: '#cccccc',
         lineHeight: 1.6,
     };
@@ -68,6 +68,16 @@ const Card: React.FC<{ icon: React.ReactNode; title: string; children: React.Rea
 };
 
 const AboutSection: React.FC = () => {
+    const [isMobile, setIsMobile] = useState(window.innerWidth < 768);
+
+    useEffect(() => {
+        const handleResize = () => {
+            setIsMobile(window.innerWidth < 768);
+        };
+        window.addEventListener('resize', handleResize);
+        return () => window.removeEventListener('resize', handleResize);
+    }, []);
+
     const styles: { [key: string]: CSSProperties } = {
         section: {
             backgroundColor: '#0d0d0d',
@@ -95,8 +105,10 @@ const AboutSection: React.FC = () => {
         },
         cardsContainer: {
             display: 'flex',
+            flexDirection: isMobile ? 'column' : 'row',
             justifyContent: 'center',
-            gap: 'clamp(0.75rem, 4vw, 1.5rem)',
+            alignItems: 'stretch',
+            gap: 'clamp(1.5rem, 4vw, 2rem)',
             width: '100%',
             maxWidth: '1200px',
         },
