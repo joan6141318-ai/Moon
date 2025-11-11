@@ -1,5 +1,4 @@
-
-import React, { CSSProperties } from 'react';
+import React, { useState, CSSProperties, useEffect } from 'react';
 
 // SVG Icon Components
 const HamburgerIcon = () => (
@@ -19,8 +18,33 @@ const ChatIcon = () => (
   </svg>
 );
 
+const XIcon = () => (
+  <svg width="28" height="28" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <path d="M18 6L6 18" stroke="white" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+    <path d="M6 6L18 18" stroke="white" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+  </svg>
+);
+
 
 const App: React.FC = () => {
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
+
+  useEffect(() => {
+    const handleKeyDown = (event: KeyboardEvent) => {
+      if (event.key === 'Escape') {
+        setIsMenuOpen(false);
+      }
+    };
+
+    if (isMenuOpen) {
+      document.addEventListener('keydown', handleKeyDown);
+    }
+
+    return () => {
+      document.removeEventListener('keydown', handleKeyDown);
+    };
+  }, [isMenuOpen]);
+
   const styles: { [key: string]: CSSProperties } = {
     container: {
       height: '100vh',
@@ -103,13 +127,80 @@ const App: React.FC = () => {
       zIndex: 10,
       transition: 'all 0.3s ease',
     },
+    menuOverlay: {
+      position: 'fixed',
+      top: 0,
+      left: 0,
+      width: '100vw',
+      height: '100vh',
+      backgroundColor: 'rgba(0, 0, 0, 0.5)',
+      zIndex: 15,
+      opacity: isMenuOpen ? 1 : 0,
+      visibility: isMenuOpen ? 'visible' : 'hidden',
+      transition: 'opacity 0.3s ease-in-out, visibility 0.3s ease-in-out',
+    },
+    sideMenu: {
+      position: 'fixed',
+      top: 0,
+      right: 0,
+      height: '100%',
+      width: 'clamp(250px, 70vw, 320px)',
+      backgroundColor: 'rgba(20, 20, 20, 0.8)',
+      backdropFilter: 'blur(15px)',
+      WebkitBackdropFilter: 'blur(15px)',
+      zIndex: 20,
+      transform: isMenuOpen ? 'translateX(0)' : 'translateX(100%)',
+      transition: 'transform 0.35s cubic-bezier(0.4, 0, 0.2, 1)',
+      display: 'flex',
+      flexDirection: 'column',
+      padding: '20px',
+      boxSizing: 'border-box',
+    },
+    closeButton: {
+      position: 'absolute',
+      top: '15px',
+      right: '15px',
+      cursor: 'pointer',
+      background: 'none',
+      border: 'none',
+    },
+    menuNav: {
+      marginTop: '80px',
+      display: 'flex',
+      flexDirection: 'column',
+      alignItems: 'flex-start',
+    },
+    menuLink: {
+      color: '#f0f0f0',
+      textDecoration: 'none',
+      fontSize: '1.5rem',
+      fontWeight: 500,
+      padding: '15px 10px',
+      transition: 'color 0.2s ease',
+    },
   };
+
+  const menuItems = ['Inicio', 'Sobre nosotros', 'Únete', 'Socios', 'Podcast', 'Preguntas frecuentes', 'Contacto', 'Chat'];
 
   return (
     <div style={styles.container}>
-      <header style={styles.header} aria-label="Menú principal">
+      <header style={styles.header} aria-label="Abrir menú principal" onClick={() => setIsMenuOpen(true)}>
         <HamburgerIcon />
       </header>
+
+      <div style={styles.menuOverlay} onClick={() => setIsMenuOpen(false)}></div>
+      <aside style={styles.sideMenu} aria-hidden={!isMenuOpen}>
+        <button style={styles.closeButton} onClick={() => setIsMenuOpen(false)} aria-label="Cerrar menú">
+          <XIcon />
+        </button>
+        <nav style={styles.menuNav}>
+          {menuItems.map(item => (
+            <a key={item} href="#" style={styles.menuLink} className="menu-link">
+              {item}
+            </a>
+          ))}
+        </nav>
+      </aside>
 
       <main style={styles.mainContent}>
         <h1 style={styles.title}>
