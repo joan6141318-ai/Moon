@@ -28,7 +28,7 @@ const CloseIcon = () => (
 
 const Header = ({ onMenuClick }: { onMenuClick: () => void }) => {
   const headerStyle: CSSProperties = {
-    position: 'absolute',
+    position: 'fixed',
     top: 0,
     left: 0,
     right: 0,
@@ -37,6 +37,10 @@ const Header = ({ onMenuClick }: { onMenuClick: () => void }) => {
     alignItems: 'center',
     padding: '20px 5%',
     zIndex: 1000,
+    transition: 'background-color 0.3s ease-in-out',
+    backgroundColor: 'rgba(13, 13, 13, 0.85)',
+    backdropFilter: 'blur(10px)',
+    WebkitBackdropFilter: 'blur(10px)',
   };
 
   const logoStyle: CSSProperties = {
@@ -179,16 +183,9 @@ const HeroSection = () => {
         textAlign: 'center',
         padding: '0 20px',
         position: 'relative',
-        background: 'url("https://i.postimg.cc/NfR2Z2m2/hero-background.jpg") no-repeat center center/cover',
-    };
-
-    const overlayStyle: CSSProperties = {
-        position: 'absolute',
-        top: 0,
-        left: 0,
-        right: 0,
-        bottom: 0,
-        backgroundColor: 'rgba(0,0,0,0.6)',
+        backgroundImage: 'linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)), url(https://images.unsplash.com/photo-1531297484001-80022131f5a1?q=80&w=2020&auto=format&fit=crop)',
+        backgroundSize: 'cover',
+        backgroundPosition: 'center',
     };
 
     const contentStyle: CSSProperties = {
@@ -224,7 +221,6 @@ const HeroSection = () => {
 
     return (
         <main style={mainStyle}>
-            <div style={overlayStyle}></div>
             <div style={contentStyle}>
                 <h1 style={titleStyle}>
                     Conecta. Crea. <span style={{ color: '#c77dff' }}>Brilla.</span>
@@ -246,23 +242,6 @@ const AboutSection = () => {
         alignItems: 'center',
         padding: 'clamp(4rem, 10vw, 8rem) clamp(1rem, 5vw, 3rem)',
         overflow: 'hidden',
-    };
-
-    const aboutBackgroundStyle: CSSProperties = {
-        position: 'absolute',
-        top: '-20px', left: '-20px', right: '-20px', bottom: '-20px',
-        backgroundImage: 'url(https://i.postimg.cc/NfR2Z2m2/hero-background.jpg)',
-        backgroundSize: 'cover',
-        backgroundPosition: 'center',
-        zIndex: 0,
-        transition: 'filter 0.5s cubic-bezier(0.23, 1, 0.32, 1)',
-    };
-
-    const overlayStyle: CSSProperties = {
-        position: 'absolute',
-        top: 0, left: 0, right: 0, bottom: 0,
-        backgroundColor: 'rgba(10, 10, 10, 0.7)',
-        zIndex: 1,
     };
 
     const contentWrapperStyle: CSSProperties = {
@@ -318,8 +297,6 @@ const AboutSection = () => {
 
     return (
         <section style={aboutSectionStyle}>
-            <div style={aboutBackgroundStyle} />
-            <div style={overlayStyle} />
             <div style={contentWrapperStyle}>
                 <h2 style={sectionTitleStyle}>
                     Quiénes <span style={{ color: '#9b29ac' }}>Somos</span>
@@ -375,11 +352,8 @@ export default function App() {
 
     useEffect(() => {
         const handleScroll = () => {
-            if (window.scrollY > window.innerHeight * 0.5) {
-                setShowFab(true);
-            } else {
-                setShowFab(false);
-            }
+            const fabThreshold = window.innerHeight * 0.5;
+            setShowFab(window.scrollY > fabThreshold);
         };
 
         window.addEventListener('scroll', handleScroll);
