@@ -8,21 +8,18 @@ const InfoCard: React.FC<{
     text?: string;
     imageUrl: string; 
     isMobile: boolean;
-    minHeight?: string;
-}> = ({ title, text, imageUrl, isMobile, minHeight = '250px' }) => {
+}> = ({ title, text, imageUrl, isMobile }) => {
     const [isHovered, setIsHovered] = React.useState(false);
 
     const cardStyle: CSSProperties = {
         position: 'relative',
-        height: '100%',
-        minHeight: minHeight,
         borderRadius: '20px',
         overflow: 'hidden',
         color: 'white',
         display: 'flex',
         alignItems: 'center',
         justifyContent: 'center',
-        padding: 'clamp(2.5rem, 6vw, 4rem)',
+        padding: 'clamp(3rem, 8vw, 5rem) clamp(2rem, 5vw, 4rem)',
         boxSizing: 'border-box',
         backgroundImage: `url(${imageUrl})`,
         backgroundSize: 'cover',
@@ -39,7 +36,7 @@ const InfoCard: React.FC<{
         left: 0,
         right: 0,
         bottom: 0,
-        backgroundColor: 'rgba(0, 0, 0, 0.65)',
+        backgroundColor: 'rgba(0, 0, 0, 0.6)',
     };
 
     const contentStyle: CSSProperties = {
@@ -49,14 +46,14 @@ const InfoCard: React.FC<{
     };
 
     const titleStyle: CSSProperties = {
-        fontSize: 'clamp(1.3rem, 3vw, 1.75rem)',
+        fontSize: 'clamp(1.2rem, 3vw, 1.5rem)',
         fontWeight: 600,
-        margin: '0 0 1.25rem 0',
+        margin: '0 0 1rem 0',
     };
     
     const textStyle: CSSProperties = {
-        fontSize: 'clamp(0.9rem, 2.5vw, 1.05rem)',
-        lineHeight: 1.8,
+        fontSize: 'clamp(0.9rem, 2.5vw, 1rem)',
+        lineHeight: 1.7,
         opacity: 0.9,
         margin: 0,
     };
@@ -89,7 +86,7 @@ const InfoCard: React.FC<{
 };
 
 const MissionIcon = () => (
-  <svg width="28" height="28" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" stroke="#c77dff" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+  <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w.org/2000/svg" stroke="#c77dff" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
     <circle cx="12" cy="12" r="10" />
     <circle cx="12" cy="12" r="6" />
     <circle cx="12" cy="12" r="2" />
@@ -97,7 +94,7 @@ const MissionIcon = () => (
 );
 
 const VisionIcon = () => (
-  <svg width="28" height="28" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" stroke="#c77dff" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+  <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w.org/2000/svg" stroke="#c77dff" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
     <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z" />
     <circle cx="12" cy="12" r="3" />
   </svg>
@@ -113,32 +110,30 @@ const FeatureCard: React.FC<{
     const cardStyle: CSSProperties = {
         backgroundColor: '#1a1a1c',
         borderRadius: '16px',
-        padding: 'clamp(1.5rem, 4vw, 2rem) clamp(2.5rem, 6vw, 3.5rem)', // Proporción horizontal
+        padding: '2rem 2.25rem', // Proporción horizontal clave
         border: '1px solid rgba(255, 255, 255, 0.1)',
         display: 'flex',
         flexDirection: 'column',
         alignItems: 'flex-start',
         textAlign: 'left',
-        height: '100%',
         boxSizing: 'border-box',
         transition: 'border-color 0.3s ease, transform 0.3s ease',
         borderColor: isHovered ? '#9b29ac' : 'rgba(255, 255, 255, 0.1)',
         transform: isHovered ? 'translateY(-5px)' : 'translateY(0)',
     };
     
-    const iconStyle: CSSProperties = { marginBottom: '1.25rem' };
+    const iconStyle: CSSProperties = { marginBottom: '1rem' };
     const titleStyle: CSSProperties = {
-        fontSize: 'clamp(1.05rem, 2.5vw, 1.2rem)',
+        fontSize: 'clamp(1rem, 2.5vw, 1.1rem)',
         fontWeight: 600,
         color: '#ffffff',
-        margin: '0 0 0.75rem 0',
+        margin: '0 0 0.5rem 0',
     };
     const textStyle: CSSProperties = {
-        fontSize: 'clamp(0.8rem, 2vw, 0.9rem)',
-        lineHeight: 1.6,
+        fontSize: 'clamp(0.8rem, 2vw, 0.85rem)',
+        lineHeight: 1.7,
         color: '#b0b0b0',
         margin: 0,
-        flexGrow: 1,
     };
 
     return (
@@ -169,7 +164,7 @@ const AboutSection: React.FC<{ isMobile: boolean }> = ({ isMobile }) => {
             fontWeight: 800,
             color: '#ffffff',
             textAlign: 'center',
-            marginBottom: '1.5rem',
+            marginBottom: '1rem',
         },
         highlight: {
             color: '#9b29ac',
@@ -190,7 +185,6 @@ const AboutSection: React.FC<{ isMobile: boolean }> = ({ isMobile }) => {
                     title="Más de 7 años de experiencia"
                     text="Somos una agencia de talentos para plataformas de streaming. Nos especializamos en descubrir y potenciar a creadores de contenido, conectándolos con las plataformas más influyentes a nivel global. Nuestra comunidad, que supera los 400 talentos activos, es el testimonio de nuestro compromiso."
                     isMobile={isMobile}
-                    minHeight={isMobile ? '300px' : '400px'}
                 />
             </div>
 
@@ -214,7 +208,7 @@ const AboutSection: React.FC<{ isMobile: boolean }> = ({ isMobile }) => {
 // --- Componentes de la App principal ---
 
 const HamburgerIcon = () => (
-  <svg width="26" height="26" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" style={{ display: 'block' }}>
+  <svg width="26" height="26" viewBox="0 0 24 24" fill="none" xmlns="http://www.w.org/2000/svg" style={{ display: 'block' }}>
     <path d="M3 12H21" stroke="white" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
     <path d="M3 6H21" stroke="white" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
     <path d="M3 18H21" stroke="white" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
@@ -222,7 +216,7 @@ const HamburgerIcon = () => (
 );
 
 const ChatIcon = () => (
-  <svg width="28" height="28" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <svg width="28" height="28" viewBox="0 0 24 24" fill="none" xmlns="http://www.w.org/2000/svg">
     <path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z" stroke="white" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"></path>
     <circle cx="12" cy="12" r="1" fill="white" stroke="white" strokeWidth="0.5"/>
     <circle cx="16" cy="12" r="1" fill="white" stroke="white" strokeWidth="0.5"/>
@@ -231,7 +225,7 @@ const ChatIcon = () => (
 );
 
 const XIcon = () => (
-  <svg width="28" height="28" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <svg width="28" height="28" viewBox="0 0 24 24" fill="none" xmlns="http://www.w.org/2000/svg">
     <path d="M18 6L6 18" stroke="white" strokeWidth="1.2" strokeLinecap="round" strokeLinejoin="round"/>
     <path d="M6 6L18 18" stroke="white" strokeWidth="1.2" strokeLinecap="round" strokeLinejoin="round"/>
   </svg>
