@@ -113,7 +113,7 @@ const FeatureCard: React.FC<{
     const cardStyle: CSSProperties = {
         backgroundColor: '#1a1a1c',
         borderRadius: '16px',
-        padding: 'clamp(1.75rem, 5vw, 2.25rem) clamp(2.25rem, 6vw, 2.75rem)',
+        padding: 'clamp(1.5rem, 4vw, 2rem) clamp(2.5rem, 6vw, 3.5rem)', // Proporción horizontal
         border: '1px solid rgba(255, 255, 255, 0.1)',
         display: 'flex',
         flexDirection: 'column',
@@ -128,14 +128,14 @@ const FeatureCard: React.FC<{
     
     const iconStyle: CSSProperties = { marginBottom: '1.25rem' };
     const titleStyle: CSSProperties = {
-        fontSize: 'clamp(1.1rem, 2.5vw, 1.25rem)',
+        fontSize: 'clamp(1.05rem, 2.5vw, 1.2rem)',
         fontWeight: 600,
         color: '#ffffff',
-        margin: '0 0 1rem 0',
+        margin: '0 0 0.75rem 0',
     };
     const textStyle: CSSProperties = {
-        fontSize: 'clamp(0.85rem, 2vw, 0.95rem)',
-        lineHeight: 1.7,
+        fontSize: 'clamp(0.8rem, 2vw, 0.9rem)',
+        lineHeight: 1.6,
         color: '#b0b0b0',
         margin: 0,
         flexGrow: 1,
