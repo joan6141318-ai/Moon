@@ -3,39 +3,20 @@ import React, { useState, CSSProperties, useEffect, useRef } from 'react';
 
 // --- Íconos ---
 
-const AnimatedHamburgerIcon = ({ isOpen }: { isOpen: boolean }) => {
+const MenuIcon = () => {
     const barStyle: CSSProperties = {
         display: 'block',
         width: '24px',
         height: '2px',
         backgroundColor: '#FFFFFF',
         margin: '5px 0',
-        transition: 'transform 0.3s ease-in-out, opacity 0.3s ease-in-out',
-    };
-
-    const topBarStyle: CSSProperties = {
-        ...barStyle,
-        transform: isOpen ? 'rotate(45deg) translate(5px, 5px)' : 'none',
-        transformOrigin: 'center',
-    };
-    
-    const middleBarStyle: CSSProperties = {
-        ...barStyle,
-        margin: '5px 0',
-        opacity: isOpen ? 0 : 1,
-    };
-
-    const bottomBarStyle: CSSProperties = {
-        ...barStyle,
-        transform: isOpen ? 'rotate(-45deg) translate(5px, -5px)' : 'none',
-        transformOrigin: 'center',
     };
 
     return (
-        <div style={{ width: '26px', height: '26px', display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center', position: 'relative' }}>
-            <span style={topBarStyle}></span>
-            <span style={middleBarStyle}></span>
-            <span style={bottomBarStyle}></span>
+        <div style={{ width: '26px', height: '26px', display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center' }}>
+            <span style={barStyle}></span>
+            <span style={barStyle}></span>
+            <span style={barStyle}></span>
         </div>
     );
 };
@@ -82,7 +63,7 @@ const Header = ({ onMenuClick, isScrolled, isMenuOpen }: { onMenuClick: () => vo
   return (
     <header style={headerStyle}>
       <button onClick={onMenuClick} style={headerButtonStyle} className="header-button" aria-label={isMenuOpen ? 'Cerrar menú' : 'Abrir menú'}>
-        <AnimatedHamburgerIcon isOpen={isMenuOpen} />
+        <MenuIcon />
       </button>
     </header>
   );
@@ -203,7 +184,7 @@ const HeroSection = () => {
         textAlign: 'center',
         padding: '0 20px',
         position: 'relative',
-        backgroundImage: 'linear-gradient(to bottom, rgba(13, 13, 13, 0.8) 0%, rgba(13, 13, 13, 0) 50%, rgba(13, 13, 13, 1) 100%), url(https://i.postimg.cc/hv5fbmt0/IMG_20251111_053352.jpg)',
+        backgroundImage: 'linear-gradient(to bottom, rgba(13, 13, 13, 0.7) 0%, rgba(13, 13, 13, 0.1) 50%, rgba(13, 13, 13, 1) 100%), url(https://i.postimg.cc/hv5fbmt0/IMG_20251111_053352.jpg)',
         backgroundSize: 'cover',
         backgroundPosition: 'center',
     };
