@@ -32,7 +32,7 @@ const App: React.FC = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [selectedMenuItem, setSelectedMenuItem] = useState<string | null>(null);
   const navRef = useRef<HTMLElement>(null);
-  const lastTouchElement = useRef<Element | null>(null);
+  const lastHoveredElementRef = useRef<Element | null>(null);
 
   useEffect(() => {
     const handleKeyDown = (event: KeyboardEvent) => {
@@ -52,63 +52,60 @@ const App: React.FC = () => {
 
   useEffect(() => {
     const navElement = navRef.current;
-    if (!navElement) return;
-    
+    if (!isMenuOpen || !navElement) return;
+
     const handleTouchMove = (event: TouchEvent) => {
         const touch = event.touches[0];
-        const newElement = document.elementFromPoint(touch.clientX, touch.clientY);
-        const oldElement = lastTouchElement.current;
-    
-        if (newElement === oldElement) {
+        if (!touch) return;
+
+        const elementUnderTouch = document.elementFromPoint(touch.clientX, touch.clientY);
+        const newHoveredElement = elementUnderTouch?.closest('.menu-link');
+        const lastHoveredElement = lastHoveredElementRef.current;
+        
+        if (newHoveredElement === lastHoveredElement) {
             return;
         }
-    
-        if (oldElement) {
-            oldElement.classList.remove('touch-hover');
+
+        if (lastHoveredElement) {
+            lastHoveredElement.classList.remove('touch-hover');
         }
-    
-        if (newElement && newElement.classList.contains('menu-link')) {
-            newElement.classList.add('touch-hover');
-            lastTouchElement.current = newElement;
+
+        if (newHoveredElement) {
+            newHoveredElement.classList.add('touch-hover');
+            lastHoveredElementRef.current = newHoveredElement;
         } else {
-            lastTouchElement.current = null;
+            lastHoveredElementRef.current = null;
         }
     };
 
     const handleTouchStart = (event: TouchEvent) => {
+        event.preventDefault();
         setSelectedMenuItem(null);
-        if (lastTouchElement.current) {
-            lastTouchElement.current.classList.remove('touch-hover');
-            lastTouchElement.current = null;
-        }
         handleTouchMove(event);
     };
 
     const handleTouchEnd = () => {
-        if (lastTouchElement.current) {
-            const selectedText = lastTouchElement.current.textContent;
+        const lastHoveredElement = lastHoveredElementRef.current;
+        if (lastHoveredElement) {
+            const selectedText = lastHoveredElement.textContent;
             if (selectedText) {
               setSelectedMenuItem(selectedText);
             }
-            lastTouchElement.current.classList.remove('touch-hover');
-            lastTouchElement.current = null;
+            lastHoveredElement.classList.remove('touch-hover');
+            lastHoveredElementRef.current = null;
         }
     };
 
-    if (isMenuOpen) {
-        navElement.addEventListener('touchstart', handleTouchStart);
-        navElement.addEventListener('touchmove', handleTouchMove);
-        navElement.addEventListener('touchend', handleTouchEnd);
-        navElement.addEventListener('touchcancel', handleTouchEnd);
-    }
+    navElement.addEventListener('touchstart', handleTouchStart, { passive: false });
+    navElement.addEventListener('touchmove', handleTouchMove, { passive: false });
+    navElement.addEventListener('touchend', handleTouchEnd);
+    navElement.addEventListener('touchcancel', handleTouchEnd);
 
     return () => {
-        if(navElement) {
-            navElement.removeEventListener('touchstart', handleTouchStart);
-            navElement.removeEventListener('touchmove', handleTouchMove);
-            navElement.removeEventListener('touchend', handleTouchEnd);
-            navElement.removeEventListener('touchcancel', handleTouchEnd);
-        }
+        navElement.removeEventListener('touchstart', handleTouchStart);
+        navElement.removeEventListener('touchmove', handleTouchMove);
+        navElement.removeEventListener('touchend', handleTouchEnd);
+        navElement.removeEventListener('touchcancel', handleTouchEnd);
     };
   }, [isMenuOpen]);
 
