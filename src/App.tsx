@@ -20,9 +20,9 @@ const ChatIcon = () => (
 );
 
 const XIcon = () => (
-  <svg width="28" height="28" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-    <path d="M18 6L6 18" stroke="white" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
-    <path d="M6 6L18 18" stroke="white" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+  <svg width="32" height="32" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <path d="M18 6L6 18" stroke="white" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
+    <path d="M6 6L18 18" stroke="white" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
   </svg>
 );
 
@@ -142,15 +142,13 @@ const App: React.FC = () => {
     },
     sideMenu: {
       position: 'fixed',
-      top: '20px',
-      right: '20px',
-      width: '280px',
-      backgroundColor: 'rgba(15, 15, 15, 0.8)',
-      backdropFilter: 'blur(18px)',
-      WebkitBackdropFilter: 'blur(18px)',
-      borderRadius: '12px',
+      top: '0',
+      right: '0',
+      width: '300px',
+      height: '100vh',
+      backgroundColor: 'rgba(10, 10, 10, 0.95)',
       zIndex: 20,
-      transform: isMenuOpen ? 'translateX(0)' : 'translateX(110%)',
+      transform: isMenuOpen ? 'translateX(0)' : 'translateX(100%)',
       transition: 'transform 0.35s cubic-bezier(0.4, 0, 0.2, 1)',
       display: 'flex',
       flexDirection: 'column',
@@ -161,14 +159,14 @@ const App: React.FC = () => {
     },
     closeButton: {
       position: 'absolute',
-      top: '15px',
-      right: '15px',
+      top: '20px',
+      right: '20px',
       cursor: 'pointer',
       background: 'none',
       border: 'none',
     },
     menuNav: {
-      marginTop: '50px',
+      marginTop: '70px',
       display: 'flex',
       flexDirection: 'column',
       alignItems: 'flex-start',
@@ -176,9 +174,9 @@ const App: React.FC = () => {
     menuLink: {
       color: '#f0f0f0',
       textDecoration: 'none',
-      fontSize: '1.2rem',
-      fontWeight: 400,
-      padding: '12px 0',
+      fontSize: '1.25rem',
+      fontWeight: 300,
+      padding: '15px 0',
       transition: 'color 0.2s ease',
       width: '100%',
     },
