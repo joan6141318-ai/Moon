@@ -1,3 +1,4 @@
+
 import React, { useState, CSSProperties, useEffect } from 'react';
 
 // SVG Icon Components
@@ -141,20 +142,22 @@ const App: React.FC = () => {
     },
     sideMenu: {
       position: 'fixed',
-      top: 0,
-      right: 0,
-      height: '100%',
-      width: 'clamp(250px, 70vw, 320px)',
-      backgroundColor: 'rgba(20, 20, 20, 0.8)',
-      backdropFilter: 'blur(15px)',
-      WebkitBackdropFilter: 'blur(15px)',
+      top: '20px',
+      right: '20px',
+      width: '280px',
+      backgroundColor: 'rgba(15, 15, 15, 0.8)',
+      backdropFilter: 'blur(18px)',
+      WebkitBackdropFilter: 'blur(18px)',
+      borderRadius: '12px',
       zIndex: 20,
-      transform: isMenuOpen ? 'translateX(0)' : 'translateX(100%)',
+      transform: isMenuOpen ? 'translateX(0)' : 'translateX(110%)',
       transition: 'transform 0.35s cubic-bezier(0.4, 0, 0.2, 1)',
       display: 'flex',
       flexDirection: 'column',
       padding: '20px',
       boxSizing: 'border-box',
+      boxShadow: '0 8px 24px rgba(0,0,0,0.3)',
+      visibility: isMenuOpen ? 'visible' : 'hidden',
     },
     closeButton: {
       position: 'absolute',
@@ -165,7 +168,7 @@ const App: React.FC = () => {
       border: 'none',
     },
     menuNav: {
-      marginTop: '80px',
+      marginTop: '50px',
       display: 'flex',
       flexDirection: 'column',
       alignItems: 'flex-start',
@@ -173,10 +176,11 @@ const App: React.FC = () => {
     menuLink: {
       color: '#f0f0f0',
       textDecoration: 'none',
-      fontSize: '1.5rem',
-      fontWeight: 500,
-      padding: '15px 10px',
+      fontSize: '1.2rem',
+      fontWeight: 400,
+      padding: '12px 0',
       transition: 'color 0.2s ease',
+      width: '100%',
     },
   };
 
