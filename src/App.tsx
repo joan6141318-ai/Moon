@@ -22,7 +22,7 @@ const InfoCard: React.FC<{
         display: 'flex',
         alignItems: 'center',
         justifyContent: 'center',
-        padding: 'clamp(2rem, 6vw, 4rem)',
+        padding: 'clamp(2.5rem, 6vw, 4rem)',
         boxSizing: 'border-box',
         backgroundImage: `url(${imageUrl})`,
         backgroundSize: 'cover',
@@ -49,24 +49,24 @@ const InfoCard: React.FC<{
     };
 
     const titleStyle: CSSProperties = {
-        fontSize: 'clamp(1.25rem, 3vw, 1.6rem)',
-        fontWeight: 700,
-        margin: '0 0 1rem 0',
+        fontSize: 'clamp(1.3rem, 3vw, 1.75rem)',
+        fontWeight: 600,
+        margin: '0 0 1.25rem 0',
     };
     
     const textStyle: CSSProperties = {
-        fontSize: 'clamp(0.9rem, 2.5vw, 1rem)',
-        lineHeight: 1.7,
+        fontSize: 'clamp(0.9rem, 2.5vw, 1.05rem)',
+        lineHeight: 1.8,
         opacity: 0.9,
         margin: 0,
     };
     
     const innerBorderStyle: CSSProperties = {
         position: 'absolute',
-        top: '1.25rem',
-        left: '1.25rem',
-        right: '1.25rem',
-        bottom: '1.25rem',
+        top: '1.5rem',
+        left: '1.5rem',
+        right: '1.5rem',
+        bottom: '1.5rem',
         border: '1px solid rgba(255, 255, 255, 0.2)',
         borderRadius: '12px',
         opacity: 0.8,
@@ -113,7 +113,7 @@ const FeatureCard: React.FC<{
     const cardStyle: CSSProperties = {
         backgroundColor: '#1a1a1c',
         borderRadius: '16px',
-        padding: 'clamp(1.5rem, 4vw, 2rem) clamp(1.5rem, 4vw, 2.5rem)',
+        padding: 'clamp(1.75rem, 5vw, 2.25rem) clamp(2.25rem, 6vw, 2.75rem)',
         border: '1px solid rgba(255, 255, 255, 0.1)',
         display: 'flex',
         flexDirection: 'column',
@@ -128,14 +128,14 @@ const FeatureCard: React.FC<{
     
     const iconStyle: CSSProperties = { marginBottom: '1.25rem' };
     const titleStyle: CSSProperties = {
-        fontSize: 'clamp(1.1rem, 2.5vw, 1.2rem)',
+        fontSize: 'clamp(1.1rem, 2.5vw, 1.25rem)',
         fontWeight: 600,
         color: '#ffffff',
-        margin: '0 0 0.75rem 0',
+        margin: '0 0 1rem 0',
     };
     const textStyle: CSSProperties = {
-        fontSize: 'clamp(0.85rem, 2vw, 0.9rem)',
-        lineHeight: 1.6,
+        fontSize: 'clamp(0.85rem, 2vw, 0.95rem)',
+        lineHeight: 1.7,
         color: '#b0b0b0',
         margin: 0,
         flexGrow: 1,
@@ -190,7 +190,7 @@ const AboutSection: React.FC<{ isMobile: boolean }> = ({ isMobile }) => {
                     title="Más de 7 años de experiencia"
                     text="Somos una agencia de talentos para plataformas de streaming. Nos especializamos en descubrir y potenciar a creadores de contenido, conectándolos con las plataformas más influyentes a nivel global. Nuestra comunidad, que supera los 400 talentos activos, es el testimonio de nuestro compromiso."
                     isMobile={isMobile}
-                    minHeight={isMobile ? '300px' : '380px'}
+                    minHeight={isMobile ? '300px' : '400px'}
                 />
             </div>
 
