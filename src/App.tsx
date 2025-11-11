@@ -1,5 +1,19 @@
 import React from 'react';
 
+const App: React.FC = () => {
+  return (
+    <div style={styles.container}>
+      <header style={styles.header}>
+        <h1 style={styles.title}>Bienvenido a tu Proyecto</h1>
+      </header>
+      <main style={styles.main}>
+        <p style={styles.text}>Mis disculpas por el malentendido anterior.</p>
+        <p style={styles.text}>Este es un punto de partida limpio para que puedas comenzar a construir tu aplicación.</p>
+      </main>
+    </div>
+  );
+};
+
 const styles: { [key: string]: React.CSSProperties } = {
   container: {
     display: 'flex',
@@ -7,40 +21,25 @@ const styles: { [key: string]: React.CSSProperties } = {
     alignItems: 'center',
     justifyContent: 'center',
     height: '100vh',
-    backgroundColor: '#f0f2f5',
-    fontFamily: 'Arial, sans-serif',
     textAlign: 'center',
-    padding: '20px',
-    boxSizing: 'border-box',
-  },
-  card: {
-    backgroundColor: 'white',
-    padding: '40px',
-    borderRadius: '12px',
-    boxShadow: '0 4px 20px rgba(0, 0, 0, 0.1)',
+    backgroundColor: '#ffffff',
   },
   header: {
+    marginBottom: '2rem',
+  },
+  title: {
     fontSize: '2.5rem',
     color: '#333',
-    marginBottom: '10px',
+    margin: 0,
   },
-  paragraph: {
+  main: {
+    padding: '0 1rem',
+  },
+  text: {
     fontSize: '1.2rem',
     color: '#666',
-    maxWidth: '500px',
-  }
+    lineHeight: '1.6',
+  },
 };
 
-export default function App() {
-  return (
-    <div style={styles.container}>
-      <div style={styles.card}>
-        <h1 style={styles.header}>Página Limpiada</h1>
-        <p style={styles.paragraph}>
-          El proyecto anterior ha sido completamente eliminado. Ahora tienes un lienzo en blanco.
-          Mis disculpas por los problemas anteriores. ¡Empecemos de nuevo!
-        </p>
-      </div>
-    </div>
-  );
-}
+export default App;
