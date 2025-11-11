@@ -1,214 +1,10 @@
 
 import React, { useState, CSSProperties, useEffect, useRef } from 'react';
 
-// --- SECCIÓN "QUIÉNES SOMOS" REDISEÑADA ---
-
-const InfoCard: React.FC<{ 
-    title?: string; 
-    text?: string;
-    imageUrl: string; 
-    isMobile: boolean;
-}> = ({ title, text, imageUrl, isMobile }) => {
-    const [isHovered, setIsHovered] = React.useState(false);
-
-    const cardStyle: CSSProperties = {
-        position: 'relative',
-        borderRadius: '20px',
-        overflow: 'hidden',
-        color: 'white',
-        display: 'flex',
-        alignItems: 'center',
-        justifyContent: 'center',
-        padding: 'clamp(3rem, 8vw, 5rem) clamp(2rem, 5vw, 4rem)',
-        boxSizing: 'border-box',
-        backgroundImage: `url(${imageUrl})`,
-        backgroundSize: 'cover',
-        backgroundPosition: 'center',
-        transition: 'transform 0.3s ease-in-out',
-        transform: isHovered ? 'scale(1.02)' : 'scale(1)',
-        cursor: 'default',
-        textAlign: 'center',
-    };
-
-    const overlayStyle: CSSProperties = {
-        position: 'absolute',
-        top: 0,
-        left: 0,
-        right: 0,
-        bottom: 0,
-        backgroundColor: 'rgba(0, 0, 0, 0.6)',
-    };
-
-    const contentStyle: CSSProperties = {
-        position: 'relative',
-        zIndex: 2,
-        maxWidth: '750px',
-    };
-
-    const titleStyle: CSSProperties = {
-        fontSize: 'clamp(1.2rem, 3vw, 1.5rem)',
-        fontWeight: 600,
-        margin: '0 0 1rem 0',
-    };
-    
-    const textStyle: CSSProperties = {
-        fontSize: 'clamp(0.9rem, 2.5vw, 1rem)',
-        lineHeight: 1.7,
-        opacity: 0.9,
-        margin: 0,
-    };
-    
-    const innerBorderStyle: CSSProperties = {
-        position: 'absolute',
-        top: '1.5rem',
-        left: '1.5rem',
-        right: '1.5rem',
-        bottom: '1.5rem',
-        border: '1px solid rgba(255, 255, 255, 0.2)',
-        borderRadius: '12px',
-        opacity: 0.8,
-    };
-
-    return (
-        <div 
-            style={cardStyle}
-            onMouseEnter={() => setIsHovered(true)}
-            onMouseLeave={() => setIsHovered(false)}
-        >
-            <div style={overlayStyle}></div>
-            <div style={innerBorderStyle}></div>
-            <div style={contentStyle}>
-                {title && <h3 style={titleStyle}>{title}</h3>}
-                {text && <p style={textStyle}>{text}</p>}
-            </div>
-        </div>
-    );
-};
-
-const MissionIcon = () => (
-  <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w.org/2000/svg" stroke="#c77dff" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
-    <circle cx="12" cy="12" r="10" />
-    <circle cx="12" cy="12" r="6" />
-    <circle cx="12" cy="12" r="2" />
-  </svg>
-);
-
-const VisionIcon = () => (
-  <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w.org/2000/svg" stroke="#c77dff" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
-    <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z" />
-    <circle cx="12" cy="12" r="3" />
-  </svg>
-);
-
-const FeatureCard: React.FC<{
-    icon: React.ReactNode;
-    title: string;
-    text: string;
-}> = ({ icon, title, text }) => {
-    const [isHovered, setIsHovered] = React.useState(false);
-
-    const cardStyle: CSSProperties = {
-        backgroundColor: '#1a1a1c',
-        borderRadius: '16px',
-        padding: '2rem 2.25rem', // Proporción horizontal clave
-        border: '1px solid rgba(255, 255, 255, 0.1)',
-        display: 'flex',
-        flexDirection: 'column',
-        alignItems: 'flex-start',
-        textAlign: 'left',
-        boxSizing: 'border-box',
-        transition: 'border-color 0.3s ease, transform 0.3s ease',
-        borderColor: isHovered ? '#9b29ac' : 'rgba(255, 255, 255, 0.1)',
-        transform: isHovered ? 'translateY(-5px)' : 'translateY(0)',
-    };
-    
-    const iconStyle: CSSProperties = { marginBottom: '1rem' };
-    const titleStyle: CSSProperties = {
-        fontSize: 'clamp(1rem, 2.5vw, 1.1rem)',
-        fontWeight: 600,
-        color: '#ffffff',
-        margin: '0 0 0.5rem 0',
-    };
-    const textStyle: CSSProperties = {
-        fontSize: 'clamp(0.8rem, 2vw, 0.85rem)',
-        lineHeight: 1.7,
-        color: '#b0b0b0',
-        margin: 0,
-    };
-
-    return (
-        <div 
-            style={cardStyle}
-            onMouseEnter={() => setIsHovered(true)}
-            onMouseLeave={() => setIsHovered(false)}
-        >
-            <div style={iconStyle}>{icon}</div>
-            <h3 style={titleStyle}>{title}</h3>
-            <p style={textStyle}>{text}</p>
-        </div>
-    );
-};
-
-const AboutSection: React.FC<{ isMobile: boolean }> = ({ isMobile }) => {
-    const styles: { [key: string]: CSSProperties } = {
-        section: {
-            backgroundColor: '#0d0d0d',
-            padding: 'clamp(3rem, 8vw, 6rem) clamp(1rem, 5vw, 4rem)',
-            display: 'flex',
-            flexDirection: 'column',
-            alignItems: 'center',
-            gap: '2.5rem',
-        },
-        title: {
-            fontSize: 'clamp(2.2rem, 5vw, 3rem)',
-            fontWeight: 800,
-            color: '#ffffff',
-            textAlign: 'center',
-            marginBottom: '1rem',
-        },
-        highlight: {
-            color: '#9b29ac',
-        },
-        mainCardWrapper: {
-            maxWidth: '1200px',
-            width: '100%',
-        },
-    };
-    
-    return (
-        <section style={styles.section}>
-            <h2 style={styles.title}>Quiénes <span style={styles.highlight}>Somos</span></h2>
-            
-            <div style={styles.mainCardWrapper}>
-                <InfoCard 
-                    imageUrl="https://images.unsplash.com/photo-1522071820081-009f0129c71c?q=80&w=2070&auto=format&fit=crop"
-                    title="Más de 7 años de experiencia"
-                    text="Somos una agencia de talentos para plataformas de streaming. Nos especializamos en descubrir y potenciar a creadores de contenido, conectándolos con las plataformas más influyentes a nivel global. Nuestra comunidad, que supera los 400 talentos activos, es el testimonio de nuestro compromiso."
-                    isMobile={isMobile}
-                />
-            </div>
-
-            <div className="features-grid">
-                 <FeatureCard 
-                    icon={<MissionIcon />}
-                    title="Misión"
-                    text="Impulsar el talento emergente, proporcionando las herramientas y la visibilidad necesarias para transformar la pasión en una carrera profesional de éxito."
-                />
-                <FeatureCard 
-                    icon={<VisionIcon />}
-                    title="Visión"
-                    text="Ser la agencia de talentos líder y más respetada en el ecosistema digital, reconocida por nuestra integridad, innovación y el impacto positivo en la vida de nuestros creadores."
-                />
-            </div>
-        </section>
-    );
-};
-
-
 // --- Componentes de la App principal ---
 
 const HamburgerIcon = () => (
-  <svg width="26" height="26" viewBox="0 0 24 24" fill="none" xmlns="http://www.w.org/2000/svg" style={{ display: 'block' }}>
+  <svg width="26" height="26" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" style={{ display: 'block' }}>
     <path d="M3 12H21" stroke="white" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
     <path d="M3 6H21" stroke="white" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
     <path d="M3 18H21" stroke="white" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
@@ -216,7 +12,7 @@ const HamburgerIcon = () => (
 );
 
 const ChatIcon = () => (
-  <svg width="28" height="28" viewBox="0 0 24 24" fill="none" xmlns="http://www.w.org/2000/svg">
+  <svg width="28" height="28" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
     <path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z" stroke="white" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"></path>
     <circle cx="12" cy="12" r="1" fill="white" stroke="white" strokeWidth="0.5"/>
     <circle cx="16" cy="12" r="1" fill="white" stroke="white" strokeWidth="0.5"/>
@@ -225,7 +21,7 @@ const ChatIcon = () => (
 );
 
 const XIcon = () => (
-  <svg width="28" height="28" viewBox="0 0 24 24" fill="none" xmlns="http://www.w.org/2000/svg">
+  <svg width="28" height="28" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
     <path d="M18 6L6 18" stroke="white" strokeWidth="1.2" strokeLinecap="round" strokeLinejoin="round"/>
     <path d="M6 6L18 18" stroke="white" strokeWidth="1.2" strokeLinecap="round" strokeLinejoin="round"/>
   </svg>
@@ -235,29 +31,9 @@ const XIcon = () => (
 const App: React.FC = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [selectedMenuItem, setSelectedMenuItem] = useState<string | null>(null);
-  const [isChatFabVisible, setIsChatFabVisible] = useState(false);
-  const [isMobile, setIsMobile] = useState(window.innerWidth < 768);
   const navRef = useRef<HTMLElement>(null);
   const lastHoveredElementRef = useRef<Element | null>(null);
   
-  useEffect(() => {
-    const handleResize = () => setIsMobile(window.innerWidth < 768);
-    window.addEventListener('resize', handleResize);
-    return () => window.removeEventListener('resize', handleResize);
-  }, []);
-
-  useEffect(() => {
-    const handleScroll = () => {
-      if (window.scrollY > window.innerHeight * 0.5) {
-        setIsChatFabVisible(true);
-      } else {
-        setIsChatFabVisible(false);
-      }
-    };
-    window.addEventListener('scroll', handleScroll, { passive: true });
-    return () => window.removeEventListener('scroll', handleScroll);
-  }, []);
-
   useEffect(() => {
     const handleKeyDown = (event: KeyboardEvent) => {
       if (event.key === 'Escape') {
@@ -417,9 +193,9 @@ const App: React.FC = () => {
       border: 'none',
       boxShadow: '0 6px 20px rgba(0,0,0,0.3)',
       zIndex: 10,
-      opacity: isChatFabVisible ? 1 : 0,
-      visibility: isChatFabVisible ? 'visible' : 'hidden',
-      transform: isChatFabVisible ? 'scale(1)' : 'scale(0.5)',
+      opacity: 1,
+      visibility: 'visible',
+      transform: 'scale(1)',
       transition: 'all 0.4s cubic-bezier(0.25, 1, 0.5, 1)',
     },
     menuOverlay: {
@@ -514,8 +290,6 @@ const App: React.FC = () => {
         </main>
       </div>
       
-      <AboutSection isMobile={isMobile} />
-
       <button style={styles.chatFab} className="chat-fab" aria-label="Abrir chat de ayuda">
         <ChatIcon />
       </button>
