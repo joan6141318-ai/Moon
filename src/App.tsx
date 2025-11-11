@@ -29,7 +29,7 @@ const App: React.FC = () => {
       flexDirection: 'column',
       position: 'relative',
       backgroundColor: '#1a1a1a',
-      backgroundImage: `linear-gradient(rgba(10, 5, 15, 0.7), rgba(0, 0, 0, 0.9)), url('https://images.hdqwalls.com/download/girl-holding-moon-4k-i6-2160x3840.jpg')`,
+      backgroundImage: `linear-gradient(rgba(10, 5, 15, 0.7), rgba(0, 0, 0, 0.9)), url('https://w.forfun.com/fetch/cf/cf31362e4c9e4719b5b294e1d1f0c2a7.jpeg')`,
       backgroundSize: 'cover',
       backgroundPosition: 'center',
       overflow: 'hidden',
