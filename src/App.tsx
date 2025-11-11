@@ -1,6 +1,5 @@
 
 
-
 import React, { useState, useEffect, useRef, ReactNode, useCallback } from 'react';
 import { FAQItem, PaymentTier } from './types';
 import { 
@@ -472,6 +471,145 @@ const PartnershipModal: React.FC<{ isOpen: boolean; onClose: () => void }> = ({ 
 
 
 // --- Page Section Components ---
+const PaymentTable: React.FC<{ tiers: PaymentTier[] }> = ({ tiers }) => {
+    return (
+        <div className="overflow-x-auto relative rounded-lg border border-purple-500/30">
+            <table className="w-full text-sm text-left text-gray-300">
+                <thead className="text-xs text-purple-300 uppercase bg-gray-900/50">
+                    <tr>
+                        <th scope="col" className="px-4 py-3 sm:px-6 whitespace-nowrap">Nivel</th>
+                        <th scope="col" className="px-4 py-3 sm:px-6 whitespace-nowrap">Meta Mensual en Semillas</th>
+                        <th scope="col" className="px-4 py-3 sm:px-6 whitespace-nowrap text-center">Horas de Transmisión al Día</th>
+                        <th scope="col" className="px-4 py-3 sm:px-6 whitespace-nowrap text-center">Meta Mensual en Horas</th>
+                        <th scope="col" className="px-4 py-3 sm:px-6 whitespace-nowrap">Remuneración Mensual (USD)</th>
+                        <th scope="col" className="px-4 py-3 sm:px-6 whitespace-nowrap">Cambio de Semillas (USD)</th>
+                        <th scope="col" className="px-4 py-3 sm:px-6 whitespace-nowrap">Pago Total</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {tiers.map((tier) => (
+                        <tr key={tier.level} className="border-b border-gray-700 hover:bg-gray-800/50 transition-colors">
+                            <th scope="row" className="px-4 py-4 sm:px-6 font-medium text-white whitespace-nowrap">{tier.level}</th>
+                            <td className="px-4 py-4 sm:px-6">{tier.seedsGoal}</td>
+                            <td className="px-4 py-4 sm:px-6 text-center">{tier.dailyHours}</td>
+                            <td className="px-4 py-4 sm:px-6 text-center">44</td>
+                            <td className="px-4 py-4 sm:px-6">{tier.remuneration}</td>
+                            <td className="px-4 py-4 sm:px-6">{tier.seedExchange}</td>
+                            <td className="px-4 py-4 sm:px-6 font-bold text-green-400">{tier.totalPayment}</td>
+                        </tr>
+                    ))}
+                </tbody>
+            </table>
+            <div className="p-4 bg-gray-900/50 text-gray-400 text-xs sm:text-sm space-y-1">
+                <p>Cada transmisión debe durar por lo menos 1 hora para contar como hora válida. Cada día se contará cómo máximo 2 horas válidas.</p>
+                <p>Por ejemplo si un emisor transmite 58 minutos un día, no tiene hora válida. Si un emisor transmite 3 horas un día, se le contarán solamente 2 horas válidas.</p>
+            </div>
+        </div>
+    );
+};
+
+const PaymentCarousel: React.FC<{ tiers: PaymentTier[] }> = ({ tiers }) => {
+    const [currentIndex, setCurrentIndex] = useState(0);
+    const timeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+
+    const resetTimeout = useCallback(() => {
+        if (timeoutRef.current) {
+            clearTimeout(timeoutRef.current);
+        }
+    },[]);
+
+    const next = useCallback(() => {
+        setCurrentIndex(prev => (prev === tiers.length - 1 ? 0 : prev + 1));
+    }, [tiers.length]);
+
+    useEffect(() => {
+        resetTimeout();
+        timeoutRef.current = setTimeout(next, 4000);
+
+        return () => {
+            resetTimeout();
+        };
+    }, [currentIndex, next, resetTimeout]);
+
+    const prev = () => {
+        resetTimeout();
+        setCurrentIndex(prev => (prev === 0 ? tiers.length - 1 : prev - 1));
+    };
+    
+    const handleNext = () => {
+        resetTimeout();
+        next();
+    }
+
+    return (
+        <div className="relative w-full max-w-sm mx-auto min-h-[22rem]">
+            <div className="relative h-full overflow-hidden rounded-lg">
+                {tiers.map((tier, index) => (
+                    <div
+                        key={index}
+                        className={`absolute inset-0 transition-all duration-500 ease-in-out transform ${
+                            index === currentIndex ? 'opacity-100 translate-x-0' : 
+                            (index === (currentIndex - 1 + tiers.length) % tiers.length ? 'opacity-0 -translate-x-full' : 'opacity-0 translate-x-full')
+                        }`}
+                        aria-hidden={index !== currentIndex}
+                    >
+                        <div className="flex flex-col h-full text-center p-6 bg-gray-800/50 rounded-lg border border-purple-500/30">
+                           <h3 className="text-4xl font-bold text-white mb-4">Nivel {tier.level}</h3>
+                            <div className="w-full text-lg space-y-2 flex-grow flex flex-col justify-center">
+                                <div className="flex justify-between">
+                                    <span className="text-gray-400">Meta Semillas:</span>
+                                    <span className="text-white font-medium">{tier.seedsGoal}</span>
+                                </div>
+                                <div className="flex justify-between">
+                                    <span className="text-gray-400">Horas Diarias:</span>
+                                    <span className="text-white font-medium">{tier.dailyHours}</span>
+                                </div>
+                                <div className="flex justify-between">
+                                    <span className="text-gray-400">Remuneración:</span>
+                                    <span className="text-white font-medium">{tier.remuneration}</span>
+                                </div>
+                                <div className="flex justify-between">
+                                    <span className="text-gray-400">Cambio Semillas:</span>
+                                    <span className="text-white font-medium">{tier.seedExchange}</span>
+                                </div>
+                                <div className="pt-3 mt-3 border-t border-purple-500/30 flex justify-between items-baseline">
+                                    <span className="text-white font-bold text-xl">Pago Total:</span>
+                                    <span className="text-green-400 font-bold text-2xl">{tier.totalPayment} USD</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                ))}
+            </div>
+            
+            <button 
+                onClick={prev} 
+                className="absolute top-1/2 -translate-y-1/2 -left-4 z-10 p-2 bg-black/40 rounded-full hover:bg-purple-600 transition-colors focus:outline-none focus:ring-2 focus:ring-purple-400"
+                aria-label="Anterior nivel"
+            >
+                <ChevronLeftIcon className="w-6 h-6" />
+            </button>
+            <button 
+                onClick={handleNext} 
+                className="absolute top-1/2 -translate-y-1/2 -right-4 z-10 p-2 bg-black/40 rounded-full hover:bg-purple-600 transition-colors focus:outline-none focus:ring-2 focus:ring-purple-400"
+                aria-label="Siguiente nivel"
+            >
+                <ChevronRightIcon className="w-6 h-6" />
+            </button>
+
+            <div className="absolute -bottom-6 left-1/2 -translate-x-1/2 flex space-x-2">
+                {tiers.map((_, index) => (
+                    <button 
+                        key={index} 
+                        onClick={() => { resetTimeout(); setCurrentIndex(index); }} 
+                        className={`w-2.5 h-2.5 rounded-full transition-all ${index === currentIndex ? 'bg-purple-500' : 'bg-gray-600 hover:bg-gray-400'}`}
+                        aria-label={`Ir al nivel ${index + 1}`}
+                    />
+                ))}
+            </div>
+        </div>
+    );
+};
 
 const Header: React.FC<{ onOpenJoinModal: () => void; onOpenAboutModal: () => void }> = ({ onOpenJoinModal, onOpenAboutModal }) => {
     const [isScrolled, setIsScrolled] = useState(false);
@@ -766,58 +904,39 @@ const FAQ: React.FC = () => {
     );
 };
 
-const PaymentTable: React.FC = () => {
-    const paymentData: Omit<PaymentTier, 'seedExchange' | 'remuneration'>[] = [
-      { level: 'A', seedsGoal: '2,000', dailyHours: '2 / 44', totalPayment: '$23' },
-      { level: 'S1', seedsGoal: '10,000', dailyHours: '2 / 44', totalPayment: '$118' },
-      { level: 'S2', seedsGoal: '20,000', dailyHours: '2 / 44', totalPayment: '$235' },
-      { level: 'S3', seedsGoal: '40,000', dailyHours: '2 / 44', totalPayment: '$471' },
-      { level: 'S4', seedsGoal: '80,000', dailyHours: '2 / 44', totalPayment: '$941' },
-      { level: 'S5', seedsGoal: '120,000', dailyHours: '2 / 44', totalPayment: '$1,412' },
-      { level: 'S6', seedsGoal: '200,000', dailyHours: '2 / 44', totalPayment: '$2,353' },
-      { level: 'S7', seedsGoal: '300,000', dailyHours: '2 / 44', totalPayment: '$3,529' },
-      { level: 'S8', seedsGoal: '500,000', dailyHours: '2 / 44', totalPayment: '$5,882' },
-      { level: 'S9', seedsGoal: '800,000', dailyHours: '2 / 44', totalPayment: '$9,412' },
-      { level: 'S10', seedsGoal: '1,000,000', dailyHours: '2 / 44', totalPayment: '$11,765' },
-      { level: 'S11', seedsGoal: '2,000,000', dailyHours: '2 / 44', totalPayment: '$23,529' },
-      { level: 'S12', seedsGoal: '3,000,000', dailyHours: '2 / 44', totalPayment: '$36,786' },
-    ];
-    
-    return (
-        <div className="overflow-x-auto relative rounded-lg border border-purple-500/30">
-            <table className="w-full text-sm text-left text-gray-300">
-                <thead className="text-xs text-purple-300 uppercase bg-gray-900/50">
-                    <tr>
-                        <th scope="col" className="px-4 py-3 sm:px-6">Nivel</th>
-                        <th scope="col" className="px-4 py-3 sm:px-6">Meta de Semillas</th>
-                        <th scope="col" className="px-4 py-3 sm:px-6">Horas (Diarias/Mensuales)</th>
-                        <th scope="col" className="px-4 py-3 sm:px-6">Pago Total (USD)</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    {paymentData.map((tier) => (
-                        <tr key={tier.level} className="border-b border-gray-700 hover:bg-gray-800/50 transition-colors">
-                            <th scope="row" className="px-4 py-4 sm:px-6 font-medium text-white whitespace-nowrap">{tier.level}</th>
-                            <td className="px-4 py-4 sm:px-6">{tier.seedsGoal}</td>
-                            <td className="px-4 py-4 sm:px-6">{tier.dailyHours}</td>
-                            <td className="px-4 py-4 sm:px-6 font-bold text-green-400">{tier.totalPayment}</td>
-                        </tr>
-                    ))}
-                </tbody>
-            </table>
-            <div className="p-4 bg-gray-900/50 text-gray-400 text-xs sm:text-sm space-y-2 border-t border-purple-500/30">
-                <p><strong className="text-purple-300">Importante:</strong> Para poder monetizar, es fundamental haber cumplido con el objetivo mensual en horas y haber logrado alguna de las metas de semillas establecidas.</p>
-                <p><strong className="text-purple-300">Requisitos de Horas:</strong> Se requieren 2 horas diarias / 44 horas mensuales. Cada transmisión debe durar al menos 1 hora para ser válida, con un máximo de 2 horas válidas contadas por día.</p>
-            </div>
-        </div>
-    );
-};
-
 const GeneralInfo: React.FC = () => {
+    const paymentData: PaymentTier[] = [
+      { level: 'A', seedsGoal: '2,000', dailyHours: '2', remuneration: '$14', seedExchange: '$9', totalPayment: '$23' },
+      { level: 'B', seedsGoal: '5,000', dailyHours: '2', remuneration: '$35', seedExchange: '$23', totalPayment: '$58' },
+      { level: 'C', seedsGoal: '10,000', dailyHours: '2', remuneration: '$74', seedExchange: '$48', totalPayment: '$122' },
+      { level: 'CE', seedsGoal: '20,000', dailyHours: '2', remuneration: '$141', seedExchange: '$95', totalPayment: '$236' },
+      { level: 'D', seedsGoal: '30,000', dailyHours: '2', remuneration: '$211', seedExchange: '$143', totalPayment: '$354' },
+      { level: 'E', seedsGoal: '60,000', dailyHours: '2', remuneration: '$422', seedExchange: '$286', totalPayment: '$708' },
+      { level: 'S1', seedsGoal: '100,000', dailyHours: '2', remuneration: '$660', seedExchange: '$476', totalPayment: '$1,136' },
+      { level: 'S2', seedsGoal: '150,000', dailyHours: '2', remuneration: '$990', seedExchange: '$714', totalPayment: '$1,704' },
+      { level: 'S3', seedsGoal: '200,000', dailyHours: '2', remuneration: '$1,320', seedExchange: '$952', totalPayment: '$2,272' },
+      { level: 'S4', seedsGoal: '250,000', dailyHours: '2', remuneration: '$1,650', seedExchange: '$1,190', totalPayment: '$2,840' },
+      { level: 'S5', seedsGoal: '300,000', dailyHours: '2', remuneration: '$1,980', seedExchange: '$1,429', totalPayment: '$3,409' },
+      { level: 'S6', seedsGoal: '400,000', dailyHours: '2', remuneration: '$2,700', seedExchange: '$1,905', totalPayment: '$4,604' },
+      { level: 'S7', seedsGoal: '500,000', dailyHours: '2', remuneration: '$3,550', seedExchange: '$2,381', totalPayment: '$5,931' },
+      { level: 'S8', seedsGoal: '750,000', dailyHours: '2', remuneration: '$5,500', seedExchange: '$3,572', totalPayment: '$9,072' },
+      { level: 'S9', seedsGoal: '1,000,000', dailyHours: '2', remuneration: '$6,800', seedExchange: '$4,762', totalPayment: '$11,562' },
+      { level: 'S10', seedsGoal: '1,500,000', dailyHours: '2', remuneration: '$10,400', seedExchange: '$7,143', totalPayment: '$17,543' },
+      { level: 'S11', seedsGoal: '2,000,000', dailyHours: '2', remuneration: '$14,500', seedExchange: '$9,524', totalPayment: '$24,024' },
+      { level: 'S12', seedsGoal: '3,000,000', dailyHours: '2', remuneration: '$22,500', seedExchange: '$14,286', totalPayment: '$36,786' },
+    ];
+
     const infoData = [
         {
-            title: 'Tabla de Pagos',
-            content: <PaymentTable />
+            title: 'Tabla de pagos bigo live',
+            content: (
+                <div>
+                    <PaymentTable tiers={paymentData} />
+                    <div className="mt-12 mb-6">
+                        <PaymentCarousel tiers={paymentData} />
+                    </div>
+                </div>
+            )
         },
         {
             title: '¿Qué es un PK?',
@@ -866,7 +985,7 @@ const GeneralInfo: React.FC = () => {
             <h2 className="text-3xl md:text-4xl font-bold text-white text-center mb-10">Información General</h2>
             <div className="max-w-4xl mx-auto">
                 {infoData.map((item, index) => (
-                    <AccordionItem key={index} title={item.title} startOpen={item.title === 'Tabla de Pagos'}>
+                    <AccordionItem key={index} title={item.title} startOpen={item.title === 'Tabla de pagos bigo live'}>
                         {item.content}
                     </AccordionItem>
                 ))}
