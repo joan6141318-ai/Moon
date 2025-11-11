@@ -1,7 +1,7 @@
 
 import React, { useState, CSSProperties, useEffect, useRef } from 'react';
 
-// --- NUEVA SECCIÓN "QUIÉNES SOMOS" CON DISEÑO VISUAL ---
+// --- SECCIÓN "QUIÉNES SOMOS" REDISEÑADA ---
 
 const InfoCard: React.FC<{ 
     title?: string; 
@@ -20,17 +20,17 @@ const InfoCard: React.FC<{
         overflow: 'hidden',
         color: 'white',
         display: 'flex',
-        alignItems: text ? 'center' : 'flex-end',
-        justifyContent: text ? 'center' : 'flex-start',
+        alignItems: 'center',
+        justifyContent: 'center',
         padding: 'clamp(1.5rem, 4vw, 2.5rem)',
         boxSizing: 'border-box',
         backgroundImage: `url(${imageUrl})`,
         backgroundSize: 'cover',
         backgroundPosition: 'center',
         transition: 'transform 0.3s ease-in-out',
-        transform: isHovered ? 'scale(1.03)' : 'scale(1)',
-        cursor: 'pointer',
-        textAlign: text ? 'center' : 'left',
+        transform: isHovered ? 'scale(1.02)' : 'scale(1)',
+        cursor: 'default',
+        textAlign: 'center',
     };
 
     const overlayStyle: CSSProperties = {
@@ -39,8 +39,7 @@ const InfoCard: React.FC<{
         left: 0,
         right: 0,
         bottom: 0,
-        backgroundColor: 'rgba(0, 0, 0, 0.6)',
-        background: 'linear-gradient(to top, rgba(0,0,0,0.85) 0%, rgba(0,0,0,0.1) 60%)',
+        backgroundColor: 'rgba(0, 0, 0, 0.7)',
     };
 
     const contentStyle: CSSProperties = {
@@ -52,26 +51,17 @@ const InfoCard: React.FC<{
     const titleStyle: CSSProperties = {
         fontSize: 'clamp(1.2rem, 3vw, 1.5rem)',
         fontWeight: 600,
-        margin: 0,
+        margin: '0 0 1rem 0',
     };
     
     const textStyle: CSSProperties = {
         fontSize: 'clamp(0.9rem, 2.5vw, 1rem)',
-        lineHeight: 1.6,
-        marginTop: '1rem',
+        lineHeight: 1.7,
         opacity: 0.9,
-    }
-
-    const underlineStyle: CSSProperties = {
-        height: '3px',
-        backgroundColor: '#9b29ac',
-        marginTop: '0.5rem',
-        transition: 'width 0.3s ease',
-        width: isHovered ? '80px' : '50px',
-        margin: text ? '1rem auto 0 auto' : '0.5rem 0 0 0',
+        margin: 0,
     };
-
-     const innerBorderStyle: CSSProperties = {
+    
+    const innerBorderStyle: CSSProperties = {
         position: 'absolute',
         top: '1rem',
         left: '1rem',
@@ -80,7 +70,6 @@ const InfoCard: React.FC<{
         border: '1px solid rgba(255, 255, 255, 0.2)',
         borderRadius: '12px',
         opacity: 0.8,
-        transition: 'opacity 0.3s ease',
     };
 
     return (
@@ -94,14 +83,13 @@ const InfoCard: React.FC<{
             <div style={contentStyle}>
                 {title && <h3 style={titleStyle}>{title}</h3>}
                 {text && <p style={textStyle}>{text}</p>}
-                {title && <div style={underlineStyle}></div>}
             </div>
         </div>
     );
 };
 
 const MissionIcon = () => (
-  <svg width="32" height="32" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" stroke="#9b29ac" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+  <svg width="28" height="28" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" stroke="#9b29ac" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
     <circle cx="12" cy="12" r="10" />
     <circle cx="12" cy="12" r="6" />
     <circle cx="12" cy="12" r="2" />
@@ -109,7 +97,7 @@ const MissionIcon = () => (
 );
 
 const VisionIcon = () => (
-  <svg width="32" height="32" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" stroke="#9b29ac" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+  <svg width="28" height="28" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" stroke="#9b29ac" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
     <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z" />
     <circle cx="12" cy="12" r="3" />
   </svg>
@@ -123,30 +111,29 @@ const FeatureCard: React.FC<{
     const [isHovered, setIsHovered] = React.useState(false);
 
     const cardStyle: CSSProperties = {
-        backgroundColor: '#1a1a1a',
-        borderRadius: '20px',
-        padding: 'clamp(0.75rem, 2vw, 1rem)',
+        backgroundColor: '#1c1c1e',
+        borderRadius: '16px',
+        padding: 'clamp(1.5rem, 4vw, 2.5rem)',
         border: '1px solid rgba(255, 255, 255, 0.1)',
         display: 'flex',
         flexDirection: 'column',
         height: '100%',
         boxSizing: 'border-box',
-        transition: 'transform 0.3s ease, border-color 0.3s ease',
-        transform: isHovered ? 'translateY(-5px)' : 'translateY(0)',
+        transition: 'border-color 0.3s ease',
         borderColor: isHovered ? '#9b29ac' : 'rgba(255, 255, 255, 0.1)',
     };
     
-    const iconStyle: CSSProperties = { marginBottom: '0.4rem' };
+    const iconStyle: CSSProperties = { marginBottom: '1rem' };
     const titleStyle: CSSProperties = {
-        fontSize: 'clamp(1rem, 2.2vw, 1.1rem)',
+        fontSize: 'clamp(1.1rem, 2.5vw, 1.25rem)',
         fontWeight: 600,
         color: '#fff',
-        margin: '0 0 0.3rem 0',
+        margin: '0 0 0.5rem 0',
     };
     const textStyle: CSSProperties = {
-        fontSize: 'clamp(0.8rem, 1.8vw, 0.85rem)',
-        lineHeight: 1.5,
-        color: '#d1d1d1',
+        fontSize: 'clamp(0.85rem, 2vw, 0.9rem)',
+        lineHeight: 1.6,
+        color: '#b0b0b0',
         margin: 0,
         flexGrow: 1,
     };
@@ -168,18 +155,18 @@ const AboutSection: React.FC<{ isMobile: boolean }> = ({ isMobile }) => {
     const styles: { [key: string]: CSSProperties } = {
         section: {
             backgroundColor: '#0d0d0d',
-            padding: 'clamp(3rem, 8vw, 6rem) clamp(0.5rem, 3vw, 1.5rem)',
+            padding: 'clamp(3rem, 8vw, 6rem) clamp(1rem, 4vw, 2rem)',
             display: 'flex',
             flexDirection: 'column',
             alignItems: 'center',
-            gap: '1.5rem',
+            gap: '2rem',
         },
         title: {
             fontSize: 'clamp(2rem, 5vw, 2.8rem)',
             fontWeight: 800,
             color: '#ffffff',
             textAlign: 'center',
-            marginBottom: '0',
+            marginBottom: '1rem',
         },
         highlight: {
             color: '#9b29ac',
