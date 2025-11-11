@@ -28,7 +28,7 @@ const App: React.FC = () => {
       flexDirection: 'column',
       position: 'relative',
       backgroundColor: '#1a1a1a',
-      backgroundImage: `linear-gradient(rgba(10, 5, 15, 0.8), rgba(0, 0, 0, 0.95)), url('https://images.unsplash.com/photo-1521737604893-d14cc237f11d?q=80&w=2084&auto=format&fit=crop')`,
+      backgroundImage: `linear-gradient(rgba(10, 5, 15, 0.7), rgba(0, 0, 0, 0.9)), url('https://i.pinimg.com/originals/a0/27/93/a027931a5b1b427b34692790d0b9856a.jpg')`,
       backgroundSize: 'cover',
       backgroundPosition: 'center',
       overflow: 'hidden',
