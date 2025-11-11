@@ -125,7 +125,7 @@ const FeatureCard: React.FC<{
     const cardStyle: CSSProperties = {
         backgroundColor: '#1a1a1a',
         borderRadius: '20px',
-        padding: 'clamp(1rem, 3vw, 1.25rem)',
+        padding: 'clamp(0.75rem, 2vw, 1rem)',
         border: '1px solid rgba(255, 255, 255, 0.1)',
         display: 'flex',
         flexDirection: 'column',
@@ -136,16 +136,16 @@ const FeatureCard: React.FC<{
         borderColor: isHovered ? '#9b29ac' : 'rgba(255, 255, 255, 0.1)',
     };
     
-    const iconStyle: CSSProperties = { marginBottom: '0.75rem' };
+    const iconStyle: CSSProperties = { marginBottom: '0.4rem' };
     const titleStyle: CSSProperties = {
-        fontSize: 'clamp(1.1rem, 3vw, 1.3rem)',
+        fontSize: 'clamp(1rem, 2.2vw, 1.1rem)',
         fontWeight: 600,
         color: '#fff',
-        margin: '0 0 0.5rem 0',
+        margin: '0 0 0.3rem 0',
     };
     const textStyle: CSSProperties = {
-        fontSize: 'clamp(0.85rem, 2vw, 0.95rem)',
-        lineHeight: 1.6,
+        fontSize: 'clamp(0.8rem, 1.8vw, 0.85rem)',
+        lineHeight: 1.5,
         color: '#d1d1d1',
         margin: 0,
         flexGrow: 1,
@@ -172,7 +172,7 @@ const AboutSection: React.FC<{ isMobile: boolean }> = ({ isMobile }) => {
             display: 'flex',
             flexDirection: 'column',
             alignItems: 'center',
-            gap: '2rem',
+            gap: '1.5rem',
         },
         title: {
             fontSize: 'clamp(2rem, 5vw, 2.8rem)',
