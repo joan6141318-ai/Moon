@@ -1,8 +1,130 @@
 
-
 import React, { useState, CSSProperties, useEffect, useRef } from 'react';
 
-// SVG Icon Components
+// --- Componentes para la nueva sección "Quiénes somos" ---
+
+const MissionIcon = () => (
+    <svg width="40" height="40" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M12 21C16.9706 21 21 16.9706 21 12C21 7.02944 16.9706 3 12 3C7.02944 3 3 7.02944 3 12C3 16.9706 7.02944 21 12 21Z" stroke="#c77dff" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
+        <path d="M12 15C13.6569 15 15 13.6569 15 12C15 10.3431 13.6569 9 12 9C10.3431 9 9 10.3431 9 12C9 13.6569 10.3431 15 12 15Z" stroke="#c77dff" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
+        <path d="M12 5.10001V3" stroke="#c77dff" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
+        <path d="M18.9 12H21" stroke="#c77dff" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
+        <path d="M12 18.9V21" stroke="#c77dff" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
+        <path d="M5.10001 12H3" stroke="#c77dff" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
+    </svg>
+);
+
+const VisionIcon = () => (
+    <svg width="40" height="40" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M15.5 7.5L18 5M18 5L20.5 7.5M18 5V12M18 12C18 15.3137 15.3137 18 12 18C8.68629 18 6 15.3137 6 12C6 8.68629 8.68629 6 12 6C13.7915 6 15.394 6.70221 16.5 7.84357M18 12H21.5" stroke="#c77dff" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
+        <path d="M3.5 12H7" stroke="#c77dff" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
+        <path d="M12 3.5V7" stroke="#c77dff" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
+    </svg>
+);
+
+const Card: React.FC<{ icon: React.ReactNode; title: string; children: React.ReactNode }> = ({ icon, title, children }) => {
+    const [isHovered, setIsHovered] = React.useState(false);
+    
+    const cardStyle: CSSProperties = {
+        backgroundColor: '#1f1f1f',
+        borderRadius: '16px',
+        padding: '2rem',
+        flex: '1',
+        minWidth: '280px',
+        margin: '1rem',
+        border: '1px solid rgba(255, 255, 255, 0.1)',
+        display: 'flex',
+        flexDirection: 'column',
+        alignItems: 'center',
+        textAlign: 'center',
+        transition: 'transform 0.3s ease, box-shadow 0.3s ease',
+        transform: isHovered ? 'translateY(-10px)' : 'translateY(0)',
+        boxShadow: isHovered ? '0 15px 30px rgba(155, 41, 172, 0.2)' : '0 5px 15px rgba(0, 0, 0, 0.3)',
+    };
+
+    const titleStyle: CSSProperties = {
+        fontSize: '1.5rem',
+        fontWeight: 600,
+        color: '#ffffff',
+        margin: '1rem 0 0.5rem 0',
+    };
+    
+    const textStyle: CSSProperties = {
+        fontSize: '0.95rem',
+        color: '#cccccc',
+        lineHeight: 1.7,
+    };
+    
+    return (
+        <div 
+            style={cardStyle} 
+            onMouseEnter={() => setIsHovered(true)}
+            onMouseLeave={() => setIsHovered(false)}
+        >
+            {icon}
+            <h3 style={titleStyle}>{title}</h3>
+            <p style={textStyle}>{children}</p>
+        </div>
+    );
+};
+
+const AboutSection: React.FC = () => {
+    const styles: { [key: string]: CSSProperties } = {
+        section: {
+            backgroundColor: '#0d0d0d',
+            padding: ' clamp(3rem, 8vw, 6rem) 2rem',
+            display: 'flex',
+            flexDirection: 'column',
+            alignItems: 'center',
+            textAlign: 'center',
+        },
+        title: {
+            fontSize: 'clamp(2rem, 5vw, 2.8rem)',
+            fontWeight: 800,
+            color: '#ffffff',
+            marginBottom: '1rem',
+        },
+        highlight: {
+          color: '#9b29ac',
+        },
+        description: {
+            fontSize: 'clamp(1rem, 2.5vw, 1.1rem)',
+            color: '#e0e0e0',
+            maxWidth: '800px',
+            lineHeight: 1.8,
+            marginBottom: '4rem',
+        },
+        cardsContainer: {
+            display: 'flex',
+            flexWrap: 'wrap',
+            justifyContent: 'center',
+            gap: '1rem',
+            width: '100%',
+            maxWidth: '1200px',
+        },
+    };
+    
+    return (
+        <section style={styles.section}>
+            <h2 style={styles.title}>Quiénes <span style={styles.highlight}>somos</span></h2>
+            <p style={styles.description}>
+                Somos una agencia de talentos para plataformas de streaming con más de 7 años de experiencia. Nos especializamos en descubrir y potenciar a creadores de contenido, conectándolos con las plataformas más influyentes a nivel global. Nuestra comunidad, que supera los 400 talentos activos, es el testimonio de nuestro compromiso con el crecimiento profesional y el éxito sostenible en la industria.
+            </p>
+            <div style={styles.cardsContainer}>
+                 <Card icon={<MissionIcon />} title="Misión">
+                    Impulsar a creadores de contenido emergentes, proporcionándoles las herramientas, la estrategia y las conexiones necesarias para que transformen su pasión en una carrera profesional exitosa y de gran impacto.
+                </Card>
+                <Card icon={<VisionIcon />} title="Visión">
+                    Ser la agencia de talentos líder y el referente global en la industria del streaming, construyendo un ecosistema donde el talento innovador y las plataformas de contenido se unen para crear el futuro del entretenimiento digital.
+                </Card>
+            </div>
+        </section>
+    );
+};
+
+
+// --- Componentes de la App principal ---
+
 const HamburgerIcon = () => (
   <svg width="26" height="26" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" style={{ display: 'block' }}>
     <path d="M3 12H21" stroke="white" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
@@ -31,8 +153,21 @@ const XIcon = () => (
 const App: React.FC = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [selectedMenuItem, setSelectedMenuItem] = useState<string | null>(null);
+  const [isChatFabVisible, setIsChatFabVisible] = useState(false);
   const navRef = useRef<HTMLElement>(null);
   const lastHoveredElementRef = useRef<Element | null>(null);
+
+  useEffect(() => {
+    const handleScroll = () => {
+      if (window.scrollY > window.innerHeight * 0.5) {
+        setIsChatFabVisible(true);
+      } else {
+        setIsChatFabVisible(false);
+      }
+    };
+    window.addEventListener('scroll', handleScroll, { passive: true });
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
 
   useEffect(() => {
     const handleKeyDown = (event: KeyboardEvent) => {
@@ -110,11 +245,13 @@ const App: React.FC = () => {
   }, [isMenuOpen]);
 
   const styles: { [key: string]: CSSProperties } = {
-    container: {
+    heroSection: {
       height: '100vh',
-      width: '100vw',
+      width: '100%',
       display: 'flex',
       flexDirection: 'column',
+      justifyContent: 'center',
+      alignItems: 'center',
       position: 'relative',
       backgroundColor: '#1a1a1a',
       backgroundImage: `linear-gradient(to top, rgba(155, 41, 172, 0.02), transparent 50%), linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.9)), url('https://i.postimg.cc/4yVxtSjg/IMG-20251111-053352.jpg')`,
@@ -133,7 +270,6 @@ const App: React.FC = () => {
       border: 'none',
     },
     mainContent: {
-      flex: 1,
       display: 'flex',
       flexDirection: 'column',
       justifyContent: 'center',
@@ -192,7 +328,10 @@ const App: React.FC = () => {
       border: 'none',
       boxShadow: '0 6px 20px rgba(0,0,0,0.3)',
       zIndex: 10,
-      transition: 'all 0.3s ease',
+      opacity: isChatFabVisible ? 1 : 0,
+      visibility: isChatFabVisible ? 'visible' : 'hidden',
+      transform: isChatFabVisible ? 'scale(1)' : 'scale(0.5)',
+      transition: 'all 0.4s cubic-bezier(0.25, 1, 0.5, 1)',
     },
     menuOverlay: {
       position: 'fixed',
@@ -244,11 +383,7 @@ const App: React.FC = () => {
   const menuItems = ['Inicio', 'Sobre nosotros', 'Únete', 'Socios', 'Podcast', 'Preguntas frecuentes', 'Contacto', 'Chat'];
 
   return (
-    <div style={styles.container}>
-      <button style={styles.header} className="header-button" aria-label="Abrir menú principal" onClick={() => setIsMenuOpen(true)}>
-        <HamburgerIcon />
-      </button>
-
+    <div>
       <div style={styles.menuOverlay} onClick={() => setIsMenuOpen(false)}></div>
       <aside style={styles.sideMenu} aria-hidden={!isMenuOpen}>
         <button style={styles.closeButton} className="close-button" onClick={() => setIsMenuOpen(false)} aria-label="Cerrar menú">
@@ -271,17 +406,24 @@ const App: React.FC = () => {
         </nav>
       </aside>
 
-      <main style={styles.mainContent}>
-        <h1 style={styles.title}>
-          Conecta. Crea. <span style={styles.highlight}>Brilla.</span>
-        </h1>
-        <p style={styles.subtitle}>
-          Tu talento merece ser visto.
-        </p>
-        <button style={styles.ctaButton} className="cta-button">
-          Comienza hoy
+      <div style={styles.heroSection}>
+        <button style={styles.header} className="header-button" aria-label="Abrir menú principal" onClick={() => setIsMenuOpen(true)}>
+          <HamburgerIcon />
         </button>
-      </main>
+        <main style={styles.mainContent}>
+          <h1 style={styles.title}>
+            Conecta. Crea. <span style={styles.highlight}>Brilla.</span>
+          </h1>
+          <p style={styles.subtitle}>
+            Tu talento merece ser visto.
+          </p>
+          <button style={styles.ctaButton} className="cta-button">
+            Comienza hoy
+          </button>
+        </main>
+      </div>
+      
+      <AboutSection />
 
       <button style={styles.chatFab} className="chat-fab" aria-label="Abrir chat de ayuda">
         <ChatIcon />
