@@ -3,7 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Mi Proyecto</title>
+    <title>Chatbot Gemini</title>
   <script type="importmap">
 {
   "imports": {
@@ -17,6 +17,15 @@
 }
 </script>
 <style>
+  :root {
+    --user-bg: #007bff;
+    --model-bg: #e9ecef;
+    --text-light: #ffffff;
+    --text-dark: #212529;
+    --bg-light: #f8f9fa;
+    --border-color: #dee2e6;
+  }
+
   html, body {
     margin: 0;
     padding: 0;
@@ -27,11 +36,15 @@
       sans-serif;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
+    background-color: var(--bg-light);
   }
 
   #root {
     height: 100%;
     width: 100%;
+    display: flex;
+    flex-direction: column;
+    box-sizing: border-box;
   }
 </style>
 </head>

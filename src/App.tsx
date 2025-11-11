@@ -1,24 +1,46 @@
-import React from 'react';
+import React, { useState } from 'react';
+import { Message } from './types';
+import { getGeminiResponse } from './services/gemini';
+import Chatbot from './components/Chatbot';
 
 const App: React.FC = () => {
-  const containerStyle: React.CSSProperties = {
-    height: '100%',
-    width: '100%',
-    display: 'flex',
-    alignItems: 'center',
-    justifyContent: 'center',
-    backgroundColor: '#f0f0f0', // Un color de fondo gris claro para ser visible
-    color: '#333',
-    fontSize: '24px',
-    fontFamily: 'sans-serif',
-    textAlign: 'center',
-    padding: '20px',
+  const [messages, setMessages] = useState<Message[]>([
+    {
+      role: 'model',
+      text: '¡Hola! ¿En qué puedo ayudarte hoy?',
+    },
+  ]);
+  const [isLoading, setIsLoading] = useState(false);
+
+  const handleSendMessage = async (text: string) => {
+    if (!text.trim() || isLoading) return;
+
+    const userMessage: Message = { role: 'user', text };
+    setMessages((prev) => [...prev, userMessage]);
+    setIsLoading(true);
+
+    try {
+      const botResponseText = await getGeminiResponse(text);
+      const botMessage: Message = { role: 'model', text: botResponseText };
+      setMessages((prev) => [...prev, botMessage]);
+    } catch (error) {
+      console.error(error);
+      const errorMessage: Message = {
+        role: 'model',
+        text: 'Lo siento, ocurrió un error. Por favor intenta de nuevo.',
+      };
+      setMessages((prev) => [...prev, errorMessage]);
+    } finally {
+      setIsLoading(false);
+    }
   };
 
   return (
-    <div style={containerStyle}>
-      <p>La aplicación está funcionando.<br />Este es el lienzo.</p>
-    </div>
+    <Chatbot
+      messages={messages}
+      onSendMessage={handleSendMessage}
+      isLoading={isLoading}
+    />
   );
 };
 
