@@ -3,13 +3,42 @@ import React, { useState, CSSProperties, useEffect, useRef } from 'react';
 
 // --- Íconos ---
 
-const HamburgerIcon = () => (
-  <svg width="26" height="26" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" style={{ display: 'block' }}>
-    <path d="M3 12H21" stroke="#FFFFFF" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
-    <path d="M3 6H21" stroke="#FFFFFF" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
-    <path d="M3 18H21" stroke="#FFFFFF" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
-  </svg>
-);
+const AnimatedHamburgerIcon = ({ isOpen }: { isOpen: boolean }) => {
+    const barStyle: CSSProperties = {
+        display: 'block',
+        width: '24px',
+        height: '2px',
+        backgroundColor: '#FFFFFF',
+        margin: '5px 0',
+        transition: 'transform 0.3s ease-in-out, opacity 0.3s ease-in-out',
+    };
+
+    const topBarStyle: CSSProperties = {
+        ...barStyle,
+        transform: isOpen ? 'rotate(45deg) translate(5px, 5px)' : 'none',
+        transformOrigin: 'center',
+    };
+    
+    const middleBarStyle: CSSProperties = {
+        ...barStyle,
+        margin: '5px 0',
+        opacity: isOpen ? 0 : 1,
+    };
+
+    const bottomBarStyle: CSSProperties = {
+        ...barStyle,
+        transform: isOpen ? 'rotate(-45deg) translate(5px, -5px)' : 'none',
+        transformOrigin: 'center',
+    };
+
+    return (
+        <div style={{ width: '26px', height: '26px', display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center', position: 'relative' }}>
+            <span style={topBarStyle}></span>
+            <span style={middleBarStyle}></span>
+            <span style={bottomBarStyle}></span>
+        </div>
+    );
+};
 
 const ChatIcon = () => (
   <svg width="28" height="28" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -26,7 +55,7 @@ const CloseIcon = () => (
 
 // --- Componentes ---
 
-const Header = ({ onMenuClick }: { onMenuClick: () => void }) => {
+const Header = ({ onMenuClick, isScrolled, isMenuOpen }: { onMenuClick: () => void; isScrolled: boolean; isMenuOpen: boolean; }) => {
   const headerStyle: CSSProperties = {
     position: 'fixed',
     top: 0,
@@ -38,9 +67,7 @@ const Header = ({ onMenuClick }: { onMenuClick: () => void }) => {
     padding: '20px 5%',
     zIndex: 1000,
     transition: 'background-color 0.3s ease-in-out',
-    backgroundColor: 'rgba(13, 13, 13, 0.85)',
-    backdropFilter: 'blur(10px)',
-    WebkitBackdropFilter: 'blur(10px)',
+    backgroundColor: isScrolled ? 'rgba(13, 13, 13, 0.85)' : 'transparent',
   };
 
   const logoStyle: CSSProperties = {
@@ -56,13 +83,14 @@ const Header = ({ onMenuClick }: { onMenuClick: () => void }) => {
     color: 'white',
     cursor: 'pointer',
     padding: '8px',
+    zIndex: 1200, // Asegura que el botón esté sobre el overlay del menú
   };
 
   return (
     <header style={headerStyle}>
       <a href="#" style={logoStyle}>Agency</a>
-      <button onClick={onMenuClick} style={headerButtonStyle} className="header-button" aria-label="Abrir menú">
-        <HamburgerIcon />
+      <button onClick={onMenuClick} style={headerButtonStyle} className="header-button" aria-label={isMenuOpen ? 'Cerrar menú' : 'Abrir menú'}>
+        <AnimatedHamburgerIcon isOpen={isMenuOpen} />
       </button>
     </header>
   );
@@ -183,7 +211,7 @@ const HeroSection = () => {
         textAlign: 'center',
         padding: '0 20px',
         position: 'relative',
-        backgroundImage: 'linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)), url(https://images.unsplash.com/photo-1531297484001-80022131f5a1?q=80&w=2020&auto=format&fit=crop)',
+        backgroundImage: 'linear-gradient(to bottom, rgba(13, 13, 13, 0.8) 0%, rgba(13, 13, 13, 0) 50%, rgba(13, 13, 13, 1) 100%), url(https://images.unsplash.com/photo-1522071820081-009f0129c71c?q=80&w=2070&auto=format&fit=crop)',
         backgroundSize: 'cover',
         backgroundPosition: 'center',
     };
@@ -307,7 +335,7 @@ const AboutSection = () => {
                     >
                         <h3 style={experienceTitleStyle}>Más de 7 años de experiencia</h3>
                         <p style={descriptionStyle}>
-                            Somos una agencia de talentos para plataformas de streaming. Nos especializamos en descubrir y potenciar a creadores de contenido, conectándolos con las plataformas más influyentes a nivel global. Nuestra comunidad, que supera los <span style={purpleSpanStyle}>400</span> talentos activos, es el testimonio de nuestro compromiso.
+                            Somos una agencia de talentos para plataformas de streaming. Nos especializamos en descubrir y potenciar a creadores de contenido, conectándolos con las plataformas más influyentes a nivel global. Nuestra comunidad, que supera los <span style={{ ...purpleSpanStyle }}>400</span> talentos activos, es el testimonio de nuestro compromiso.
                         </p>
                     </div>
                 </div>
@@ -347,11 +375,14 @@ const ChatFab = ({ isVisible }: { isVisible: boolean }) => {
 export default function App() {
     const [isMenuOpen, setIsMenuOpen] = useState(false);
     const [showFab, setShowFab] = useState(false);
+    const [isHeaderScrolled, setIsHeaderScrolled] = useState(false);
 
     const toggleMenu = () => setIsMenuOpen(!isMenuOpen);
 
     useEffect(() => {
         const handleScroll = () => {
+            setIsHeaderScrolled(window.scrollY > 50);
+
             const fabThreshold = window.innerHeight * 0.5;
             setShowFab(window.scrollY > fabThreshold);
         };
@@ -362,7 +393,7 @@ export default function App() {
 
     return (
         <>
-            <Header onMenuClick={toggleMenu} />
+            <Header onMenuClick={toggleMenu} isScrolled={isHeaderScrolled} isMenuOpen={isMenuOpen} />
             <SideMenu isOpen={isMenuOpen} onClose={toggleMenu} />
             <HeroSection />
             <AboutSection />
