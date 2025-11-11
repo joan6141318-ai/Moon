@@ -29,6 +29,21 @@
     -moz-osx-font-smoothing: grayscale;
     background-color: #0d0d0d;
     color: #fff;
+    -ms-overflow-style: none;  /* IE and Edge */
+    scrollbar-width: none;  /* Firefox */
+  }
+
+  body::-webkit-scrollbar {
+    display: none;
+  }
+  
+  .side-menu {
+    -ms-overflow-style: none;  /* IE and Edge */
+    scrollbar-width: none;  /* Firefox */
+  }
+  
+  .side-menu::-webkit-scrollbar {
+    display: none;
   }
 
   .cta-button:hover {

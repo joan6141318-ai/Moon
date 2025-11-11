@@ -434,7 +434,7 @@ const App: React.FC = () => {
   return (
     <div>
       <div style={styles.menuOverlay} onClick={() => setIsMenuOpen(false)}></div>
-      <aside style={styles.sideMenu} aria-hidden={!isMenuOpen}>
+      <aside style={styles.sideMenu} className="side-menu" aria-hidden={!isMenuOpen}>
         <button style={styles.closeButton} className="close-button" onClick={() => setIsMenuOpen(false)} aria-label="Cerrar menú">
           <XIcon />
         </button>
