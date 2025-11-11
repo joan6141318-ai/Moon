@@ -21,7 +21,6 @@ const styles: { [key: string]: React.CSSProperties } = {
     alignItems: 'center',
     justifyContent: 'center',
     height: '100%',
-    width: '100%',
     textAlign: 'center',
     color: '#ffffff',
   },
