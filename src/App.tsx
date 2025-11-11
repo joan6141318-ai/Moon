@@ -237,7 +237,7 @@ const App: React.FC = () => {
       marginTop: '60px',
       display: 'flex',
       flexDirection: 'column',
-      alignItems: 'flex-start',
+      alignItems: 'stretch',
     },
   };
 
