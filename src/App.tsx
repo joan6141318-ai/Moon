@@ -59,6 +59,7 @@ const App: React.FC = () => {
       margin: '0 0 1rem 0',
       lineHeight: 1.2,
       textShadow: '0 4px 10px rgba(0,0,0,0.5)',
+      whiteSpace: 'nowrap',
     },
     highlight: {
       color: '#9b29ac',
