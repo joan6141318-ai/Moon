@@ -80,7 +80,7 @@ const App: React.FC = () => {
       zIndex: 5,
     },
     title: {
-      fontFamily: "'Montserrat', sans-serif",
+      fontFamily: "'Poppins', sans-serif",
       fontSize: 'clamp(2.8rem, 8vw, 5rem)',
       fontWeight: 800,
       color: '#ffffff',
@@ -217,7 +217,7 @@ const App: React.FC = () => {
           Tu talento merece ser visto.
         </p>
         <button style={styles.ctaButton} className="cta-button">
-          comienza hoy
+          Comienza hoy
         </button>
       </main>
 
