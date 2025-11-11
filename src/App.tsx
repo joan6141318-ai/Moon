@@ -84,7 +84,7 @@ const App: React.FC = () => {
       fontSize: 'clamp(2.5rem, 8vw, 5rem)',
       fontWeight: 800,
       color: '#ffffff',
-      margin: '0 0 1rem 0',
+      margin: '0 0 0.5rem 0',
       lineHeight: 1.2,
       textShadow: '0 4px 10px rgba(0,0,0,0.5)',
       whiteSpace: 'nowrap',
@@ -93,7 +93,7 @@ const App: React.FC = () => {
       color: '#9b29ac',
     },
     subtitle: {
-      fontSize: 'clamp(0.85rem, 3.5vw, 1.15rem)',
+      fontSize: 'clamp(0.8rem, 3.5vw, 1.1rem)',
       color: '#f0f0f0',
       maxWidth: '500px',
       margin: '0 0 2rem 0',
